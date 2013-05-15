@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="SOFTWARE2G">
+		<class>com.software2g.vo.Aplicacion</class>
+		<class>com.software2g.vo.Funcionalidad</class>
+		<class>com.software2g.vo.Funcionalidadrol</class>
+		<class>com.software2g.vo.FuncionalidadrolPK</class>
+		<class>com.software2g.vo.Institucion</class>
+		<class>com.software2g.vo.Persona</class>
+		<class>com.software2g.vo.Personainstitucion</class>
+		<class>com.software2g.vo.PersonainstitucionPK</class>
+		<class>com.software2g.vo.Rol</class>
+		<class>com.software2g.vo.Rolusuario</class>
+		<class>com.software2g.vo.RolusuarioPK</class>
+		<class>com.software2g.vo.Tipodocumento</class>
+		<class>com.software2g.vo.Usuario</class>
+		<class>com.software2g.vo.Abono</class>
+		<class>com.software2g.vo.Credito</class>
+		<class>com.software2g.vo.CreditoPK</class>
+		<class>com.software2g.vo.Creditotipodescuento</class>
+		<class>com.software2g.vo.CreditotipodescuentoPK</class>
+		<class>com.software2g.vo.Donacion</class>
+		<class>com.software2g.vo.Donacionobjeto</class>
+		<class>com.software2g.vo.DonacionobjetoPK</class>
+		<class>com.software2g.vo.Donacionsucursal</class>
+		<class>com.software2g.vo.DonacionsucursalPK</class>
+		<class>com.software2g.vo.Entidaddonante</class>
+		<class>com.software2g.vo.Objeto</class>
+		<class>com.software2g.vo.Pagare</class>
+		<class>com.software2g.vo.Presupuesto</class>
+		<class>com.software2g.vo.Presupuestodonacion</class>
+		<class>com.software2g.vo.PresupuestodonacionPK</class>
+		<class>com.software2g.vo.Presupuestosucursal</class>
+		<class>com.software2g.vo.Seguro</class>
+		<class>com.software2g.vo.Sucursal</class>
+		<class>com.software2g.vo.Tipocredito</class>
+		<class>com.software2g.vo.Tipocreditoseguroadquirido</class>
+		<class>com.software2g.vo.TipocreditoseguroadquiridoPK</class>
+		<class>com.software2g.vo.Tipodescuento</class>
+		<class>com.software2g.vo.Tipopagare</class>
+	</persistence-unit>
+</persistence>

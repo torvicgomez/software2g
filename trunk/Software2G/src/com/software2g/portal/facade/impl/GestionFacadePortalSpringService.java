@@ -1,0 +1,642 @@
+package com.software2g.portal.facade.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.software2g.portal.dao.IAplicacionDao;
+import com.software2g.portal.dao.IFuncionalidadDao;
+import com.software2g.portal.dao.IFuncionalidadRolDao;
+import com.software2g.portal.dao.IInstitucionDao;
+import com.software2g.portal.dao.IPersonaDao;
+import com.software2g.portal.dao.IPersonaInstitucionDao;
+import com.software2g.portal.dao.IRolDao;
+import com.software2g.portal.dao.IRolUsuarioDao;
+import com.software2g.portal.dao.ITipoDocumentoDao;
+import com.software2g.portal.dao.IUsuarioDao;
+import com.software2g.portal.facade.IGestionFacadePortal;
+import com.software2g.vo.Aplicacion;
+import com.software2g.vo.Funcionalidad;
+import com.software2g.vo.Funcionalidadrol;
+import com.software2g.vo.Institucion;
+import com.software2g.vo.Persona;
+import com.software2g.vo.Personainstitucion;
+import com.software2g.vo.Rol;
+import com.software2g.vo.Rolusuario;
+import com.software2g.vo.Tipodocumento;
+import com.software2g.vo.Usuario;
+
+@Transactional(propagation=Propagation.REQUIRED)
+public class GestionFacadePortalSpringService implements IGestionFacadePortal{
+	@Autowired
+	IAplicacionDao aplicacionDao;
+	@Autowired
+	IFuncionalidadDao funcionalidadDao;
+	@Autowired
+	IFuncionalidadRolDao funcionalidadRolDao;
+	@Autowired
+	IInstitucionDao institucionDao;
+	@Autowired
+	IPersonaDao personaDao;
+	@Autowired
+	IPersonaInstitucionDao personaInstitucionDao;
+	@Autowired
+	IRolDao rolDao;
+	@Autowired
+	IRolUsuarioDao rolUsuarioDao;
+	@Autowired
+	ITipoDocumentoDao tipoDocumentoDao;
+	@Autowired
+	IUsuarioDao usuarioDao;
+	
+	public IAplicacionDao getAplicacionDao() {return aplicacionDao;}
+	public void setAplicacionDao(IAplicacionDao aplicacionDao) {this.aplicacionDao = aplicacionDao;}
+	public IFuncionalidadDao getFuncionalidadDao() {return funcionalidadDao;}
+	public void setFuncionalidadDao(IFuncionalidadDao funcionalidadDao) {this.funcionalidadDao = funcionalidadDao;}
+	public IFuncionalidadRolDao getFuncionalidadRolDao() {return funcionalidadRolDao;}
+	public void setFuncionalidadRolDao(IFuncionalidadRolDao funcionalidadRolDao) {this.funcionalidadRolDao = funcionalidadRolDao;}
+	public IInstitucionDao getInstitucionDao() {return institucionDao;}
+	public void setInstitucionDao(IInstitucionDao institucionDao) {this.institucionDao = institucionDao;}
+	public IPersonaDao getPersonaDao() {return personaDao;}
+	public void setPersonaDao(IPersonaDao personaDao) {this.personaDao = personaDao;}
+	public IPersonaInstitucionDao getPersonaInstitucionDao() {return personaInstitucionDao;}
+	public void setPersonaInstitucionDao(IPersonaInstitucionDao personaInstitucionDao) {this.personaInstitucionDao = personaInstitucionDao;}
+	public IRolDao getRolDao() {return rolDao;}
+	public void setRolDao(IRolDao rolDao) {this.rolDao = rolDao;}
+	public IRolUsuarioDao getRolUsuarioDao() {return rolUsuarioDao;}
+	public void setRolUsuarioDao(IRolUsuarioDao rolUsuarioDao) {this.rolUsuarioDao = rolUsuarioDao;}
+	public ITipoDocumentoDao getTipoDocumentoDao() {return tipoDocumentoDao;}
+	public void setTipoDocumentoDao(ITipoDocumentoDao tipoDocumentoDao) {this.tipoDocumentoDao = tipoDocumentoDao;}
+	public IUsuarioDao getUsuarioDao() {return usuarioDao;}
+	public void setUsuarioDao(IUsuarioDao usuarioDao) {this.usuarioDao = usuarioDao;}
+	
+	//-------------------------------------------------------------------------------------
+	//Implementacion de Metodos de la Entidad Aplicacion
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Aplicacion findAplicacionById(java.lang.Integer id) throws Exception {
+		try {
+			return getAplicacionDao().findAplicacionById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findAplicacionById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Aplicacion</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Aplicacion> findAllAplicacions() throws Exception {
+		try {
+			return getAplicacionDao().findAllAplicacions();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllAplicacions failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistAplicacion(Aplicacion aplicacion) throws Exception {
+		try {
+			getAplicacionDao().persistAplicacion(aplicacion);
+		} catch (RuntimeException e) {
+			throw new Exception("persistAplicacion failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeAplicacion(Aplicacion aplicacion) throws Exception {
+		try {
+			getAplicacionDao().removeAplicacion(aplicacion);
+		} catch (RuntimeException e) {
+			throw new Exception("removeAplicacion failed: " + e.getMessage());
+		}
+	}
+	//FIN ------ Implementacion de Metodos de la Entidad Aplicacion
+	//-------------------------------------------------------------------------------------
+	
+	
+	//-------------------------------------------------------------------------------------
+	//Implementacion de Metodos de la Entidad FuncionalidadRol
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Funcionalidadrol findFuncionalidadrolById(com.software2g.vo.FuncionalidadrolPK id) throws Exception {
+		try {
+			return getFuncionalidadRolDao().findFuncionalidadrolById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findFuncionalidadrolById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Funcionalidadrol</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Funcionalidadrol> findAllFuncionalidadrols() throws Exception {
+		try {
+			return getFuncionalidadRolDao().findAllFuncionalidadrols();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllFuncionalidadrols failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistFuncionalidadrol(Funcionalidadrol funcionalidadrol) throws Exception {
+		try {
+			getFuncionalidadRolDao().persistFuncionalidadrol(funcionalidadrol);
+		} catch (RuntimeException e) {
+			throw new Exception("persistFuncionalidadrol failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeFuncionalidadrol(Funcionalidadrol funcionalidadrol) throws Exception {
+		try {
+			getFuncionalidadRolDao().removeFuncionalidadrol(funcionalidadrol);
+		} catch (RuntimeException e) {
+			throw new Exception("removeFuncionalidadrol failed: " + e.getMessage());
+		}
+	}
+	//FIN ------ Implementacion de Metodos de la Entidad FuncionalidadRol
+	//Metodos propios
+	/**
+	 * Metodo que obtiene las funcionalidades asociadas a un rol en especifico. 
+	 * @param idRol
+	 * @return
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Funcionalidadrol> findAllFuncionalidadrols(Integer idRol) throws Exception{
+		try {
+			return getFuncionalidadRolDao().findAllFuncionalidadrols(idRol);
+		} catch (RuntimeException e) {
+			throw new Exception("findAllFuncionalidadrols failed: " + e.getMessage());
+		}
+	}
+	//-------------------------------------------------------------------------------------
+
+	//-------------------------------------------------------------------------------------
+	//Implementacion de Metodos de la Entidad Funcionalidad
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Funcionalidad findFuncionalidadById(java.lang.Integer id) throws Exception {
+		try {
+			return getFuncionalidadDao().findFuncionalidadById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findFuncionalidadById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Funcionalidad</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Funcionalidad> findAllFuncionalidads() throws Exception {
+		try {
+			return getFuncionalidadDao().findAllFuncionalidads();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllFuncionalidads failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistFuncionalidad(Funcionalidad funcionalidad) throws Exception {
+		try {
+			getFuncionalidadDao().persistFuncionalidad(funcionalidad);
+		} catch (RuntimeException e) {
+			throw new Exception("persistFuncionalidad failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeFuncionalidad(Funcionalidad funcionalidad) throws Exception {
+		try {
+			getFuncionalidadDao().removeFuncionalidad(funcionalidad);
+		} catch (RuntimeException e) {
+			throw new Exception("removeFuncionalidad failed: " + e.getMessage());
+		}
+	}
+	//FIN ------ Implementacion de Metodos de la Entidad Funcionalidad
+	//-------------------------------------------------------------------------------------
+	
+	//-------------------------------------------------------------------------------------
+	//Implementacion de Metodos de la Entidad Institucion
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Institucion findInstitucionById(java.lang.Integer id) throws Exception {
+		try {
+			return getInstitucionDao().findInstitucionById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findInstitucionById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Institucion</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Institucion> findAllInstitucions() throws Exception {
+		try {
+			return getInstitucionDao().findAllInstitucions();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllInstitucions failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistInstitucion(Institucion institucion) throws Exception {
+		try {
+			getInstitucionDao().persistInstitucion(institucion);
+		} catch (RuntimeException e) {
+			throw new Exception("persistInstitucion failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeInstitucion(Institucion institucion) throws Exception {
+		try {
+			getInstitucionDao().removeInstitucion(institucion);
+		} catch (RuntimeException e) {
+			throw new Exception("removeInstitucion failed: " + e.getMessage());
+		}
+	}
+	//FIN ------ Implementacion de Metodos de la Entidad Institucion
+	//-------------------------------------------------------------------------------------
+
+	//-------------------------------------------------------------------------------------
+	//Implementacion de Metodos de la Entidad PersonaInstitucion
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Personainstitucion findPersonainstitucionById(com.software2g.vo.PersonainstitucionPK id) throws Exception {
+		try {
+			return getPersonaInstitucionDao().findPersonainstitucionById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findPersonainstitucionById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Personainstitucion</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Personainstitucion> findAllPersonainstitucions() throws Exception {
+		try {
+			return getPersonaInstitucionDao().findAllPersonainstitucions();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllPersonainstitucions failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistPersonainstitucion(Personainstitucion personainstitucion) throws Exception {
+		try {
+			getPersonaInstitucionDao().persistPersonainstitucion(personainstitucion);
+		} catch (RuntimeException e) {
+			throw new Exception("persistPersonainstitucion failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removePersonainstitucion(Personainstitucion personainstitucion) throws Exception {
+		try {
+			getPersonaInstitucionDao().removePersonainstitucion(personainstitucion);
+		} catch (RuntimeException e) {
+			throw new Exception("removePersonainstitucion failed: " + e.getMessage());
+		}
+	}
+	//FIN ------ Implementacion de Metodos de la Entidad PersonaInstitucion
+	//-------------------------------------------------------------------------------------
+
+	//-------------------------------------------------------------------------------------
+	//Implementacion de Metodos de la Entidad Persona
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Persona findPersonaById(java.lang.Integer id) throws Exception {
+		try {
+			return getPersonaDao().findPersonaById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findPersonaById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Persona</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Persona> findAllPersonas() throws Exception {
+		try {
+			return getPersonaDao().findAllPersonas();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllPersonas failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistPersona(Persona persona) throws Exception {
+		try {
+			getPersonaDao().persistPersona(persona);
+		} catch (RuntimeException e) {
+			throw new Exception("persistPersona failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removePersona(Persona persona) throws Exception {
+		try {
+			getPersonaDao().removePersona(persona);
+		} catch (RuntimeException e) {
+			throw new Exception("removePersona failed: " + e.getMessage());
+		}
+	}
+	//FIN ------ Implementacion de Metodos de la Entidad Persona
+	//-------------------------------------------------------------------------------------
+
+	//-------------------------------------------------------------------------------------
+	//Implementacion de Metodos de la Entidad Rol
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Rol findRolById(java.lang.Integer id) throws Exception {
+		try {
+			return getRolDao().findRolById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findRolById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Rol</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Rol> findAllRols() throws Exception {
+		try {
+			return getRolDao().findAllRols();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllRols failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistRol(Rol rol) throws Exception {
+		try {
+			getRolDao().persistRol(rol);
+		} catch (RuntimeException e) {
+			throw new Exception("persistRol failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeRol(Rol rol) throws Exception {
+		try {
+			getRolDao().removeRol(rol);
+		} catch (RuntimeException e) {
+			throw new Exception("removeRol failed: " + e.getMessage());
+		}
+	}
+	//FIN ------ Implementacion de Metodos de la Entidad Rol
+	//-------------------------------------------------------------------------------------
+
+	//-------------------------------------------------------------------------------------
+	//Implementacion de Metodos de la Entidad RolUsuario
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Rolusuario findRolusuarioById(com.software2g.vo.RolusuarioPK id) throws Exception {
+		try {
+			return getRolUsuarioDao().findRolusuarioById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findRolusuarioById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Rolusuario</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Rolusuario> findAllRolusuarios() throws Exception {
+		try {
+			return getRolUsuarioDao().findAllRolusuarios();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllRolusuarios failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistRolusuario(Rolusuario rolusuario) throws Exception {
+		try {
+			getRolUsuarioDao().persistRolusuario(rolusuario);
+		} catch (RuntimeException e) {
+			throw new Exception("persistRolusuario failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeRolusuario(Rolusuario rolusuario) throws Exception {
+		try {
+			getRolUsuarioDao().removeRolusuario(rolusuario);
+		} catch (RuntimeException e) {
+			throw new Exception("removeRolusuario failed: " + e.getMessage());
+		}
+	}
+	//FIN ------ Implementacion de Metodos de la Entidad RolUsuario
+
+	// Metodos propios
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Rolusuario> findAllRolusuarios(String login) throws Exception{
+		try {
+			return getRolUsuarioDao().findAllRolusuarios(login);
+		} catch (RuntimeException e) {
+			throw new Exception("findAllRolusuarios login " + login + " failed: " + e.getMessage());
+		}
+	}
+	
+	//-------------------------------------------------------------------------------------
+
+	//-------------------------------------------------------------------------------------
+	//Implementacion de Metodos de la Entidad TipoDocumento
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Tipodocumento findTipodocumentoById(java.lang.Integer id) throws Exception {
+		try {
+			return getTipoDocumentoDao().findTipodocumentoById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findTipodocumentoById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Tipodocumento</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Tipodocumento> findAllTipodocumentos() throws Exception {
+		try {
+			System.out.println("Entra esta parte de implementacion del mentodo: [List<Tipodocumento> findAllTipodocumentos()]!!!!!!!!!!!");
+			List<Tipodocumento> lista = getTipoDocumentoDao().findAllTipodocumentos();
+			return lista;
+		} catch (Exception ee){
+			System.out.println("metod de la GestionFacadePortalSpringService !!!!!!!!!!!!!");
+			ee.printStackTrace();
+		}/* catch (RuntimeException e) {
+			throw new Exception("findAllTipodocumentos failed: " + e.getMessage());
+		}*/
+		return null;
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistTipodocumento(Tipodocumento tipodocumento) throws Exception {
+		try {
+			getTipoDocumentoDao().persistTipodocumento(tipodocumento);
+		} catch (RuntimeException e) {
+			throw new Exception("persistTipodocumento failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeTipodocumento(Tipodocumento tipodocumento) throws Exception {
+		try {
+			getTipoDocumentoDao().removeTipodocumento(tipodocumento);
+		} catch (RuntimeException e) {
+			throw new Exception("removeTipodocumento failed: " + e.getMessage());
+		}
+	}
+	//FIN ------ Implementacion de Metodos de la Entidad TipoDocumento
+	//-------------------------------------------------------------------------------------
+
+	//-------------------------------------------------------------------------------------
+	//Implementacion de Metodos de la Entidad Usuario
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Usuario findUsuarioById(java.lang.String id) throws Exception {
+		try {
+			return getUsuarioDao().findUsuarioById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findUsuarioById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Usuario</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Usuario> findAllUsuarios() throws Exception {
+		try {
+			return getUsuarioDao().findAllUsuarios();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllUsuarios failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistUsuario(Usuario usuario) throws Exception {
+		try {
+			getUsuarioDao().persistUsuario(usuario);
+		} catch (RuntimeException e) {
+			throw new Exception("persistUsuario failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeUsuario(Usuario usuario) throws Exception {
+		try {
+			getUsuarioDao().removeUsuario(usuario);
+		} catch (RuntimeException e) {
+			throw new Exception("removeUsuario failed: " + e.getMessage());
+		}
+	}
+	//FIN ------ Implementacion de Metodos de la Entidad Usuario
+	
+	//Metodos propios
+	/**
+	 * Metodo de busqueda de usuario segun estado y login
+	 * @param login
+	 * @param estado
+	 * @return
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Usuario findUsuarioById(String login, String password, String estado) throws Exception {
+		try {
+			return getUsuarioDao().findUsuarioById(login,password,estado);
+		} catch (RuntimeException e) {
+			//e.printStackTrace();
+			//throw new Exception("findUsuarioById failed with the login " + login + " and estado " + estado + " : " + e.getMessage());
+			return null;
+		}
+	}
+	//-------------------------------------------------------------------------------------
+
+	//-----------------------------------------------------------------------------------
+	// Metodos de la logica del negocio													-
+	//-----------------------------------------------------------------------------------
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Usuario cargarPortalUser(Usuario usuarioVO, String estado) throws Exception{
+		String password = usuarioVO.getPasswordUsua();
+		System.out.println("password: ["+password+"]");
+		Usuario userLogin = findUsuarioById(usuarioVO.getLoginUsua(),usuarioVO.getPasswordUsua(),estado);
+		if(userLogin!=null){
+			System.out.println("Entra esta parte *****************+");
+			if(userLogin.getPasswordUsua().equals(password)){
+				//Cargar roles y las funcionalidades asociadas al cada rol
+				System.out.println("En Construccion!!!!!!");
+				userLogin.setRolusuarios(findAllRolusuarios(userLogin.getLoginUsua()));
+				if(userLogin.getRolusuarios()!=null&&userLogin.getRolusuarios().size()>0){
+					for(Rolusuario elem:userLogin.getRolusuarios())
+						elem.getRol().setFuncionalidadrols(findAllFuncionalidadrols(elem.getRol().getIdRol()));
+				}
+			}else
+				System.out.println("Contraseña usuario no coincide!!!");
+		}else
+			System.out.println("Error usuario no existe en BD!!!");
+		return userLogin;
+	}
+	
+	
+}
+

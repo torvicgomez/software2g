@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd          http://www.springframework.org/schema/tx           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd          http://www.springframework.org/schema/context          http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <!--bean post-processor for JPA annotations-->
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor">
+    </bean>
+    
+    <!--Transaction manager for a single JPA EntityManager (alternative to JTA)-->
+    <!-- Configuracion B.D. Gestion -->
+    <bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactoryPostgres">
+    	<property name="dataSource" ref="dataSourcePostgres"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="database" value="POSTGRESQL"/>
+                <property name="showSql" value="true"/>
+                <property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect"/>                
+            </bean>
+        </property>
+    </bean>
+    
+    <!-- Configuracion Recursos B.D. -->
+    <bean class="org.springframework.jndi.JndiObjectFactoryBean" id="dataSourcePostgres">
+		<property name="resourceRef">
+	       <value>false</value>
+	    </property> 
+    	<property name="jndiName">
+			<value>java:comp/env/jdbc/SISTEMAS2G</value>		
+		</property>
+    </bean>
+    
+    <bean class="org.springframework.orm.jpa.JpaTransactionManager" id="transactionManagerPostgres">
+        <property name="entityManagerFactory" ref="entityManagerFactoryPostgres"/> 
+    </bean>
+    
+    <!--  enable the configuration of transactional behavior based on annotations  -->
+    <tx:annotation-driven transaction-manager="transactionManagerPostgres"/>
+    
+	<!--	DECLARACION DE LOS ACTION-->
+    <bean class="com.software2g.portal.action.PortalAction" id="PortalAction" scope="prototype">
+    	<constructor-arg ref="gestionFacadePortal"/> 
+    </bean> 
+    <bean class="com.software2g.contable.action.ContableAction" id="ContableAction" scope="prototype">
+    	<constructor-arg ref="gestionFacadeContable"/> 
+    </bean> 
+    
+	 <!--  CONFIGURACION TILES -->
+ 	<bean class="com.software2g.web.tiles2.SpringTilesConfigurer" id="tilesConfigurer"> 
+ 		<property name="definitions"> 
+ 			<list> 
+ 				<value>/WEB-INF/tiles.xml</value>
+ 				<value>/WEB-INF/tiles-contable.xml</value>   
+ 			</list> 
+ 		</property> 
+ 	</bean>
+	     
+   <context:component-scan base-package="com.software2g"/> 
+   
+   <!--Exception translation bean post processor-->
+   <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor">
+   </bean>	
+	
+   <!-- DECLARACION DE LOS FACADE -->
+   <bean class="com.software2g.portal.facade.impl.GestionFacadePortalSpringService" id="gestionFacadePortal">
+	   	<property name="aplicacionDao"><bean class="com.software2g.portal.dao.impl.AplicacionDaoImpl"/></property>
+	   	<property name="funcionalidadDao"><bean class="com.software2g.portal.dao.impl.FuncionalidadDaoImpl"/></property>
+		<property name="funcionalidadRolDao"><bean class="com.software2g.portal.dao.impl.FuncionalidadRolDaoImpl"/></property>
+	    <property name="rolDao"><bean class="com.software2g.portal.dao.impl.RolDaoImpl"/></property>
+	  	<property name="rolUsuarioDao"><bean class="com.software2g.portal.dao.impl.RolUsuarioDaoImpl"/></property>
+	    <property name="usuarioDao"><bean class="com.software2g.portal.dao.impl.UsuarioDaoImpl"/></property>
+	    <property name="personaDao"><bean class="com.software2g.portal.dao.impl.PersonaDaoImpl"/></property>
+		<property name="tipoDocumentoDao"><bean class="com.software2g.portal.dao.impl.TipoDocumentoDaoImpl"/></property>
+		<property name="personaInstitucionDao"><bean class="com.software2g.portal.dao.impl.PersonaInstitucionDaoImpl"/></property>
+		<property name="institucionDao"><bean class="com.software2g.portal.dao.impl.InstitucionDaoImpl"/></property>
+   </bean>	
+   
+   <bean class="com.software2g.contable.facade.impl.GestionFacadeContableSpringService" id="gestionFacadeContable">
+        <property name="abonoDao"><bean class="com.software2g.contable.dao.impl.AbonoDaoImpl"/></property>
+        <property name="creditoDao"><bean class="com.software2g.contable.dao.impl.CreditoDaoImpl"/></property>
+        <property name="creditoTipoDesDao"><bean class="com.software2g.contable.dao.impl.CreditoTipoDescuentoDaoImpl"/></property>
+        <property name="donacionDao"><bean class="com.software2g.contable.dao.impl.DonacionDaoImpl"/></property>
+        <property name="donacionObjDao"><bean class="com.software2g.contable.dao.impl.DonacionObjetoDaoImpl"/></property>
+        <property name="donacionSucursalDao"><bean class="com.software2g.contable.dao.impl.DonacionSucursalDaoImpl"/></property>
+        <property name="entidadDonanteDao"><bean class="com.software2g.contable.dao.impl.EntidadDonanteDaoImpl"/></property>
+        <property name="objetoDao"><bean class="com.software2g.contable.dao.impl.ObjetoDaoImpl"/></property>
+        <property name="pagareDao"><bean class="com.software2g.contable.dao.impl.PagareDaoImpl"/></property>
+        <property name="presupuestoDao"><bean class="com.software2g.contable.dao.impl.PresupuestoDaoImpl"/></property>
+        <property name="presupuestoDonacionDao"><bean class="com.software2g.contable.dao.impl.PresupuestoDonacionDaoImpl"/></property>
+        <property name="presupuestoSucursalDao"><bean class="com.software2g.contable.dao.impl.PresupuestoSucursalDaoImpl"/></property>
+        <property name="seguroDao"><bean class="com.software2g.contable.dao.impl.SeguroDaoImpl"/></property>
+        <property name="sucursalDao"><bean class="com.software2g.contable.dao.impl.SucursalDaoImpl"/></property>
+        <property name="tipoCreditoDao"><bean class="com.software2g.contable.dao.impl.TipoCreditoDaoImpl"/></property>
+        <property name="tipoCreSegAdquiridoDao"><bean class="com.software2g.contable.dao.impl.TipoCreditoSeguroAdquiridoDaoImpl"/></property>
+        <property name="tipoDescuentoDao"><bean class="com.software2g.contable.dao.impl.TipoDescuentoDaoImpl"/></property>
+        <property name="tipoPagareDao"><bean class="com.software2g.contable.dao.impl.TipoPagareDaoImpl"/></property>
+        <property name="personaDao"><bean class="com.software2g.portal.dao.impl.PersonaDaoImpl"/></property>
+    </bean>
+    
+</beans>

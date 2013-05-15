@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ 
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="baseLayoutPortal" template="/tilesPagsPortal/baseLayout.jsp"> 
+		<put-attribute name="title" value="SIAC" />
+		<put-attribute name="functionPrinc" value="/tilesPagsPortal/functionPrinc.jsp" />
+		<put-attribute name="body" value="/tilesPagsPortal/body.jsp" />
+		<put-attribute name="footer" value="/tilesPagsPortal/footer.jsp" />
+	</definition>
+	
+	<!-- PORTAL ACTION PERSONAL -->
+	<definition name="portal.inicioPersonal" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/personal/inicioPersonal.jsp" />
+	</definition>
+	<definition name="portal.crearpersona" extends="baseLayoutPortal" >
+		<put-attribute name="body" value="/personal/personal.jsp" />
+	</definition>
+	<definition name="portal.listpersonal" extends="baseLayoutPortal" >
+		<put-attribute name="body" value="/personal/listPersonal.jsp" />
+	</definition>
+	<definition name="portal.editarPassword" extends="baseLayoutPortal" >
+		<put-attribute name="body" value="/personal/cambiarPassword.jsp" />
+	</definition>
+	
+	<!-- PORTAL ACTION INSTITUCIONES -->
+	<definition name="portal.inicioInstitucion" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/institucion/inicioInstituciones.jsp" />
+	</definition>
+	<definition name="portal.listinstitucion" extends="baseLayoutPortal" >
+		<put-attribute name="body" value="/institucion/listInstitucion.jsp" />
+	</definition>
+	
+</tiles-definitions>

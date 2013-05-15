@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ 
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="baseLayoutPortal" template="/tilesPagsPortal/baseLayout.jsp"> 
+		<put-attribute name="title" value="SIAC" />
+		<put-attribute name="functionPrinc" value="/tilesPagsPortal/functionPrinc.jsp" />
+		<put-attribute name="body" value="/tilesPagsPortal/body.jsp" />
+		<put-attribute name="footer" value="/tilesPagsPortal/footer.jsp" />
+	</definition>
+	
+	<!-- CONTABLE ACTION -->
+	<definition name="contable.inicioCartera" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/cartera/parametricas/inicioCartera.jsp" />
+	</definition>
+	<definition name="contable.inicioParametrica" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/cartera/parametricas/inicioParametrica.jsp" />
+	</definition>
+	<definition name="contable.listSucursal" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/cartera/parametricas/listSucursales.jsp" />
+	</definition>
+	<definition name="contable.crearSucursal" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/cartera/parametricas/crearSucursales.jsp" />
+	</definition>
+	
+	<!-- CONTABLE DONACIONES -->
+	<definition name="contable.inicioDonaciones" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/cartera/donaciones/inicioDonaciones.jsp" />
+	</definition>
+	<definition name="contable.listEntidades" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/cartera/donaciones/listEntidades.jsp" />
+	</definition>
+	<definition name="contable.listObjetos" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/cartera/donaciones/listProductos.jsp" />
+	</definition>
+	<definition name="contable.listDonaciones" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/cartera/donaciones/listDonaciones.jsp" />
+	</definition>
+	<definition name="contable.listPresupuestos" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/cartera/donaciones/listPresupuestos.jsp" />
+	</definition>
+	 
+	 <!-- CONTABLE CREDITO -->
+	 <definition name="contable.inicioCredito" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/cartera/credito/inicioCreditos.jsp" />
+	</definition>
+	<definition name="contable.listPagares" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/cartera/credito/listPagares.jsp" />
+	</definition>
+	<definition name="contable.listTipoCredito" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/cartera/credito/listTipoCredito.jsp" />
+	</definition>
+	<definition name="contable.listCreditoSocio" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/cartera/credito/listCreditoSocios.jsp" />
+	</definition>
+	 
+</tiles-definitions>

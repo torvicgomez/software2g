@@ -1,0 +1,80 @@
+#header {
+  float:left;
+  width:100%;
+  background:#ffffff;
+  font: 80%/1.45em "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  line-height: normal;
+  }
+  
+#header ul {
+  margin:0;
+  padding:10px 10px 0;
+  list-style:none;
+  }
+#header li {
+  float:left;
+  background:#CECF9C url("../images/esqOther.png") no-repeat left top;
+  margin:0;
+  padding:0 5px 0 0;
+  margin-left:1px;
+  border-bottom:2px solid #cccccc;
+  }
+#header a {
+  float:left;
+  display:block;
+  padding:5px 7px 4px 20px;
+  text-decoration:none;
+  font-weight:normal;
+  color:#000000;
+  }
+/* Commented Backslash Hack
+   hides rule from IE5-Mac \*/
+#header a {float:none;}
+/* End IE5-Mac hack */
+#header a:hover {
+  color:#31659C;/*Color del subrayado*/
+   font-weight:bold;
+  }
+#header #current {
+   background:#31659C url("../images/esqIzquierda.png") no-repeat left top;/*Color del seleccionado*/
+   border:0px solid #ADAEAD;
+   border-bottom:1px solid #999999;
+   
+  }
+#header #current a {
+  color:#ffffff;/*Color de letra de la pestaña seleccionada*/
+  padding-bottom:5px;
+   font-weight:bold;
+   
+  }
+.fondoAzul{
+   background:url('../images/fondoAzul.png');
+   background-repeat: no-repeat;
+  }
+
+.mensaje {
+	border: 2px solid #31659C;
+	background-color: #F7F7E7;
+	color: #31659C;
+	width: 30%;
+	text-align: left;
+}
+.Pie {
+  position:absolute; bottom:0;
+}
+.colorAzul{
+	color: blue;
+}
+.colorRojo{
+	color: red;
+}
+.colorVerde{
+	color: green;
+}
+.colorVioleta{
+	color: fuchsia;
+}
+.colorBlanco{
+	color: white;
+}

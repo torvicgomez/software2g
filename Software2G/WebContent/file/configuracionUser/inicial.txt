@@ -1,0 +1,23 @@
+1000|root|Personal|inicioPersonal.action?url=Personal|body
+1001|1000|Administración Personal|listPersonal.action?url=Personal::>Administración Personal|body
+1002|1000|Cambiar Contraseña|cambiarPassword.action?url=Personal::>Cambiar Contraseña|body
+3000|root|Cartera|inicioCartera.action?url=Cartera|body
+3001|3000|Parametricas|inicioParametrica.action?url=Cartera::>Parametricas|body
+3002|3001|Sucursales|listSucursales.action?url=Cartera::>Parametricas::>Sucursales|body
+
+3003|3000|Donaciones|inicioDonaciones.action?url=Cartera::>Donaciones|body
+3004|3003|Entidad Donante|listEntidadDonante.action?url=Cartera::>Donaciones::>Entidad Donante|body
+3005|3003|Donar|listDonaciones.action?url=Cartera::>Donaciones::>Donar|body
+3006|3003|Productos|listObjetos.action?url=Cartera::>Donaciones::>Productos|body
+3007|3003|Presupuesto|listPresupuesto.action?url=Cartera::>Donaciones::>Presupuesto|body
+
+3008|3000|Creditos|inicioCreditos.action?url=Cartera::>Creditos|body
+3009|3008|Pagare|listPagare.action?url=Cartera::>Creditos::>Pagare|body
+3010|3008|Tipos de Creditos|listTipoCredito.action?url=Cartera::>Creditos::>Tipos de Creditos|body
+3011|3008|Creditos Socios|listCreditosSocios.action?url=Cartera::>Creditos::>Creditos Socios|body
+
+
+2000|root|Instituciones|inicioInstituciones.action?url=Instituciones|body
+2001|2000|Administración Institución|listInstituciones.action?url=Instituciones::>Administración Institución|body
+
+4000|root|Reportes|inicioInstituciones.action?url=Instituciones|body

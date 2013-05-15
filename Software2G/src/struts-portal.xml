@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+
+<struts>
+    <package name="default" extends="struts-default">    	
+        <result-types>
+			<result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
+		</result-types>
+		
+		<interceptors>
+			<interceptor name="security" class="com.siac.util.seguridad.interceptor.SecurityInterceptor" />
+			<interceptor-stack name="all-default">
+			     <interceptor-ref name="security" />
+			     <interceptor-ref name="defaultStack"/> 
+			</interceptor-stack>
+			<interceptor-stack name="fileUploadStack">
+				<interceptor-ref name="exception" />
+					<interceptor-ref name="alias" />
+					<interceptor-ref name="servletConfig" />
+					<interceptor-ref name="prepare" />
+					<interceptor-ref name="i18n" />
+					<interceptor-ref name="chain" />
+					<interceptor-ref name="debugging" />
+					<interceptor-ref name="profiling" />
+					<interceptor-ref name="scopedModelDriven" /> 
+					<interceptor-ref name="modelDriven" />
+					<interceptor-ref name="fileUpload"/>
+					<interceptor-ref name="checkbox" />
+					<interceptor-ref name="staticParams" />
+					<interceptor-ref name="params">
+						<param name="excludeParams"> dojo\..*,^struts\..*</param>
+					</interceptor-ref>
+					<interceptor-ref name="conversionError" />
+					<interceptor-ref name="validation">
+						<param name="excludeMethods"> input,back,cancel,browse</param>
+					</interceptor-ref>
+					<interceptor-ref name="workflow">
+						<param name="excludeMethods"> input,back,cancel,browse</param>
+					</interceptor-ref>
+			</interceptor-stack>
+			
+		</interceptors>
+
+        <global-results>
+		  	<result name="error">/error.jsp</result>
+		  	<result name="login">/index.jsp</result>
+		</global-results>
+        
+        <!-- PORTAL ACTION -->
+        <action name="inicio" method="execute" class="PortalAction">
+        	<result name="success">/portal/login.jsp</result>
+        </action>
+        <action name="salir" method="salirAplicacion" class="PortalAction">
+        	<result name="success">/portal/login.jsp</result>
+        </action>
+        <!-- PORTAL ACTION PERSONAL -->
+        <action name="inicioPersonal" method="execute" class="PortalAction">
+        	<result name="success"  type="tiles">portal.inicioPersonal</result>
+        </action>
+        <action name="listPersonal" method="listarPersonal" class="PortalAction">
+			<result name="success" type="tiles">portal.listpersonal</result>
+        </action>
+        <action name="crearPersona" method="formCrearPersonal" class="PortalAction">
+			<result name="success" type="tiles">portal.crearpersona</result>
+        </action>
+        <action name="savePersona" method="savePersona" class="PortalAction">
+			<result name="success" type="tiles">portal.listpersonal</result>
+			<result name="input" type="tiles">portal.crearpersona</result>
+        </action>
+        <action name="editarPersonal" method="editarPersonal" class="PortalAction">
+			<result name="success" type="tiles">portal.crearpersona</result>
+        </action>
+        <action name="ingresarPortal" method="cargarPortalUser" class="PortalAction">
+			<interceptor-ref name="all-default"></interceptor-ref>
+			<result name="success">/tilesPagsPortal/inicioPortal.jsp</result>
+			<result name="error">/portal/login.jsp</result>
+        </action>
+        <action name="cambiarPassword" method="editarPassword" class="PortalAction">
+			<result name="success" type="tiles">portal.editarPassword</result>
+        </action>
+        <action name="saveCambioPass" method="saveCambioPass" class="PortalAction">
+			<result name="success" type="tiles">portal.editarPassword</result>
+        </action>
+        
+        <!-- PORTAL ACTION INSTITUCIONES -->
+        <action name="inicioInstituciones" method="execute" class="PortalAction">
+        	<result name="success" type="tiles">portal.inicioInstitucion</result>
+        </action>
+        <action name="listInstituciones" method="listarInstitucion" class="PortalAction">
+			<result name="success" type="tiles">portal.listinstitucion</result>
+        </action>
+        
+    </package>
+</struts>

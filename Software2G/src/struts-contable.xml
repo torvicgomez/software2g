@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+
+<struts>
+    <package name="contable" extends="struts-default">    	
+        <result-types>
+			<result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
+		</result-types>
+		
+		<interceptors>
+			<interceptor name="security" class="com.siac.util.seguridad.interceptor.SecurityInterceptor" />
+			<interceptor-stack name="all-default">
+			     <interceptor-ref name="security" />
+			     <interceptor-ref name="defaultStack"/> 
+			</interceptor-stack>
+			<interceptor-stack name="fileUploadStack">
+				<interceptor-ref name="exception" />
+					<interceptor-ref name="alias" />
+					<interceptor-ref name="servletConfig" />
+					<interceptor-ref name="prepare" />
+					<interceptor-ref name="i18n" />
+					<interceptor-ref name="chain" />
+					<interceptor-ref name="debugging" />
+					<interceptor-ref name="profiling" />
+					<interceptor-ref name="scopedModelDriven" /> 
+					<interceptor-ref name="modelDriven" />
+					<interceptor-ref name="fileUpload"/>
+					<interceptor-ref name="checkbox" />
+					<interceptor-ref name="staticParams" />
+					<interceptor-ref name="params">
+						<param name="excludeParams"> dojo\..*,^struts\..*</param>
+					</interceptor-ref>
+					<interceptor-ref name="conversionError" />
+					<interceptor-ref name="validation">
+						<param name="excludeMethods"> input,back,cancel,browse</param>
+					</interceptor-ref>
+					<interceptor-ref name="workflow">
+						<param name="excludeMethods"> input,back,cancel,browse</param>
+					</interceptor-ref>
+			</interceptor-stack>
+			
+		</interceptors>
+
+        <global-results>
+		  	<result name="error">/error.jsp</result>
+		  	<result name="login">/index.jsp</result>
+		</global-results>
+        
+        <!-- CONTABLE ACTION -->
+        <action name="inicioCartera" method="execute" class="ContableAction">
+        	<result name="success" type="tiles">contable.inicioCartera</result>
+        </action>
+        <action name="inicioParametrica" method="execute" class="ContableAction">
+        	<result name="success" type="tiles">contable.inicioParametrica</result>
+        </action>
+        <action name="listSucursales" method="listarSucursales" class="ContableAction">
+        	<result name="success" type="tiles">contable.listSucursal</result>
+        </action>
+        <action name="crearSucursal" method="crearSucursal" class="ContableAction">
+        	<result name="success" type="tiles">contable.crearSucursal</result>
+        </action>
+        <action name="editarSucursal" method="crearSucursal" class="ContableAction">
+        	<result name="success" type="tiles">contable.crearSucursal</result>
+        </action>
+        <action name="saveSucursal" method="saveSucursal" class="ContableAction">
+        	<result name="success" type="tiles">contable.listSucursal</result>
+        	<result name="error" type="tiles">contable.crearSucursal</result>
+        </action>
+        
+        <!-- CONTABLE DONACIONES -->
+        <action name="inicioDonaciones" method="execute" class="ContableAction">
+        	<result name="success" type="tiles">contable.inicioDonaciones</result>
+        </action>
+        <action name="listEntidadDonante" method="listarEntidades" class="ContableAction">
+        	<result name="success" type="tiles">contable.listEntidades</result>
+        </action>
+        <action name="crearEntidad" method="crearEntidad" class="ContableAction">
+        	<result name="success" type="tiles">contable.listEntidades</result>
+        </action>
+        <action name="saveEntidad" method="saveEntidad" class="ContableAction">
+        	<result name="success" type="tiles">contable.listEntidades</result>
+        </action>
+        <action name="editarEntidad" method="crearEntidad" class="ContableAction">
+        	<result name="success" type="tiles">contable.listEntidades</result>
+        </action>
+        
+        <!-- CONTABLE OBJETOS -->
+        <action name="listObjetos" method="listarObjetos" class="ContableAction">
+        	<result name="success" type="tiles">contable.listObjetos</result>
+        </action>
+        <action name="crearObjeto" method="crearObjeto" class="ContableAction">
+        	<result name="success" type="tiles">contable.listObjetos</result>
+        </action>
+        <action name="saveObjeto" method="saveObjeto" class="ContableAction">
+        	<result name="success" type="tiles">contable.listObjetos</result>
+        </action>
+        <action name="editarObjeto" method="crearObjeto" class="ContableAction">
+        	<result name="success" type="tiles">contable.listObjetos</result>
+        </action>
+        
+        <!-- CONTABLE DONACIONES ENTIDADES -->
+        <action name="listDonaciones" method="listDonaciones" class="ContableAction">
+        	<result name="success" type="tiles">contable.listDonaciones</result>
+        </action>
+        <action name="crearDonacion" method="crearDonaciones" class="ContableAction">
+        	<result name="success" type="tiles">contable.listDonaciones</result>
+        </action>
+        <action name="saveDonacion" method="saveDonaciones" class="ContableAction">
+        	<result name="success" type="tiles">contable.listDonaciones</result>
+        </action> 
+        <action name="editarDonacion" method="crearDonaciones" class="ContableAction">
+        	<result name="success" type="tiles">contable.listDonaciones</result>
+        </action>
+        <action name="addProductosDonacion" method="addProdDonacion" class="ContableAction">
+        	<result name="success" type="tiles">contable.listDonaciones</result>
+        </action>
+        <action name="delProductosDonacion" method="delProdDonacion" class="ContableAction">
+        	<result name="success" type="tiles">contable.listDonaciones</result>
+        </action>
+        
+        <!-- CONTABLE PRESUPUESTO -->
+        <action name="listPresupuesto" method="listPresupuestos" class="ContableAction">
+        	<result name="success" type="tiles">contable.listPresupuestos</result>
+        </action>
+        <action name="crearPresupuesto" method="crearPresupuesto" class="ContableAction">
+        	<result name="success" type="tiles">contable.listPresupuestos</result>
+        </action>
+        <action name="savePresupuesto" method="savePresupuesto" class="ContableAction">
+        	<result name="success" type="tiles">contable.listPresupuestos</result>
+        </action> 
+        <action name="editarPresupuesto" method="crearPresupuesto" class="ContableAction">
+        	<result name="success" type="tiles">contable.listPresupuestos</result>
+        </action>
+        <action name="cmbDonacionesEnt" method="loadDonacionesEntidades" class="ContableAction">
+        	<result name="success">/cartera/donaciones/loadDonaciones.jsp</result>
+        </action>
+        <action name="valorDonacionesEnt" method="loadValorDonacionesEntidades" class="ContableAction">
+        	<result name="success">/cartera/donaciones/loadDonaciones.jsp</result>
+        </action>
+        <action name="addPresupuestoDonacion" method="addPresDonacion" class="ContableAction">
+        	<result name="success" type="tiles">contable.listPresupuestos</result>
+        </action>
+        <action name="delPresupuestoDonacion" method="delPresDonacion" class="ContableAction">
+        	<result name="success" type="tiles">contable.listPresupuestos</result>
+        </action>
+        
+        <!-- CONTABLE CREDITO -->
+        <action name="inicioCreditos" method="execute" class="ContableAction">
+        	<result name="success" type="tiles">contable.inicioCredito</result>
+        </action>
+        <action name="listPagare" method="listPagares" class="ContableAction">
+        	<result name="success" type="tiles">contable.listPagares</result>
+        </action>
+        <action name="crearPagare" method="crearPagare" class="ContableAction">
+        	<result name="success" type="tiles">contable.listPagares</result>
+        </action>
+        <action name="cmbDeudor" method="loadDeudoresPagare" class="ContableAction">
+        	<result name="success">/cartera/credito/loadDeudorPagare.jsp</result>
+        </action>
+        <action name="cargarDeudor" method="loadDeudor" class="ContableAction">
+        	<result name="success">/cartera/credito/loadDeudorPagare.jsp</result>
+        </action>
+        <action name="savePagare" method="savePagare" class="ContableAction">
+        	<result name="success" type="tiles">contable.listPagares</result>
+        </action>
+        <action name="editarPagare" method="crearPagare" class="ContableAction">
+        	<result name="success" type="tiles">contable.listPagares</result>
+        </action>
+        <action name="listTipoCredito" method="listTipoCredito" class="ContableAction">
+        	<result name="success" type="tiles">contable.listTipoCredito</result>
+        </action>
+        <action name="listCreditosSocios" method="listCreditoSocios" class="ContableAction">
+        	<result name="success" type="tiles">contable.listCreditoSocio</result>
+        </action>
+        <action name="crearCreditoSocio" method="crearCreditoSocio" class="ContableAction">
+        	<result name="success" type="tiles">contable.listCreditoSocio</result>
+        </action>
+        <action name="cmbPagare" method="loadTitularCredito" class="ContableAction">
+        	<result name="success">/cartera/credito/loadTitularCredito.jsp</result>
+        </action>
+        <action name="cargarTitularCredito" method="loadTitular" class="ContableAction">
+        	<result name="success">/cartera/credito/loadTitularCredito.jsp</result>
+        </action>
+        <action name="cmbTipoCredito" method="loadDateTipoCredito" class="ContableAction">
+        	<result name="success">/cartera/credito/loadTipoCredito.jsp</result>
+        </action>
+        <action name="cmbPresupuesto" method="loadPresupuesto" class="ContableAction">
+        	<result name="success">/cartera/credito/loadPresupuesto.jsp</result>
+        </action>
+        <action name="saveCreditoSocio" method="saveCreditoSocio" class="ContableAction">
+        	<result name="success" type="tiles">contable.listCreditoSocio</result>
+        	<result name="input" type="tiles">contable.listCreditoSocio</result>
+        </action>
+        <action name="pagosCredito" method="crearCreditoSocio" class="ContableAction">
+        	<result name="success" type="tiles">contable.listCreditoSocio</result>
+        </action>
+        <action name="calcularPago" method="calcularPago" class="ContableAction">
+        	<result name="success" type="tiles">contable.listCreditoSocio</result>
+        </action>
+        
+    </package>
+</struts>

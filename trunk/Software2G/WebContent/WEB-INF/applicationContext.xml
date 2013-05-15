@@ -8,7 +8,7 @@
     <!-- Configuracion B.D. Gestion -->
     <bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactoryPostgres">
     	<property name="dataSource" ref="dataSourcePostgres"/>
-        <property name="jpaVendorAdapter">
+        <property name="jpaVendorAdapter"> 
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                 <property name="database" value="POSTGRESQL"/>
                 <property name="showSql" value="true"/>

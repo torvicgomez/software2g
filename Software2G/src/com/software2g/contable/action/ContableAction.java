@@ -1012,7 +1012,7 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     				addActionMessage(getText("validacion.requerido","presupuesto","Presupuesto"));
     			if(creditoVO.getCredFechainiciacredito()==null)
     				addActionMessage(getText("validacion.requerido","fechainicredito","Fecha Inicio Credito"));
-    			if(creditoVO.getCredMontocredito()<=0)
+    			if(creditoVO.getCredMontocredito()<=0) 
     				addActionMessage(getText("validacion.requerido","montocredito","Monto del Credito"));
     			if(creditoVO.getCredNrocheque()==null||creditoVO.getCredNrocheque().equals(""))
     				addActionMessage(getText("validacion.requerido","nrochequedes","Nro Cheque Desembolso"));

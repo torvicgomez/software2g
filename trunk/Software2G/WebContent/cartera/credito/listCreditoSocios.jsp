@@ -165,7 +165,11 @@
 													<s:property value="creditoVO.pagare.persona.pnombrePers"/> <s:property value="creditoVO.pagare.persona.snombrePers"/> <s:property value="creditoVO.pagare.persona.papellidoPers"/> <s:property value="creditoVO.pagare.persona.sapellidoPers"/> 
 													<s:property value="creditoVO.pagare.persona.documentoPers"/><s:property value="creditoVO.pagare.persona.tipodocumento.abreviaturaTidoc"/> <s:property value="creditoVO.pagare.persona.emailPers"/>
 													<s:hidden name="creditoVO.pagare.pagaId"/>
+													<s:hidden name="creditoVO.pagare.pagaMonto" id="montoPagareCredito"/>
 												</font></strong>
+												<script type="text/javascript" charset="ISO-8859-1">
+													document.getElementById("montoCredito").value = document.getElementById("montoPagareCredito").value;
+												</script>
 											</s:if>
 										</div>
 									</td>
@@ -175,8 +179,16 @@
 										<s:text name="creditossocios.tipocredito"></s:text><s:text name="campo.requerido"></s:text>
 									</td>
 									<td class="text" width="80%" align="left"  valign="top">
-										<s:select list="listTipoCredito" id="selectTipoCredito" name="creditoVO.tipocredito.ticrId" listKey="ticrId" listValue="ticrDescripcion" headerKey="-1" headerValue=".::Seleccione::."></s:select>
-										<div id="infoTipoCredito"></div>
+										<s:if test="listTipoCredito!=null&&listTipoCredito.size>0">
+											<s:select list="listTipoCredito" id="selectTipoCredito" name="creditoVO.tipocredito.ticrId" listKey="ticrId" listValue="ticrDescripcion" headerKey="-1" headerValue=".::Seleccione::."></s:select>
+										</s:if>
+										<div id="infoTipoCredito">
+											<s:if test="tipoCreditoVO!=null&&tipoCreditoVO.ticrId">
+												Interes Corriente&nbsp;<strong><font size="2" color="#FF0000"><s:property value="tipoCreditoVO.ticrTasainteresvencido"/>&nbsp;%</font></strong> 
+												Interes Mora&nbsp;<strong><font size="2" color="#FF0000"><s:property value="tipoCreditoVO.ticrInteresmoramesven"/>&nbsp;%</font></strong>
+												Interes Efectivo Anual&nbsp;<strong><font size="2" color="#FF0000"><s:property value="tipoCreditoVO.ticrInteresefectivoanual"/>&nbsp;%</font></strong>
+											</s:if>
+										</div>
 									</td>
 								</tr>
 								<tr>
@@ -184,8 +196,17 @@
 										<s:text name="creditossocios.presupuesto"></s:text><s:text name="campo.requerido"></s:text>
 									</td>
 									<td class="text" width="80%" align="left"  valign="top">
-										<s:select list="listPresupuesto" id="selectPresupuesto" name="creditoVO.presupuesto.presId" listKey="presId" listValue="presDescripcion" headerKey="-1" headerValue=".::Seleccione::."></s:select>
-										<div id="infoPresupuesto"></div>
+										<s:if test="listPresupuesto!=null&&listPresupuesto.size>0">
+											<s:select list="listPresupuesto" id="selectPresupuesto" name="creditoVO.presupuesto.presId" listKey="presId" listValue="presDescripcion" headerKey="-1" headerValue=".::Seleccione::."></s:select>
+										</s:if>
+										<div id="infoPresupuesto">
+											<s:if test="presupuestoVO!=null&&presupuestoVO.presId">
+												Monto Disponible&nbsp;<strong><font size="2" color="#FF0000">$<s:property value="presupuestoVO.presValorString"/>&nbsp;</font></strong>
+												<s:hidden name="presupuestoVO.presId"></s:hidden> 
+												<s:hidden name="presupuestoVO.presValor"></s:hidden>
+												<s:hidden name="presupuestoVO.presDescripcion"></s:hidden>
+											</s:if>
+										</div>
 									</td>
 								</tr>
 								<tr>

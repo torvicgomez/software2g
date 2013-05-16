@@ -22,7 +22,7 @@
 			<s:property value="creditoVO.pagare.persona.pnombrePers"/> <s:property value="creditoVO.pagare.persona.snombrePers"/> <s:property value="creditoVO.pagare.persona.papellidoPers"/> <s:property value="creditoVO.pagare.persona.sapellidoPers"/> 
 			<s:property value="creditoVO.pagare.persona.documentoPers"/><s:property value="creditoVO.pagare.persona.tipodocumento.abreviaturaTidoc"/> <s:property value="creditoVO.pagare.persona.emailPers"/>
 			<s:hidden name="creditoVO.pagare.pagaId"/>
-			<s:hidden name="creditoVO.credMontocredito" id="montoPagareCredito"/>
+			<s:hidden name="creditoVO.pagare.pagaMonto" id="montoPagareCredito"/>
 		</font></strong>
 		<script type="text/javascript" charset="ISO-8859-1">
 			document.getElementById("montoCredito").value = document.getElementById("montoPagareCredito").value;

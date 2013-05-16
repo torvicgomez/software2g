@@ -1004,18 +1004,32 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     		System.out.println("creditoVO: ["+creditoVO+"]");
     		
     		if(creditoVO!=null){
+    			
     			if(creditoVO.getPagare()==null||creditoVO.getPagare().getPagaId()<=0)
     				addActionMessage(getText("validacion.requerido","titularcredito","Titular Credito"));
+    			else{
+    				getCreditoVO().setPagare(gestionFacadeContable.findPagareById(getCreditoVO().getPagare().getPagaId()));
+        			getCreditoVO().setCredMontocredito(Double.valueOf(getCreditoVO().getPagare().getPagaMonto()));
+    			}
+    			
     			if(creditoVO.getTipocredito()==null||creditoVO.getTipocredito().getTicrId()<=0)
     				addActionMessage(getText("validacion.requerido","tipocredito","Tipo Credito"));
+    			else{
+    				setTipoCreditoVO(gestionFacadeContable.findTipocreditoById(getTipoCreditoVO().getTicrId()));
+    			}
+    			
     			if(creditoVO.getPresupuesto()==null||creditoVO.getPresupuesto().getPresId()<=0)
     				addActionMessage(getText("validacion.requerido","presupuesto","Presupuesto"));
+    			else
+    				setPresupuestoVO(gestionFacadeContable.findPresupuestoById(getPresupuestoVO().getPresId()));
+    			
     			if(creditoVO.getCredFechainiciacredito()==null)
     				addActionMessage(getText("validacion.requerido","fechainicredito","Fecha Inicio Credito"));
     			if(creditoVO.getCredMontocredito()<=0) 
     				addActionMessage(getText("validacion.requerido","montocredito","Monto del Credito"));
     			if(creditoVO.getCredNrocheque()==null||creditoVO.getCredNrocheque().equals(""))
     				addActionMessage(getText("validacion.requerido","nrochequedes","Nro Cheque Desembolso"));
+    			
     			if(presupuestoVO!=null){
     				if(presupuestoVO.getPresValor()<creditoVO.getCredMontocredito())
     					addActionMessage(getText("validacion.montocredito","validacionmontos",""));
@@ -1042,6 +1056,11 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     				setListCredito(gestionFacadeContable.findAllCreditos());
     	    		estado="listarCreditosSocios";
     			}else{
+    				System.out.println("----------------------------------------------");
+    				System.out.println("----------------------------------------------");
+    				System.out.println("ENTRA ESTA PARTE!!!!!!!!!!");
+    				System.out.println("----------------------------------------------");
+    				System.out.println("----------------------------------------------");
     				setListPresupuesto(gestionFacadeContable.findAllPresupuestos());
         			setListTipoCredito(gestionFacadeContable.findAllTipocreditos());
     	    		estado="crearCreditoSocio";

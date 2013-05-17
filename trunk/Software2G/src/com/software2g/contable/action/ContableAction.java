@@ -808,11 +808,14 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     		if(pagareVO!=null){
     			if(pagareVO.getPersona()==null||pagareVO.getPersona().getIdPers()<=0)
     				addActionMessage(getText("validacion.requerido","deudorPagare","Deudor Pagare"));
+    			else{
+    				getPagareVO().setPersona(gestionFacadeContable.findPersonaById(pagareVO.getPersona().getIdPers()));
+    			}
     			if(pagareVO.getTipopagare()==null||pagareVO.getTipopagare().getTipaId()<=0)
     				addActionMessage(getText("validacion.requerido","tipopagare","Tipo Pagare"));
-    			if(pagareVO.getPagaFechapago()==null||pagareVO.getPagaFechapago().equals(""))
+    			if(!ValidaString.validarFecha(pagareVO.getPagaFechapago()))
     				addActionMessage(getText("validacion.requerido","fechapagopagare","Fecha de Pago"));
-    			if(pagareVO.getPagaMonto()==null||pagareVO.getPagaMonto().equals("")/*Long.parseLong(pagareVO.getPagaMonto())<=0*/)
+    			if(!ValidaString.isNumericDouble(pagareVO.getPagaMonto())) // ==null||pagareVO.getPagaMonto().equals("")/*Long.parseLong(pagareVO.getPagaMonto())<=0*/)
     				addActionMessage(getText("validacion.requerido","montopagare","Monto"));
     			if(!hasActionMessages()){
     				if(pagareVO.getPagaEstado()==null||pagareVO.getPagaEstado().equals(""))
@@ -898,7 +901,7 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
 			addActionMessage(getText("error.aplicacion"));
 			e.printStackTrace();
 		}
-		System.out.println("result: ["+result+"]");
+		System.out.println("result: ["+result+"]"); 
     	return result;
 	}
 	
@@ -909,7 +912,11 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     		if(getCreditoVO()!=null&&getCreditoVO().getCredId()>0){
     			String fechaLiquidar = getCreditoVO().getFechaALiquidar();
     			setCreditoVO(gestionFacadeContable.findCreditoById(getCreditoVO().getCredId()));
-    			getCreditoVO().setFechaALiquidar(fechaLiquidar);
+    			if(!ValidaString.validarFecha(fechaLiquidar)){
+    				addActionMessage(getText("validacion.requeridofecha","fechaaliquidar","Fecha de Corte"));
+    				getCreditoVO().setFechaALiquidar(ValidaString.fechaSystem());
+    			}else
+    				getCreditoVO().setFechaALiquidar(fechaLiquidar);
     			setAbonoVO(gestionFacadeContable.liquidacionPagoCredito(getCreditoVO()));
     			estado="pagosCreditos";
     		}else{
@@ -1000,44 +1007,34 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     public String saveCreditoSocio(){
 		String  result = Action.SUCCESS; 
     	try { 
-    		
-    		System.out.println("creditoVO: ["+creditoVO+"]");
-    		
     		if(creditoVO!=null){
-    			
     			if(creditoVO.getPagare()==null||creditoVO.getPagare().getPagaId()<=0)
     				addActionMessage(getText("validacion.requerido","titularcredito","Titular Credito"));
     			else{
     				getCreditoVO().setPagare(gestionFacadeContable.findPagareById(getCreditoVO().getPagare().getPagaId()));
         			getCreditoVO().setCredMontocredito(Double.valueOf(getCreditoVO().getPagare().getPagaMonto()));
     			}
-    			
     			if(creditoVO.getTipocredito()==null||creditoVO.getTipocredito().getTicrId()<=0)
     				addActionMessage(getText("validacion.requerido","tipocredito","Tipo Credito"));
     			else{
     				setTipoCreditoVO(gestionFacadeContable.findTipocreditoById(getTipoCreditoVO().getTicrId()));
     			}
-    			
     			if(creditoVO.getPresupuesto()==null||creditoVO.getPresupuesto().getPresId()<=0)
     				addActionMessage(getText("validacion.requerido","presupuesto","Presupuesto"));
-    			else
+    			else{
     				setPresupuestoVO(gestionFacadeContable.findPresupuestoById(getPresupuestoVO().getPresId()));
-    			
-    			if(creditoVO.getCredFechainiciacredito()==null)
+    			}
+    			if(!ValidaString.validarFecha( creditoVO.getCredFechainiciacredito()))
     				addActionMessage(getText("validacion.requerido","fechainicredito","Fecha Inicio Credito"));
     			if(creditoVO.getCredMontocredito()<=0) 
     				addActionMessage(getText("validacion.requerido","montocredito","Monto del Credito"));
     			if(creditoVO.getCredNrocheque()==null||creditoVO.getCredNrocheque().equals(""))
     				addActionMessage(getText("validacion.requerido","nrochequedes","Nro Cheque Desembolso"));
-    			
     			if(presupuestoVO!=null){
     				if(presupuestoVO.getPresValor()<creditoVO.getCredMontocredito())
     					addActionMessage(getText("validacion.montocredito","validacionmontos",""));
     			}else
     				addActionMessage(getText("validacion.montocredito","validacionmontos",""));
-    			
-    			System.out.println("hasActionMessages(): ["+hasActionMessages()+"]");
-    			
     			if(!hasActionMessages()){
     				creditoVO.setCredSaldo(creditoVO.getCredMontocredito());
     				creditoVO.setCredEstado(ConstantesAplicativo.estadoCreditoVigente);
@@ -1056,11 +1053,6 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     				setListCredito(gestionFacadeContable.findAllCreditos());
     	    		estado="listarCreditosSocios";
     			}else{
-    				System.out.println("----------------------------------------------");
-    				System.out.println("----------------------------------------------");
-    				System.out.println("ENTRA ESTA PARTE!!!!!!!!!!");
-    				System.out.println("----------------------------------------------");
-    				System.out.println("----------------------------------------------");
     				setListPresupuesto(gestionFacadeContable.findAllPresupuestos());
         			setListTipoCredito(gestionFacadeContable.findAllTipocreditos());
     	    		estado="crearCreditoSocio";

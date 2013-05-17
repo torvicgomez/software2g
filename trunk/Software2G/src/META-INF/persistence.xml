@@ -20,7 +20,7 @@
 		<class>com.software2g.vo.Creditotipodescuento</class>
 		<class>com.software2g.vo.CreditotipodescuentoPK</class>
 		<class>com.software2g.vo.Donacion</class>
-		<class>com.software2g.vo.Donacionobjeto</class>
+		<class>com.software2g.vo.Donacionobjeto</class> 
 		<class>com.software2g.vo.DonacionobjetoPK</class>
 		<class>com.software2g.vo.Donacionsucursal</class>
 		<class>com.software2g.vo.DonacionsucursalPK</class>

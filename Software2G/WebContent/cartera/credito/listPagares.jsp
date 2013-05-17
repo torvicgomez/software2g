@@ -148,7 +148,15 @@
 								<tr>
 									<td class="text" width="20%" align="left" valign="top"></td>
 									<td class="text" width="80%" align="left"  valign="top">
-										<div id="deudorPagare"></div>
+										<div id="deudorPagare">
+											<s:if test="pagareVO.persona!=null&&pagareVO.persona.idPers>0">
+												Deudor Pagare:&nbsp;<strong><font size="2" color="#FF0000">
+													<s:property value="pagareVO.persona.pnombrePers"/>&nbsp;<s:property value="pagareVO.persona.snombrePers"/>&nbsp;<s:property value="pagareVO.persona.papellidoPers"/>&nbsp;<s:property value="pagareVO.persona.sapellidoPers"/>&nbsp;
+													<s:property value="pagareVO.persona.documentoPers"/><s:property value="pagareVO.persona.tipodocumento.abreviaturaTidoc"/>&nbsp;<s:property value="pagareVO.persona.emailPers"/>
+													<s:hidden name="pagareVO.persona.idPers"></s:hidden>
+												</font></strong>
+											</s:if>
+										</div>
 									</td>
 								</tr>
 								<tr>

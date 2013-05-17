@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import bsh.ParseException;
+
 public class ValidaString {
 	private static final String formatoFecha="yyyy-MM-dd";
 	private static final String formatoHora="HH:mm:ss";
@@ -136,4 +138,25 @@ public class ValidaString {
         }
         return res;
     }
+    
+    public static boolean validarFecha(String fecha) throws java.text.ParseException {  
+    	if (fecha == null)  
+    		return false;  
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); //año-mes-dia  
+    	if (fecha.trim().length() != dateFormat.toPattern().length())  
+    		return false;  
+    	dateFormat.setLenient(false);  
+    	dateFormat.parse(fecha.trim());  
+    	return true;  
+    }
+    
+    public static boolean isNumericDouble(String cadena){
+    	try {
+    		Double.parseDouble(cadena);
+    		return true;
+    	} catch (NumberFormatException nfe){
+    		return false;
+    	}
+    }
+    
 }

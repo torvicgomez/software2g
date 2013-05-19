@@ -10,6 +10,26 @@
 <SCRIPT type="text/javascript" src="<s:url value="/scripts/calendar-en.js"/>"></SCRIPT>
 <SCRIPT type="text/javascript" src="<s:url value="/scripts/calendarnew.js"/>"></SCRIPT>
 <script type="text/javascript" language="javascript" src="<s:url value='js/jquery.js'/>"></script>
+<script language="javascript" type="text/javascript">
+	$(document).ready(function(){
+        $("#selectPais").change(function(event){
+            var id = $("#selectPais").find(':selected').val();
+            if(id>0){
+            	$("#viewSelectDpto").show("block");
+            	$("#viewSelectMcpo").show("block");
+            }else{
+            	$("#viewSelectDpto").hide(1000);
+            	$("#viewSelectMcpo").hide(1000);
+            }
+        });
+        
+        $("#selectDpto").change(function(event){
+            var id = $("#selectDpto").find(':selected').val();
+            $("#viewSelectMcpo").load('loadMunicipios.action?personaVO.municipio.departamento.dptoId='+id);
+        });
+        
+    });
+</script>
 <s:form name="personal" id="personal">
 	<body id="dt_example">
 		<div id="demo">
@@ -81,7 +101,9 @@
 									<s:text name="personal.sexo"></s:text><s:text name="campo.requerido"></s:text>
 								</td>
 								<td class="text">
-									<s:select list="listSexo" name="personaVO.sexoPers" listKey="key" listValue="valor" headerKey="-1" headerValue=".::Seleccione::." />
+									<s:select list="listSexo" name="personaVO.sexoPers" listKey="key" listValue="valor" headerKey="-1" headerValue=".::Seleccione::." />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+									<s:text name="personal.estadocivil"></s:text><s:text name="campo.requerido"></s:text>
+									<s:select list="listEstadoCivil" name="personaVO.estadocivilPers" listKey="key" listValue="valor" headerKey="-1" headerValue=".::Seleccione::." />
 								</td>
 								<td class="text">
 									<s:text name="personal.fechanacimiento"></s:text><s:text name="campo.requerido"></s:text>
@@ -93,10 +115,10 @@
 							</tr>
 							<tr>
 								<td class="text">
-									<s:text name="personal.estadocivil"></s:text><s:text name="campo.requerido"></s:text>
+									<s:text name="personal.telefono"></s:text><s:text name="campo.requerido"></s:text>
 								</td>
 								<td class="text">
-									<s:select list="listEstadoCivil" name="personaVO.estadocivilPers" listKey="key" listValue="valor" headerKey="-1" headerValue=".::Seleccione::." />
+									<s:textfield name="personaVO.telefonoPers" size="35" maxlength="30"></s:textfield>
 								</td>
 								<td class="text">
 									<s:text name="personal.email"></s:text><s:text name="campo.requerido"></s:text>
@@ -105,6 +127,34 @@
 									<s:textfield name="personaVO.emailPers" size="35" maxlength="80"></s:textfield>
 								</td>
 							</tr>
+							<tr>
+								<td class="text">
+									<s:text name="personal.ubicaciongeo"></s:text><s:text name="campo.requerido"></s:text>
+								</td>
+								<td class="text">
+									<s:select list="listPais" name="personaVO.municipio.departamento.pais.paisId" id="selectPais" listKey="paisId" listValue="nompais" headerKey="-1" headerValue=".::Seleccione::." />
+									<s:if test="personaVO.municipio.departamento.pais.paisId>0">
+										<div id="viewSelectDpto" style="overflow:auto;width:auto;height:auto;display:block">
+									</s:if>
+									<s:else>
+										<div id="viewSelectDpto" style="overflow:auto;width:auto;height:auto;display:none">
+									</s:else>
+										<s:select list="listDepartamento" name="personaVO.municipio.departamento.dptoId" id="selectDpto" listKey="dptoId" listValue="nomdpto" headerKey="-1" headerValue=".::Seleccione::." />
+									</div>
+									<div id="viewSelectMcpo">
+										<s:if test="listMunicipio!=null&&listMunicipio.size>0">
+											<s:select list="listMunicipio" name="personaVO.municipio.mcpoId" listKey="mcpoId" listValue="nommunicipio" headerKey="-1" headerValue=".::Seleccione::." />
+										</s:if>
+									</div>
+								</td>
+								<td class="text">
+									<s:text name="personal.direccion"></s:text><s:text name="campo.requerido"></s:text>
+								</td>
+								<td class="text">
+									<s:textfield name="personaVO.direccionPers" size="35" maxlength="100"></s:textfield>
+								</td>
+							</tr>
+							
 						</table>
 					</td>	
 				</tr>

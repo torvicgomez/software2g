@@ -38,5 +38,8 @@
 		<class>com.software2g.vo.TipocreditoseguroadquiridoPK</class>
 		<class>com.software2g.vo.Tipodescuento</class>
 		<class>com.software2g.vo.Tipopagare</class>
+		<class>com.software2g.vo.Pais</class>
+		<class>com.software2g.vo.Departamento</class>
+		<class>com.software2g.vo.Municipio</class> 
 	</persistence-unit>
 </persistence>

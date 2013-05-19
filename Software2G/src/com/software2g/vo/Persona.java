@@ -57,6 +57,12 @@ public class Persona implements Serializable {
 	@Column(name="snombre_pers")
 	private String snombrePers;
 
+	@Column(name="direccion_pers")
+	private String direccionPers;
+
+	@Column(name="telefono_pers")
+	private String telefonoPers;
+	
 	//bi-directional many-to-one association to Tipodocumento
 	@ManyToOne
 	@JoinColumn(name="id_tidoc")
@@ -73,6 +79,12 @@ public class Persona implements Serializable {
 	//bi-directional many-to-one association to Pagare
 	@OneToMany(mappedBy="persona")
 	private List<Pagare> pagares;
+	
+	
+	@ManyToOne
+	@JoinColumn(name="id_mcpo")
+	private Municipio municipio;
+	
 	
 	public Persona() {
 	}
@@ -223,6 +235,30 @@ public class Persona implements Serializable {
 
 	public void setPagares(List<Pagare> pagares) {
 		this.pagares = pagares;
+	}
+
+	public Municipio getMunicipio() {
+		return municipio;
+	}
+
+	public void setMunicipio(Municipio municipio) {
+		this.municipio = municipio;
+	}
+
+	public String getDireccionPers() {
+		return direccionPers;
+	}
+
+	public void setDireccionPers(String direccionPers) {
+		this.direccionPers = direccionPers;
+	}
+
+	public String getTelefonoPers() {
+		return telefonoPers;
+	}
+
+	public void setTelefonoPers(String telefonoPers) {
+		this.telefonoPers = telefonoPers;
 	}
 
 }

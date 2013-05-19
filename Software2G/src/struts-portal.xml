@@ -84,6 +84,9 @@
         <action name="saveCambioPass" method="saveCambioPass" class="PortalAction">
 			<result name="success" type="tiles">portal.editarPassword</result>
         </action>
+        <action name="loadMunicipios" method="loadMunicipios" class="PortalAction">
+			<result name="success">/personal/loadMunicipios.jsp</result>
+        </action>
         
         <!-- PORTAL ACTION INSTITUCIONES -->
         <action name="inicioInstituciones" method="execute" class="PortalAction">

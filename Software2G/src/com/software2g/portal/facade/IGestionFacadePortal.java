@@ -3,9 +3,12 @@ package com.software2g.portal.facade;
 import java.util.List;
 
 import com.software2g.vo.Aplicacion;
+import com.software2g.vo.Departamento;
 import com.software2g.vo.Funcionalidad;
 import com.software2g.vo.Funcionalidadrol;
 import com.software2g.vo.Institucion;
+import com.software2g.vo.Municipio;
+import com.software2g.vo.Pais;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Personainstitucion;
 import com.software2g.vo.Rol;
@@ -130,4 +133,27 @@ public interface IGestionFacadePortal {
 	//Metodos Negocio
 	public Usuario cargarPortalUser(Usuario usuarioVO, String estado) throws Exception;
 	//--------------------------------------------------------------------------
+	
+	//--------------------------------------------------------------------------
+	//Metodos Entidad Pais
+	public Pais findPaisById(long id) throws Exception;
+	public List<Pais> findAllPaiss() throws Exception;
+	//FIN --- Metodos Entidad Pais
+	//--------------------------------------------------------------------------
+	
+	//--------------------------------------------------------------------------
+	//Metodos Entidad Departamento
+	public Departamento findDepartamentoById(long id) throws Exception;
+	public List<Departamento> findAllDepartamentos() throws Exception;
+	//FIN --- Metodos Entidad Departamento
+	//--------------------------------------------------------------------------
+	
+	//--------------------------------------------------------------------------
+	//Metodos Entidad Municipio
+	public Municipio findMunicipioById(long id) throws Exception;
+	public List<Municipio> findAllMunicipios() throws Exception;
+	public List<Municipio> findAllMunicipios(long idDpto) throws Exception;
+	//FIN --- Metodos Entidad Municipio
+	//--------------------------------------------------------------------------
+	
 }

@@ -17,8 +17,11 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import com.software2g.portal.facade.IGestionFacadePortal;
 import com.software2g.util.ValidaString;
+import com.software2g.vo.Departamento;
 import com.software2g.vo.Funcionalidadrol;
 import com.software2g.vo.Institucion;
+import com.software2g.vo.Municipio;
+import com.software2g.vo.Pais;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Rolusuario;
 import com.software2g.vo.Tipodocumento;
@@ -39,7 +42,9 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
 	private List<Institucion> listInstitucion;
  	private Persona personaVO;
 	private Usuario usuarioVO;
-	
+	private List<Pais> listPais;
+	private List<Departamento> listDepartamento;
+	private List<Municipio> listMunicipio;
 	
 	public PortalAction(IGestionFacadePortal gestionFacadePortal) {
         this.gestionFacadePortal = gestionFacadePortal;
@@ -74,6 +79,8 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
     		listTipoDoc=gestionFacadePortal.findAllTipodocumentos();
     		listSexo = cargarListSexo();
     		listEstadoCivil = cargarListEstadoCivil();
+    		listPais = gestionFacadePortal.findAllPaiss();
+    		listDepartamento = gestionFacadePortal.findAllDepartamentos();
     	} catch (Exception e) {
 			addActionMessage(getText("error.aplicacion"));
 			System.out.println("Entra esta parte");
@@ -83,6 +90,22 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
     	return result;
 	}
 
+	@SkipValidation
+	public String loadMunicipios(){
+		String  result = Action.SUCCESS; 
+    	try {
+    		if(getPersonaVO().getMunicipio().getDepartamento().getDptoId()>0)
+    			listMunicipio = gestionFacadePortal.findAllMunicipios(getPersonaVO().getMunicipio().getDepartamento().getDptoId()); 
+    	} catch (Exception e) {
+			addActionMessage(getText("error.aplicacion"));
+			System.out.println("Entra esta parte");
+			e.printStackTrace();
+		}
+		System.out.println("result: ["+result+"]");
+    	return result;
+	}
+	
+	
 	@SkipValidation
 	public List<UtilGenerico> cargarListSexo(){
 		ArrayList<UtilGenerico>list = new ArrayList<UtilGenerico>();
@@ -228,23 +251,31 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
     				addActionMessage(getText("validacion.requerido","nroDocPer","Número Documento"));
     			if(personaVO.getTipodocumento().getIdTidoc()==null||personaVO.getTipodocumento().getIdTidoc()==-1)
     				addActionMessage(getText("validacion.requerido","tipoDocPer","Número Documento (tipo de documento)"));
-    			if(personaVO.getFechaexpdocPers()==null||personaVO.getFechaexpdocPers().equals(""))
-    				addActionMessage(getText("validacion.requerido","fechaExpPer","Fecha Expedición"));
+    			if(!ValidaString.validarFecha(personaVO.getFechaexpdocPers()))
+    				addActionMessage(getText("validacion.requeridofecha","fechaExpPer","Fecha Expedición"));
     			if(personaVO.getPnombrePers()==null||personaVO.getPnombrePers().equals(""))
     				addActionMessage(getText("validacion.requerido","primerNomPer","Primer Nombre"));
     			if(personaVO.getPapellidoPers()==null||personaVO.getPapellidoPers().equals(""))
     				addActionMessage(getText("validacion.requerido","primerApelPer","Primer Apellido"));
     			if(personaVO.getSexoPers()==null||personaVO.getSexoPers().equals("-1"))
     				addActionMessage(getText("validacion.requerido","sexoPer","Sexo"));
-    			if(personaVO.getFechanacimientoPers()==null||personaVO.getFechanacimientoPers().equals(""))
-    				addActionMessage(getText("validacion.requerido","fechaNaciPer","Fecha Nacimiento"));
+    			if(!ValidaString.validarFecha(personaVO.getFechanacimientoPers()))
+    				addActionMessage(getText("validacion.requeridofecha","fechaNaciPer","Fecha Nacimiento"));
     			if(personaVO.getEstadocivilPers()==null||personaVO.getEstadocivilPers().equals("-1"))
     				addActionMessage(getText("validacion.requerido","esatdoCivPer","Estado Civil"));
+    			if(personaVO.getTelefonoPers()==null||personaVO.getTelefonoPers().equals(""))
+    				addActionMessage(getText("validacion.requerido","telefonoPer","Teléfono"));
     			if(personaVO.getEmailPers()==null||personaVO.getEmailPers().equals(""))
     				addActionMessage(getText("validacion.requerido","emailPer","Correo Electrónico"));
     			if(personaVO.getEmailPers()!=null&&!ValidaString.isEmail(personaVO.getEmailPers()))
     				addActionMessage(getText("validacion.formato","emailPerformato","Correo Electrónico"));
+    			if(personaVO.getMunicipio().getMcpoId()<=0||personaVO.getMunicipio().getDepartamento().getPais().getPaisId()<=0)
+    				addActionMessage(getText("validacion.requerido","ubicaciongeoPer","Ubicación Geográfica"));
+    			if(personaVO.getDireccionPers()==null||personaVO.getDireccionPers().equals(""))
+    				addActionMessage(getText("validacion.requerido","direccionPer","Dirección"));
+    			
     			ValidaString.imprimirObject(personaVO);
+    			
     			if(!hasActionMessages()){
     				
     				System.out.println("personaVO.getTipodocumento().getIdTidoc():["+personaVO.getTipodocumento().getIdTidoc()+"]");
@@ -259,6 +290,14 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
     				listTipoDoc=gestionFacadePortal.findAllTipodocumentos();
     	    		listSexo = cargarListSexo();
     	    		listEstadoCivil = cargarListEstadoCivil();
+    	    		listPais = gestionFacadePortal.findAllPaiss();
+    	    		listDepartamento = gestionFacadePortal.findAllDepartamentos();
+    	    		if(personaVO.getMunicipio().getDepartamento().getPais().getPaisId()<=0){
+    	    			getPersonaVO().getMunicipio().getDepartamento().setDptoId(-1);
+    	    			getPersonaVO().getMunicipio().setMcpoId(-1);
+    	    		}if(getPersonaVO().getMunicipio().getDepartamento().getDptoId()>0)
+    	    			listMunicipio = gestionFacadePortal.findAllMunicipios(getPersonaVO().getMunicipio().getDepartamento().getDptoId());
+    	    		
     			}
     		}else
     			System.out.println("intenta ingresar ilegalmente!!!!");
@@ -280,6 +319,12 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
     		listTipoDoc=gestionFacadePortal.findAllTipodocumentos();
     		listSexo = cargarListSexo();
     		listEstadoCivil = cargarListEstadoCivil();
+    		
+    		listPais = gestionFacadePortal.findAllPaiss();
+    		listDepartamento = gestionFacadePortal.findAllDepartamentos();
+    		if(getPersonaVO().getMunicipio()!=null&&getPersonaVO().getMunicipio().getDepartamento().getDptoId()>0)
+    			listMunicipio = gestionFacadePortal.findAllMunicipios(getPersonaVO().getMunicipio().getDepartamento().getDptoId());
+    		
     	} catch (Exception e) {
 			addActionMessage(getText("error.aplicacion"));
 			e.printStackTrace();
@@ -394,5 +439,11 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
 	public void setListPersona(List<Persona> listPersona) {this.listPersona = listPersona;}
 	public List<Institucion> getListInstitucion() {return listInstitucion;}
 	public void setListInstitucion(List<Institucion> listInstitucion) {this.listInstitucion = listInstitucion;}
+	public List<Pais> getListPais() {return listPais;}
+	public void setListPais(List<Pais> listPais) {this.listPais = listPais;}
+	public List<Departamento> getListDepartamento() {return listDepartamento;}
+	public void setListDepartamento(List<Departamento> listDepartamento) {this.listDepartamento = listDepartamento;}
+	public List<Municipio> getListMunicipio() {return listMunicipio;}
+	public void setListMunicipio(List<Municipio> listMunicipio) {this.listMunicipio = listMunicipio;}
 	
 }

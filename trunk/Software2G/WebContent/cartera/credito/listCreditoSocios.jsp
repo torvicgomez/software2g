@@ -72,7 +72,7 @@
 			<table border="0" width="100%" align="center">
 				<tr>
 					<td>
-						Prueba!!!
+						Prueba montada!!!
 						<s:hidden name="estado"></s:hidden>	
 						<s:hidden name="creditoVO.credId" id="idCredito"></s:hidden>
 						<h1><strong><s:text name="titulo.creditossocios"></s:text></strong></h1>

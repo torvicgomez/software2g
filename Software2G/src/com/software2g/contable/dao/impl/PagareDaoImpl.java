@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.software2g.contable.dao.IPagareDao;
+import com.software2g.vo.Credito;
 import com.software2g.vo.Pagare;
 
 import org.springframework.stereotype.Repository;
@@ -94,23 +95,34 @@ public class PagareDaoImpl implements IPagareDao {
 	@SuppressWarnings("unchecked")
 	public List<Pagare> findAllTitularesCredito(String datoFind, String tipoFind) {
         try {
-    		String jpqlString = "select pagare from " + Pagare.class.getSimpleName() + " pagare";
+    		String jpqlString = "select pagare from " + Pagare.class.getSimpleName() + " pagare ";
     		if(tipoFind.equals("0"))
-    			jpqlString += " where lower(pagare.persona.pnombrePers) like :datoFind " +
+    			jpqlString += " where ( lower(pagare.persona.pnombrePers) like :datoFind " +
 						  " or  lower(pagare.persona.snombrePers) like :datoFind " +
 						  " or  lower(pagare.persona.papellidoPers) like :datoFind " +
-						  " or  lower(pagare.persona.sapellidoPers) like :datoFind ";
+						  " or  lower(pagare.persona.sapellidoPers) like :datoFind ) " +
+						  " and pagare.pagaId not in (select credito.pagare.pagaId from  " + Credito.class.getSimpleName() + " credito ) ";
     		else if(tipoFind.equals("1"))
     			jpqlString += " where pagare.pagaId = :datoFind ";
     		jpqlString += " order by pagare.persona.pnombrePers, pagare.persona.snombrePers, pagare.persona.papellidoPers, pagare.persona.sapellidoPers asc ";
+    		/*
+    		System.out.println("*************************************************************");
+    		System.out.println("*************************************************************");
+    		System.out.println("JPQL: ["+jpqlString+"]");
+    		System.out.println("Dato: ["+datoFind.toLowerCase()+"]");
+    		System.out.println("*************************************************************");
+    		System.out.println("*************************************************************");
+    		*/ 
             Query query = em.createQuery( jpqlString );
             if(tipoFind.equals("0"))
             	query.setParameter("datoFind", "%"+datoFind.toLowerCase()+"%");
             else if(tipoFind.equals("1"))
             	query.setParameter("datoFind", Long.parseLong(datoFind));
             return query.getResultList();
-        }
-        finally {
+        }/*catch (Exception e){
+        	e.printStackTrace();
+        	return null;
+        }*/finally {
             if (em != null) {
                 em.close();
             }

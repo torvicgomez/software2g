@@ -70,10 +70,13 @@
 		<property name="tipoDocumentoDao"><bean class="com.software2g.portal.dao.impl.TipoDocumentoDaoImpl"/></property>
 		<property name="personaInstitucionDao"><bean class="com.software2g.portal.dao.impl.PersonaInstitucionDaoImpl"/></property>
 		<property name="institucionDao"><bean class="com.software2g.portal.dao.impl.InstitucionDaoImpl"/></property>
+		<property name="paisDao"><bean class="com.software2g.portal.dao.impl.PaisDaoImpl"/></property>
+		<property name="departamentoDao"><bean class="com.software2g.portal.dao.impl.DepartamentoDaoImpl"/></property>
+		<property name="municipioDao"><bean class="com.software2g.portal.dao.impl.MunicipioDaoImpl"/></property>
    </bean>	
    
    <bean class="com.software2g.contable.facade.impl.GestionFacadeContableSpringService" id="gestionFacadeContable">
-        <property name="abonoDao"><bean class="com.software2g.contable.dao.impl.AbonoDaoImpl"/></property>
+        <property name="abonoDao"><bean class="com.software2g.contable.dao.impl.AbonoDaoImpl"/></property> 
         <property name="creditoDao"><bean class="com.software2g.contable.dao.impl.CreditoDaoImpl"/></property>
         <property name="creditoTipoDesDao"><bean class="com.software2g.contable.dao.impl.CreditoTipoDescuentoDaoImpl"/></property>
         <property name="donacionDao"><bean class="com.software2g.contable.dao.impl.DonacionDaoImpl"/></property>

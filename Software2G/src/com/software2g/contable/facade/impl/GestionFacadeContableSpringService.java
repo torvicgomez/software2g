@@ -1079,9 +1079,15 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 	public Abono liquidacionPagoCredito(Credito creditoVO)throws Exception {
 		try {
 			Abono abonoVO = new Abono();
-			double diasLiquidados = this.diasLiquidados(creditoVO.getCredFechaultimopago(),
+			double diasLiquidados = 0;
+			double diasMora = 0;
+			if(creditoVO.getTipoRecalcularPago()==null||creditoVO.getTipoRecalcularPago().equals("")||creditoVO.getTipoRecalcularPago().equals("0")){
+				diasLiquidados = this.diasLiquidados(creditoVO.getCredFechaultimopago(),
 					creditoVO.getFechaALiquidar()==null||creditoVO.getFechaALiquidar().equals("")?ValidaString.fechaSystem():creditoVO.getFechaALiquidar());
-			double diasMora = this.diasMora(diasLiquidados);
+			}else if(creditoVO.getTipoRecalcularPago().equals("1")){
+				diasLiquidados = 0;
+			}
+			diasMora = this.diasMora(diasLiquidados);
 			abonoVO.setCredito(creditoVO);
 			abonoVO.setDiasLiquidados(diasLiquidados);
 			abonoVO.setDiasMora(diasMora);
@@ -1118,8 +1124,15 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 		return ( fechaFinal.getTime() - fechaInicio.getTime() ) / ConstantesAplicativo.MILLSECS_PER_DAY;
 	}
 	
+	public double diasLiquidados(String fechaUltPago, double valoraPagar){
+		
+		return 0;
+	}
+	
+	
 	public double diasMora(double diasLiquidados){
-		return diasLiquidados - ConstantesAplicativo.DIAS_MES;
+		double diasMora = diasLiquidados - ConstantesAplicativo.DIAS_MES; 
+		return diasMora>0?diasMora:0;
 	}
 	
 	public double valorInteresCorrienteCredito(double saldoCredito, double interesCorriente, double diasLiquidados){

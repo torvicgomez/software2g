@@ -72,12 +72,11 @@ public class Abono implements Serializable {
 	@Column(name="abon_nrocomprobante")
 	private String abonNrocomprobante;
 	
-	@Transient
+	@Column(name="abon_diasliq")
 	private double diasLiquidados;
 	
-	@Transient 
+	@Column(name="abon_diamora") 
 	private double diasMora;
-	
 	
 	//bi-directional many-to-one association to Credito
 	@ManyToOne

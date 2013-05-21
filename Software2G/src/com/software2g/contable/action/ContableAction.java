@@ -910,6 +910,12 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
 		String  result = Action.SUCCESS; 
     	try {
     		if(getCreditoVO()!=null&&getCreditoVO().getCredId()>0){
+    			System.out.println("***************************************************************");
+    			System.out.println("***************************************************************");
+    			System.out.println("tipo Recalculo: ["+getCreditoVO().getTipoRecalcularPago()+"]");
+    			System.out.println("***************************************************************");
+    			System.out.println("***************************************************************");
+    			
     			String fechaLiquidar = getCreditoVO().getFechaALiquidar();
     			setCreditoVO(gestionFacadeContable.findCreditoById(getCreditoVO().getCredId()));
     			if(!ValidaString.validarFecha(fechaLiquidar)){

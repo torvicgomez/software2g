@@ -97,32 +97,22 @@ public class PagareDaoImpl implements IPagareDao {
         try {
     		String jpqlString = "select pagare from " + Pagare.class.getSimpleName() + " pagare ";
     		if(tipoFind.equals("0"))
-    			jpqlString += " where ( lower(pagare.persona.pnombrePers) like :datoFind " +
+    			jpqlString += " where pagare.pagaId not in (select credito.pagare.pagaId from  " + Credito.class.getSimpleName() + " credito )  " +
+    					  " and ( lower(pagare.persona.pnombrePers) like :datoFind " +
 						  " or  lower(pagare.persona.snombrePers) like :datoFind " +
 						  " or  lower(pagare.persona.papellidoPers) like :datoFind " +
-						  " or  lower(pagare.persona.sapellidoPers) like :datoFind ) " +
-						  " and pagare.pagaId not in (select credito.pagare.pagaId from  " + Credito.class.getSimpleName() + " credito ) ";
+						  " or  lower(pagare.persona.sapellidoPers) like :datoFind ) " ;
     		else if(tipoFind.equals("1"))
-    			jpqlString += " where pagare.pagaId = :datoFind ";
+    			jpqlString += " where pagare.pagaId = :datoFind and pagare.pagaId not in (select credito.pagare.pagaId from  " + Credito.class.getSimpleName() + " credito )  ";
     		jpqlString += " order by pagare.persona.pnombrePers, pagare.persona.snombrePers, pagare.persona.papellidoPers, pagare.persona.sapellidoPers asc ";
-    		/*
-    		System.out.println("*************************************************************");
-    		System.out.println("*************************************************************");
-    		System.out.println("JPQL: ["+jpqlString+"]");
-    		System.out.println("Dato: ["+datoFind.toLowerCase()+"]");
-    		System.out.println("*************************************************************");
-    		System.out.println("*************************************************************");
-    		*/ 
             Query query = em.createQuery( jpqlString );
             if(tipoFind.equals("0"))
             	query.setParameter("datoFind", "%"+datoFind.toLowerCase()+"%");
             else if(tipoFind.equals("1"))
             	query.setParameter("datoFind", Long.parseLong(datoFind));
             return query.getResultList();
-        }/*catch (Exception e){
-        	e.printStackTrace();
-        	return null;
-        }*/finally {
+        }
+        finally {
             if (em != null) {
                 em.close();
             }

@@ -73,6 +73,9 @@ public class Credito implements Serializable {
 	
 	@Transient
 	private String fechaALiquidar;
+	
+	@Transient
+	private String tipoRecalcularPago;
 
 	//bi-directional many-to-one association to Abono
 	@OneToMany(mappedBy="credito")
@@ -321,6 +324,16 @@ public class Credito implements Serializable {
 
 	public void setFechaALiquidar(String fechaALiquidar) {
 		this.fechaALiquidar = fechaALiquidar;
+	}
+
+
+	public String getTipoRecalcularPago() {
+		return tipoRecalcularPago;
+	}
+
+
+	public void setTipoRecalcularPago(String tipoRecalcularPago) {
+		this.tipoRecalcularPago = tipoRecalcularPago;
 	}
 
 }

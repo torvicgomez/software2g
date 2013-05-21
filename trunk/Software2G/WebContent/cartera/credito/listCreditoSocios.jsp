@@ -63,6 +63,13 @@
 		document.form.action="pagosCredito.action?id="+idCredito;
 		document.form.submit();
 	}
+
+	function cambioTipoRecPag(obj){
+		document.getElementById("recalculoPagos").value = obj.value; 
+	}
+	
+											
+
 	
 	</script>
 </head>
@@ -329,15 +336,27 @@
 										<strong><font size="3" color="#FF0000"><s:property value="creditoVO.credFechaultimopago"/></font></strong>
 									</td>
 									<th class="text" align="left" valign="top">
+										<input type="radio" name="tipoRecalcularPag" checked="checked" value="0" onclick="javascript:cambioTipoRecPag(this);" />
 										<font size="3"><s:text name="creditossocios.fechadecorte"></s:text></font>
 									</th>
-									<td align="left" valign="top">
-										<!--<strong><font size="3" color="#FF0000"><s:property value="creditoVO.fechaALiquidar"/></font></strong>-->
+									<td align="left" valign="top"  colspan="2">
 										<s:textfield name="creditoVO.fechaALiquidar" id="fechaCorte" size="15" maxlength="10"></s:textfield>
 										<img alt="Fecha de Corte" src="<s:url value="/imagenes/calendario.gif"/>" onclick="showCalendar('fechaCorte', 'y-mm-dd');">(yyyy-mm-dd)
 									</td>
-									<td align="left" valign="top" colspan="2">
+									<td align="left" valign="top" rowspan="2">
 										<s:submit value="Recalcular Pagos" action="calcularPago" cssClass="button"></s:submit>
+									</td>
+								</tr>
+								<tr>
+									<th class="text" align="left" valign="top">&nbsp;</th>
+									<td align="left" valign="top">&nbsp;</td>
+									<th class="text" align="left" valign="top">
+										<s:hidden name="creditoVO.tipoRecalcularPago" id="recalculoPagos" value="0"></s:hidden>
+										<input type="radio" name="tipoRecalcularPag" value="1"  onclick="javascript:cambioTipoRecPag(this);"/> 
+										<font size="3"><s:text name="creditossocios.valorapagar"></s:text></font>
+									</th>
+									<td align="left" valign="top"  colspan="2">
+										<s:textfield name="abonoVO.abonValortotal" size="15"></s:textfield>
 									</td>
 								</tr>
 								<tr>
@@ -406,6 +425,31 @@
 									</th>
 									<td align="right" valign="top">
 										<strong><font size="3" color="#FF0000"><s:property value="abonoVO.abonValortotalView"/></font></strong>
+									</td>
+								</tr>
+								<tr>
+									<th class="text" align="left" valign="top">
+										<s:text name="creditossocios.fecharegabono"></s:text>
+									</th>
+									<td class="text" align="left" valign="top">
+										<s:textfield name="abonoVO.abonFecha" id="fechaAbono" size="15" maxlength="10"></s:textfield>
+										<img alt="Fecha de Abono" src="<s:url value="/imagenes/calendario.gif"/>" onclick="showCalendar('fechaAbono', 'y-mm-dd');">(yyyy-mm-dd)
+									</td>
+									<th class="text" align="left" valign="top">
+										<s:text name="creditossocios.nrocomprobante"></s:text>
+									</th>
+									<td class="text" align="left" valign="top">
+										<s:textfield name="abonoVO.abonNrocomprobante"></s:textfield>
+									</td>
+									<th class="text" align="right" valign="top">
+										<s:text name="creditossocios.valorabono"></s:text> 
+									</th>
+									<td class="text" align="right" valign="top">
+										
+										<!--<s:textfield name="abonoVO.abonValortotal" 
+												     cssStyle="text-align:right;color:#009500;border-color:#FFFFFF;border-width:0px;border-style:solid;font-size:20px" 
+												     size="10"></s:textfield>-->
+									
 									</td>
 								</tr>
 							</table>

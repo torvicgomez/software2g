@@ -356,7 +356,7 @@
 										<font size="3"><s:text name="creditossocios.valorapagar"></s:text></font>
 									</th>
 									<td align="left" valign="top"  colspan="2">
-										<s:textfield name="abonoVO.abonValortotal" size="15"></s:textfield>
+										<s:textfield name="abonoVO.valoraPagar" size="15"></s:textfield>
 									</td>
 								</tr>
 								<tr>
@@ -413,45 +413,58 @@
 								</tr>
 								<tr>
 									<th class="text" align="right" valign="top" colspan="5">
+										<font size="3"><s:text name="creditossocios.abonoacapitaladc"></s:text></font>
+									</th>
+									<td align="right" valign="top">
+										<strong><font size="3" color="#FF0000"><s:property value="abonoVO.abonValorcapitaladicionalView"/></font></strong>
+									</td>
+								</tr>
+								<tr>
+									<th class="text" align="right" valign="top" colspan="5">
 										<font size="3"><s:text name="creditossocios.abonoacapital"></s:text></font>
 									</th>
 									<td align="right" valign="top">
 										<strong><font size="3" color="#FF0000"><s:property value="abonoVO.abonValorcapitalView"/></font></strong>
 									</td>
 								</tr>
+								
 								<tr>
-									<th class="text" align="right" valign="top" colspan="5">
+									<td align="right" valign="top" colspan="4">
+										<table border="0" width="100%">
+											<tr>
+												<th class="text" align="left" valign="top">
+													<s:text name="creditossocios.fecharegabono"></s:text>
+												</th>
+												<td class="text" align="left" valign="top">
+													<s:textfield name="abonoVO.abonFecha" id="fechaAbono" size="15" maxlength="10"></s:textfield>
+													<img alt="Fecha de Abono" src="<s:url value="/imagenes/calendario.gif"/>" onclick="showCalendar('fechaAbono', 'y-mm-dd');">(yyyy-mm-dd)
+												</td>
+												<th class="text" align="left" valign="top">
+													<s:text name="creditossocios.nrocomprobante"></s:text>
+												</th>
+												<td class="text" align="left" valign="top">
+													<s:textfield name="abonoVO.abonNrocomprobante"></s:textfield>
+												</td>
+											</tr>
+										</table>
+									</td>								
+									<th class="text" align="right" valign="top">
 										<font size="3"><s:text name="creditossocios.totolapagar"></s:text></font>
 									</th>
 									<td align="right" valign="top">
-										<strong><font size="3" color="#FF0000"><s:property value="abonoVO.abonValortotalView"/></font></strong>
+										<strong><font size="3" color="#009500"><s:property value="abonoVO.abonValortotalView"/></font></strong>
 									</td>
 								</tr>
-								<tr>
-									<th class="text" align="left" valign="top">
-										<s:text name="creditossocios.fecharegabono"></s:text>
-									</th>
-									<td class="text" align="left" valign="top">
-										<s:textfield name="abonoVO.abonFecha" id="fechaAbono" size="15" maxlength="10"></s:textfield>
-										<img alt="Fecha de Abono" src="<s:url value="/imagenes/calendario.gif"/>" onclick="showCalendar('fechaAbono', 'y-mm-dd');">(yyyy-mm-dd)
-									</td>
-									<th class="text" align="left" valign="top">
-										<s:text name="creditossocios.nrocomprobante"></s:text>
-									</th>
-									<td class="text" align="left" valign="top">
-										<s:textfield name="abonoVO.abonNrocomprobante"></s:textfield>
-									</td>
+								<!--<tr>
 									<th class="text" align="right" valign="top">
 										<s:text name="creditossocios.valorabono"></s:text> 
 									</th>
 									<td class="text" align="right" valign="top">
-										
-										<!--<s:textfield name="abonoVO.abonValortotal" 
+										<s:textfield name="abonoVO.abonValortotal" 
 												     cssStyle="text-align:right;color:#009500;border-color:#FFFFFF;border-width:0px;border-style:solid;font-size:20px" 
-												     size="10"></s:textfield>-->
-									
+												     size="10"></s:textfield>
 									</td>
-								</tr>
+								</tr>-->
 							</table>
 						</td>
 					</tr>

@@ -2,7 +2,10 @@ package com.software2g.contable.facade.impl;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -1079,15 +1082,9 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 	public Abono liquidacionPagoCredito(Credito creditoVO)throws Exception {
 		try {
 			Abono abonoVO = new Abono();
-			double diasLiquidados = 0;
-			double diasMora = 0;
-			if(creditoVO.getTipoRecalcularPago()==null||creditoVO.getTipoRecalcularPago().equals("")||creditoVO.getTipoRecalcularPago().equals("0")){
-				diasLiquidados = this.diasLiquidados(creditoVO.getCredFechaultimopago(),
+			double diasLiquidados = this.diasLiquidados(creditoVO.getCredFechaultimopago(),
 					creditoVO.getFechaALiquidar()==null||creditoVO.getFechaALiquidar().equals("")?ValidaString.fechaSystem():creditoVO.getFechaALiquidar());
-			}else if(creditoVO.getTipoRecalcularPago().equals("1")){
-				diasLiquidados = 0;
-			}
-			diasMora = this.diasMora(diasLiquidados);
+			double diasMora = this.diasMora(diasLiquidados);
 			abonoVO.setCredito(creditoVO);
 			abonoVO.setDiasLiquidados(diasLiquidados);
 			abonoVO.setDiasMora(diasMora);
@@ -1125,7 +1122,6 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 	}
 	
 	public double diasLiquidados(String fechaUltPago, double valoraPagar){
-		
 		return 0;
 	}
 	
@@ -1173,5 +1169,78 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 	public double valorTotalaPagar(double abonoCapital, double valorIntCorriente, double valorIntMora, double valorSeguro, double valorOtroRec){
 		return abonoCapital+valorIntCorriente+valorIntMora+valorSeguro+valorOtroRec;
 	}
+
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public String obtenerFechaCorte(Credito creditoVO, double valorapagar)throws Exception{
+		double diasLiquidados = this.valorAbonoCapital(creditoVO.getCredMontocredito(), creditoVO.getTipocredito().getTicrTiempomes(), 
+														creditoVO.getCredSaldo(), creditoVO.getTipocredito().getTicrTasainteresvencido(), 
+														creditoVO.getTipocredito().getTicrInteresmoramesven(), 
+														1, 0, valorapagar);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		System.out.println("--------------------------------------------------------------");
+		System.out.println("--------------------------------------------------------------");
+		System.out.println("diasLiquidados: ["+diasLiquidados+"]");
+		System.out.println("creditoVO.getCredFechaultimopago(): ["+creditoVO.getCredFechaultimopago()+"]");
+		System.out.println("año: ["+Integer.parseInt(creditoVO.getCredFechaultimopago().substring(0, 4))+"]");
+		System.out.println("mes: ["+Integer.parseInt(creditoVO.getCredFechaultimopago().substring(5, 7))+"]");
+		System.out.println("dia: ["+Integer.parseInt(creditoVO.getCredFechaultimopago().substring(8, 10))+"]");
+		System.out.println("--------------------------------------------------------------");
+		System.out.println("--------------------------------------------------------------");
+		Date fechaInicio = new Date(Integer.parseInt(creditoVO.getCredFechaultimopago().substring(0, 4))-1900, 
+				Integer.parseInt(creditoVO.getCredFechaultimopago().substring(5, 7)),
+				Integer.parseInt(creditoVO.getCredFechaultimopago().substring(8, 10)));
+		
+		System.out.println("............................................................");
+		System.out.println("............................................................");
+		System.out.println("fechaCorte: ["+sdf.format(fechaInicio)+"]");
+		System.out.println("............................................................");
+		System.out.println("............................................................");
+		
+		
+		long dias = (long)diasLiquidados*24 * 60 * 60 * 1000;
+		System.out.println(fechaInicio.getTime()+" + "+dias+" = "+(fechaInicio.getTime()+dias));
+		Date fechaCorte = new java.util.Date(fechaInicio.getTime() + dias);
+		
+		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println("fechaCorte: ["+fechaCorte+"]");
+		System.out.println("fechaCorte: ["+sdf.format(fechaCorte)+"]");
+		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		
+		Calendar cal = new GregorianCalendar();
+        cal.setTimeInMillis(fechaInicio.getTime());
+        cal.add(Calendar.DATE, (int) diasLiquidados);
+        System.out.println("**************************************************************************");
+        System.out.println("**************************************************************************");
+        System.out.println("**************************************************************************");
+        System.out.println("fechaCorte: ["+sdf.format(new java.sql.Date(cal.getTimeInMillis()))+"]");
+        System.out.println("**************************************************************************");
+        System.out.println("**************************************************************************");
+        System.out.println("**************************************************************************");
+		return ValidaString.fechaSystem();
+	}
+	
+	private double valorAbonoCapital(double montoCredito, double periocidadCobro, double saldoCredito, double interesCorriente, double interesMora, 
+									double diasLiquidados, double diasMora, double valorapagar){
+		System.out.println("------------------------------------------------------------");
+		System.out.println("diasLiquidados: ["+diasLiquidados+"]");
+		System.out.println("diasMora: ["+diasMora+"]");
+		System.out.println("valorapagar:["+valorapagar+"]");
+		double abonoCapital = (montoCredito/periocidadCobro)*(diasLiquidados/ConstantesAplicativo.DIAS_MES);
+		System.out.println("abonoCapital: ["+abonoCapital+"]");
+		double valorIntCorriente = diasLiquidados>=30?(saldoCredito*interesCorriente)/100:(((saldoCredito*interesCorriente)/100)*diasLiquidados)/ConstantesAplicativo.DIAS_MES;
+		System.out.println("valorIntCorriente: ["+valorIntCorriente+"]");
+		double valorIntMora = diasMora>0?((saldoCredito*interesMora)/100)*(diasMora/ConstantesAplicativo.DIAS_MES):0;
+		System.out.println("valorIntMora: ["+valorIntMora+"]");
+		
+		if((abonoCapital+valorIntCorriente+valorIntMora)>valorapagar)
+			return diasLiquidados-1;
+		else
+			return valorAbonoCapital(montoCredito, periocidadCobro, saldoCredito, interesCorriente, interesMora, 
+					(diasLiquidados+1), (diasLiquidados+1)>30?(diasMora+1):0, valorapagar);
+	}
+	
+	
 	
 }

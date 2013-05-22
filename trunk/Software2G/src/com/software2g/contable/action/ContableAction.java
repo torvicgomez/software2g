@@ -916,8 +916,21 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     			System.out.println("***************************************************************");
     			System.out.println("***************************************************************");
     			
-    			String fechaLiquidar = getCreditoVO().getFechaALiquidar();
-    			setCreditoVO(gestionFacadeContable.findCreditoById(getCreditoVO().getCredId()));
+    			String fechaLiquidar = null; 
+    			if(creditoVO.getTipoRecalcularPago()==null||creditoVO.getTipoRecalcularPago().equals("")||creditoVO.getTipoRecalcularPago().equals("0")){
+    				fechaLiquidar = getCreditoVO().getFechaALiquidar();
+    				setCreditoVO(gestionFacadeContable.findCreditoById(getCreditoVO().getCredId()));
+    			}else if(creditoVO.getTipoRecalcularPago().equals("1")){
+    				setCreditoVO(gestionFacadeContable.findCreditoById(getCreditoVO().getCredId()));
+    				fechaLiquidar = gestionFacadeContable.obtenerFechaCorte(getCreditoVO(), getAbonoVO().getAbonValortotal());
+    			}
+    			System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++");
+    			System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++");
+    			System.out.println("fechaLiquidar: ["+fechaLiquidar+"]");
+    			System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++");
+    			System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++");
+    			
+    			
     			if(!ValidaString.validarFecha(fechaLiquidar)){
     				addActionMessage(getText("validacion.requeridofecha","fechaaliquidar","Fecha de Corte"));
     				getCreditoVO().setFechaALiquidar(ValidaString.fechaSystem());

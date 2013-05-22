@@ -163,4 +163,5 @@ public interface IGestionFacadeContable {
 	//-----------------------------------------------------------
 	
 	public Abono liquidacionPagoCredito(Credito creditoVO)throws Exception;
+	public String obtenerFechaCorte(Credito creditoVO, double valorapagar)throws Exception;
 }

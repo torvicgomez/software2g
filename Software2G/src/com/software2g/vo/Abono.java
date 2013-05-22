@@ -68,6 +68,9 @@ public class Abono implements Serializable {
 	
 	@Transient
 	private String abonValortotalView;
+	
+	@Transient
+	private double valoraPagar;
 
 	@Column(name="abon_nrocomprobante")
 	private String abonNrocomprobante;
@@ -77,6 +80,12 @@ public class Abono implements Serializable {
 	
 	@Column(name="abon_diamora") 
 	private double diasMora;
+	
+	@Column(name="abon_valorcapitaladicional")
+	private double abonValorcapitaladicional;
+	
+	@Transient
+	private String abonValorcapitaladicionalView;
 	
 	//bi-directional many-to-one association to Credito
 	@ManyToOne
@@ -234,6 +243,27 @@ public class Abono implements Serializable {
 
 	public void setDiasMora(double diasMora) {
 		this.diasMora = diasMora;
+	}
+
+	public double getAbonValorcapitaladicional() {
+		return abonValorcapitaladicional;
+	}
+
+	public void setAbonValorcapitaladicional(double abonValorcapitaladicional) {
+		this.abonValorcapitaladicional = abonValorcapitaladicional;
+	}
+
+	public double getValoraPagar() {
+		return valoraPagar;
+	}
+
+	public void setValoraPagar(double valoraPagar) {
+		this.valoraPagar = valoraPagar;
+	}
+
+	public String getAbonValorcapitaladicionalView() {
+		abonValorcapitaladicionalView = ValidaString.formatToMoney(String.valueOf(abonValorcapitaladicional));
+		return abonValorcapitaladicionalView;
 	}
 
 }

@@ -1,0 +1,8 @@
+abon_nrocomprobante character varying(20),
+abon_diasliq double precision NOT NULL,
+abon_diamora double precision NOT NULL,
+abon_valorcapitaladicional double precision,
+  
+  
+direccion_pers character varying(100),
+telefono_pers character varying(30),

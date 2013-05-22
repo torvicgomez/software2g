@@ -1,7 +1,10 @@
 package com.software2g.contable.action;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -916,14 +919,34 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     			System.out.println("***************************************************************");
     			System.out.println("***************************************************************");
     			
-    			String fechaLiquidar = null; 
+    			String fechaLiquidar = null;
+    			boolean band = true;
     			if(creditoVO.getTipoRecalcularPago()==null||creditoVO.getTipoRecalcularPago().equals("")||creditoVO.getTipoRecalcularPago().equals("0")){
     				fechaLiquidar = getCreditoVO().getFechaALiquidar();
+    				//Validar que la fecha a liquidar no sea superior a la fecha actual.
+    				
     				setCreditoVO(gestionFacadeContable.findCreditoById(getCreditoVO().getCredId()));
     			}else if(creditoVO.getTipoRecalcularPago().equals("1")){
     				setCreditoVO(gestionFacadeContable.findCreditoById(getCreditoVO().getCredId()));
-    				fechaLiquidar = gestionFacadeContable.obtenerFechaCorte(getCreditoVO(), getAbonoVO().getAbonValortotal());
+    				fechaLiquidar = gestionFacadeContable.obtenerFechaCorte(getCreditoVO(), getAbonoVO().getValoraPagar());
+    				String fechaActual = ValidaString.fechaSystem();
+    				Calendar fecha1 = new GregorianCalendar(Integer.parseInt(fechaLiquidar.substring(0, 4)), 
+    						Integer.parseInt(fechaLiquidar.substring(5, 7))-1,
+    						Integer.parseInt(fechaLiquidar.substring(8, 10)));
+    				Calendar fecha2 = new GregorianCalendar(Integer.parseInt(fechaActual.substring(0, 4)),  
+    						Integer.parseInt(fechaActual.substring(5, 7))-1,
+    						Integer.parseInt(fechaActual.substring(8, 10)));
+    				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    				System.out.println("*****************************************");
+    				System.out.println("Fecha1: ["+sdf.format(new java.sql.Date(fecha1.getTimeInMillis()))+"]");
+    				System.out.println("Fecha2: ["+sdf.format(new java.sql.Date(fecha2.getTimeInMillis()))+"]");
+    				System.out.println("*****************************************");
+    				if(!ValidaString.esFechaMenor(fecha1, fecha2)){
+    					fechaLiquidar = ValidaString.fechaSystem();
+    					band = false;
+    				}
     			}
+    			
     			System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++");
     			System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++");
     			System.out.println("fechaLiquidar: ["+fechaLiquidar+"]");
@@ -936,7 +959,15 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     				getCreditoVO().setFechaALiquidar(ValidaString.fechaSystem());
     			}else
     				getCreditoVO().setFechaALiquidar(fechaLiquidar);
+    			double valoraPagar = getAbonoVO().getValoraPagar();
     			setAbonoVO(gestionFacadeContable.liquidacionPagoCredito(getCreditoVO()));
+    			if(!band){
+    				getAbonoVO().setAbonValorcapitaladicional(valoraPagar-getAbonoVO().getAbonValortotal());
+    				getAbonoVO().setAbonValortotal(valoraPagar);
+    				getAbonoVO().setValoraPagar(valoraPagar);
+    			}else
+    				getAbonoVO().setValoraPagar(getAbonoVO().getAbonValortotal());
+    				
     			estado="pagosCreditos";
     		}else{
     			setListPresupuesto(gestionFacadeContable.findAllPresupuestos());

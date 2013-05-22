@@ -5,7 +5,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -159,4 +161,21 @@ public class ValidaString {
     	}
     }
     
+    public static String obtenerFechaCorte(int ano, int mes, int dia, int nrodias){
+    	SimpleDateFormat sdf = new SimpleDateFormat(formatoFecha);
+		Calendar cal = new GregorianCalendar(ano, (mes-1), dia);
+        cal.add(Calendar.DATE, (int) nrodias);
+        return sdf.format(new java.sql.Date(cal.getTimeInMillis()));
+    }
+    
+    public static boolean esFechaMenor(Calendar f1,Calendar f2) {
+        SimpleDateFormat sdf = new SimpleDateFormat(formatoFecha);
+        try {
+            Date fr1 = sdf.parse(sdf.format(f1.getTime()));
+            Date fr2 = sdf.parse(sdf.format(f2.getTime()));
+            return fr1.before(fr2);
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

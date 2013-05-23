@@ -64,12 +64,18 @@
 		document.form.submit();
 	}
 
-	function cambioTipoRecPag(obj){
-		document.getElementById("recalculoPagos").value = obj.value; 
+	function cambioTipoRecPag(obj, tipo){
+		document.getElementById("recalculoPagos").value = obj.value;
+		if(tipo=='fec'){
+			document.getElementById("valorapagar").disabled = true;
+			document.getElementById("fechaCorte").disabled = false;
+			document.getElementById("divFechaCorte").style.display = 'block';
+		}else if(tipo=='val'){
+			document.getElementById("valorapagar").disabled = false;
+			document.getElementById("fechaCorte").disabled = true;
+			document.getElementById("divFechaCorte").style.display = 'none'; 
+		} 
 	}
-	
-											
-
 	
 	</script>
 </head>
@@ -336,14 +342,15 @@
 										<strong><font size="3" color="#FF0000"><s:property value="creditoVO.credFechaultimopago"/></font></strong>
 									</td>
 									<th class="text" align="left" valign="top">
-										<input type="radio" name="tipoRecalcularPag" checked="checked" value="0" onclick="javascript:cambioTipoRecPag(this);" />
+										<input type="radio" name="tipoRecalcularPag" checked="checked" value="0" onclick="javascript:cambioTipoRecPag(this,'fec');" />
 										<font size="3"><s:text name="creditossocios.fechadecorte"></s:text></font>
 									</th>
 									<td align="left" valign="top"  colspan="2">
-										<s:textfield name="creditoVO.fechaALiquidar" id="fechaCorte" size="15" maxlength="10"></s:textfield>
-										<img alt="Fecha de Corte" src="<s:url value="/imagenes/calendario.gif"/>" onclick="showCalendar('fechaCorte', 'y-mm-dd');">(yyyy-mm-dd)
+										<table border="0" width="100%"><tr><td><s:textfield name="creditoVO.fechaALiquidar" id="fechaCorte" size="15" maxlength="10"></s:textfield></td>
+										<td><div id="divFechaCorte" style="overflow:auto;width:auto;height:auto;display:block"><img alt="Fecha de Corte" src="<s:url value="/imagenes/calendario.gif"/>" onclick="showCalendar('fechaCorte', 'y-mm-dd');"></div></td>
+										<td>(yyyy-mm-dd)</td></tr></table>
 									</td>
-									<td align="left" valign="top" rowspan="2">
+									<td align="center" valign="middle" rowspan="2">
 										<s:submit value="Recalcular Pagos" action="calcularPago" cssClass="button"></s:submit>
 									</td>
 								</tr>
@@ -352,11 +359,11 @@
 									<td align="left" valign="top">&nbsp;</td>
 									<th class="text" align="left" valign="top">
 										<s:hidden name="creditoVO.tipoRecalcularPago" id="recalculoPagos" value="0"></s:hidden>
-										<input type="radio" name="tipoRecalcularPag" value="1"  onclick="javascript:cambioTipoRecPag(this);"/> 
+										<input type="radio" name="tipoRecalcularPag" value="1"  onclick="javascript:cambioTipoRecPag(this,'val');"/> 
 										<font size="3"><s:text name="creditossocios.valorapagar"></s:text></font>
 									</th>
 									<td align="left" valign="top"  colspan="2">
-										<s:textfield name="abonoVO.valoraPagar" size="15"></s:textfield>
+										<s:textfield name="abonoVO.valoraPagar" id="valorapagar" size="15" disabled="true"> </s:textfield>
 									</td>
 								</tr>
 								<tr>

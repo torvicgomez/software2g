@@ -5,7 +5,8 @@
 <!--<LINK REL=STYLESHEET TYPE="text/css" HREF="js/jpowered_style.css"> -->
 <%
 	Usuario usuarioLogin = (Usuario) request.getSession().getAttribute("usuarioLogin");
-	String nameFileFuncUser = "inicial"; 
+	String nameFileFuncUser = "inicial";
+	//String nameFileFuncUser = "pruebasUtilidades"; 
 	/*if(usuarioLogin.getNombreFileFunc()!=null&&!usuarioLogin.getNombreFileFunc().equals(""))
 		nameFileFuncUser = usuarioLogin.getNombreFileFunc();
 	else 

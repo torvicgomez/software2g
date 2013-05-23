@@ -913,19 +913,23 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
 		String  result = Action.SUCCESS; 
     	try {
     		if(getCreditoVO()!=null&&getCreditoVO().getCredId()>0){
-    			System.out.println("***************************************************************");
-    			System.out.println("***************************************************************");
-    			System.out.println("tipo Recalculo: ["+getCreditoVO().getTipoRecalcularPago()+"]");
-    			System.out.println("***************************************************************");
-    			System.out.println("***************************************************************");
-    			
     			String fechaLiquidar = null;
     			boolean band = true;
     			if(creditoVO.getTipoRecalcularPago()==null||creditoVO.getTipoRecalcularPago().equals("")||creditoVO.getTipoRecalcularPago().equals("0")){
     				fechaLiquidar = getCreditoVO().getFechaALiquidar();
     				//Validar que la fecha a liquidar no sea superior a la fecha actual.
-    				
-    				setCreditoVO(gestionFacadeContable.findCreditoById(getCreditoVO().getCredId()));
+    				String fechaActual = ValidaString.fechaSystem();
+    				Calendar fecha1 = new GregorianCalendar(Integer.parseInt(fechaLiquidar.substring(0, 4)), 
+    						Integer.parseInt(fechaLiquidar.substring(5, 7))-1,
+    						Integer.parseInt(fechaLiquidar.substring(8, 10)));
+    				Calendar fecha2 = new GregorianCalendar(Integer.parseInt(fechaActual.substring(0, 4)),  
+    						Integer.parseInt(fechaActual.substring(5, 7))-1,
+    						Integer.parseInt(fechaActual.substring(8, 10)));
+    				fecha2.add(Calendar.DATE, 1);
+    				if(ValidaString.esFechaMenor(fecha1, fecha2))
+    					setCreditoVO(gestionFacadeContable.findCreditoById(getCreditoVO().getCredId()));
+    				else
+    					addActionMessage(getText("validacion.fechacorte","fechacorte",""));
     			}else if(creditoVO.getTipoRecalcularPago().equals("1")){
     				setCreditoVO(gestionFacadeContable.findCreditoById(getCreditoVO().getCredId()));
     				fechaLiquidar = gestionFacadeContable.obtenerFechaCorte(getCreditoVO(), getAbonoVO().getValoraPagar());
@@ -936,38 +940,31 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     				Calendar fecha2 = new GregorianCalendar(Integer.parseInt(fechaActual.substring(0, 4)),  
     						Integer.parseInt(fechaActual.substring(5, 7))-1,
     						Integer.parseInt(fechaActual.substring(8, 10)));
-    				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    				System.out.println("*****************************************");
-    				System.out.println("Fecha1: ["+sdf.format(new java.sql.Date(fecha1.getTimeInMillis()))+"]");
-    				System.out.println("Fecha2: ["+sdf.format(new java.sql.Date(fecha2.getTimeInMillis()))+"]");
-    				System.out.println("*****************************************");
     				if(!ValidaString.esFechaMenor(fecha1, fecha2)){
     					fechaLiquidar = ValidaString.fechaSystem();
     					band = false;
     				}
     			}
     			
-    			System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++");
-    			System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++");
-    			System.out.println("fechaLiquidar: ["+fechaLiquidar+"]");
-    			System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++");
-    			System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++");
-    			
-    			
-    			if(!ValidaString.validarFecha(fechaLiquidar)){
-    				addActionMessage(getText("validacion.requeridofecha","fechaaliquidar","Fecha de Corte"));
-    				getCreditoVO().setFechaALiquidar(ValidaString.fechaSystem());
-    			}else
-    				getCreditoVO().setFechaALiquidar(fechaLiquidar);
-    			double valoraPagar = getAbonoVO().getValoraPagar();
-    			setAbonoVO(gestionFacadeContable.liquidacionPagoCredito(getCreditoVO()));
-    			if(!band){
-    				getAbonoVO().setAbonValorcapitaladicional(valoraPagar-getAbonoVO().getAbonValortotal());
-    				getAbonoVO().setAbonValortotal(valoraPagar);
-    				getAbonoVO().setValoraPagar(valoraPagar);
-    			}else
-    				getAbonoVO().setValoraPagar(getAbonoVO().getAbonValortotal());
-    				
+    			if(!hasActionMessages()){
+	    			if(!ValidaString.validarFecha(fechaLiquidar)){
+	    				addActionMessage(getText("validacion.requeridofecha","fechaaliquidar","Fecha de Corte"));
+	    				getCreditoVO().setFechaALiquidar(ValidaString.fechaSystem());
+	    			}else
+	    				getCreditoVO().setFechaALiquidar(fechaLiquidar);
+	    			double valoraPagar = getAbonoVO().getValoraPagar();
+	    			setAbonoVO(gestionFacadeContable.liquidacionPagoCredito(getCreditoVO()));
+	    			if(!band){
+	    				getAbonoVO().setAbonValorcapitaladicional(valoraPagar-getAbonoVO().getAbonValortotal());
+	    				getAbonoVO().setAbonValortotal(valoraPagar);
+	    				getAbonoVO().setValoraPagar(valoraPagar);
+	    			}else
+	    				getAbonoVO().setValoraPagar(getAbonoVO().getAbonValortotal());
+    			}else{
+    				setCreditoVO(gestionFacadeContable.findCreditoById(getCreditoVO().getCredId()));
+        			getCreditoVO().setFechaALiquidar(ValidaString.fechaSystem());
+        			setAbonoVO(gestionFacadeContable.liquidacionPagoCredito(getCreditoVO()));
+    			}
     			estado="pagosCreditos";
     		}else{
     			setListPresupuesto(gestionFacadeContable.findAllPresupuestos());

@@ -201,5 +201,32 @@
         	<result name="success" type="tiles">contable.listCreditoSocio</result>
         </action>
         
+        
+        <action name="fileUploadAction" method="display" class="com.software2g.util.action.FileUploadAction"> 
+        	<result name="none">/PruebasUtil/fileupload.jsp</result> 
+        </action>
+        <action name="resultAction" class="com.software2g.util.action.FileUploadAction"> 
+        	<interceptor-ref name="exception"/> 
+        	<interceptor-ref name="i18n"/> 
+        	<interceptor-ref name="fileUpload"> 
+        		<param name="allowedTypes">text/plain</param> 
+        		<param name="maximumSize">2097152</param> 
+        	</interceptor-ref> 
+        	<interceptor-ref name="params"> 
+        		<param name="excludeParams">dojo\..*,^struts\..*</param> 
+        	</interceptor-ref>
+        	<interceptor-ref name="validation"> 
+        		<param name="excludeMethods">input,back,cancel,browse</param> 
+        	</interceptor-ref> 
+        	<interceptor-ref name="workflow"> 
+        		<param name="excludeMethods">input,back,cancel,browse</param> 
+        	</interceptor-ref> 
+        	<result name="success">/PruebasUtil/result.jsp</result> 
+        	<result name="input">/PruebasUtil/fileupload.jsp</result> 
+        </action>
+        	
+        
+        
+        
     </package>
 </struts>

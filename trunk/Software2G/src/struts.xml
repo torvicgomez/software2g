@@ -2,7 +2,8 @@
 <!DOCTYPE struts PUBLIC
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
-<struts>   
+<struts>
+	<include file="struts-pruebasUtil.xml"></include>   
     <include file="struts-portal.xml"></include>
     <include file="struts-contable.xml"></include>
 </struts>

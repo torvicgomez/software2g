@@ -42,6 +42,9 @@
     	<constructor-arg ref="gestionFacadeContable"/> 
     </bean> 
     
+    <bean class="com.software2g.util.action.FileUploadAction" id="FileUploadAction" scope="prototype"></bean>
+    
+    
 	 <!--  CONFIGURACION TILES -->
  	<bean class="com.software2g.web.tiles2.SpringTilesConfigurer" id="tilesConfigurer"> 
  		<property name="definitions"> 

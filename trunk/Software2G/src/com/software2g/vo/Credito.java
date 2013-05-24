@@ -50,6 +50,9 @@ public class Credito implements Serializable {
 	@Column(name="cred_saldo")
 	private double credSaldo;
 	
+	@Column(name="cred_abonocapital")
+	private double credAbonocapital;
+	
 	@Transient
 	private String credSaldoView;
 	
@@ -334,6 +337,15 @@ public class Credito implements Serializable {
 
 	public void setTipoRecalcularPago(String tipoRecalcularPago) {
 		this.tipoRecalcularPago = tipoRecalcularPago;
+	}
+
+
+	public double getCredAbonocapital() {
+		return credAbonocapital;
+	}
+
+	public void setCredAbonocapital(double credAbonocapital) {
+		this.credAbonocapital = credAbonocapital;
 	}
 
 }

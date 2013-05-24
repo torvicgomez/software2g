@@ -1167,7 +1167,9 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 	}
 	
 	public double valorTotalaPagar(double abonoCapital, double valorIntCorriente, double valorIntMora, double valorSeguro, double valorOtroRec){
-		return abonoCapital+valorIntCorriente+valorIntMora+valorSeguro+valorOtroRec;
+		DecimalFormat  df = new DecimalFormat("###########0.00");
+		String valor = df.format(abonoCapital+valorIntCorriente+valorIntMora+valorSeguro+valorOtroRec);
+		return Double.parseDouble(valor.replace(',','.'));
 	}
 
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)

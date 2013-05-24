@@ -8,6 +8,7 @@ public final class ConstantesAplicativo {
 	public static final String estadoActivo="1";
 	public static final String estadoInactivo="0";
 	public static final String estadoCreditoVigente="VIGENTE";
+	public static final String estadoCreditoCancelado="CANCELADO";
 	public static final String textomsgCredito="CREDITO";
 	
 }

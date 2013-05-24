@@ -894,6 +894,8 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     			setCreditoVO(gestionFacadeContable.findCreditoById(Long.parseLong((String)request.getParameter("id"))));
     			getCreditoVO().setFechaALiquidar(ValidaString.fechaSystem());
     			setAbonoVO(gestionFacadeContable.liquidacionPagoCredito(getCreditoVO()));
+    			request.getSession().setAttribute("creditoVO", getCreditoVO());
+    			request.getSession().setAttribute("abonoVO", getAbonoVO());
     			estado="pagosCreditos";
     		}else{
     			setListPresupuesto(gestionFacadeContable.findAllPresupuestos());
@@ -965,7 +967,10 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
         			getCreditoVO().setFechaALiquidar(ValidaString.fechaSystem());
         			setAbonoVO(gestionFacadeContable.liquidacionPagoCredito(getCreditoVO()));
     			}
+    			request.getSession().setAttribute("creditoVO", getCreditoVO());
+    			request.getSession().setAttribute("abonoVO", getAbonoVO());
     			estado="pagosCreditos";
+    			
     		}else{
     			setListPresupuesto(gestionFacadeContable.findAllPresupuestos());
     			setListTipoCredito(gestionFacadeContable.findAllTipocreditos());
@@ -979,6 +984,67 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     	return result;
 	}
 
+	@SkipValidation
+    public String guardarAbonoCreditos(){
+		String  result = Action.SUCCESS; 
+    	try {
+    		//ValidaString.imprimirObject(getCreditoVO());
+    		//ValidaString.imprimirObject(getAbonoVO());
+    		if(!ValidaString.validarFecha(abonoVO.getAbonFecha()))
+				addActionMessage(getText("validacion.requerido","fechaabono","Fecha Abono"));
+			if(abonoVO.getAbonNrocomprobante()==null||abonoVO.getAbonNrocomprobante().equals(""))
+				addActionMessage(getText("validacion.requerido","nrocomprobantepago","Nro Comprobante"));
+    		if(!hasActionMessages()){
+    			String fechaCorte = creditoVO.getFechaALiquidar();
+    			String fechaAbono = abonoVO.getAbonFecha();
+    			String nroComprobante = abonoVO.getAbonNrocomprobante();
+    			setCreditoVO((Credito)request.getSession().getAttribute("creditoVO"));
+        		setAbonoVO((Abono)request.getSession().getAttribute("abonoVO"));
+        		abonoVO.setAbonFecha(fechaAbono);
+        		abonoVO.setAbonNrocomprobante(nroComprobante);
+        		abonoVO.setAbonFechamodificacion(ValidaString.fechaSystem());
+        		abonoVO.setAbonHora(ValidaString.horaSystem());
+        		abonoVO.setAbonRegistradopor(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua());
+        		gestionFacadeContable.persistAbono(abonoVO);
+        		
+        		creditoVO.setCredSaldo(creditoVO.getCredSaldo()-abonoVO.getAbonValortotal());
+        		creditoVO.setCredInteres(creditoVO.getCredInteres()+abonoVO.getAbonValorinteres());
+        		creditoVO.setCredValorseguro(creditoVO.getCredValorseguro()+abonoVO.getAbonValorseguro());
+        		creditoVO.setCredInteresmora(creditoVO.getCredInteresmora()+abonoVO.getAbonValorinteresmora());
+        		creditoVO.setCredOtroscargos(creditoVO.getCredOtroscargos()+abonoVO.getAbonOtrocargo());
+        		creditoVO.setCredAbonocapital(creditoVO.getCredAbonocapital()+abonoVO.getAbonValorcapitaladicional());
+        		creditoVO.setCredFechaultimopago(fechaCorte);
+        		creditoVO.setCredEstado(creditoVO.getCredSaldo()==0?ConstantesAplicativo.estadoCreditoCancelado:ConstantesAplicativo.estadoCreditoVigente);
+        		creditoVO.setCredFechamodificacion(ValidaString.fechaSystem());
+        		creditoVO.setCredHora(ValidaString.horaSystem());
+        		creditoVO.setCredRegistradopor(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua());
+        		gestionFacadeContable.persistCredito(creditoVO);
+        		
+        		
+        		presupuestoVO = creditoVO.getPresupuesto();
+        		presupuestoVO.setPresValor(presupuestoVO.getPresValor()+abonoVO.getAbonValortotal());
+        		presupuestoVO.setPresFechamodificacion(ValidaString.fechaSystem());
+        		presupuestoVO.setPresHora(ValidaString.horaSystem());
+        		presupuestoVO.setPresRegistradopor(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua());
+        		gestionFacadeContable.persistPresupuesto(presupuestoVO);
+        		
+        		
+        		setListCredito(gestionFacadeContable.findAllCreditos());
+        		estado="listarCreditosSocios";
+    		}else{
+    			setCreditoVO((Credito)request.getSession().getAttribute("creditoVO"));
+        		setAbonoVO((Abono)request.getSession().getAttribute("abonoVO"));
+    			estado="pagosCreditos";
+    		}
+    	} catch (Exception e) {
+			addActionMessage(getText("error.aplicacion"));
+			e.printStackTrace();
+		}
+		System.out.println("result: ["+result+"]");
+    	return result;
+	}
+	
+	
 	@SkipValidation
     public String loadTitularCredito(){
 		String  result = Action.SUCCESS; 

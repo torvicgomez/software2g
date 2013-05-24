@@ -9,7 +9,7 @@
 <table width="100%" align="center" height="100%" border="0" >
 	<tr>
 		<td valign="top" width="100%" height="100%">
-			<div class="border" >
+			<div  >
 				<jsp:include page="footer.jsp"></jsp:include>
 			</div>
 		</td>

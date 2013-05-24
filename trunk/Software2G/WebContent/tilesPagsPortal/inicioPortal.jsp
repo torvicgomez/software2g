@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<link href="<s:url value='/css/demo_page.css'/>" rel="stylesheet" type="text/css" />
+<link href="<s:url value='/css/scheme1.css'/>" rel="stylesheet" type="text/css" />
+<link href="<s:url value='/css/demo_table.css'/>" rel="stylesheet" type="text/css" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,15 +11,15 @@
 <title><s:text name="titulo.header"></s:text></title>
 <link rel="icon" href="http://localhost:8080/Software2G/imagenes/acafeto.png" type="image/png" />
 </head>
- <frameset rows="*,60" frameborder="no" border="0" framespacing="0">
-	<frameset rows="140,*" cols="*" frameborder="no" border="0" framespacing="0" >
-	  <frame src="tilesPagsPortal/encabezado.jsp" name="encabezado"  id="encabezado" noresize="noresize" />
-	  <frameset rows="*" cols="250,*" frameborder="no" border="0" framespacing="0">
-	    <frame src="tilesPagsPortal/treeMenu.jsp" name="treemenu" id="treemenu"  />
-	    <frame src="tilesPagsPortal/bienvenida.jsp" name="body" id="body" />
-	  </frameset>
+ <frameset rows="*,60" frameborder="yes" border="1" framespacing="0">
+	<frameset rows="140,*" cols="*" frameborder="yes" border="1" framespacing="0" >
+	  <frame src="tilesPagsPortal/encabezado.jsp" name="encabezado"  id="encabezado" noresize="noresize" class="border"/>
+	  <frameset rows="*" cols="250,*" frameborder="yes" border="1" framespacing="0">
+	    <frame src="tilesPagsPortal/treeMenu.jsp" name="treemenu" id="treemenu"  class="border"/>
+	    <frame src="tilesPagsPortal/bienvenida.jsp" name="body" id="body" class="border"/>
+	  </frameset> 
 	</frameset>
-	<frame src="tilesPagsPortal/piePagina.jsp" name="piePagina"  id="piePagina" noresize="noresize" />
+	<frame src="tilesPagsPortal/piePagina.jsp" name="piePagina"  id="piePagina" noresize="noresize" class="border" />
 </frameset>
 <noframes><body>
 </body>

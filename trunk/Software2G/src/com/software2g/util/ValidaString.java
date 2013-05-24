@@ -137,7 +137,7 @@ public class ValidaString {
         DecimalFormat fmt = new DecimalFormat("###,###,###,##0.00");
         String res = "0,00";
         if(!ValidaString.isNullOrEmptyString(str)){
-        	res=fmt.format(Float.parseFloat(str));
+        	res=fmt.format(Double.parseDouble(str));
         }
         return res;
     }
@@ -187,4 +187,9 @@ public class ValidaString {
     	return Double.parseDouble(valor.setScale(scale, mode).toString()); //.doubleValue();
     }
    
+    public static double operacionMathAproximacion(double val1, double val2, int operacion){
+    	DecimalFormat  df = new DecimalFormat("###########0.00");
+		String valor = df.format(operacion==1?val1+val2:operacion==2?val1-val2:0);
+		return Double.parseDouble(valor.replace(',','.'));
+    }
 }

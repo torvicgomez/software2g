@@ -97,6 +97,8 @@
 						</s:elseif>
 						<s:elseif test="estado=='pagosCreditos'">
 							<s:submit value="Cancelar" action="listCreditosSocios" cssClass="button"></s:submit>
+							<s:submit value="Ver Historial de Pagos" action="listHistorialPagos" cssClass="button"></s:submit>
+							<s:submit value="Registrar Pago" action="saveAbono" cssClass="button"></s:submit>
 						</s:elseif>
 					</td>
 				</tr>
@@ -142,10 +144,10 @@
 										<td width="10%">
 											<s:property value="credEstado"/>
 										</td>
-										<td width="10%">
+										<td width="10%" align="right">
 											<s:property value="credSaldoView"/>
 										</td>
-										<td width="10%">
+										<td width="10%" align="right">
 											<s:property value="credMontocreditoView"/>
 										</td>
 									</tr>

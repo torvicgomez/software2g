@@ -3,6 +3,7 @@ package com.software2g.util;
 import java.beans.Expression;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -178,4 +179,12 @@ public class ValidaString {
             return false;
         }
     }
+
+    public static double doublePrecision(BigDecimal valor,int scale, boolean roundUp){
+    	int mode = (roundUp) ? BigDecimal.ROUND_UP : BigDecimal.ROUND_DOWN;
+    	System.out.println("valor: ["+valor+"]");
+    	System.out.println("precision: ["+valor.setScale(scale, mode)+"]");
+    	return Double.parseDouble(valor.setScale(scale, mode).toString()); //.doubleValue();
+    }
+   
 }

@@ -957,9 +957,15 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
 	    			double valoraPagar = getAbonoVO().getValoraPagar();
 	    			setAbonoVO(gestionFacadeContable.liquidacionPagoCredito(getCreditoVO()));
 	    			if(!band){
-	    				getAbonoVO().setAbonValorcapitaladicional(valoraPagar-getAbonoVO().getAbonValortotal());
+	    				if((creditoVO.getCredSaldo()+abonoVO.getAbonValorinteres()+abonoVO.getAbonValorinteresmora()+abonoVO.getAbonValorseguro()+abonoVO.getAbonOtrocargo())
+	    						<valoraPagar){
+	    					valoraPagar = creditoVO.getCredSaldo()+abonoVO.getAbonValorinteres()+abonoVO.getAbonValorinteresmora()+abonoVO.getAbonValorseguro()+abonoVO.getAbonOtrocargo();
+	    					getAbonoVO().setAbonValorcapitaladicional(ValidaString.operacionMathAproximacion(creditoVO.getCredSaldo(),getAbonoVO().getAbonValorcapital(),2));
+	    				}else
+	    					getAbonoVO().setAbonValorcapitaladicional(ValidaString.operacionMathAproximacion(valoraPagar,getAbonoVO().getAbonValortotal(),2));
 	    				getAbonoVO().setAbonValortotal(valoraPagar);
 	    				getAbonoVO().setValoraPagar(valoraPagar);
+	    				
 	    			}else
 	    				getAbonoVO().setValoraPagar(getAbonoVO().getAbonValortotal());
     			}else{
@@ -1007,12 +1013,12 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
         		abonoVO.setAbonRegistradopor(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua());
         		gestionFacadeContable.persistAbono(abonoVO);
         		
-        		creditoVO.setCredSaldo(creditoVO.getCredSaldo()-abonoVO.getAbonValortotal());
-        		creditoVO.setCredInteres(creditoVO.getCredInteres()+abonoVO.getAbonValorinteres());
-        		creditoVO.setCredValorseguro(creditoVO.getCredValorseguro()+abonoVO.getAbonValorseguro());
-        		creditoVO.setCredInteresmora(creditoVO.getCredInteresmora()+abonoVO.getAbonValorinteresmora());
-        		creditoVO.setCredOtroscargos(creditoVO.getCredOtroscargos()+abonoVO.getAbonOtrocargo());
-        		creditoVO.setCredAbonocapital(creditoVO.getCredAbonocapital()+abonoVO.getAbonValorcapitaladicional());
+        		creditoVO.setCredSaldo(ValidaString.operacionMathAproximacion(creditoVO.getCredSaldo(), ValidaString.operacionMathAproximacion(abonoVO.getAbonValorcapital(),abonoVO.getAbonValorcapitaladicional(),1), 2));
+        		creditoVO.setCredInteres(ValidaString.operacionMathAproximacion(creditoVO.getCredInteres(),abonoVO.getAbonValorinteres(),1));
+        		creditoVO.setCredValorseguro(ValidaString.operacionMathAproximacion(creditoVO.getCredValorseguro(),abonoVO.getAbonValorseguro(),1));
+        		creditoVO.setCredInteresmora(ValidaString.operacionMathAproximacion(creditoVO.getCredInteresmora(),abonoVO.getAbonValorinteresmora(),1));
+        		creditoVO.setCredOtroscargos(ValidaString.operacionMathAproximacion(creditoVO.getCredOtroscargos(),abonoVO.getAbonOtrocargo(),1));
+        		creditoVO.setCredAbonocapital(ValidaString.operacionMathAproximacion(creditoVO.getCredAbonocapital(),abonoVO.getAbonValorcapitaladicional(),1));
         		creditoVO.setCredFechaultimopago(fechaCorte);
         		creditoVO.setCredEstado(creditoVO.getCredSaldo()==0?ConstantesAplicativo.estadoCreditoCancelado:ConstantesAplicativo.estadoCreditoVigente);
         		creditoVO.setCredFechamodificacion(ValidaString.fechaSystem());
@@ -1022,7 +1028,7 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
         		
         		
         		presupuestoVO = creditoVO.getPresupuesto();
-        		presupuestoVO.setPresValor(presupuestoVO.getPresValor()+abonoVO.getAbonValortotal());
+        		presupuestoVO.setPresValor(ValidaString.operacionMathAproximacion(presupuestoVO.getPresValor(),abonoVO.getAbonValortotal(),1));
         		presupuestoVO.setPresFechamodificacion(ValidaString.fechaSystem());
         		presupuestoVO.setPresHora(ValidaString.horaSystem());
         		presupuestoVO.setPresRegistradopor(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua());

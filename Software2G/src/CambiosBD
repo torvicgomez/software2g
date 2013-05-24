@@ -1,8 +1,17 @@
 abon_nrocomprobante character varying(20),
 abon_diasliq double precision NOT NULL,
 abon_diamora double precision NOT NULL,
-abon_valorcapitaladicional double precision,
+abon_valorcapitaladicional double precision,  
   
-  
-direccion_pers character varying(100),
-telefono_pers character varying(30),
+cred_hora character varying(8),
+cred_estado character varying(20),
+cred_nrocheque character varying(20),
+cred_fechaultimopago character varying(10),
+cred_abonocapital double precision,  
+
+
+id_pers integer NOT NULL, -- Pagare
+
+
+direccion_pers character varying(100), -- Persona
+telefono_pers character varying(30), -- Persona

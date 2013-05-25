@@ -10,14 +10,10 @@
 			<table align="center" width="100%" height="100%" border="0">
 				<tr>
 					<td valign="top" width="70%" height="100%">
-						<div class="border">
 							<jsp:include page="header.jsp"></jsp:include>
-						</div>
 					</td>
 					<td valign="baseline" width="30%" height="100%">
-						<div class="border">
 							<jsp:include page="headerUser.jsp"></jsp:include>
-						</div>
 					</td>
 				</tr>
 			</table>

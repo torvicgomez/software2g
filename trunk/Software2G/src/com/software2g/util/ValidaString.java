@@ -192,4 +192,9 @@ public class ValidaString {
 		String valor = df.format(operacion==1?val1+val2:operacion==2?val1-val2:0);
 		return Double.parseDouble(valor.replace(',','.'));
     }
+    
+    public static double doublePrecision(double valor){
+    	DecimalFormat  df = new DecimalFormat("###########0.00");
+		return Double.parseDouble(df.format(valor).replace(',','.'));
+    }
 }

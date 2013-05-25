@@ -1174,6 +1174,7 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
 	public String obtenerFechaCorte(Credito creditoVO, double valorapagar)throws Exception{
+		
 		double diasLiquidados = this.valorAbonoCapital(creditoVO.getCredMontocredito(), creditoVO.getTipocredito().getTicrTiempomes(), 
 														creditoVO.getCredSaldo(), creditoVO.getTipocredito().getTicrTasainteresvencido(), 
 														creditoVO.getTipocredito().getTicrInteresmoramesven(), 

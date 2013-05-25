@@ -203,6 +203,10 @@
         <action name="saveAbono" method="guardarAbonoCreditos" class="ContableAction">
         	<result name="success" type="tiles">contable.listCreditoSocio</result>
         </action>
+        <action name="calcularPagoTotal" method="calcularPagoTotal" class="ContableAction">
+        	<result name="success" type="tiles">contable.listCreditoSocio</result>
+        </action>
+        
         
     </package>
 </struts>

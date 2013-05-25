@@ -354,6 +354,7 @@
 									</td>
 									<td align="center" valign="middle" rowspan="2">
 										<s:submit value="Recalcular Pagos" action="calcularPago" cssClass="button"></s:submit>
+										<s:submit value="Pago Total" action="calcularPagoTotal" cssClass="button"></s:submit>
 									</td>
 								</tr>
 								<tr>

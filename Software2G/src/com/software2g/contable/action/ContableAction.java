@@ -911,6 +911,23 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
 	}
 	
 	@SkipValidation
+    public String calcularPagoTotal(){
+    	String  result = Action.SUCCESS; 
+    	try {
+    		setCreditoVO((Credito)request.getSession().getAttribute("creditoVO"));
+    		setAbonoVO((Abono)request.getSession().getAttribute("abonoVO"));
+    		creditoVO.setTipoRecalcularPago("2");
+    		abonoVO.setValoraPagar(ValidaString.doublePrecision(creditoVO.getCredSaldo()+abonoVO.getAbonValorinteres()+abonoVO.getAbonValorinteresmora()+abonoVO.getAbonValorseguro()+abonoVO.getAbonOtrocargo()));
+    		result = this.calcularPago();
+    	} catch (Exception e) {
+			addActionMessage(getText("error.aplicacion"));
+			e.printStackTrace();
+		}
+    	System.out.println("result: ["+result+"]"); 
+    	return result;
+	}
+	
+	@SkipValidation
     public String calcularPago(){
 		String  result = Action.SUCCESS; 
     	try {
@@ -932,7 +949,7 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     					setCreditoVO(gestionFacadeContable.findCreditoById(getCreditoVO().getCredId()));
     				else
     					addActionMessage(getText("validacion.fechacorte","fechacorte",""));
-    			}else if(creditoVO.getTipoRecalcularPago().equals("1")){
+    			}else if(creditoVO.getTipoRecalcularPago().equals("1")||creditoVO.getTipoRecalcularPago().equals("2")){
     				setCreditoVO(gestionFacadeContable.findCreditoById(getCreditoVO().getCredId()));
     				fechaLiquidar = gestionFacadeContable.obtenerFechaCorte(getCreditoVO(), getAbonoVO().getValoraPagar());
     				String fechaActual = ValidaString.fechaSystem();
@@ -959,8 +976,10 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
 	    			if(!band){
 	    				if((creditoVO.getCredSaldo()+abonoVO.getAbonValorinteres()+abonoVO.getAbonValorinteresmora()+abonoVO.getAbonValorseguro()+abonoVO.getAbonOtrocargo())
 	    						<valoraPagar){
-	    					valoraPagar = creditoVO.getCredSaldo()+abonoVO.getAbonValorinteres()+abonoVO.getAbonValorinteresmora()+abonoVO.getAbonValorseguro()+abonoVO.getAbonOtrocargo();
+	    					System.out.println("valoraPagar1: ["+valoraPagar+"]");
+	    					valoraPagar = ValidaString.doublePrecision(creditoVO.getCredSaldo()+abonoVO.getAbonValorinteres()+abonoVO.getAbonValorinteresmora()+abonoVO.getAbonValorseguro()+abonoVO.getAbonOtrocargo());
 	    					getAbonoVO().setAbonValorcapitaladicional(ValidaString.operacionMathAproximacion(creditoVO.getCredSaldo(),getAbonoVO().getAbonValorcapital(),2));
+	    					System.out.println("valoraPagar2: ["+valoraPagar+"]");
 	    				}else
 	    					getAbonoVO().setAbonValorcapitaladicional(ValidaString.operacionMathAproximacion(valoraPagar,getAbonoVO().getAbonValortotal(),2));
 	    				getAbonoVO().setAbonValortotal(valoraPagar);

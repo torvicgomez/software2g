@@ -15,7 +15,7 @@
  %>
 <table width="100%" class="border">
   <tr>	
-	<td valign="top">
+	<td valign="top"> 
      <applet name="TREEAPPLET" archive="<%=application.getContextPath()+"/tilesPagsPortal/Treemenu.jar"%>" code="TreeApplet.class" width="220" height="410" mayscript>
          <!-- Tree Properties -->
          <param name="backgroundColor" value="#FFFFFF">

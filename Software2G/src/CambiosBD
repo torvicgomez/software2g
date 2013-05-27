@@ -15,3 +15,127 @@ id_pers integer NOT NULL, -- Pagare
 
 direccion_pers character varying(100), -- Persona
 telefono_pers character varying(30), -- Persona
+
+
+
+CREATE TABLE contable.aud_credito
+(
+  cred_id numeric(30,0) NOT NULL,
+  ticr_id numeric(30,0) NOT NULL,
+  pres_id numeric(30,0) NOT NULL,
+  paga_id numeric(30,0) NOT NULL,
+  cred_fechainiciacredito character varying(10),
+  cred_montocredito double precision,
+  cred_saldo double precision,
+  cred_interes double precision,
+  cred_valorseguro double precision,
+  cred_fechamodificacion character varying(10),
+  cred_interesmora double precision,
+  cred_otroscargos double precision,
+  cred_registradopor character varying(30),
+  cred_hora character varying(8),
+  cred_estado character varying(20),
+  cred_nrocheque character varying(20),
+  cred_fechaultimopago character varying(10),
+  cred_abonocapital double precision,
+  cred_operacion character varying(1)
+)WITH (OIDS=FALSE);
+
+ALTER TABLE contable.aud_credito OWNER TO postgres;
+
+CREATE OR REPLACE FUNCTION  contable.insert_aud_credito() RETURNS trigger AS '
+	BEGIN
+		INSERT INTO contable.aud_credito(
+		  cred_id,
+		  ticr_id,
+		  pres_id,
+		  paga_id,
+		  cred_fechainiciacredito,
+		  cred_montocredito,
+		  cred_saldo,
+		  cred_interes,
+		  cred_valorseguro,
+		  cred_fechamodificacion,
+		  cred_interesmora,
+		  cred_otroscargos,
+		  cred_registradopor,
+		  cred_hora,
+		  cred_estado,
+		  cred_nrocheque,
+		  cred_fechaultimopago,
+		  cred_abonocapital,
+		  cred_operacion)
+		VALUES (
+		  NEW.cred_id,
+		  NEW.ticr_id,
+		  NEW.pres_id,
+		  NEW.paga_id,
+		  NEW.cred_fechainiciacredito,
+		  NEW.cred_montocredito,
+		  NEW.cred_saldo,
+		  NEW.cred_interes,
+		  NEW.cred_valorseguro,
+		  NEW.cred_fechamodificacion,
+		  NEW.cred_interesmora,
+		  NEW.cred_otroscargos,
+		  NEW.cred_registradopor,
+		  NEW.cred_hora,
+		  NEW.cred_estado,
+		  NEW.cred_nrocheque,
+		  NEW.cred_fechaultimopago,
+		  NEW.cred_abonocapital,
+		  ''I'');
+	END;
+	RETURN NULL;
+' LANGUAGE plpgsql;
+
+CREATE TRIGGER tr_i_contable_credito AFTER INSERT ON contable.credito FOR EACH ROW EXECUTE PROCEDURE contable.insert_aud_credito();
+
+
+CREATE OR REPLACE FUNCTION  contable.update_aud_credito() RETURNS trigger AS '
+	BEGIN
+		INSERT INTO contable.aud_credito(
+		  cred_id,
+		  ticr_id,
+		  pres_id,
+		  paga_id,
+		  cred_fechainiciacredito,
+		  cred_montocredito,
+		  cred_saldo,
+		  cred_interes,
+		  cred_valorseguro,
+		  cred_fechamodificacion,
+		  cred_interesmora,
+		  cred_otroscargos,
+		  cred_registradopor,
+		  cred_hora,
+		  cred_estado,
+		  cred_nrocheque,
+		  cred_fechaultimopago,
+		  cred_abonocapital,
+		  cred_operacion)
+		VALUES (
+		  NEW.cred_id,
+		  NEW.ticr_id,
+		  NEW.pres_id,
+		  NEW.paga_id,
+		  NEW.cred_fechainiciacredito,
+		  NEW.cred_montocredito,
+		  NEW.cred_saldo,
+		  NEW.cred_interes,
+		  NEW.cred_valorseguro,
+		  NEW.cred_fechamodificacion,
+		  NEW.cred_interesmora,
+		  NEW.cred_otroscargos,
+		  NEW.cred_registradopor,
+		  NEW.cred_hora,
+		  NEW.cred_estado,
+		  NEW.cred_nrocheque,
+		  NEW.cred_fechaultimopago,
+		  NEW.cred_abonocapital,
+		  ''U'');
+	END;
+	RETURN NULL;
+' LANGUAGE plpgsql;
+
+CREATE TRIGGER tr_i_contable_credito AFTER UPDATE ON contable.credito FOR EACH ROW EXECUTE PROCEDURE contable.update_aud_credito();

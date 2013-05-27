@@ -14,7 +14,8 @@
     </td>
   </tr>-->
   <tr>
-    <td align="right" valign="middle"  background="<s:url value="/imagenes/imagenRight.gif"/>">
+    <!--background="<s:url value="/imagenes/imagenRight.gif"/>"-->
+    <td align="right" valign="middle">
     	<strong><font size="2" color="#FFFFFF"><br><br>
     		<%=userLogin.getPersona().getNombreCompleto().toUpperCase()%><br>
    			<%=userLogin.getPersona().getEmailPers()%>&nbsp;&nbsp;-&nbsp;&nbsp;<%=userLogin.getLoginUsua()%><br>

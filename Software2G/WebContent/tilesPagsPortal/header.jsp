@@ -4,7 +4,7 @@
 <table width="100%" height="100%">
   <tr>
     <td align="left">
-   		<img src="<s:url value="/imagenes/imagenLeft1.gif"/>" height="100%" width="100%"/>
+   		<!--<img src="<s:url value="/imagenes/imagenLeft1.gif"/>" height="100%" width="100%"/>-->
    		<!--<strong><font size="20">Acafeto,</font>&nbsp;<font size="10">cafés especiales</font></strong>-->
     </td>
   </tr>

@@ -11,7 +11,7 @@ cred_abonocapital double precision,
 
 
 id_pers integer NOT NULL, -- Pagare
-
+ 
 
 direccion_pers character varying(100), -- Persona
 telefono_pers character varying(30), -- Persona
@@ -85,8 +85,8 @@ CREATE OR REPLACE FUNCTION  contable.insert_aud_credito() RETURNS trigger AS '
 		  NEW.cred_fechaultimopago,
 		  NEW.cred_abonocapital,
 		  ''I'');
+		RETURN NULL;
 	END;
-	RETURN NULL;
 ' LANGUAGE plpgsql;
 
 CREATE TRIGGER tr_i_contable_credito AFTER INSERT ON contable.credito FOR EACH ROW EXECUTE PROCEDURE contable.insert_aud_credito();
@@ -134,8 +134,8 @@ CREATE OR REPLACE FUNCTION  contable.update_aud_credito() RETURNS trigger AS '
 		  NEW.cred_fechaultimopago,
 		  NEW.cred_abonocapital,
 		  ''U'');
+		 RETURN NULL;
 	END;
-	RETURN NULL;
 ' LANGUAGE plpgsql;
 
-CREATE TRIGGER tr_i_contable_credito AFTER UPDATE ON contable.credito FOR EACH ROW EXECUTE PROCEDURE contable.update_aud_credito();
+CREATE TRIGGER tr_u_contable_credito AFTER UPDATE ON contable.credito FOR EACH ROW EXECUTE PROCEDURE contable.update_aud_credito();

@@ -139,3 +139,179 @@ CREATE OR REPLACE FUNCTION  contable.update_aud_credito() RETURNS trigger AS '
 ' LANGUAGE plpgsql;
 
 CREATE TRIGGER tr_u_contable_credito AFTER UPDATE ON contable.credito FOR EACH ROW EXECUTE PROCEDURE contable.update_aud_credito();
+
+CREATE TABLE contable.aud_presupuesto
+(
+  pres_id numeric(30,0) NOT NULL,
+  pres_valor double precision,
+  pres_descripcion character varying(32),
+  pres_fechamodificacion character varying(10),
+  pres_hora character varying(8),
+  pres_registradopor character varying(30),
+  pres_operacion character varying(1)
+)WITH (OIDS=FALSE);
+
+ALTER TABLE contable.aud_presupuesto OWNER TO postgres;
+
+CREATE OR REPLACE FUNCTION  contable.insert_aud_presupuesto() RETURNS trigger AS '
+	BEGIN
+		INSERT INTO contable.aud_presupuesto(
+		  pres_id,
+		  pres_valor,
+		  pres_descripcion,
+		  pres_fechamodificacion,
+		  pres_hora,
+		  pres_registradopor,
+		  pres_operacion)
+		VALUES (
+		  NEW.pres_id,
+		  NEW.pres_valor,
+		  NEW.pres_descripcion,
+		  NEW.pres_fechamodificacion,
+		  NEW.pres_hora,
+		  NEW.pres_registradopor,
+		  ''I'');
+		RETURN NULL;
+	END;
+' LANGUAGE plpgsql;
+
+CREATE TRIGGER tr_i_contable_presupuesto AFTER INSERT ON contable.presupuesto FOR EACH ROW EXECUTE PROCEDURE contable.insert_aud_presupuesto();
+
+CREATE OR REPLACE FUNCTION  contable.update_aud_presupuesto() RETURNS trigger AS '
+	BEGIN
+		INSERT INTO contable.aud_presupuesto(
+		  pres_id,
+		  pres_valor,
+		  pres_descripcion,
+		  pres_fechamodificacion,
+		  pres_hora,
+		  pres_registradopor,
+		  pres_operacion)
+		VALUES (
+		  NEW.pres_id,
+		  NEW.pres_valor,
+		  NEW.pres_descripcion,
+		  NEW.pres_fechamodificacion,
+		  NEW.pres_hora,
+		  NEW.pres_registradopor,
+		  ''U'');
+		RETURN NULL;
+	END;
+' LANGUAGE plpgsql;
+
+CREATE TRIGGER tr_u_contable_presupuesto AFTER UPDATE ON contable.presupuesto FOR EACH ROW EXECUTE PROCEDURE contable.update_aud_presupuesto();
+
+
+CREATE TABLE contable.aud_abono
+(
+  abon_id numeric(30,0) NOT NULL,
+  cred_id numeric(30,0),
+  abon_valortotal double precision,
+  abon_valorcapital double precision,
+  abon_valorinteres double precision,
+  abon_valorseguro double precision,
+  abon_fecha character varying(10),
+  abon_valorinteresmora double precision,
+  abon_otrocargo double precision,
+  abon_fechamodificacion character varying(10),
+  abon_hora character varying(8),
+  abon_registradopor character varying(30),
+  abon_nrocomprobante character varying(20),
+  abon_diasliq double precision NOT NULL,
+  abon_diamora double precision NOT NULL,
+  abon_valorcapitaladicional double precision,
+  abon_operacion character varying(1)
+)WITH (OIDS=FALSE);
+
+ALTER TABLE contable.aud_abono OWNER TO postgres;
+
+CREATE OR REPLACE FUNCTION  contable.insert_aud_abono() RETURNS trigger AS '
+	BEGIN
+		INSERT INTO contable.aud_abono(
+		  abon_id,
+		  cred_id,
+		  abon_valortotal,
+		  abon_valorcapital,
+		  abon_valorinteres,
+		  abon_valorseguro,
+		  abon_fecha,
+		  abon_valorinteresmora,
+		  abon_otrocargo,
+		  abon_fechamodificacion,
+		  abon_hora,
+		  abon_registradopor,
+		  abon_nrocomprobante,
+		  abon_diasliq,
+		  abon_diamora,
+		  abon_valorcapitaladicional,
+		  abon_operacion)
+		VALUES (
+		  NEW.abon_id,
+		  NEW.cred_id,
+		  NEW.abon_valortotal,
+		  NEW.abon_valorcapital,
+		  NEW.abon_valorinteres,
+		  NEW.abon_valorseguro,
+		  NEW.abon_fecha,
+		  NEW.abon_valorinteresmora,
+		  NEW.abon_otrocargo,
+		  NEW.abon_fechamodificacion,
+		  NEW.abon_hora,
+		  NEW.abon_registradopor,
+		  NEW.abon_nrocomprobante,
+		  NEW.abon_diasliq,
+		  NEW.abon_diamora,
+		  NEW.abon_valorcapitaladicional,
+		  ''I'');
+		RETURN NULL;
+	END;
+' LANGUAGE plpgsql;
+
+CREATE TRIGGER tr_i_contable_abono AFTER INSERT ON contable.abono FOR EACH ROW EXECUTE PROCEDURE contable.insert_aud_abono();
+
+CREATE OR REPLACE FUNCTION  contable.update_aud_abono() RETURNS trigger AS '
+	BEGIN
+		INSERT INTO contable.aud_abono(
+		  abon_id,
+		  cred_id,
+		  abon_valortotal,
+		  abon_valorcapital,
+		  abon_valorinteres,
+		  abon_valorseguro,
+		  abon_fecha,
+		  abon_valorinteresmora,
+		  abon_otrocargo,
+		  abon_fechamodificacion,
+		  abon_hora,
+		  abon_registradopor,
+		  abon_nrocomprobante,
+		  abon_diasliq,
+		  abon_diamora,
+		  abon_valorcapitaladicional,
+		  abon_operacion)
+		VALUES (
+		  NEW.abon_id,
+		  NEW.cred_id,
+		  NEW.abon_valortotal,
+		  NEW.abon_valorcapital,
+		  NEW.abon_valorinteres,
+		  NEW.abon_valorseguro,
+		  NEW.abon_fecha,
+		  NEW.abon_valorinteresmora,
+		  NEW.abon_otrocargo,
+		  NEW.abon_fechamodificacion,
+		  NEW.abon_hora,
+		  NEW.abon_registradopor,
+		  NEW.abon_nrocomprobante,
+		  NEW.abon_diasliq,
+		  NEW.abon_diamora,
+		  NEW.abon_valorcapitaladicional,
+		  ''U'');
+		RETURN NULL;
+	END;
+' LANGUAGE plpgsql;
+
+CREATE TRIGGER tr_u_contable_abono AFTER UPDATE ON contable.abono FOR EACH ROW EXECUTE PROCEDURE contable.update_aud_abono();
+
+
+

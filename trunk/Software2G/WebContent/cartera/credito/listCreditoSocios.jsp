@@ -101,6 +101,10 @@
 							<s:submit value="Registrar Pago" action="saveAbono" cssClass="button"></s:submit>
 							<s:submit value="Imprimir" action="imprimirLiq" cssClass="button"></s:submit>
 						</s:elseif>
+						<s:elseif test="estado=='listPagosCredito'">
+							<s:submit value="volver" action="pagosCredito" cssClass="button"></s:submit>
+						</s:elseif>
+						
 					</td>
 				</tr>
 				<s:if test="estado==null||estado=='listarCreditosSocios'">
@@ -480,7 +484,22 @@
 						</td>
 					</tr>
 				</s:elseif>
-				
+				<s:elseif test="estado=='listPagosCredito'">
+					<tr>
+						<td valign="top">
+							<table border="0" width="100%">
+								<tr>
+									<td colspan="2"><h1><strong><s:text name="creditossocios.historialpago"></s:text></strong></h1></td>
+								</tr>
+								<tr>
+									<td>
+									
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</s:elseif>
 			</table>
 			</div>
 			<div class="spacer"></div>

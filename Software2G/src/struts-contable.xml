@@ -206,7 +206,9 @@
         <action name="calcularPagoTotal" method="calcularPagoTotal" class="ContableAction">
         	<result name="success" type="tiles">contable.listCreditoSocio</result>
         </action>
-        
+        <action name="imprimirLiq" method="imprimirLiq" class="ContableAction">
+        	<result name="success">/cartera/credito/impCreditoSocios.jsp</result>
+        </action>
         
     </package>
 </struts>

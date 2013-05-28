@@ -99,6 +99,7 @@
 							<s:submit value="Cancelar" action="listCreditosSocios" cssClass="button"></s:submit>
 							<s:submit value="Ver Historial de Pagos" action="listHistorialPagos" cssClass="button"></s:submit>
 							<s:submit value="Registrar Pago" action="saveAbono" cssClass="button"></s:submit>
+							<s:submit value="Imprimir" action="imprimirLiq" cssClass="button"></s:submit>
 						</s:elseif>
 					</td>
 				</tr>

@@ -1010,6 +1010,22 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
 	}
 
 	@SkipValidation
+    public String imprimirLiq(){
+    	String  result = Action.SUCCESS; 
+    	try {
+    		String fechaCorte = creditoVO.getFechaALiquidar();
+    		setCreditoVO((Credito)request.getSession().getAttribute("creditoVO"));
+    		creditoVO.setFechaALiquidar(fechaCorte);
+    		setAbonoVO((Abono)request.getSession().getAttribute("abonoVO"));
+    	} catch (Exception e) {
+			addActionMessage(getText("error.aplicacion"));
+			e.printStackTrace();
+		}
+    	System.out.println("result: ["+result+"]"); 
+    	return result;
+	}
+	
+	@SkipValidation
     public String guardarAbonoCreditos(){
 		String  result = Action.SUCCESS; 
     	try {

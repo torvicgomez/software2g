@@ -13,13 +13,13 @@
 		nameFileFuncUser = "inicial";
 	*/
  %>
-<table width="100%" class="border">
+<table width="100%" height="100%">
   <tr>	
 	<td valign="top"> 
-     <applet name="TREEAPPLET" archive="<%=application.getContextPath()+"/tilesPagsPortal/Treemenu.jar"%>" code="TreeApplet.class" width="220" height="410" mayscript>
+     <applet name="TREEAPPLET" archive="<%=application.getContextPath()+"/tilesPagsPortal/Treemenu.jar"%>" code="TreeApplet.class" width="220" height="430" mayscript>
          <!-- Tree Properties -->
          <param name="backgroundColor" value="#FFFFFF">
-         <param name="borderWidth" value="1">
+         <param name="borderWidth" value="0">
          <param name="borderColor" value="#FFFFFF">
          <param name="underlineLinks" value="false">
          <param name="scrollBarBgColor" value="#FFFFFF">
@@ -36,9 +36,15 @@
          <param name="defaultFont" value="Arial,N,12">
          <param name="defaultColor" value="#000000">
          <param name="defaultExpanded" value="false">
-         <param name="defaultNormalImage"   value="document">
-         <param name="defaultExpandedImage" value="document">
+         <param name="defaultNormalImage"   value="closedfolder">
+         <param name="defaultExpandedImage" value="openfolder">
          <param name="defaultMouseImage"    value="point">
+         <!-- Images -->
+		 <param name="image1" value="closedfolder|./iconimages/closedfolder.gif">
+		 <param name="image2" value="openfolder|./iconimages/openfolder.gif">
+		 <param name="image3" value="document|./iconimages/document.gif">
+		 <param name="image4" value="point|./iconimages/point.gif">
+		 
          <!-- Node File morenodes -->
          <param name="Nodedata" value="<%=application.getContextPath()%>/file/configuracionUser/<%=nameFileFuncUser%>.txt">
        </applet>

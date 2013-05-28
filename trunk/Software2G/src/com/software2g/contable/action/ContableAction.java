@@ -66,6 +66,7 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
 	private List<Credito> listCredito;
 	private Credito creditoVO;
 	private Abono abonoVO;
+	private List<Abono> listAbono;
 	
 	public List<Sucursal> getListSucursal() {return listSucursal;}
 	public void setListSucursal(List<Sucursal> listSucursal) {this.listSucursal = listSucursal;}
@@ -116,6 +117,8 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
 	public void setTipoCreditoVO(Tipocredito tipoCreditoVO) {this.tipoCreditoVO = tipoCreditoVO;}
 	public Abono getAbonoVO() {return abonoVO;}
 	public void setAbonoVO(Abono abonoVO) {this.abonoVO = abonoVO;}
+	public List<Abono> getListAbono() {return listAbono;}
+	public void setListAbono(List<Abono> listAbono) {this.listAbono = listAbono;}
 	
 	
 	@SkipValidation
@@ -897,6 +900,13 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     			request.getSession().setAttribute("creditoVO", getCreditoVO());
     			request.getSession().setAttribute("abonoVO", getAbonoVO());
     			estado="pagosCreditos";
+    		}else if(getCreditoVO()!=null&&getCreditoVO().getCredId()>0){
+    			setCreditoVO(gestionFacadeContable.findCreditoById(getCreditoVO().getCredId()));
+    			getCreditoVO().setFechaALiquidar(ValidaString.fechaSystem());
+    			setAbonoVO(gestionFacadeContable.liquidacionPagoCredito(getCreditoVO()));
+    			request.getSession().setAttribute("creditoVO", getCreditoVO());
+    			request.getSession().setAttribute("abonoVO", getAbonoVO());
+    			estado="pagosCreditos";
     		}else{
     			setListPresupuesto(gestionFacadeContable.findAllPresupuestos());
     			setListTipoCredito(gestionFacadeContable.findAllTipocreditos());
@@ -1222,6 +1232,27 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     	return result;
 	}
 
+	@SkipValidation
+    public String listHistorialPagos(){
+		String  result = Action.SUCCESS; 
+    	try {
+    		setCreditoVO((Credito)request.getSession().getAttribute("creditoVO"));
+    		//ValidaString.imprimirObject(getCreditoVO());
+			getCreditoVO().setAbonos(gestionFacadeContable.findAllAbonos(getCreditoVO().getCredId()));
+			for(Abono elem:getCreditoVO().getAbonos()){
+				System.out.println("Valor Total:["+elem.getAbonValortotalView()+"]");
+			}
+    		//setListAbono(gestionFacadeContable.findAllAbonos(getCreditoVO().getCredId()));
+    		estado="listPagosCredito";
+    	} catch (Exception e) {
+			addActionMessage(getText("error.aplicacion"));
+			e.printStackTrace();
+		}
+		System.out.println("result: ["+result+"]");
+    	return result;
+	}
+	
+	
 	public HttpServletRequest getRequest() {return request;}
 	public void setRequest(HttpServletRequest request) {this.request = request;}
 	public HttpServletResponse getResponse() {return response;}

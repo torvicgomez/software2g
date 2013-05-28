@@ -162,6 +162,15 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 		}
 	}
 
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Abono> findAllAbonos(long idCredito) throws Exception {
+		try {
+			return getAbonoDao().findAllAbonos(idCredito);
+		} catch (RuntimeException e) {
+			throw new Exception("findAllAbonos failed: " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

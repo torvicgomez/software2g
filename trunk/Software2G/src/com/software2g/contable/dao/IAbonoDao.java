@@ -27,6 +27,8 @@ public interface IAbonoDao {
 	 * Return all persistent instances of the <code>Abono</code> entity.
 	 */
 	public List<Abono> findAllAbonos();
+	
+	public List<Abono> findAllAbonos(long idCredito);
 	/**
 	 * Make the given instance managed and persistent.
 	 */

@@ -76,6 +76,25 @@ public class AbonoDaoImpl implements IAbonoDao {
             }
         }
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Abono> findAllAbonos(long idCredito) {
+        try {
+    		String jpqlString = " select abono from " + Abono.class.getSimpleName() + " abono " +
+    				" where abono.credito.credId =:idCredito " +
+    				" order by abono.abonFechamodificacion, abono.abonHora asc ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("idCredito", idCredito);
+            return query.getResultList();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

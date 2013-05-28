@@ -27,6 +27,7 @@ public interface IGestionFacadeContable {
 	//-----------------------Abono-------------------------------
 	public Abono findAbonoById(long id) throws Exception;
 	public List<Abono> findAllAbonos() throws Exception;
+	public List<Abono> findAllAbonos(long idCredito) throws Exception;
 	public void persistAbono(Abono abono) throws Exception;
 	public void removeAbono(Abono abono) throws Exception;
 	//-----------------------------------------------------------

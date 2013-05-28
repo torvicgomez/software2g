@@ -20,6 +20,10 @@
 	background-image: -webkit-linear-gradient(top, #FFFFFF 0%, #966A36 100%);
 	/* W3C Markup, IE10 Release Preview */ 
 	background-image: linear-gradient(to bottom, #FFFFFF 0%, #966A36 100%);
+	border: 2px solid #CECF9C;/*Borde del frame principal*/
+	-moz-border-radius: 10px;/*Borde redondeado pata mozilla*/
+    -webkit-border-radius: 10px;/*Borde redondeado*/
+    behavior:url(border-radius.htc); 
 }
 </style>
 <table width="100%" align="center" height="100%" border="0" class="fondo">

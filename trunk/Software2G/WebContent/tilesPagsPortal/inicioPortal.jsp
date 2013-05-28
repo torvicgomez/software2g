@@ -11,15 +11,16 @@
 <title><s:text name="titulo.header"></s:text></title>
 <link rel="icon" href="http://localhost:8080/Software2G/imagenes/acafeto.png" type="image/png" />
 </head>
+
  <frameset rows="*,60" frameborder="no" border="0" framespacing="0">
 	<frameset rows="140,*" cols="*" frameborder="no" border="0" framespacing="0" >
-	  <frame src="tilesPagsPortal/encabezado.jsp" name="encabezado"  id="encabezado" noresize="noresize" class="border"/>
+	  <frame src="tilesPagsPortal/encabezado.jsp" name="encabezado"  id="encabezado" noresize="noresize" />
 	  <frameset rows="*" cols="250,*" frameborder="no" border="0" framespacing="0">
-	    <frame src="tilesPagsPortal/treeMenu.jsp" name="treemenu" id="treemenu"  class="border"/>
-	    <frame src="tilesPagsPortal/bienvenida.jsp" name="body" id="body" class="border"/>
+	    <frame src="tilesPagsPortal/treeMenu.jsp" name="treemenu" id="treemenu"/>
+	    <frame src="tilesPagsPortal/bienvenida.jsp" name="body" id="body"/>
 	  </frameset> 
 	</frameset>
-	<frame src="tilesPagsPortal/piePagina.jsp" name="piePagina"  id="piePagina" noresize="noresize" class="border" />
+	<frame src="tilesPagsPortal/piePagina.jsp" name="piePagina"  id="piePagina" noresize="noresize"/>
 </frameset>
 <noframes><body>
 </body>

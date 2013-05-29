@@ -1240,7 +1240,7 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     		//ValidaString.imprimirObject(getCreditoVO());
 			getCreditoVO().setAbonos(gestionFacadeContable.findAllAbonos(getCreditoVO().getCredId()));
 			for(Abono elem:getCreditoVO().getAbonos()){
-				System.out.println("Valor Total:["+elem.getAbonValortotalView()+"]");
+				System.out.println("Valor Total:["+elem.getAbonValortotalView()+"] ::: Fecha:["+elem.getAbonFecha()+"]");
 			}
     		//setListAbono(gestionFacadeContable.findAllAbonos(getCreditoVO().getCredId()));
     		estado="listPagosCredito";

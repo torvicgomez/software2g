@@ -212,6 +212,9 @@
         <action name="listHistorialPagos" method="listHistorialPagos" class="ContableAction">
         	<result name="success" type="tiles">contable.listCreditoSocio</result>
         </action>
+        <action name="imprimirLiqHis" method="imprimirLiqHis" class="ContableAction">
+        	<result name="success">/cartera/credito/impHisCreditoSocios.jsp</result>
+        </action>
         
     </package>
 </struts>

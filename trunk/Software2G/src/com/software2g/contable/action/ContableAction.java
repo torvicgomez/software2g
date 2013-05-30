@@ -462,6 +462,11 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
 		    		request.getSession().removeAttribute("listDonacionObj");
 		    		request.getSession().setAttribute("listDonacionObj", listDonancionObjeto);
 		    		donacionObjetoVO=null;
+    			}else{
+    				if(request.getSession().getAttribute("listDonacionObj")==null)
+		    			listDonancionObjeto = new ArrayList<Donacionobjeto>();
+		    		else
+		    			listDonancionObjeto = (ArrayList<Donacionobjeto>)request.getSession().getAttribute("listDonacionObj");
     			}
     			setListEntidades(gestionFacadeContable.findAllEntidaddonantes());
 	    		setListObjetos(gestionFacadeContable.findAllObjetos());
@@ -629,6 +634,11 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
 		    		request.getSession().removeAttribute("listPresupuestoDona");
 		    		request.getSession().setAttribute("listPresupuestoDona", listPresupuestoDonaVO);
 		    		donacionVO=null;
+    			}else{
+    				if(request.getSession().getAttribute("listPresupuestoDona")==null)
+		    			listPresupuestoDonaVO = new ArrayList<Presupuestodonacion>();
+		    		else
+		    			listPresupuestoDonaVO = (ArrayList<Presupuestodonacion>)request.getSession().getAttribute("listPresupuestoDona");
     			}
     		}else
     			System.out.println("Esta intentanto ingresar ilegalmente!!!!");

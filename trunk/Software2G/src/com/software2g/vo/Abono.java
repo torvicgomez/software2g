@@ -92,6 +92,16 @@ public class Abono implements Serializable {
 	@JoinColumn(name="cred_id")
 	private Credito credito;
 
+	@Column(name="abon_periodoliquidado")
+	private String abonPeriodoliquidado;  
+	
+	@Column(name="abon_saldo")
+	private double abonSaldo;  
+	
+	@Transient
+	private String abonSaldoView;
+	
+	  
 	public Abono() {
 	}
 
@@ -266,4 +276,37 @@ public class Abono implements Serializable {
 		return abonValorcapitaladicionalView;
 	}
 
+	public String getAbonPeriodoliquidado() {
+		return abonPeriodoliquidado;
+	}
+
+	public void setAbonPeriodoliquidado(String abonPeriodoliquidado) {
+		this.abonPeriodoliquidado = abonPeriodoliquidado;
+	}
+
+	public double getAbonSaldo() {
+		return abonSaldo;
+		
+	}
+
+	public void setAbonSaldo(double abonSaldo) {
+		this.abonSaldo = abonSaldo;
+	}
+
+	public String getAbonSaldoView() {
+		abonSaldoView = ValidaString.formatToMoney(String.valueOf(abonSaldo));
+		return abonSaldoView;
+	}
+
+	public String getAbonFechaUltimoPago() {
+		return this.abonPeriodoliquidado.split("/")[0];
+	}
+	
+	public String getAbonFechaCorteAbono() {
+		return this.abonPeriodoliquidado.split("/")[1];
+	}
+	
+	public String getAbonSaldoFechaCorteView(){
+		return ValidaString.formatToMoney(String.valueOf(ValidaString.operacionMathAproximacion(abonSaldo, ValidaString.operacionMathAproximacion(abonValorcapital,abonValorcapitaladicional,1), 2)));
+	}
 }

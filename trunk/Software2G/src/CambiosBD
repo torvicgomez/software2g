@@ -17,6 +17,9 @@ direccion_pers character varying(100), -- Persona
 telefono_pers character varying(30), -- Persona
 
 
+ALTER TABLE contable.abono ADD COLUMN abon_periodoliquidado character varying(25);
+ALTER TABLE contable.abono ADD COLUMN abon_saldo double precision;
+update contable.abono set abon_saldo = 0 ;
 
 CREATE TABLE contable.aud_credito
 (
@@ -220,6 +223,8 @@ CREATE TABLE contable.aud_abono
   abon_diasliq double precision NOT NULL,
   abon_diamora double precision NOT NULL,
   abon_valorcapitaladicional double precision,
+  abon_periodoliquidado character varying(25),
+  abon_saldo double precision,
   abon_operacion character varying(1)
 )WITH (OIDS=FALSE);
 
@@ -244,6 +249,8 @@ CREATE OR REPLACE FUNCTION  contable.insert_aud_abono() RETURNS trigger AS '
 		  abon_diasliq,
 		  abon_diamora,
 		  abon_valorcapitaladicional,
+		  abon_periodoliquidado,
+  		  abon_saldo,
 		  abon_operacion)
 		VALUES (
 		  NEW.abon_id,
@@ -262,6 +269,8 @@ CREATE OR REPLACE FUNCTION  contable.insert_aud_abono() RETURNS trigger AS '
 		  NEW.abon_diasliq,
 		  NEW.abon_diamora,
 		  NEW.abon_valorcapitaladicional,
+		  NEW.abon_periodoliquidado,
+  		  NEW.abon_saldo,
 		  ''I'');
 		RETURN NULL;
 	END;
@@ -288,6 +297,8 @@ CREATE OR REPLACE FUNCTION  contable.update_aud_abono() RETURNS trigger AS '
 		  abon_diasliq,
 		  abon_diamora,
 		  abon_valorcapitaladicional,
+		  abon_periodoliquidado,
+  		  abon_saldo,
 		  abon_operacion)
 		VALUES (
 		  NEW.abon_id,
@@ -306,6 +317,8 @@ CREATE OR REPLACE FUNCTION  contable.update_aud_abono() RETURNS trigger AS '
 		  NEW.abon_diasliq,
 		  NEW.abon_diamora,
 		  NEW.abon_valorcapitaladicional,
+		  NEW.abon_periodoliquidado,
+  		  NEW.abon_saldo,
 		  ''U'');
 		RETURN NULL;
 	END;

@@ -1053,6 +1053,8 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
         		setAbonoVO((Abono)request.getSession().getAttribute("abonoVO"));
         		abonoVO.setAbonFecha(fechaAbono);
         		abonoVO.setAbonNrocomprobante(nroComprobante);
+        		abonoVO.setAbonSaldo(creditoVO.getCredSaldo());
+        		abonoVO.setAbonPeriodoliquidado(creditoVO.getCredFechaultimopago()+" / "+fechaCorte);
         		abonoVO.setAbonFechamodificacion(ValidaString.fechaSystem());
         		abonoVO.setAbonHora(ValidaString.horaSystem());
         		abonoVO.setAbonRegistradopor(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua());

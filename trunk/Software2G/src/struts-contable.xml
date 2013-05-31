@@ -216,5 +216,12 @@
         	<result name="success">/cartera/credito/impHisCreditoSocios.jsp</result>
         </action>
         
+        
+        <!-- CONTABLE REPORTES -->
+        <action name="reportCredCliente" method="reportCredCliente" class="ContableAction">
+        	<result name="success" type="tiles">contable.listCreditoSocio</result>
+        </action>
+        
+        
     </package>
 </struts>

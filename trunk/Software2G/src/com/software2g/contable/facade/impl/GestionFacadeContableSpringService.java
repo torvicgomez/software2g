@@ -193,7 +193,7 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 	}
 	//-----------------------------------------------------------
 	//-----------------------------------------------------------
-	//-----------------------Credigo-------------------------------
+	//-----------------------Credito-------------------------------
 	/**
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
@@ -218,6 +218,18 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 		}
 	}
 
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Credito> findAllCreditosXCliente(String documentoPers) throws Exception {
+		try {
+			System.out.println("documentoPers: ["+documentoPers+"]");
+			System.out.println("getCreditoDao(): ["+getCreditoDao()+"]");
+			System.out.println(getCreditoDao().findAllCreditosXCliente(documentoPers));
+			return null;
+		} catch (RuntimeException e) {
+			throw new Exception("findAllCreditosXCliente failed: " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

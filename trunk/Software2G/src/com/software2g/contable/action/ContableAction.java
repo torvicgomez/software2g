@@ -1264,6 +1264,31 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     	return result;
 	}
 	
+	@SkipValidation
+    public String reportCredCliente(){
+		String  result = Action.SUCCESS; 
+    	try {
+    		listCredito = gestionFacadeContable.findAllCreditosXCliente("75106199");
+    		if(listCredito!=null&&listCredito.size()>0){
+    			for(Credito elem:listCredito){
+    				System.out.println(elem.getPagare().getPersona().getPnombrePers()+
+    						"-"+elem.getCredId()+"-"+elem.getTipocredito().getTicrDescripcion()+
+    						"-"+elem.getPagare().getPagaId()+"-"+elem.getCredNrocheque()+
+    						"-"+elem.getCredMontocreditoView()+"-"+elem.getCredSaldoView()+"-"+elem.getCredFechaultimopago()+
+    						"-"+elem.getCredEstado());
+    			}
+    		}else{
+    			System.out.println("lista vacia!!!!!!!!");
+    		}
+    		estado="listPagosCredito";
+    	} catch (Exception e) {
+			addActionMessage(getText("error.aplicacion"));
+			e.printStackTrace();
+		}
+		System.out.println("result: ["+result+"]");
+    	return result;
+	}
+	
 	
 	public HttpServletRequest getRequest() {return request;}
 	public void setRequest(HttpServletRequest request) {this.request = request;}

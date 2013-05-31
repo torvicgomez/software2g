@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import com.software2g.contable.dao.ICreditoDao;
 import com.software2g.vo.Credito;
+import com.software2g.vo.Persona;
 
 import org.springframework.stereotype.Repository;
 
@@ -76,6 +77,44 @@ public class CreditoDaoImpl implements ICreditoDao {
             }
         }
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Credito> findAllCreditosXCliente(String documentoPers) {
+        try {
+        	System.out.println("Entra esta metodo");
+    		String jpqlString = "select credito from " + Credito.class.getSimpleName() + " credito " +
+    				" JOIN credito.tipocredito tcre " +
+    				" JOIN credito.pagare pag " +
+    				" JOIN pag.persona pers " +
+    				" where pers.documentoPers =: documentoPers ";
+    		/*
+    		select per.pnombre_pers||' '||per.snombre_pers||' '||per.papellido_pers||' '||per.sapellido_pers as nombreCompl,
+			cred.cred_id, tcre.ticr_descripcion, pag.paga_id,
+			cred.cred_nrocheque, cred.cred_montocredito, cred.cred_saldo, 
+			cred.cred_fechaultimopago, cred.cred_estado
+			from portal.persona per
+			inner join contable.pagare pag on (pag.id_pers = per.id_pers)
+			inner join contable.credito cred on (cred.paga_id = pag.paga_id)
+			inner join contable.tipocredito tcre on (tcre.ticr_id = cred.ticr_id)
+			where per.documento_pers = '75106199';
+    		*/
+    		
+    		System.out.println("jpqlString: ["+jpqlString+"]");
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("documentoPers", documentoPers);
+            return query.getResultList();
+        }catch  (Exception e){
+        	e.printStackTrace();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+		return null;
+	}
+	
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

@@ -35,6 +35,7 @@ public interface IGestionFacadeContable {
 	//-----------------------Credito-------------------------------
 	public Credito findCreditoById(long id) throws Exception;
 	public List<Credito> findAllCreditos() throws Exception;
+	public List<Credito> findAllCreditosXCliente(String documentoPers) throws Exception;
 	public void persistCredito(Credito credito) throws Exception;
 	public void removeCredito(Credito credito) throws Exception;
 	//-----------------------------------------------------------

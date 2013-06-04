@@ -7,6 +7,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-<strong><font size="12" color="#FFCCBB">Bienvenidos al Portal!!!!!!!!!</font></strong>
+<table style='font-family: Arial;font-size: 12px;' width="100%">
+	<tr valign="bottom">
+		<td width="100%" align="center" >
+			<p>
+				<img alt="" src="../imagenes/acafetocafe.jpg" width="400" height="400"  >
+			</p>
+		</td>
+	</tr>
+</table>
 </body>
 </html>

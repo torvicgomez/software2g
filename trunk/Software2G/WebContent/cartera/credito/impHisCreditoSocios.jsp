@@ -7,6 +7,23 @@
 <%String formatPag="LEGAL";
 String nomArchivo = "HisCredito";
 %>
+
+<pdf:transform 
+	screenWidth="930" 
+	pageFormat= "<%=formatPag%>"
+	pageOrientation="portrait" 
+	pageInsets="25,15,20,15,points"
+	enableImageSplit="false"
+	inline="false"
+	fileName="<%=nomArchivo%>">
+<pdf:footer
+	pageNumberTemplate="Pág. ${page}/${total}"
+	pageNumberAlignment="right"
+	color="#000000"
+	initialPageNumber="1"
+	pagesToSkip="0"
+	fontSize="10"
+	areaHeight="55"/>
 		
 
 <html>
@@ -190,3 +207,4 @@ String nomArchivo = "HisCredito";
 		</s:form>
 	</body>
 </html>
+</pdf:transform>

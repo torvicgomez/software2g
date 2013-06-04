@@ -6,6 +6,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
 <body>
-<strong><font size="12" color="#FFCCBB">Bienvenidos a la Funcionalidad Cartera!!!!!!!!!</font></strong>
+<table style='font-family: Arial;font-size: 12px;' width="100%">
+	<tr>
+		<td  width="70%">
+			<p>La Funcionalidad Cartera, permite visualizar los estados de cartera de cada uno de los créditos asociados a cada cliente,
+			donde se detallan columnas como referencia del crédito, titular, estado, saldo a la fecha y monto inicial del crédito. 
+			</p>
+		</td>
+		<td width="30%">
+			<p>
+				<img alt="" src="../imagenes/cartera.jpg">
+			</p>
+		</td>
+	</tr>
+</table>
 </body>
 </html>

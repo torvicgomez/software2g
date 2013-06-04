@@ -1289,6 +1289,26 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     	return result;
 	}
 	
+	@SkipValidation
+    public String imprimirLiqHis(){
+		String  result = Action.SUCCESS; 
+    	try {
+    		setCreditoVO((Credito)request.getSession().getAttribute("creditoVO"));
+    		//ValidaString.imprimirObject(getCreditoVO());
+			getCreditoVO().setAbonos(gestionFacadeContable.findAllAbonos(getCreditoVO().getCredId()));
+			for(Abono elem:getCreditoVO().getAbonos()){
+				System.out.println("Valor Total:["+elem.getAbonValortotalView()+"] ::: Fecha:["+elem.getAbonFecha()+"]");
+			}
+    		//setListAbono(gestionFacadeContable.findAllAbonos(getCreditoVO().getCredId()));
+    	} catch (Exception e) {
+			addActionMessage(getText("error.aplicacion"));
+			e.printStackTrace();
+		}
+		System.out.println("result: ["+result+"]");
+    	return result;
+	}
+
+	
 	
 	public HttpServletRequest getRequest() {return request;}
 	public void setRequest(HttpServletRequest request) {this.request = request;}

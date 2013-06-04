@@ -6,6 +6,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
 <body>
-<strong><font size="12" color="#FFCCBB">Bienvenidos a la Funcionalidad Personal!!!!!!!!!</font></strong>
+<table style='font-family: Arial;font-size: 12px;' width="100%">
+	<tr>
+	<td >
+			<p>
+				<img alt="" src="../imagenes/persona.jpg" width="150" height="150">
+			</p>
+		</td>
+		<td>
+			<p>La Funcionalidad Personal permite crear y actualizar los datos personales de los clientes.
+			</p>
+		</td>
+	</tr>
+</table>
 </body>
 </html>

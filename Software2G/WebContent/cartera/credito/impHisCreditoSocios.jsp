@@ -225,10 +225,6 @@ String nomArchivo = "HisCredito";
 																<font color="#009500"><s:property value="abonValortotalView"/></font>
 															</td>
 														</tr>
-														<tr>
-															<td align="right" valign="top" colspan="2" bgcolor='Silver'>
-															</td>
-														</tr>
 													</table>
 												</td>
 											</tr>

@@ -6,6 +6,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
 <body>
-<strong><font size="12" color="#FFCCBB">Bienvenidos a la Funcionalidad Cartera::>Parametricas!!!!!!!!!</font></strong>
+<table style='font-family: Arial;font-size: 12px;'>
+	<tr>
+		<td>
+			<p>
+				<img alt="" src="../imagenes/parametrica.png">
+			</p>
+		</td>
+		<td>
+			<p>En la Funcionalidad Parametrica se crean las sucursales necesarias en las cuales se podran asociar posteriormente donaciones
+			</p>
+		</td>
+	</tr>
+</table>
 </body>
 </html>

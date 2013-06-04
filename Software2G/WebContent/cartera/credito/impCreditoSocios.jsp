@@ -41,9 +41,8 @@ String nomArchivo = "Credito";
 </head>
 <body id="dt_example">
 		<s:form id="form">
-		<div id="demo">
-							<table border="0" width="100%">
-							<tr>
+					<table border="0" width="100%">
+						<tr>
 							<td valign="top">
 								<table border="0" width="100%" style='font-family: Arial;font-size: 8px;'>
 								<tr>
@@ -77,14 +76,11 @@ String nomArchivo = "Credito";
 								</tr>
 								</table>
 							</td>
-							</tr>
-							</table>
+						</tr>
+					</table>
 							<table border="0" width="100%">
 								<tr>
 									<td valign="top">
-										<table border="0" width="100%">
-											<tr>
-												<td valign="top">
 													<table border="0" width="100%" style='font-family: Arial;font-size: 8px;'>
 													<tr bgcolor='Silver'>
 														<th class="text" align="left" valign="top" colspan="1" >
@@ -116,15 +112,11 @@ String nomArchivo = "Credito";
 														</td>
 													</tr>
 													</table>
-												</td>
-											</tr>
-										</table>
+												
 									</td>
 									<td valign="top">
-										<table border="0">
-											<tr>
-												<td>
-													<table border="0" width="100%" style='font-family: Arial;font-size: 8px;'>
+										
+													<table border="0" width="70%" style='font-family: Arial;font-size: 8px;'>
 														<tr bgcolor='Silver'>
 															<th class="text" align="left" valign="top" colspan="1">
 																INFORMACIÓN DE SU CRÉDITO
@@ -147,14 +139,12 @@ String nomArchivo = "Credito";
 															</td>
 														</tr>
 													</table>
-												</td>
-											</tr>
-										</table>
 									</td>
+								</tr>
+							</table>
+							<table>
+								<tr>
 									<td valign="top">
-										<table border="0">
-											<tr>
-												<td>
 													<table border="0" width="100%" style='font-family: Arial;font-size: 8px;'>
 														<tr bgcolor='Silver'>
 															<th class="text" align="left" valign="top" colspan="1">
@@ -194,81 +184,81 @@ String nomArchivo = "Credito";
 															</td>
 														</tr>
 													</table>
-												</td>
-											</tr>
-										</table>
 									</td>
-								</tr>
-							</table>
-							<table border="0" width="100%" style='font-family: Arial;font-size: 8px;'>
-								<tr bgcolor='Silver'>
-									<th class="text" align="right" valign="top" colspan="8" >
-										INFORMACIÓN DE SU PAGO ACTUAL
-									</th>
-								</tr>
-								<tr>
-									<th class="text" align="left" valign="top" >
-										<s:text name="creditossocios.saldo"></s:text>
-									</th>
-									<td align="left" valign="top">
-										<font color="#FF0000"><s:property value="creditoVO.credSaldoView"/></font>
-									</td>
-									<th class="text" align="left" valign="top" colspan="">
-										<s:text name="tipocredito.interescorriente"></s:text>
-									</th>
-									<td align="left" valign="top">
-										<font color="#FF0000"><s:property value="abonoVO.abonValorinteresView"/></font>
-									</td>
-									<th class="text" align="left" valign="top" colspan="">
-										<s:text name="tipocredito.interesmora"></s:text>
-									</th>
-									<td align="left" valign="top">
-										<font color="#FF0000"><s:property value="abonoVO.abonValorinteresmoraView"/></font>
-									</td>
-								</tr>
-								<tr>
-									<th class="text" align="left" valign="top" colspan="">
-										<s:text name="tipocredito.segurotipocredito"></s:text>
-									</th>
-									<td align="left" valign="top">
-										<font color="#FF0000"><s:property value="abonoVO.abonValorseguroView"/></font>
-									</td>
-									<th class="text" align="left" valign="top" colspan="">
-										<s:text name="creditossocios.otroscargos"></s:text>
-									</th>
-									<td align="left" valign="top">
-										<font color="#FF0000"><s:property value="abonoVO.abonOtrocargoView"/></font>
-									</td>
-								</tr>
-								<tr>
-									<th class="text" align="left" valign="top" colspan="">
-										<s:text name="creditossocios.abonoacapitaladc"></s:text>
-									</th>
-									<td align="left" valign="top">
-										<font color="#FF0000"><s:property value="abonoVO.abonValorcapitaladicionalView"/></font>
-									</td>
-									<th class="text" align="left" valign="top" colspan="">
-										<s:text name="creditossocios.abonoacapital"></s:text>
-									</th>
-									<td align="left" valign="top">
-										<font color="#FF0000"><s:property value="abonoVO.abonValorcapitalView"/></font>
-									</td>
-									<th class="text" align="left" valign="top" colspan="">
-										<s:text name="creditossocios.totolapagar"></s:text>
-									</th>
-									<td align="left" valign="top">
-										<font color="#009500"><s:property value="abonoVO.abonValortotalView"/></font>
-									</td>
-								</tr>
-								<tr><td><br></td></tr>
-								<tr>
-									<td class="text" align="right" valign="top" colspan="10" height='5' style='font-family: Arial;font-size: 8px;'>
-										<s:property value="creditoVO.credFechamodificacion"/>/<s:property value="creditoVO.credHora"/>&nbsp;&nbsp;<s:property value="creditoVO.credRegistradopor"/>
-									</td>
-								</tr>
-							</table>
-							
-			</div>
+									<td valign="top">
+													<table border="0" width="100%" style='font-family: Arial;font-size: 8px;'>
+														<tr bgcolor='Silver'>
+															<th class="text" align="left" valign="top" colspan="1" >
+																INFORMACIÓN DE SU PAGO ACTUAL
+															</th>
+														</tr>
+														<tr>
+															<th class="text" align="left" valign="top" >
+																<s:text name="creditossocios.saldo"></s:text>
+															</th>
+															<td align="right" valign="top">
+																<font color="#FF0000"><s:property value="creditoVO.credSaldoView"/></font>
+															</td>
+															<th class="text" align="left" valign="top" >
+																<s:text name="tipocredito.interescorriente"></s:text>
+															</th>
+															<td align="right" valign="top">
+																<font color="#FF0000"><s:property value="abonoVO.abonValorinteresView"/></font>
+															</td>
+														</tr>
+														<tr>
+															<th class="text" align="left" valign="top" >
+																<s:text name="tipocredito.segurotipocredito"></s:text>
+															</th>
+															<td align="right" valign="top">
+																<font color="#FF0000"><s:property value="abonoVO.abonValorseguroView"/></font>
+															</td>
+															<th class="text" align="left" valign="top" >
+																<s:text name="creditossocios.otroscargos"></s:text>
+															</th>
+															<td align="right" valign="top">
+																<font color="#FF0000"><s:property value="abonoVO.abonOtrocargoView"/></font>
+															</td>
+														</tr>
+														<tr>
+															<th class="text" align="left" valign="top">
+																<s:text name="creditossocios.abonoacapitaladc"></s:text>
+															</th>
+															<td align="right" valign="top">
+																<font color="#FF0000"><s:property value="abonoVO.abonValorcapitaladicionalView"/></font>
+															</td>
+															<th class="text" align="left" valign="top" >
+																<s:text name="creditossocios.abonoacapital"></s:text>
+															</th>
+															<td align="right" valign="top">
+																<font color="#FF0000"><s:property value="abonoVO.abonValorcapitalView"/></font>
+															</td>
+														</tr>
+														<tr>
+															<th class="text" align="left" valign="top" >
+																<s:text name="tipocredito.interesmora"></s:text>
+															</th>
+															<td align="right" valign="top">
+																<font color="#FF0000"><s:property value="abonoVO.abonValorinteresmoraView"/></font>
+															</td>
+															<th class="text" align="left" valign="top" >
+																	<s:text name="creditossocios.totolapagar"></s:text>
+															</th>
+															<td align="right" valign="top">
+																<font color="#009500"><s:property value="abonoVO.abonValortotalView"/></font>
+															</td>
+														</tr>
+													</table>
+							</td>
+						</tr>
+					</table>
+				<table width="100%">	
+					<tr>
+							<td class="text" align="right" valign="top" height='5' style='font-family: Arial;font-size: 8px;'>
+								<s:property value="creditoVO.credFechamodificacion"/>/<s:property value="creditoVO.credHora"/>&nbsp;&nbsp;<s:property value="creditoVO.credRegistradopor"/>
+							</td>
+						</tr>
+				</table>
 		</s:form>
 	</body>
 </html>

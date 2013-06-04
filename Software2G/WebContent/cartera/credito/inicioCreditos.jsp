@@ -6,6 +6,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
 <body>
-<strong><font size="12" color="#FFCCBB">Bienvenidos a la Funcionalidad Cartera::>Creditos!!!!!!!!!</font></strong>
+<table style='font-family: Arial;font-size: 12px;'>
+	<tr>
+		<td>
+			<p>
+				<img alt="" src="../imagenes/credito.jpg">
+			</p>
+		</td>
+		<td>
+			<p>Funcionalidad de Creditos permite crear nuevos pagare y creditos, asociar los pagare y creditos a los socios,
+				generar los abonos realizados durante la vida del credito e imprimir los detalles.
+			</p>
+		</td>
+	</tr>
+</table>
 </body>
 </html>

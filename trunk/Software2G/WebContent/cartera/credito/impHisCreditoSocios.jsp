@@ -38,7 +38,15 @@ String nomArchivo = "HisCredito";
 	<SCRIPT type="text/javascript" src="<s:url value="/scripts/calendar-stripped.js"/>"></SCRIPT> 
 	<SCRIPT type="text/javascript" src="<s:url value="/scripts/calendar-en.js"/>"></SCRIPT>
 	<SCRIPT type="text/javascript" src="<s:url value="/scripts/calendarnew.js"/>"></SCRIPT>
-	
+	<style type="text/css">
+		.borderAux {
+			border: 2px solid #CECF9C;/*Borde del frame principal*/
+			background-color: #F7F7E7;/*Fondo del frame principal*/
+			-moz-border-radius: 10px;/*Borde redondeado pata mozilla*/
+		    -webkit-border-radius: 10px;/*Borde redondeado*/
+		    behavior:url(border-radius.htc);
+		}
+	</style> 
 </head>
 <body id="dt_example">
 		<s:form id="form">
@@ -101,20 +109,20 @@ String nomArchivo = "HisCredito";
 								<s:if test="creditoVO.abonos.size==1"><%width="50%";%></s:if>
 									<table border="0" width="<%=width%>"> 
 											<tr>
-												<td rowspan="5" align="center" width="15%" class="border"><strong><font size="5"><%=cont%></font></strong></td>
-												<th class="border">Periodo Liquidado</th>
-												<th class="border">Dias Liquidados</th>
-												<th class="border">Dias Mora</th>
+												<td rowspan="5" align="center" valign="middle" width="15%" class="borderAux"><strong><font size="5"><%=cont%></font></strong></td>
+												<th class="borderAux">Periodo Liquidado</th>
+												<th class="borderAux">Dias Liquidados</th>
+												<th class="borderAux">Dias Mora</th>
 											</tr>
 											<tr>
-												<td align="center">17-02-2013 / 17-02-2013</td>
+												<td align="center"><s:property value="abonPeriodoliquidado"/></td>
 												<td align="center"><s:property value="diasLiquidados"/></td>
 												<td align="center"><s:property value="diasMora"/></td>
 											</tr>
 											<tr>
-												<th class="border">Fecha Abono</th>
-												<th class="border">Nro Comprobante</th>
-												<th class="border">Registrado Por</th>
+												<th class="borderAux">Fecha Abono</th>
+												<th class="borderAux">Nro Comprobante</th>
+												<th class="borderAux">Registrado Por</th>
 											</tr>
 											<tr>
 												<td align="center"><s:property value="abonFecha"/></td>
@@ -123,7 +131,7 @@ String nomArchivo = "HisCredito";
 											</tr>
 											<tr>
 												<td colspan="3">
-													<table border="0" width="100%" class="border">
+													<table border="0" width="100%" class="borderAux">
 														<tr>
 															<th align="right" valign="top">
 																<font size="3"><s:property value="abonFechaUltimoPago"/></font>

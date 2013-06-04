@@ -103,6 +103,7 @@
 						</s:elseif>
 						<s:elseif test="estado=='listPagosCredito'">
 							<s:submit value="volver" action="pagosCredito" cssClass="button"></s:submit>
+							<s:submit value="Imprimir" action="imprimirLiqHis" cssClass="button"></s:submit>
 						</s:elseif>
 						
 					</td>

@@ -32,6 +32,7 @@ import com.software2g.contable.dao.ITipoDescuentoDao;
 import com.software2g.contable.dao.ITipoPagareDao;
 import com.software2g.contable.facade.IGestionFacadeContable;
 import com.software2g.portal.dao.IPersonaDao;
+import com.software2g.portal.dao.ITipoDocumentoDao;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Abono;
@@ -52,6 +53,7 @@ import com.software2g.vo.Sucursal;
 import com.software2g.vo.Tipocredito;
 import com.software2g.vo.Tipocreditoseguroadquirido;
 import com.software2g.vo.Tipodescuento;
+import com.software2g.vo.Tipodocumento;
 import com.software2g.vo.Tipopagare;
 
 
@@ -96,6 +98,8 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 	ITipoPagareDao tipoPagareDao;
 	@Autowired
 	IPersonaDao personaDao;
+	@Autowired
+	ITipoDocumentoDao tipoDocumentoDao;
 	
 	public IAbonoDao getAbonoDao() {return abonoDao;}
 	public void setAbonoDao(IAbonoDao abonoDao) {this.abonoDao = abonoDao;}
@@ -135,6 +139,8 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 	public void setTipoCreSegAdquiridoDao(ITipoCreditoSeguroAdquiridoDao tipoCreSegAdquiridoDao) {this.tipoCreSegAdquiridoDao = tipoCreSegAdquiridoDao;}
 	public IPersonaDao getPersonaDao() {return personaDao;}
 	public void setPersonaDao(IPersonaDao personaDao) {this.personaDao = personaDao;}
+	public ITipoDocumentoDao getTipoDocumentoDao() {return tipoDocumentoDao;}
+	public void setTipoDocumentoDao(ITipoDocumentoDao tipoDocumentoDao) {this.tipoDocumentoDao = tipoDocumentoDao;}
 	
 	//-----------------------------------------------------------
 	//-----------------------Abono-------------------------------
@@ -219,12 +225,9 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 	}
 
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Credito> findAllCreditosXCliente(String documentoPers) throws Exception {
+	public List<Credito> findAllCreditosXCliente(String documentoPers, Integer idTipoDoc) throws Exception {
 		try {
-			System.out.println("documentoPers: ["+documentoPers+"]");
-			System.out.println("getCreditoDao(): ["+getCreditoDao()+"]");
-			System.out.println(getCreditoDao().findAllCreditosXCliente(documentoPers));
-			return null;
+			return getCreditoDao().findAllCreditosXCliente(documentoPers, idTipoDoc);
 		} catch (RuntimeException e) {
 			throw new Exception("findAllCreditosXCliente failed: " + e.getMessage());
 		}
@@ -1080,6 +1083,62 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 		}
 	}
 	//-----------------------------------------------------------	
+	
+	//-------------------------------------------------------------------------------------
+	//Implementacion de Metodos de la Entidad TipoDocumento
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Tipodocumento findTipodocumentoById(java.lang.Integer id) throws Exception {
+		try {
+			return getTipoDocumentoDao().findTipodocumentoById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findTipodocumentoById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Tipodocumento</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Tipodocumento> findAllTipodocumentos() throws Exception {
+		try {
+			System.out.println("Entra esta parte de implementacion del mentodo: [List<Tipodocumento> findAllTipodocumentos()]!!!!!!!!!!!");
+			List<Tipodocumento> lista = getTipoDocumentoDao().findAllTipodocumentos();
+			return lista;
+		} catch (Exception ee){
+			System.out.println("metod de la GestionFacadePortalSpringService !!!!!!!!!!!!!");
+			ee.printStackTrace();
+		}/* catch (RuntimeException e) {
+			throw new Exception("findAllTipodocumentos failed: " + e.getMessage());
+		}*/
+		return null;
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistTipodocumento(Tipodocumento tipodocumento) throws Exception {
+		try {
+			getTipoDocumentoDao().persistTipodocumento(tipodocumento);
+		} catch (RuntimeException e) {
+			throw new Exception("persistTipodocumento failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeTipodocumento(Tipodocumento tipodocumento) throws Exception {
+		try {
+			getTipoDocumentoDao().removeTipodocumento(tipodocumento);
+		} catch (RuntimeException e) {
+			throw new Exception("removeTipodocumento failed: " + e.getMessage());
+		}
+	}
+	//FIN ------ Implementacion de Metodos de la Entidad TipoDocumento
+	//-------------------------------------------------------------------------------------
+	
 	
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
 	public List<Persona> findAllPersonas(String datoFind, String tipoFind)throws Exception {

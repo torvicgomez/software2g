@@ -98,6 +98,7 @@
         <property name="tipoDescuentoDao"><bean class="com.software2g.contable.dao.impl.TipoDescuentoDaoImpl"/></property>
         <property name="tipoPagareDao"><bean class="com.software2g.contable.dao.impl.TipoPagareDaoImpl"/></property>
         <property name="personaDao"><bean class="com.software2g.portal.dao.impl.PersonaDaoImpl"/></property>
+        <property name="tipoDocumentoDao"><bean class="com.software2g.portal.dao.impl.TipoDocumentoDaoImpl"/></property>
     </bean>
     
 </beans>

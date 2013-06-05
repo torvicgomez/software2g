@@ -20,6 +20,7 @@ import com.software2g.vo.Sucursal;
 import com.software2g.vo.Tipocredito;
 import com.software2g.vo.Tipocreditoseguroadquirido;
 import com.software2g.vo.Tipodescuento;
+import com.software2g.vo.Tipodocumento;
 import com.software2g.vo.Tipopagare;
 
 public interface IGestionFacadeContable {
@@ -35,7 +36,7 @@ public interface IGestionFacadeContable {
 	//-----------------------Credito-------------------------------
 	public Credito findCreditoById(long id) throws Exception;
 	public List<Credito> findAllCreditos() throws Exception;
-	public List<Credito> findAllCreditosXCliente(String documentoPers) throws Exception;
+	public List<Credito> findAllCreditosXCliente(String documentoPers, Integer idTipoDoc) throws Exception;
 	public void persistCredito(Credito credito) throws Exception;
 	public void removeCredito(Credito credito) throws Exception;
 	//-----------------------------------------------------------
@@ -163,6 +164,16 @@ public interface IGestionFacadeContable {
 	public List<Persona> findAllPersonas(String datoFind, String tipoFind)throws Exception;
 	public Persona findPersonaById(java.lang.Integer id) throws Exception;
 	//-----------------------------------------------------------
+	
+	//--------------------------------------------------------------------------
+	//Metodos Entidad TipoDocumento
+	public Tipodocumento findTipodocumentoById(java.lang.Integer id) throws Exception;
+	public List<Tipodocumento> findAllTipodocumentos() throws Exception;
+	public void persistTipodocumento(Tipodocumento tipodocumento) throws Exception;
+	public void removeTipodocumento(Tipodocumento tipodocumento) throws Exception;
+	//FIN --- Metodos Entidad TipoDocumento
+	//--------------------------------------------------------------------------
+	
 	
 	public Abono liquidacionPagoCredito(Credito creditoVO)throws Exception;
 	public String obtenerFechaCorte(Credito creditoVO, double valorapagar)throws Exception;

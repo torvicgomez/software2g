@@ -27,7 +27,7 @@ public interface ICreditoDao {
 	 * Return all persistent instances of the <code>Credito</code> entity.
 	 */
 	public List<Credito> findAllCreditos();
-	public List<Credito> findAllCreditosXCliente(String documentoPers);
+	public List<Credito> findAllCreditosXCliente(String documentoPers, Integer idTipoDoc);
 	/**
 	 * Make the given instance managed and persistent.
 	 */

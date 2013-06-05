@@ -226,7 +226,7 @@ public class Persona implements Serializable {
 	}
 	
 	public String getNombreCompleto(){
-		return this.pnombrePers+" "+this.snombrePers+" "+this.papellidoPers+" "+this.sapellidoPers;
+		return this.pnombrePers.toUpperCase()+" "+this.snombrePers.toUpperCase()+" "+this.papellidoPers.toUpperCase()+" "+this.sapellidoPers.toUpperCase();
 	}
 
 	public List<Pagare> getPagares() {
@@ -261,4 +261,7 @@ public class Persona implements Serializable {
 		this.telefonoPers = telefonoPers;
 	}
 
+	public String getUbicacionPersona(){
+		return this.municipio.getDepartamento().getPais().getNompais().toUpperCase()+"-"+this.municipio.getDepartamento().getNomdpto().toUpperCase()+"-"+this.municipio.getNommunicipio().toUpperCase();
+	}
 }

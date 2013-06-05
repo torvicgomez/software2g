@@ -219,7 +219,10 @@
         
         <!-- CONTABLE REPORTES -->
         <action name="reportCredCliente" method="reportCredCliente" class="ContableAction">
-        	<result name="success" type="tiles">contable.listCreditoSocio</result>
+        	<result name="success" type="tiles">contable.creditoXCliente</result>
+        </action>
+        <action name="findReportCredCliente" method="findReportCredCliente" class="ContableAction">
+        	<result name="success" type="tiles">contable.creditoXCliente</result>
         </action>
         
         

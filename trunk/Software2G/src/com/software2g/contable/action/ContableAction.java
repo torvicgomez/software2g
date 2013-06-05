@@ -32,6 +32,7 @@ import com.software2g.vo.Presupuestodonacion;
 import com.software2g.vo.Sucursal;
 import com.software2g.vo.Tipocredito;
 import com.software2g.vo.Tipocreditoseguroadquirido;
+import com.software2g.vo.Tipodocumento;
 import com.software2g.vo.Tipopagare;
 import com.software2g.vo.Usuario;
 
@@ -67,6 +68,7 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
 	private Credito creditoVO;
 	private Abono abonoVO;
 	private List<Abono> listAbono;
+	private List<Tipodocumento> listTipoDoc;
 	
 	public List<Sucursal> getListSucursal() {return listSucursal;}
 	public void setListSucursal(List<Sucursal> listSucursal) {this.listSucursal = listSucursal;}
@@ -119,6 +121,8 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
 	public void setAbonoVO(Abono abonoVO) {this.abonoVO = abonoVO;}
 	public List<Abono> getListAbono() {return listAbono;}
 	public void setListAbono(List<Abono> listAbono) {this.listAbono = listAbono;}
+	public List<Tipodocumento> getListTipoDoc() {return listTipoDoc;}
+	public void setListTipoDoc(List<Tipodocumento> listTipoDoc) {this.listTipoDoc = listTipoDoc;}
 	
 	
 	@SkipValidation
@@ -1268,19 +1272,14 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     public String reportCredCliente(){
 		String  result = Action.SUCCESS; 
     	try {
-    		listCredito = gestionFacadeContable.findAllCreditosXCliente("75106199");
-    		if(listCredito!=null&&listCredito.size()>0){
-    			for(Credito elem:listCredito){
-    				System.out.println(elem.getPagare().getPersona().getPnombrePers()+
-    						"-"+elem.getCredId()+"-"+elem.getTipocredito().getTicrDescripcion()+
-    						"-"+elem.getPagare().getPagaId()+"-"+elem.getCredNrocheque()+
-    						"-"+elem.getCredMontocreditoView()+"-"+elem.getCredSaldoView()+"-"+elem.getCredFechaultimopago()+
-    						"-"+elem.getCredEstado());
-    			}
-    		}else{
-    			System.out.println("lista vacia!!!!!!!!");
+    		if(request.getSession().getAttribute("url")==null||((String)request.getSession().getAttribute("url")).equals("")){
+    			String url = request.getParameter("url")==null?"":(String)request.getParameter("url");
+    			request.getSession().setAttribute("url", url);
+    		}else if(request.getParameter("url")!=null){
+    			request.getSession().setAttribute("url", (String)request.getParameter("url"));
     		}
-    		estado="listPagosCredito";
+    		listTipoDoc = gestionFacadeContable.findAllTipodocumentos();
+    		estado="findCreditoXCliente";
     	} catch (Exception e) {
 			addActionMessage(getText("error.aplicacion"));
 			e.printStackTrace();
@@ -1288,6 +1287,41 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
 		System.out.println("result: ["+result+"]");
     	return result;
 	}
+	
+	 public String findReportCredCliente(){
+			String  result = Action.SUCCESS; 
+	    	try {
+	    		if(personaVO!=null){
+	    			if(personaVO.getDocumentoPers()==null||personaVO.getDocumentoPers().equals(""))
+	    				addActionMessage(getText("validacion.requerido","nrodocumento","Numero Documento"));
+	    			if(personaVO.getTipodocumento().getIdTidoc()<=0) 
+	    				addActionMessage(getText("validacion.requerido","tipodocumento","Tipo Documento"));
+	    			if(!hasActionMessages()){
+			    		listCredito = gestionFacadeContable.findAllCreditosXCliente(personaVO.getDocumentoPers(), personaVO.getTipodocumento().getIdTidoc());
+			    		if(listCredito!=null&&listCredito.size()>0){
+			    			personaVO = ((Credito)listCredito.get(0)).getPagare().getPersona();
+			    			estado="listCreditoXCliente";
+			    		}else{
+			    			addActionMessage(getText("validacion.msgnoexistendatos","noexitendatos",""));
+			    			listTipoDoc = gestionFacadeContable.findAllTipodocumentos();
+		    	    		estado="findCreditoXCliente";
+			    		}
+	    			}else{
+	    				listTipoDoc = gestionFacadeContable.findAllTipodocumentos();
+	    	    		estado="findCreditoXCliente";
+	    			}
+	    		}else{
+	    			listTipoDoc = gestionFacadeContable.findAllTipodocumentos();
+    	    		estado="findCreditoXCliente";
+	    		}
+	    	} catch (Exception e) {
+				addActionMessage(getText("error.aplicacion"));
+				e.printStackTrace();
+			}
+			System.out.println("result: ["+result+"]");
+	    	return result;
+		}
+	
 	
 	@SkipValidation
     public String imprimirLiqHis(){

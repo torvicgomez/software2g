@@ -146,6 +146,7 @@ String nomArchivo = "HisCredito";
 												<td align="center"><s:property value="abonPeriodoliquidado"/></td>
 												<td align="center"><s:property value="diasLiquidados"/></td>
 												<td align="center"><s:property value="diasMora"/></td>
+												
 											</tr>
 											<tr bgcolor='Silver'>
 												<th class="border">Fecha Abono</th>
@@ -162,11 +163,12 @@ String nomArchivo = "HisCredito";
 													<table border="0" width="100%" style='font-family: Arial;font-size: 8px;'>
 														<tr>
 															<th align="left" valign="top" bgcolor='Silver'>
-																<s:text name="creditossocios.saldo"></s:text>
+																<s:text name="creditossocios.saldo"></s:text> a &acute; <s:property value="abonFechaUltimoPago"/>
 															</th>
 															<td align="right" valign="top">
-																<font color="#FF0000"><s:property value="creditoVO.credSaldoView"/></font>
+																<font color="#FF0000"><s:property value="abonSaldoView"/></font>
 															</td>
+															
 														</tr>
 														<tr>
 															<th align="left" valign="top">
@@ -223,6 +225,14 @@ String nomArchivo = "HisCredito";
 															</th>
 															<td align="right" valign="top">
 																<font color="#009500"><s:property value="abonValortotalView"/></font>
+															</td>
+														</tr>
+														<tr>
+															<th align="left" valign="top" bgcolor='Silver'>
+																<s:text name="creditossocios.saldoafechacorte"></s:text> a &acute; <s:property value="abonFechaCorteAbono"/>
+															</th>
+															<td align="right" valign="top">
+																<font color="#009500"><s:property value="abonSaldoFechaCorteView"/></font>
 															</td>
 														</tr>
 													</table>

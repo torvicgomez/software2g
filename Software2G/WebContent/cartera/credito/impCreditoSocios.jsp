@@ -41,7 +41,7 @@ String nomArchivo = "Credito";
 </head>
 <body id="dt_example">
 		<s:form id="form">
-					<table border="0" width="100%">
+					<table border="0" width="70%">
 						<tr>
 							<td valign="top">
 								<table border="0" width="100%" style='font-family: Arial;font-size: 8px;'>
@@ -78,6 +78,9 @@ String nomArchivo = "Credito";
 							</td>
 						</tr>
 					</table>
+				<table border="1" width="70%" bordercolor="#FF0000">
+					<tr>
+						<td valign="top">
 							<table border="0" width="100%">
 								<tr>
 									<td valign="top">
@@ -142,7 +145,7 @@ String nomArchivo = "Credito";
 									</td>
 								</tr>
 							</table>
-							<table>
+							<table border="0" width="100%">
 								<tr>
 									<td valign="top">
 													<table border="0" width="100%" style='font-family: Arial;font-size: 8px;'>
@@ -194,16 +197,16 @@ String nomArchivo = "Credito";
 														</tr>
 														<tr>
 															<th class="text" align="left" valign="top" >
-																<s:text name="creditossocios.saldo"></s:text>
-															</th>
-															<td align="right" valign="top">
-																<font color="#FF0000"><s:property value="creditoVO.credSaldoView"/></font>
-															</td>
-															<th class="text" align="left" valign="top" >
 																<s:text name="tipocredito.interescorriente"></s:text>
 															</th>
 															<td align="right" valign="top">
 																<font color="#FF0000"><s:property value="abonoVO.abonValorinteresView"/></font>
+															</td>
+															<th class="text" align="left" valign="top" >
+																<s:text name="tipocredito.interesmora"></s:text>
+															</th>
+															<td align="right" valign="top">
+																<font color="#FF0000"><s:property value="abonoVO.abonValorinteresmoraView"/></font>
 															</td>
 														</tr>
 														<tr>
@@ -236,29 +239,32 @@ String nomArchivo = "Credito";
 														</tr>
 														<tr>
 															<th class="text" align="left" valign="top" >
-																<s:text name="tipocredito.interesmora"></s:text>
-															</th>
-															<td align="right" valign="top">
-																<font color="#FF0000"><s:property value="abonoVO.abonValorinteresmoraView"/></font>
-															</td>
-															<th class="text" align="left" valign="top" >
 																	<s:text name="creditossocios.totolapagar"></s:text>
 															</th>
 															<td align="right" valign="top">
 																<font color="#009500"><s:property value="abonoVO.abonValortotalView"/></font>
+															</td>
+															<th class="text" align="left" valign="top" >
+																<s:text name="creditossocios.saldo"></s:text>
+															</th>
+															<td align="right" valign="top">
+																<font color="#FF0000"><s:property value="creditoVO.credSaldoView"/></font>
 															</td>
 														</tr>
 													</table>
 							</td>
 						</tr>
 					</table>
-				<table width="100%">	
-					<tr>
-							<td class="text" align="right" valign="top" height='5' style='font-family: Arial;font-size: 8px;'>
-								<s:property value="creditoVO.credFechamodificacion"/>/<s:property value="creditoVO.credHora"/>&nbsp;&nbsp;<s:property value="creditoVO.credRegistradopor"/>
-							</td>
-						</tr>
-				</table>
+				</td>
+			</tr>
+		</table>
+		<table border="0" width="70%">	
+			<tr>
+					<td class="text" align="left" valign="top" height='5' style='font-family: Arial;font-size: 8px;'>
+						<s:property value="creditoVO.credFechamodificacion"/>/<s:property value="creditoVO.credHora"/>&nbsp;&nbsp;<s:property value="creditoVO.credRegistradopor"/>
+					</td>
+				</tr>
+		</table>
 		</s:form>
 	</body>
 </html>

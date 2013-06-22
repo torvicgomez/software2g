@@ -7,77 +7,86 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title><s:text name="titulo.header"></s:text></title>
 <link rel="icon" href="http://localhost:8080/Software2G/imagenes/acafeto.png" type="image/png" />
+<!--STYLESHEETS-->
+<link href="<s:url value='/css/style.css'/>" rel="stylesheet" type="text/css" />
+<!--SCRIPTS-->
+<script type="text/javascript" language="javascript" src="<s:url value='/js/jquery.min.js'/>"></script>
+
+<!--Slider-in icons-->
+<script type="text/javascript">
+$(document).ready(function() {
+	$(".username").focus(function() {
+		$(".user-icon").css("left","-48px");
+	});
+	$(".username").blur(function() {
+		$(".user-icon").css("left","0px");
+	});
+	
+	$(".password").focus(function() {
+		$(".pass-icon").css("left","-48px");
+	});
+	$(".password").blur(function() {
+		$(".pass-icon").css("left","0px");
+	});
+});
+</script>
 </head>
 <body>
-<s:form name="login" id="login">
-	<body id="dt_example">
-		<div id="demo">
-			<table border="0" align="center">
-				<tr>
-					<td valign="top" width="100%">
-						<s:if test="hasActionMessages()">
-							<tr>
-								<td align="left">
-									<div class="border">
-										<s:actionmessage />
-										<s:actionerror />
-										<s:fielderror />
-									</div></td>
-							</tr>
-						</s:if>
-						<s:elseif test="hasActionErrors()">
-							<tr>
-								<td align="center">
-									<div class="border">
-										<s:actionmessage />
-										<s:actionerror />
-										<s:fielderror />
-									</div></td>
-							</tr>
-						</s:elseif>
-						<s:elseif test="hasFieldErrors()">
-							<tr>
-								<td align="center">
-									<div class="border">
-										<s:actionmessage />
-										<s:actionerror />
-										<s:fielderror />
-									</div></td>
-							</tr>
-						</s:elseif>
-		            </td>
-				</tr>
-				<tr>
-					<td class="border">
-					<table border="0">
-							<tr>
-								<td class="text">
-									<s:text name="login.usuario"></s:text>
-								</td>
-								<td class="text">
-									<s:textfield name="usuarioVO.loginUsua" size="20" maxlength="15"></s:textfield>
-								</td>
-							</tr>
-							<tr>
-								<td class="text">
-									<s:text name="login.password"></s:text>
-								</td>
-								<td class="text">
-									<s:password name="usuarioVO.passwordUsua" size="20" maxlength="15"></s:password>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="2" align="center" class="text">
-									<s:submit value="Entrar" action="ingresarPortal"  cssClass="button"></s:submit>
-									<s:submit value="Recuperar Contraseña" action="portal" cssClass="button"></s:submit>
-								</td>
-							</tr>
-						</table>
-					</td>	
-				</tr>
-			</table>
-		</div>	
-	</body>
-</s:form>
+<!--WRAPPER--> 
+<div id="wrapper">
+
+	<!--SLIDE-IN ICONS-->
+    <div class="user-icon"></div>
+    <div class="pass-icon"></div>
+    <!--END SLIDE-IN ICONS-->
+
+<!--LOGIN FORM-->
+
+<form name="login-form" class="login-form" action="" method="post">
+		<!--HEADER-->
+	    <div class="header">
+	    <!--TITLE--><h1>Login IngeSoft</h1><!--END TITLE-->
+	    <!--DESCRIPTION-->
+	    	
+	    		<s:if test="hasActionMessages()">
+					<div><strong><font color="#FF000">
+						<s:actionmessage />
+						<s:actionerror />
+						<s:fielderror /></font></strong>
+					</div>
+				</s:if>
+				<s:else>
+	    			<span>Ingrese el usuario y contraseña para ingresar al sistema de información IngeSoft.</span>
+	    		</s:else>
+	    	
+	    <!--END DESCRIPTION-->
+	    </div>
+	    <!--END HEADER-->
+	    <!--CONTENT-->
+		<div class="content">
+		<!--USERNAME-->
+			<s:textfield name="usuarioVO.loginUsua" size="20" maxlength="15" cssClass="input username" value="Usuario" onfocus="this.value=''"></s:textfield>
+		<!--END USERNAME-->
+    	<!--PASSWORD-->
+    		<s:password name="usuarioVO.passwordUsua" size="20" maxlength="15" cssClass="input password"></s:password>
+    	<!--END PASSWORD-->
+		</div>
+		<!--END CONTENT-->
+		<!--FOOTER-->
+	    <div class="footer">
+	    <!--LOGIN BUTTON-->
+	    	<s:submit value="Ingresar" action="ingresarPortal"  cssClass="button"></s:submit>
+	    <!--END LOGIN BUTTON-->
+	    </div>
+	    <!--END FOOTER-->
+				 
+</form>
+<!--END LOGIN FORM-->
+
+</div>
+<!--END WRAPPER-->
+
+<!--GRADIENT--><div class="gradient"></div><!--END GRADIENT-->
+
 </body>
 </html>

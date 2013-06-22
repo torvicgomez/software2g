@@ -19,7 +19,7 @@
     	<strong><font size="2" color="#FFFFFF"><br><br>
     		<%=userLogin.getPersona().getNombreCompleto().toUpperCase()%><br>
    			<%=userLogin.getPersona().getEmailPers()%>&nbsp;&nbsp;-&nbsp;&nbsp;<%=userLogin.getLoginUsua()%><br>
-   			<a href="salir.action" target="_parent">Salir</a>
+   			<a href="../salir.action" target="_parent">Salir</a>
    		</font></strong>
     </td>
    </tr>

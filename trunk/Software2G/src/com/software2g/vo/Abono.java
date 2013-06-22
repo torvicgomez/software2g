@@ -87,7 +87,7 @@ public class Abono implements Serializable {
 	@Transient
 	private String abonValorcapitaladicionalView;
 	
-	//bi-directional many-to-one association to Credito
+	//bi-directional many-to-one association to Credito    
 	@ManyToOne
 	@JoinColumn(name="cred_id")
 	private Credito credito;

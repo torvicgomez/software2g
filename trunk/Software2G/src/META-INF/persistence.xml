@@ -7,12 +7,12 @@
 		<class>com.software2g.vo.FuncionalidadrolPK</class>
 		<class>com.software2g.vo.Institucion</class>
 		<class>com.software2g.vo.Persona</class>
-		<class>com.software2g.vo.Personainstitucion</class>
+		<class>com.software2g.vo.Personainstitucion</class> 
 		<class>com.software2g.vo.PersonainstitucionPK</class>
 		<class>com.software2g.vo.Rol</class> 
 		<class>com.software2g.vo.Rolusuario</class>
 		<class>com.software2g.vo.RolusuarioPK</class>
-		<class>com.software2g.vo.Tipodocumento</class>
+		<class>com.software2g.vo.Tipodocumento</class> 
 		<class>com.software2g.vo.Usuario</class>
 		<class>com.software2g.vo.Abono</class>
 		<class>com.software2g.vo.Credito</class>

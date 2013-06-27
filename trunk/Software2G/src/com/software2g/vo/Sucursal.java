@@ -17,7 +17,7 @@ public class Sucursal implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="SUCURSAL_SUCUID_GENERATOR", sequenceName="CONTABLE.S_SUCU_ID")
+	@SequenceGenerator(name="SUCURSAL_SUCUID_GENERATOR", sequenceName="CONTABLE.S_SUCU_ID", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SUCURSAL_SUCUID_GENERATOR")
 	@Column(name="sucu_id")
 	private long sucuId;
@@ -38,8 +38,17 @@ public class Sucursal implements Serializable {
 	private String sucuRegistradopor;
 
 	@Column(name="sucu_ubicacion")
-	private BigDecimal sucuUbicacion;
+	private long sucuUbicacion;
 
+	@Transient
+	private long paisId;
+	
+	@Transient
+	private long dptoId;
+	
+	@Transient
+	private String nombreUbicacion;
+	
 	//bi-directional many-to-one association to Donacionsucursal
 	@OneToMany(mappedBy="sucursal")
 	private List<Donacionsucursal> donacionsucursals;
@@ -99,11 +108,11 @@ public class Sucursal implements Serializable {
 		this.sucuRegistradopor = sucuRegistradopor;
 	}
 
-	public BigDecimal getSucuUbicacion() {
+	public long getSucuUbicacion() {
 		return this.sucuUbicacion;
 	}
 
-	public void setSucuUbicacion(BigDecimal sucuUbicacion) {
+	public void setSucuUbicacion(long sucuUbicacion) {
 		this.sucuUbicacion = sucuUbicacion;
 	}
 
@@ -151,4 +160,30 @@ public class Sucursal implements Serializable {
 
 		return presupuestosucursals;
 	}
+
+	public long getPaisId() {
+		return paisId;
+	}
+
+	public void setPaisId(long paisId) {
+		this.paisId = paisId;
+	}
+
+	public long getDptoId() {
+		return dptoId;
+	}
+
+	public void setDptoId(long dptoId) {
+		this.dptoId = dptoId;
+	}
+
+	public String getNombreUbicacion() {
+		return nombreUbicacion;
+	}
+
+	public void setNombreUbicacion(String nombreUbicacion) {
+		this.nombreUbicacion = nombreUbicacion;
+	}
+
+	
 }

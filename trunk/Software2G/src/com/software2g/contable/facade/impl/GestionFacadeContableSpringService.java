@@ -31,6 +31,9 @@ import com.software2g.contable.dao.ITipoCreditoSeguroAdquiridoDao;
 import com.software2g.contable.dao.ITipoDescuentoDao;
 import com.software2g.contable.dao.ITipoPagareDao;
 import com.software2g.contable.facade.IGestionFacadeContable;
+import com.software2g.portal.dao.IDepartamentoDao;
+import com.software2g.portal.dao.IMunicipioDao;
+import com.software2g.portal.dao.IPaisDao;
 import com.software2g.portal.dao.IPersonaDao;
 import com.software2g.portal.dao.ITipoDocumentoDao;
 import com.software2g.util.ConstantesAplicativo;
@@ -38,12 +41,15 @@ import com.software2g.util.ValidaString;
 import com.software2g.vo.Abono;
 import com.software2g.vo.Credito;
 import com.software2g.vo.Creditotipodescuento;
+import com.software2g.vo.Departamento;
 import com.software2g.vo.Donacion;
 import com.software2g.vo.Donacionobjeto;
 import com.software2g.vo.Donacionsucursal;
 import com.software2g.vo.Entidaddonante;
+import com.software2g.vo.Municipio;
 import com.software2g.vo.Objeto;
 import com.software2g.vo.Pagare;
+import com.software2g.vo.Pais;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Presupuesto;
 import com.software2g.vo.Presupuestodonacion;
@@ -100,6 +106,12 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 	IPersonaDao personaDao;
 	@Autowired
 	ITipoDocumentoDao tipoDocumentoDao;
+	@Autowired
+	IPaisDao paisDao;
+	@Autowired
+	IDepartamentoDao departamentoDao;
+	@Autowired
+	IMunicipioDao municipioDao;
 	
 	public IAbonoDao getAbonoDao() {return abonoDao;}
 	public void setAbonoDao(IAbonoDao abonoDao) {this.abonoDao = abonoDao;}
@@ -141,6 +153,12 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 	public void setPersonaDao(IPersonaDao personaDao) {this.personaDao = personaDao;}
 	public ITipoDocumentoDao getTipoDocumentoDao() {return tipoDocumentoDao;}
 	public void setTipoDocumentoDao(ITipoDocumentoDao tipoDocumentoDao) {this.tipoDocumentoDao = tipoDocumentoDao;}
+	public IPaisDao getPaisDao() {return paisDao;}
+	public void setPaisDao(IPaisDao paisDao) {this.paisDao = paisDao;}
+	public IDepartamentoDao getDepartamentoDao() {return departamentoDao;}
+	public void setDepartamentoDao(IDepartamentoDao departamentoDao) {this.departamentoDao = departamentoDao;}
+	public IMunicipioDao getMunicipioDao() {return municipioDao;}
+	public void setMunicipioDao(IMunicipioDao municipioDao) {this.municipioDao = municipioDao;}
 	
 	//-----------------------------------------------------------
 	//-----------------------Abono-------------------------------
@@ -860,7 +878,16 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
 	public List<Sucursal> findAllSucursals() throws Exception {
 		try {
-			return getSucursalDao().findAllSucursals();
+			List<Sucursal> result = getSucursalDao().findAllSucursals();
+			for(Sucursal elem:result){
+				List<Object[]> obj = getMunicipioDao().findDatosMunicipio(elem.getSucuUbicacion());
+				for(Object[] elem1:obj){
+					elem.setNombreUbicacion(elem1[0].toString());
+					elem.setDptoId(Long.parseLong(elem1[1].toString()));
+					elem.setPaisId(Long.parseLong(elem1[2].toString()));
+				}
+			}
+			return result;
 		} catch (RuntimeException e) {
 			throw new Exception("findAllSucursals failed: " + e.getMessage());
 		}
@@ -1278,6 +1305,69 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 					(diasLiquidados+1), (diasLiquidados+1)>30?(diasMora+1):0, valorapagar);
 	}
 	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Pais findPaisById(long id) throws Exception {
+		try {
+			return getPaisDao().findPaisById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findPaisById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Aplicacion</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Pais> findAllPaiss() throws Exception {
+		try {
+			return getPaisDao().findAllPaiss();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllPaiss failed: " + e.getMessage());
+		}
+	}
 	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Departamento findDepartamentoById(long id) throws Exception {
+		try {
+			return getDepartamentoDao().findDepartamentoById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findDepartamentoById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Departamento> findAllDepartamentos() throws Exception {
+		try {
+			return getDepartamentoDao().findAllDepartamentos();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllDepartamentos failed: " + e.getMessage());
+		}
+	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Municipio findMunicipioById(long id) throws Exception {
+		try {
+			return getMunicipioDao().findMunicipioById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findMunicipioById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Municipio> findAllMunicipios() throws Exception {
+		try {
+			return getMunicipioDao().findAllMunicipios();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllMunicipios failed: " + e.getMessage());
+		}
+	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Municipio> findAllMunicipios(long idDpto) throws Exception {
+		try {
+			return getMunicipioDao().findAllMunicipios(idDpto);
+		} catch (RuntimeException e) {
+			throw new Exception("findAllMunicipios failed: " + e.getMessage());
+		}
+	}
 	
 }

@@ -21,11 +21,14 @@ import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Abono;
 import com.software2g.vo.Credito;
+import com.software2g.vo.Departamento;
 import com.software2g.vo.Donacion;
 import com.software2g.vo.Donacionobjeto;
 import com.software2g.vo.Entidaddonante;
+import com.software2g.vo.Municipio;
 import com.software2g.vo.Objeto;
 import com.software2g.vo.Pagare;
+import com.software2g.vo.Pais;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Presupuesto;
 import com.software2g.vo.Presupuestodonacion;
@@ -69,6 +72,9 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
 	private Abono abonoVO;
 	private List<Abono> listAbono;
 	private List<Tipodocumento> listTipoDoc;
+	private List<Pais> listPais;
+	private List<Departamento> listDepartamento;
+	private List<Municipio> listMunicipio;
 	
 	public List<Sucursal> getListSucursal() {return listSucursal;}
 	public void setListSucursal(List<Sucursal> listSucursal) {this.listSucursal = listSucursal;}
@@ -123,7 +129,12 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
 	public void setListAbono(List<Abono> listAbono) {this.listAbono = listAbono;}
 	public List<Tipodocumento> getListTipoDoc() {return listTipoDoc;}
 	public void setListTipoDoc(List<Tipodocumento> listTipoDoc) {this.listTipoDoc = listTipoDoc;}
-	
+	public List<Pais> getListPais() {return listPais;}
+	public void setListPais(List<Pais> listPais) {this.listPais = listPais;}
+	public List<Departamento> getListDepartamento() {return listDepartamento;}
+	public void setListDepartamento(List<Departamento> listDepartamento) {this.listDepartamento = listDepartamento;}
+	public List<Municipio> getListMunicipio() {return listMunicipio;}
+	public void setListMunicipio(List<Municipio> listMunicipio) {this.listMunicipio = listMunicipio;}
 	
 	@SkipValidation
     public String execute() {
@@ -164,8 +175,25 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     	try { 
     		if(request.getParameter("id")!=null&&Long.parseLong((String)request.getParameter("id"))>0)
     			setSucursalVO(gestionFacadeContable.findSucursalById(Long.parseLong((String)request.getParameter("id"))));
+    		listPais = gestionFacadeContable.findAllPaiss();
+    		listDepartamento = gestionFacadeContable.findAllDepartamentos();
     	} catch (Exception e) {
 			addActionMessage(getText("error.aplicacion"));
+			e.printStackTrace();
+		}
+		System.out.println("result: ["+result+"]");
+    	return result;
+	}
+	
+	@SkipValidation
+	public String loadMunicipios(){
+		String  result = Action.SUCCESS; 
+    	try {
+    		if(getSucursalVO().getDptoId()>0)
+    			listMunicipio = gestionFacadeContable.findAllMunicipios(getSucursalVO().getDptoId()); 
+    	} catch (Exception e) {
+			addActionMessage(getText("error.aplicacion"));
+			System.out.println("Entra esta parte");
 			e.printStackTrace();
 		}
 		System.out.println("result: ["+result+"]");
@@ -184,6 +212,9 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     				sucursalVO.setSucuFechamodificacion(ValidaString.fechaSystem());
     				sucursalVO.setSucuHora(ValidaString.horaSystem());
     				sucursalVO.setSucuRegistradopor(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua());
+    				
+    				ValidaString.imprimirObject(sucursalVO);
+    				
     				gestionFacadeContable.persistSucursal(sucursalVO);
     				setListSucursal(gestionFacadeContable.findAllSucursals());
     			}else

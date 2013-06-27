@@ -25,4 +25,5 @@ public interface IMunicipioDao {
 	 */
 	public List<Municipio> findAllMunicipios();
 	public List<Municipio> findAllMunicipios(long idDpto);
+	public List<Object[]> findDatosMunicipio(long idMcpo);
 }

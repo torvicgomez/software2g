@@ -80,10 +80,10 @@ $(document).ready(function() {
 	    <!--CONTENT-->
 		<div class="content">
 		<!--USERNAME-->
-			<s:textfield name="usuarioVO.loginUsua" size="20" maxlength="15" cssClass="input username" value="Usuario" onfocus="this.value=''"></s:textfield>
+			<s:textfield name="usuarioVO.loginUsua" size="20" maxlength="15" cssClass="input username" placeholder="Usuario"></s:textfield>
 		<!--END USERNAME-->
     	<!--PASSWORD-->
-    		<s:password name="usuarioVO.passwordUsua" size="20" maxlength="15" cssClass="input password"></s:password>
+    		<s:password name="usuarioVO.passwordUsua" size="20" maxlength="15" placeholder="Contraseña" cssClass="input password"></s:password>
     	<!--END PASSWORD-->
 		</div>
 		<!--END CONTENT-->

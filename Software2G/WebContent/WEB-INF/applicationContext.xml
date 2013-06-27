@@ -99,6 +99,9 @@
         <property name="tipoPagareDao"><bean class="com.software2g.contable.dao.impl.TipoPagareDaoImpl"/></property>
         <property name="personaDao"><bean class="com.software2g.portal.dao.impl.PersonaDaoImpl"/></property>
         <property name="tipoDocumentoDao"><bean class="com.software2g.portal.dao.impl.TipoDocumentoDaoImpl"/></property>
+        <property name="paisDao"><bean class="com.software2g.portal.dao.impl.PaisDaoImpl"/></property>
+		<property name="departamentoDao"><bean class="com.software2g.portal.dao.impl.DepartamentoDaoImpl"/></property>
+		<property name="municipioDao"><bean class="com.software2g.portal.dao.impl.MunicipioDaoImpl"/></property>
     </bean>
     
 </beans>

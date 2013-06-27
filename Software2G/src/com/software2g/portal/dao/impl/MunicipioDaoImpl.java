@@ -93,4 +93,25 @@ public class MunicipioDaoImpl implements IMunicipioDao {
         }
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Object[]> findDatosMunicipio(long idMcpo) {
+        try {
+    		String sqlString = "select mcpo.nommunicipio||'-'||dpto.nomdpto||'-'||pais.nompais as ubicacion," +
+    				" dpto.id_dpto, pais.id_pais " +
+    				" from portal.municipio mcpo " +
+    				" inner join portal.departamento dpto on (dpto.id_dpto = mcpo.id_dpto) " +
+    				" inner join portal.pais pais on (pais.id_pais =dpto.id_pais) " +
+    				" where id_mcpo = "+idMcpo+" ";
+            Query query = em.createNativeQuery( sqlString );
+            @SuppressWarnings("unchecked")
+            List<Object[]> result = query.getResultList();
+            return result;
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
 }

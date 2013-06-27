@@ -69,6 +69,9 @@
         	<result name="success" type="tiles">contable.listSucursal</result>
         	<result name="error" type="tiles">contable.crearSucursal</result>
         </action>
+        <action name="loadMunicipios" method="loadMunicipios" class="ContableAction">
+			<result name="success">/cartera/parametricas/loadMunicipios.jsp</result>
+        </action>
         
         <!-- CONTABLE DONACIONES -->
         <action name="inicioDonaciones" method="execute" class="ContableAction">

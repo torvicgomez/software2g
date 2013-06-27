@@ -17,8 +17,5 @@
 3011|3008|Creditos Socios|listCreditosSocios.action?url=Cartera::>Creditos::>Creditos Socios|body
 
 
-2000|root|Instituciones|inicioInstituciones.action?url=Instituciones|body
-2001|2000|Administración Institución|listInstituciones.action?url=Instituciones::>Administración Institución|body
-
-4000|root|Reportes|inicioInstituciones.action?url=Instituciones|body
+4000|root|Reportes|inicioInstituciones.action?url=Reportes|body
 4001|4000|Creditos por Cliente|reportCredCliente.action?url=Instituciones::>Creditos por Cliente|body

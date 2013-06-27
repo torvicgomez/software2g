@@ -12,6 +12,23 @@
 <!--SCRIPTS-->
 <script type="text/javascript" language="javascript" src="<s:url value='/js/jquery.min.js'/>"></script>
 
+<style type="text/css">
+.fondo{
+	/* IE10 Consumer Preview */ 
+	background-image: -ms-linear-gradient(bottom, #FFFFFF 0%, #966A36 100%);
+	/* Mozilla Firefox */ 
+	background-image: -moz-linear-gradient(bottom, #FFFFFF 0%, #966A36 100%);
+	/* Opera */ 
+	background-image: -o-linear-gradient(bottom, #FFFFFF 0%, #966A36 100%);
+	/* Webkit (Safari/Chrome 10) */ 
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #FFFFFF), color-stop(1, #966A36));
+	/* Webkit (Chrome 11+) */ 
+	background-image: -webkit-linear-gradient(bottom, #FFFFFF 0%, #966A36 100%);
+	/* W3C Markup, IE10 Release Preview */ 
+	background-image: linear-gradient(to top, #FFFFFF 0%, #966A36 100%);
+}
+</style>
+
 <!--Slider-in icons-->
 <script type="text/javascript">
 $(document).ready(function() {
@@ -31,7 +48,7 @@ $(document).ready(function() {
 });
 </script>
 </head>
-<body>
+<body class="fondo">
 <!--WRAPPER--> 
 <div id="wrapper">
 
@@ -47,18 +64,16 @@ $(document).ready(function() {
 	    <div class="header">
 	    <!--TITLE--><h1>Login IngeSoft</h1><!--END TITLE-->
 	    <!--DESCRIPTION-->
-	    	
-	    		<s:if test="hasActionMessages()">
-					<div><strong><font color="#FF000">
-						<s:actionmessage />
-						<s:actionerror />
-						<s:fielderror /></font></strong>
-					</div>
-				</s:if>
-				<s:else>
-	    			<span>Ingrese el usuario y contraseña para ingresar al sistema de información IngeSoft.</span>
-	    		</s:else>
-	    	
+	   		<s:if test="hasActionMessages()">
+				<div><strong><font color="#FF000">
+					<s:actionmessage />
+					<s:actionerror />
+					<s:fielderror /></font></strong>
+				</div>
+			</s:if>
+			<s:else>
+	   			<span>Ingrese el usuario y contraseña para ingresar al sistema de información IngeSoft.</span>
+	   		</s:else>
 	    <!--END DESCRIPTION-->
 	    </div>
 	    <!--END HEADER-->
@@ -86,7 +101,7 @@ $(document).ready(function() {
 </div>
 <!--END WRAPPER-->
 
-<!--GRADIENT--><div class="gradient"></div><!--END GRADIENT-->
+<!--GRADIENT--<div class="gradient"></div><!--END GRADIENT-->
 
 </body>
 </html>

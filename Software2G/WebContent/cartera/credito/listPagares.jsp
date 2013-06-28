@@ -53,6 +53,10 @@
 		document.form.action="editarPagare.action?id="+idPagare;
 		document.form.submit();
 	}
+	function ver(idPagare){
+		document.form.action="imprimirPagare.action?id="+idPagare;
+		document.form.submit();
+	}
 	
 	</script>
 </head>
@@ -107,7 +111,7 @@
 											<a onclick="javascript:editar('<s:property value="pagaId"/>');">Editar</a>
 										</td>
 										<td width="5%">
-											<a onclick="javascript:editar('<s:property value="pagaId"/>');">Ver</a>
+											<a onclick="javascript:ver('<s:property value="pagaId"/>');">Ver</a>
 										</td>
 										<td width="20%">
 											<s:property value="tipopagare.tipaDescripcion"/>&nbsp;(<s:property value="pagaId"/>)

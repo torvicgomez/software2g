@@ -82,7 +82,6 @@
 										<s:property value="sucuNombre"/>
 									</td>
 									<td width="45%">
-										<s:property value="sucuUbicacion"/>
 										<s:property value="nombreUbicacion"/>
 									</td>
 									<td width="25%">

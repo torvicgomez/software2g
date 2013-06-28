@@ -82,9 +82,11 @@
 									</tr>
 								</thead>
 								<tbody>
+								<%int i=0; %>
 								<s:iterator value="listTipoCredito" id="data">
+									<%i++;%>
 									<tr>
-										<td width="5%" rowspan="4" align="center">1</td>
+										<td width="5%" rowspan="4" align="center"><%=i+""%></td>
 										<th width="15%">
 											<s:text name="tipocredito.nombretipocredito"></s:text>
 										</th>
@@ -162,6 +164,7 @@
 											</td>
 										</tr>
 									</s:iterator>
+									<tr><td colspan="8"><br></td></tr>
 								</s:iterator>
 								</tbody>
 							</table>

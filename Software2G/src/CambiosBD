@@ -327,4 +327,12 @@ CREATE OR REPLACE FUNCTION  contable.update_aud_abono() RETURNS trigger AS '
 CREATE TRIGGER tr_u_contable_abono AFTER UPDATE ON contable.abono FOR EACH ROW EXECUTE PROCEDURE contable.update_aud_abono();
 
 
+--Insert tipo credito
+insert into contable.tipocredito values (nextval('contable.s_ticr_id'), 'CREDITO TIPO B',36,3,1,1,'1',CURRENT_DATE,to_char(current_timestamp,'HH24:MI:SS'),'vhgomezl',12)
+--
+
+
+
+
+
 

@@ -16,7 +16,8 @@
   <tr>
     <!--background="<s:url value="/imagenes/imagenRight.gif"/>"-->
     <td align="right" valign="middle">
-    	<strong><font size="2" color="31659C"><br><br>
+    	<img src="<s:url value="/imagenes/Mujer.png"/>">
+    	<strong><font size="2" color="31659C"><br>
     		<%=userLogin.getPersona().getNombreCompleto().toUpperCase()%><br>
    			<%=userLogin.getPersona().getEmailPers()%>&nbsp;&nbsp;-&nbsp;&nbsp;<%=userLogin.getLoginUsua()%><br>
    			<a href="../salir.action" target="_parent">Salir</a>

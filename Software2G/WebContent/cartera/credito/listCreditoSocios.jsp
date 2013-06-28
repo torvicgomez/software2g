@@ -66,6 +66,12 @@
 
 	function cambioTipoRecPag(obj, tipo){
 		document.getElementById("recalculoPagos").value = obj.value;
+		document.getElementById("valorapagar").value = document.getElementById("valorapagar").value.replace(/^([\d\.]+)E(\d+)$/, function(todo, num, exp) {
+			num = parseFloat(num);
+			exp = parseInt(exp);
+			multiplic = Math.pow(10,exp);
+			return (num*multiplic).toString();
+		} );
 		if(tipo=='fec'){
 			document.getElementById("valorapagar").disabled = true;
 			document.getElementById("fechaCorte").disabled = false;

@@ -867,9 +867,18 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
 	public Sucursal findSucursalById(long id) throws Exception {
 		try {
-			return getSucursalDao().findSucursalById(id);
+			Sucursal result = getSucursalDao().findSucursalById(id);
+			List<Object[]> obj = getMunicipioDao().findDatosMunicipio(result.getSucuUbicacion());
+			for(Object[] elem1:obj){
+				result.setNombreUbicacion(elem1[0].toString());
+				result.setDptoId(Long.parseLong(elem1[1].toString()));
+				result.setPaisId(Long.parseLong(elem1[2].toString()));
+			}
+			return result;
 		} catch (RuntimeException e) {
-			throw new Exception("findSucursalById failed with the id " + id + ": " + e.getMessage());
+			//throw new Exception("findSucursalById failed with the id " + id + ": " + e.getMessage());
+			e.printStackTrace();
+			return null;
 		}
 	}
 	/**

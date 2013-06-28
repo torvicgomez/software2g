@@ -173,10 +173,14 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     public String crearSucursal(){
 		String  result = Action.SUCCESS; 
     	try { 
-    		if(request.getParameter("id")!=null&&Long.parseLong((String)request.getParameter("id"))>0)
+    		if(request.getParameter("id")!=null&&Long.parseLong((String)request.getParameter("id"))>0){
     			setSucursalVO(gestionFacadeContable.findSucursalById(Long.parseLong((String)request.getParameter("id"))));
+    			if(getSucursalVO()!=null&&getSucursalVO().getDptoId()>0)
+        			listMunicipio = gestionFacadeContable.findAllMunicipios(getSucursalVO().getDptoId());
+    		}
     		listPais = gestionFacadeContable.findAllPaiss();
     		listDepartamento = gestionFacadeContable.findAllDepartamentos();
+    		
     	} catch (Exception e) {
 			addActionMessage(getText("error.aplicacion"));
 			e.printStackTrace();

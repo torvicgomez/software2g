@@ -71,7 +71,7 @@
 								</td>
 								<td class="text"  valign="top">
 									<s:select list="listPais" name="sucursalVO.paisId" id="selectPais" listKey="paisId" listValue="nompais" headerKey="-1" headerValue=".::Seleccione::." />
-									<s:if test="sucursal.paisId>0">
+									<s:if test="sucursalVO.paisId>0">
 										<div id="viewSelectDpto" style="overflow:auto;width:auto;height:auto;display:block">
 									</s:if>
 									<s:else>

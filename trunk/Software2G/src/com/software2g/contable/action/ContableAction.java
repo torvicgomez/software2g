@@ -1377,7 +1377,40 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     	return result;
 	}
 
-	
+	@SkipValidation
+    public String imprimirPagare(){
+		String  result = Action.SUCCESS; 
+    	try {
+    		if((String)request.getParameter("id")!=null&&(Integer.parseInt((String)request.getParameter("id")))>0){
+    			setPagareVO(gestionFacadeContable.findPagareById(Long.parseLong((String)request.getParameter("id"))));
+    			pagareVO.getTipopagare().setTipaEncabezado(pagareVO.getTipopagare().getTipaEncabezado().replace("##NOMDEUDOR##", pagareVO.getPersona().getNombreCompleto()));
+    			String fecha="13/24/2013";
+    				//pagareVO.getPagaFechacreapagare();
+    			pagareVO.getTipopagare().setTipaEncabezado(pagareVO.getTipopagare().getTipaEncabezado().replace("##DIAPAGO##", fecha));
+    			pagareVO.getTipopagare().setTipaEncabezado(pagareVO.getTipopagare().getTipaEncabezado().replace("##SUMAPAGARA##", pagareVO.getPagaMonto()));
+    			pagareVO.getTipopagare().setTipaEncabezado(pagareVO.getTipopagare().getTipaEncabezado().replace("##SUMAPAGARB##", pagareVO.getPagaMontoView()));
+    			pagareVO.getTipopagare().setTipaContenidofinal(pagareVO.getTipopagare().getTipaContenidofinal().replace("##CIUDADPAGARE##", pagareVO.getPersona().getMunicipio().getNommunicipio()));
+    			pagareVO.getTipopagare().setTipaContenidofinal(pagareVO.getTipopagare().getTipaContenidofinal().replace("##NOMDEUDOR##", pagareVO.getPersona().getNombreCompleto()));
+    			pagareVO.getTipopagare().setTipaContenidofinal(pagareVO.getTipopagare().getTipaContenidofinal().replace("##NOMCODEUDOR##", pagareVO.getPagaCodeudor()));
+    			pagareVO.getTipopagare().setTipaContenidofinal(pagareVO.getTipopagare().getTipaContenidofinal().replace("##CCDEUDOR##", pagareVO.getPersona().getDocumentoPers()));
+    					//CCDEUDOR
+    			setPagareVO(pagareVO);
+    			// setListTipoPagare(gestionFacadeContable.findAllTipopagares());
+    			//(pagareVO.getTipopagare().getTipaEncabezado().replace("##NOMDEUDOR##", pagareVO.getPersona().getNombreCompleto()))
+    			/*pagareVO.setTipopagare(pagareVO.getTipopagare().getTipaEncabezado());
+    			getCreditoVO().setCredMontocredito(Double.valueOf(getCreditoVO().getPagare().getPagaMonto()));
+    			setPagareVO(pagareVO.getTipopagare().getTipaEncabezado().replace("##NOMDEUDOR##", pagareVO.getPersona().getNombreCompleto()));
+    			*/
+    			estado="editarPagare";
+    		}
+    	} catch (Exception e) {
+			addActionMessage(getText("error.aplicacion"));
+			e.printStackTrace();
+		}
+		System.out.println("result imp: ["+result+"]");
+    	return result;
+	}
+
 	
 	public HttpServletRequest getRequest() {return request;}
 	public void setRequest(HttpServletRequest request) {this.request = request;}

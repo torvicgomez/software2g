@@ -218,7 +218,9 @@
         <action name="imprimirLiqHis" method="imprimirLiqHis" class="ContableAction">
         	<result name="success">/cartera/credito/impHisCreditoSocios.jsp</result>
         </action>
-        
+        <action name="imprimirPagare" method="imprimirPagare" class="ContableAction">
+        	<result name="success">/cartera/credito/impPagare.jsp</result>
+        </action>
         
         <!-- CONTABLE REPORTES -->
         <action name="reportCredCliente" method="reportCredCliente" class="ContableAction">

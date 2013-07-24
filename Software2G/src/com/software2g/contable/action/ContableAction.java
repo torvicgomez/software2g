@@ -10,6 +10,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.record.formula.functions.Value;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
@@ -75,6 +76,9 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
 	private List<Pais> listPais;
 	private List<Departamento> listDepartamento;
 	private List<Municipio> listMunicipio;
+	private String diaPagare;
+	private String mesPagare;
+	private String anoPagare;
 	
 	public List<Sucursal> getListSucursal() {return listSucursal;}
 	public void setListSucursal(List<Sucursal> listSucursal) {this.listSucursal = listSucursal;}
@@ -135,6 +139,12 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
 	public void setListDepartamento(List<Departamento> listDepartamento) {this.listDepartamento = listDepartamento;}
 	public List<Municipio> getListMunicipio() {return listMunicipio;}
 	public void setListMunicipio(List<Municipio> listMunicipio) {this.listMunicipio = listMunicipio;}
+	public String getDiaPagare() {return diaPagare;}
+	public void setDiaPagare(String diaPagare) {this.diaPagare = diaPagare;}
+	public String getMesPagare() {return mesPagare;}
+	public void setMesPagare(String mesPagare) {this.mesPagare = mesPagare;}
+	public String getAnoPagare() {return anoPagare;}
+	public void setAnoPagare(String anoPagare) {this.anoPagare = anoPagare;}
 	
 	@SkipValidation
     public String execute() {
@@ -221,8 +231,11 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     				
     				gestionFacadeContable.persistSucursal(sucursalVO);
     				setListSucursal(gestionFacadeContable.findAllSucursals());
-    			}else
+    			}else{
     				result=Action.ERROR;
+    				listPais = gestionFacadeContable.findAllPaiss();
+    	    		listDepartamento = gestionFacadeContable.findAllDepartamentos();
+    			}
     		}else
     			System.out.println("Esta itentando ingresar ilegalmente!!!!!");
     	} catch (Exception e) {
@@ -553,6 +566,8 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     		}else if(request.getParameter("url")!=null){
     			request.getSession().setAttribute("url", (String)request.getParameter("url"));
     		}
+    		presupuestoVO = null;
+    		listPresupuestoDonaVO = null;
     		setListPresupuesto(gestionFacadeContable.findAllPresupuestos());
     		estado="listarPresupuesto";
     	} catch (Exception e) {
@@ -787,6 +802,7 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     		}else if(request.getParameter("url")!=null){
     			request.getSession().setAttribute("url", (String)request.getParameter("url"));
     		}
+    		pagareVO = null;
     		setListPagare(gestionFacadeContable.findAllPagares());
     		estado="listarPagares";
     	} catch (Exception e) {
@@ -875,6 +891,7 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     			if(!hasActionMessages()){
     				if(pagareVO.getPagaEstado()==null||pagareVO.getPagaEstado().equals(""))
     						pagareVO.setPagaEstado(ConstantesAplicativo.estadoActivo);
+    				pagareVO.setPagaFechacreapagare(ValidaString.fechaSystem());
     				pagareVO.setPagaFechamodificacion(ValidaString.fechaSystem());
     				pagareVO.setPagaHora(ValidaString.horaSystem());
     				pagareVO.setPagaRegistradopor(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua());
@@ -928,6 +945,7 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     		}else if(request.getParameter("url")!=null){
     			request.getSession().setAttribute("url", (String)request.getParameter("url"));
     		}
+    		creditoVO=null;
     		setListCredito(gestionFacadeContable.findAllCreditos());
     		estado="listarCreditosSocios";
     	} catch (Exception e) {
@@ -944,14 +962,21 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     	try {
     		if((String)request.getParameter("id")!=null&&(Integer.parseInt((String)request.getParameter("id")))>0){
     			setCreditoVO(gestionFacadeContable.findCreditoById(Long.parseLong((String)request.getParameter("id"))));
-    			getCreditoVO().setFechaALiquidar(ValidaString.fechaSystem());
+    			if(!getCreditoVO().getCredEstado().equals(ConstantesAplicativo.estadoCreditoCancelado))
+    				getCreditoVO().setFechaALiquidar(ValidaString.fechaSystem());
+    			else
+    				getCreditoVO().setFechaALiquidar(getCreditoVO().getCredFechaultimopago());
     			setAbonoVO(gestionFacadeContable.liquidacionPagoCredito(getCreditoVO()));
     			request.getSession().setAttribute("creditoVO", getCreditoVO());
     			request.getSession().setAttribute("abonoVO", getAbonoVO());
     			estado="pagosCreditos";
     		}else if(getCreditoVO()!=null&&getCreditoVO().getCredId()>0){
     			setCreditoVO(gestionFacadeContable.findCreditoById(getCreditoVO().getCredId()));
-    			getCreditoVO().setFechaALiquidar(ValidaString.fechaSystem());
+    			if(!getCreditoVO().getCredEstado().equals(ConstantesAplicativo.estadoCreditoCancelado))
+    				getCreditoVO().setFechaALiquidar(ValidaString.fechaSystem());
+    			else
+    				getCreditoVO().setFechaALiquidar(getCreditoVO().getCredFechaultimopago());
+    			//getCreditoVO().setFechaALiquidar(ValidaString.fechaSystem());
     			setAbonoVO(gestionFacadeContable.liquidacionPagoCredito(getCreditoVO()));
     			request.getSession().setAttribute("creditoVO", getCreditoVO());
     			request.getSession().setAttribute("abonoVO", getAbonoVO());
@@ -1357,6 +1382,65 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
 	    	return result;
 		}
 	
+	@SkipValidation
+	public String findRefCredito(){
+		String  result = Action.SUCCESS; 
+    	try {
+    		if(request.getSession().getAttribute("url")==null||((String)request.getSession().getAttribute("url")).equals("")){
+    			String url = request.getParameter("url")==null?"":(String)request.getParameter("url");
+    			request.getSession().setAttribute("url", url);
+    		}else if(request.getParameter("url")!=null){
+    			request.getSession().setAttribute("url", (String)request.getParameter("url"));
+    		}
+    		estado="findRefCredito";
+    	} catch (Exception e) {
+			addActionMessage(getText("error.aplicacion"));
+			e.printStackTrace();
+		}
+		System.out.println("result: ["+result+"]");
+    	return result;
+	}
+	 
+	@SkipValidation
+	public String anularCredito(){
+		String  result = Action.SUCCESS; 
+    	try {
+    		if(request.getSession().getAttribute("url")==null||((String)request.getSession().getAttribute("url")).equals("")){
+    			String url = request.getParameter("url")==null?"":(String)request.getParameter("url");
+    			request.getSession().setAttribute("url", url);
+    		}else if(request.getParameter("url")!=null){
+    			request.getSession().setAttribute("url", (String)request.getParameter("url"));
+    		}
+    		
+    		if(creditoVO!=null){
+    			if(creditoVO.getCredId()<=0)
+    				addActionMessage(getText("validacion.requerido","refCredito","Ref. Credito"));
+    			if(!hasActionMessages()){
+    				creditoVO = gestionFacadeContable.findCreditoById(creditoVO.getCredId());
+		    		if(creditoVO!=null&&creditoVO.getCredId()>0){
+		    			listAbono = gestionFacadeContable.findAllAbonos(creditoVO.getCredId());
+		    			if(listAbono.size()<=0)
+		    				creditoVO.setSepuedeAnular("SI");
+		    			else
+		    				creditoVO.setSepuedeAnular("NO");
+		    			estado="creditoAnular";
+		    		}else{
+		    			addActionMessage(getText("validacion.msgnoexistendatos","noexitendatos",""));
+		    			estado="findRefCredito";
+		    		}
+    			}else{
+    				estado="findRefCredito";
+    			}
+    		}
+    		
+    	} catch (Exception e) {
+			addActionMessage(getText("error.aplicacion"));
+			e.printStackTrace();
+		}
+		System.out.println("result: ["+result+"]");
+    	return result;
+	}
+	
 	
 	@SkipValidation
     public String imprimirLiqHis(){
@@ -1384,23 +1468,33 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     		if((String)request.getParameter("id")!=null&&(Integer.parseInt((String)request.getParameter("id")))>0){
     			setPagareVO(gestionFacadeContable.findPagareById(Long.parseLong((String)request.getParameter("id"))));
     			pagareVO.getTipopagare().setTipaEncabezado(pagareVO.getTipopagare().getTipaEncabezado().replace("##NOMDEUDOR##", pagareVO.getPersona().getNombreCompleto()));
-    			String fecha="13/24/2013";
-    				//pagareVO.getPagaFechacreapagare();
-    			pagareVO.getTipopagare().setTipaEncabezado(pagareVO.getTipopagare().getTipaEncabezado().replace("##DIAPAGO##", fecha));
-    			pagareVO.getTipopagare().setTipaEncabezado(pagareVO.getTipopagare().getTipaEncabezado().replace("##SUMAPAGARA##", pagareVO.getPagaMonto()));
+    			System.out.println("pagareVO.getPagaFechacreapagare(): ["+pagareVO.getPagaFechacreapagare()+"]"); 
+    			String[] fecha=pagareVO.getPagaFechacreapagare().split("-");
+    			//pagareVO.getTipopagare().setTipaEncabezado(pagareVO.getTipopagare().getTipaTitulo().replace("##ID##", " "+pagareVO.getPagaId()+""));
+    			pagareVO.getTipopagare().setTipaEncabezado(pagareVO.getTipopagare().getTipaEncabezado().replace("##DIAPAGO##", fecha[2]));
+    			pagareVO.getTipopagare().setTipaEncabezado(pagareVO.getTipopagare().getTipaEncabezado().replace("##MESPAGO##", fecha[1]));
+    			pagareVO.getTipopagare().setTipaEncabezado(pagareVO.getTipopagare().getTipaEncabezado().replace("##ANOPAGO##", fecha[0]));
+    			pagareVO.getTipopagare().setTipaEncabezado(pagareVO.getTipopagare().getTipaEncabezado().replace("##SUMAPAGARA##", pagareVO.getPagaMontoView()));
     			pagareVO.getTipopagare().setTipaEncabezado(pagareVO.getTipopagare().getTipaEncabezado().replace("##SUMAPAGARB##", pagareVO.getPagaMontoView()));
-    			pagareVO.getTipopagare().setTipaContenidofinal(pagareVO.getTipopagare().getTipaContenidofinal().replace("##CIUDADPAGARE##", pagareVO.getPersona().getMunicipio().getNommunicipio()));
-    			pagareVO.getTipopagare().setTipaContenidofinal(pagareVO.getTipopagare().getTipaContenidofinal().replace("##NOMDEUDOR##", pagareVO.getPersona().getNombreCompleto()));
+    			setDiaPagare(fecha[2]);
+    			setMesPagare(fecha[1]);
+    			setAnoPagare(fecha[0]);
+    			
+    			
+    			//pagareVO.getTipopagare().setTipaContenidofinal(pagareVO.getTipopagare().getTipaContenidofinal().replace("##CIUDADPAGARE##", "Fresno"/*pagareVO.getPersona().getMunicipio().getNommunicipio()*/));
+    			/*pagareVO.getTipopagare().setTipaContenidofinal(pagareVO.getTipopagare().getTipaContenidofinal().replace("##DIAPAGARE##", fecha[2]));
+    			pagareVO.getTipopagare().setTipaContenidofinal(pagareVO.getTipopagare().getTipaContenidofinal().replace("##MESPAGARE##", fecha[1]));
+    			pagareVO.getTipopagare().setTipaContenidofinal(pagareVO.getTipopagare().getTipaContenidofinal().replace("##ANOPAGARE##", fecha[0]));
+    			pagareVO.getTipopagare().setTipaContenidofinal(pagareVO.getTipopagare().getTipaContenidofinal().replace("##NOMDEUDOR##", pagareVO.getPersona().getNombreCompleto()+"-"+pagareVO.getPagaCodeudor()));
     			pagareVO.getTipopagare().setTipaContenidofinal(pagareVO.getTipopagare().getTipaContenidofinal().replace("##NOMCODEUDOR##", pagareVO.getPagaCodeudor()));
     			pagareVO.getTipopagare().setTipaContenidofinal(pagareVO.getTipopagare().getTipaContenidofinal().replace("##CCDEUDOR##", pagareVO.getPersona().getDocumentoPers()));
-    					//CCDEUDOR
-    			setPagareVO(pagareVO);
-    			// setListTipoPagare(gestionFacadeContable.findAllTipopagares());
-    			//(pagareVO.getTipopagare().getTipaEncabezado().replace("##NOMDEUDOR##", pagareVO.getPersona().getNombreCompleto()))
-    			/*pagareVO.setTipopagare(pagareVO.getTipopagare().getTipaEncabezado());
-    			getCreditoVO().setCredMontocredito(Double.valueOf(getCreditoVO().getPagare().getPagaMonto()));
-    			setPagareVO(pagareVO.getTipopagare().getTipaEncabezado().replace("##NOMDEUDOR##", pagareVO.getPersona().getNombreCompleto()));
+    			pagareVO.getTipopagare().setTipaContenidofinal(pagareVO.getTipopagare().getTipaContenidofinal().replace("##CCCODEUDOR##", pagareVO.getPagaTelcodeudor()));
+    			pagareVO.getTipopagare().setTipaContenidofinal(pagareVO.getTipopagare().getTipaContenidofinal().replace("##DIRDEUDOR##", pagareVO.getPersona().getDireccionPers()));
+    			pagareVO.getTipopagare().setTipaContenidofinal(pagareVO.getTipopagare().getTipaContenidofinal().replace("##DIRCODEUDOR##", pagareVO.getPagaDircodeudor()));
+    			pagareVO.getTipopagare().setTipaContenidofinal(pagareVO.getTipopagare().getTipaContenidofinal().replace("##TELDEUDOR##", pagareVO.getPersona().getTelefonoPers()));
+    			pagareVO.getTipopagare().setTipaContenidofinal(pagareVO.getTipopagare().getTipaContenidofinal().replace("##TELCODEUDOR##", pagareVO.getPagaTelcodeudor()));
     			*/
+    			setPagareVO(pagareVO);
     			estado="editarPagare";
     		}
     	} catch (Exception e) {

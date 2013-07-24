@@ -51,6 +51,7 @@
 	});
 	
 	function editar(idPresupuesto){
+		alert('id:['+idPresupuesto+']');
 		document.form.action="editarPresupuesto.action?id="+idPresupuesto;
 		document.form.submit();
 	}

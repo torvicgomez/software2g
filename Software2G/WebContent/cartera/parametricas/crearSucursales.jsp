@@ -22,7 +22,7 @@
         
         $("#selectDpto").change(function(event){
             var id = $("#selectDpto").find(':selected').val();
-            $("#viewSelectMcpo").load('loadMunicipios.action?sucursalVO.dptoId='+id);
+            $("#viewSelectMcpo").load('loadMunicipiosSucursal.action?sucursalVO.dptoId='+id);
         });
         
     });

@@ -79,6 +79,8 @@ public class Credito implements Serializable {
 	
 	@Transient
 	private String tipoRecalcularPago;
+	@Transient
+	private String sepuedeAnular;
 
 	//bi-directional many-to-one association to Abono
 	@OneToMany(mappedBy="credito")
@@ -346,6 +348,16 @@ public class Credito implements Serializable {
 
 	public void setCredAbonocapital(double credAbonocapital) {
 		this.credAbonocapital = credAbonocapital;
+	}
+
+
+	public String getSepuedeAnular() {
+		return sepuedeAnular;
+	}
+
+
+	public void setSepuedeAnular(String sepuedeAnular) {
+		this.sepuedeAnular = sepuedeAnular;
 	}
 
 }

@@ -56,6 +56,11 @@
 		<put-attribute name="body" value="/cartera/credito/listCreditoSocios.jsp" />
 	</definition>
 	
+	<!-- CONTABLE ANULAR CREDITO -->
+	<definition name="contable.anularCredito" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/cartera/credito/anularCredito.jsp" />
+	</definition>
+	
 	<!-- CONTABLE REPORTES -->
 	<definition name="contable.creditoXCliente" extends="baseLayoutPortal">
 		<put-attribute name="body" value="/cartera/reportes/creditoXCliente.jsp" />

@@ -1,12 +1,21 @@
+<%@page import="com.software2g.vo.Pagare"%>
 <%@page import="com.software2g.util.ConstantesAplicativo"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="/WEB-INF/tldPDF/pdf.tld" prefix="pdf" %>
 
-<%String formatPag="NOTE";
+<%String formatPag="LEGAL";
 String nomArchivo = "Pagare";
 %>
+<pdf:transform 
+	screenWidth="930" 
+	pageFormat= "<%=formatPag%>"
+	pageOrientation="portrait" 
+	pageInsets="25,15,20,15,points"
+	enableImageSplit="false"
+	inline="false"
+	fileName="<%=nomArchivo%>">
 
 <html>
 <head>
@@ -63,108 +72,72 @@ String nomArchivo = "Pagare";
 						<td valign="top">
 							<table border="0" width="100%">
 								<tr>
-									<td class="text" width="20%" align="left" valign="top">
-										<s:text name="pagare.deudor"></s:text>
-									</td>
-									<td class="text" width="80%" align="left"  valign="top">
-										<s:hidden name="pagareVO.persona.idPers"></s:hidden>
-										<s:property value="pagareVO.persona.pnombrePers"/>&nbsp;<s:property value="pagareVO.persona.snombrePers"/>&nbsp;<s:property value="pagareVO.persona.papellidoPers"/>&nbsp;<s:property value="pagareVO.persona.sapellidoPers"/>&nbsp;
-										<s:property value="pagareVO.persona.documentoPers"/><s:property value="pagareVO.persona.tipodocumento.abreviaturaTidoc"/>&nbsp;<s:property value="pagareVO.persona.emailPers"/>
-									</td>
-								</tr>
-								<tr>
-									<td class="text" width="20%" align="left" valign="top">
-										<s:text name="pagare.tipopagare"></s:text>
-									</td>
-									<td class="text" width="80%" align="left"  valign="top">
-										<s:hidden name="pagareVO.tipopagare.tipaId"></s:hidden>
-										<s:property value="pagareVO.tipopagare.tipaDescripcion"/>
-									</td>
-								</tr>
-								<tr>
-									<td class="text" width="20%" align="left" valign="top">
-										<s:text name="pagare.fechapago"></s:text>
-									</td>
-									<td class="text" width="80%" align="left"  valign="top">
-										<s:hidden name="pagareVO.pagaFechapago"></s:hidden>
-										<s:property value="pagareVO.pagaFechapago"/>
-									</td>
-								</tr>
-								<tr>
-									<td class="text" width="20%" align="left" valign="top">
-										<s:text name="pagare.valorprestamo"></s:text>
-									</td>
-									<td class="text" width="80%" align="left"  valign="top">
-										<s:hidden name="pagareVO.pagaMonto"></s:hidden>
-										<s:property value="pagareVO.pagaMontoView"/>
-									</td>
-								</tr>
-								<tr>
-									<td class="text" width="20%" align="left" valign="top">
-										<s:text name="pagare.nombrecodeudor"></s:text>
-									</td>
-									<td class="text" width="80%" align="left"  valign="top">
-										<s:hidden name="pagareVO.pagaCodeudor"></s:hidden>
-										<s:property value="pagareVO.pagaCodeudor"/>
-									</td>
-								</tr>
-								<tr>
 									<td class="text"  valign="top">
-										<s:text name="pagare.direccioncodeudor"></s:text>
+										<p align="center">PAGARE N° <s:property value="pagareVO.pagaId"/> </p>
 									</td>
-									<td class="text"  valign="top">
-										<s:hidden name="pagareVO.pagaDircodeudor"></s:hidden>
-										<s:property value="pagareVO.pagaDircodeudor"/>
-									</td>
-								</tr>
-								<tr>
-									<td class="text"  valign="top">
-										<s:text name="pagare.telefonocodeudor"></s:text>
-									</td>
-									<td class="text"  valign="top">
-										<s:hidden name="pagareVO.pagaTelcodeudor"></s:hidden>
-										<s:property value="pagareVO.pagaTelcodeudor"/>
-									</td>
-								</tr>
-								<tr>
-									<td class="text"  valign="top">
-										<s:text name="pagare.estado"></s:text>
-									</td>
-									<td class="text"  valign="top">
-										<s:property value="pagareVO.pagaEstado"/>
-									</td>
-								</tr>
-								<tr>
 									
+								</tr>
+								<tr>
 									<td class="text"  valign="top">
-										<s:text name="pagare"></s:text>
+										<p align="justify"><br><s:property value="pagareVO.tipopagare.tipaEncabezado"/></p>	
 									</td>
+								</tr>
+								<tr> 
 									<td class="text"  valign="top">
-										<s:property value="pagareVO.tipopagare.tipaId"/>
+										<br>
+									</td>
+								</tr>
+								<tr> 
+									<td class="text"  valign="top">
+										<p align="justify"><s:property value="pagareVO.tipopagare.tipaContenidocentral"/></p>
+									</td>
+								</tr>
+								<tr> 
+									<td class="text"  valign="top">
+										<br>
 									</td>
 								</tr>
 								<tr>
 									<td class="text"  valign="top">
-										<s:text name="tipaEncabezado"></s:text>
-									</td>
-									<td class="text"  valign="top">
-										<s:property value="pagareVO.tipopagare.tipaEncabezado"/>
-									</td>
-								</tr>
-								<tr>
-									<td class="text"  valign="top">
-										<s:text name="tipaContenidocentral"></s:text>
-									</td>
-									<td class="text"  valign="top">
-										<s:property value="pagareVO.tipopagare.tipaContenidocentral"/>
-									</td>
-								</tr>
-								<tr>
-									<td class="text"  valign="top">
-										<s:text name="tipaContenidofinal"></s:text>
-									</td>
-									<td class="text"  valign="top">
-										<s:property value="pagareVO.tipopagare.tipaContenidofinal"/>
+										<!--<p align="justify"><br><s:property value="pagareVO.tipopagare.tipaContenidofinal"/></p>-->
+										<table width="80%" border="0">
+											<tr>
+												<td colspan="4">Se suscribe este título, en la ciudad de FRESNO a los <s:property value="diaPagare"/> días del mes <s:property value="mesPagare"/> del año <s:property value="anoPagare"/>.<br><br></td>
+											</tr>
+											<tr>
+												<td width="10%">DEUDOR:</td>
+												<td width="30%"><s:property value="pagareVO.persona.pnombrePers"/>&nbsp;<s:property value="pagareVO.persona.snombrePers"/>&nbsp;<s:property value="pagareVO.persona.papellidoPers"/>&nbsp;<s:property value="pagareVO.persona.sapellidoPers"/></td>
+												<td width="10%">CODEUDOR:</td>
+												<td width="30%"><s:property value="pagareVO.pagaCodeudor"/></td>
+											</tr>
+											<tr>
+												<td>C.C O NIT:</td>
+												<td><s:property value=" pagareVO.Persona.DocumentoPers"/></td>
+												<td>C.C O NIT:</td>
+												<td><s:property value=" "/></td>
+											</tr>
+											<tr>
+												<td>DIRECCIÓN:</td>
+												<td><s:property value="pagareVO.persona.direccionPers"/></td>
+												<td>DIRECCIÓN:</td>
+												<td><s:property value="pagareVO.pagaDircodeudor"/></td>
+											</tr>
+											<tr>
+												<td>TELÉFONO:</td>
+												<td><s:property value="pagareVO.persona.telefonoPers"/> </td>
+												<td>TELÉFONO:</td>
+												<td><s:property value="pagareVO.PagaTelcodeudor"/></td>
+											</tr>
+											<tr>
+												<td><br><br></td>
+											</tr>
+											<tr>
+												<td>Firma:</td>
+												<td></td>
+												<td>Firma:</td>
+												<td></td>
+											</tr>
+										</table>
 									</td>
 								</tr>
 							</table>
@@ -177,3 +150,4 @@ String nomArchivo = "Pagare";
 		</s:form>
 	</body>
 </html>
+</pdf:transform>

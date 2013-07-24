@@ -192,6 +192,7 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 			return getAbonoDao().findAllAbonos(idCredito);
 		} catch (RuntimeException e) {
 			throw new Exception("findAllAbonos failed: " + e.getMessage());
+			//return null;
 		}
 	}
 	

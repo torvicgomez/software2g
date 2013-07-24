@@ -35,7 +35,7 @@
          <param name="defaultTarget" value="_top">
          <param name="defaultFont" value="Arial,N,12">
          <param name="defaultColor" value="#000000">
-         <param name="defaultExpanded" value="false">
+         <param name="defaultExpanded" value="true">
          <param name="defaultNormalImage"   value="closedfolder">
          <param name="defaultExpandedImage" value="openfolder">
          <param name="defaultMouseImage"    value="point">

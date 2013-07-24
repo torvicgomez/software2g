@@ -15,6 +15,7 @@
 3009|3008|Pagare|listPagare.action?url=Cartera::>Creditos::>Pagare|body
 3010|3008|Tipos de Creditos|listTipoCredito.action?url=Cartera::>Creditos::>Tipos de Creditos|body
 3011|3008|Creditos Socios|listCreditosSocios.action?url=Cartera::>Creditos::>Creditos Socios|body
+3012|3008|Anular Credito|findRefCredito.action?url=Cartera::>Creditos::>Anular Credito|body
 
 
 4000|root|Reportes|inicioInstituciones.action?url=Reportes|body

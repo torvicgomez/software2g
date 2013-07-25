@@ -237,6 +237,9 @@
         <action name="anularCredito" method="anularCredito" class="ContableAction">
         	<result name="success" type="tiles">contable.anularCredito</result>
         </action>
+        <action name="anularCredPag" method="anularCredPag" class="ContableAction">
+        	<result name="success" type="tiles">contable.anularCredito</result>
+        </action>
              
         
     </package>

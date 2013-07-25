@@ -1392,6 +1392,7 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     		}else if(request.getParameter("url")!=null){
     			request.getSession().setAttribute("url", (String)request.getParameter("url"));
     		}
+    		request.getSession().removeAttribute("creditoVO");
     		estado="findRefCredito";
     	} catch (Exception e) {
 			addActionMessage(getText("error.aplicacion"));
@@ -1418,10 +1419,11 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     			if(!hasActionMessages()){
     				creditoVO = gestionFacadeContable.findCreditoById(creditoVO.getCredId());
 		    		if(creditoVO!=null&&creditoVO.getCredId()>0){
+		    			request.getSession().setAttribute("creditoVO", creditoVO);
 		    			listAbono = gestionFacadeContable.findAllAbonos(creditoVO.getCredId());
-		    			if(listAbono.size()<=0)
+		    			if(listAbono.size()<=0){
 		    				creditoVO.setSepuedeAnular("SI");
-		    			else
+		    			}else
 		    				creditoVO.setSepuedeAnular("NO");
 		    			estado="creditoAnular";
 		    		}else{
@@ -1441,7 +1443,62 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     	return result;
 	}
 	
-	
+	@SkipValidation
+	public String anularCredPag(){
+		String  result = Action.SUCCESS; 
+    	try {
+    		creditoVO = (Credito)request.getSession().getAttribute("creditoVO");
+    		/*System.out.println("*******************************************************************************************");
+    		System.out.println("*******************************************************************************************");
+    		System.out.println("*******************************************************************************************");
+    		System.out.println("creditoVO: ["+creditoVO+"]");
+    		System.out.println("creditoVO.getCredId(): ["+creditoVO.getCredId()+"]");
+    		System.out.println("-----------------------------------------------------------------");
+    		System.out.println("creditoVO.getPagare(): ["+creditoVO.getPagare()+"]");
+    		System.out.println("creditoVO.getPagare().getPagaId(): ["+creditoVO.getPagare().getPagaId()+"]");
+    		System.out.println("-----------------------------------------------------------------");
+    		System.out.println("creditoVO.getPresupuesto(): ["+creditoVO.getPresupuesto()+"]");
+    		System.out.println("creditoVO.getPresupuesto().getPresId(): ["+creditoVO.getPresupuesto().getPresId()+"]");
+    		System.out.println("*******************************************************************************************");
+    		System.out.println("*******************************************************************************************");
+    		System.out.println("*******************************************************************************************");*/
+    		if(creditoVO!=null&&creditoVO.getCredId()>0
+    				&&creditoVO.getPagare()!=null&&creditoVO.getPagare().getPagaId()>0
+    				&&creditoVO.getPresupuesto()!=null&&creditoVO.getPresupuesto().getPresId()>0){
+    			//Anular Credito
+    			creditoVO.setCredEstado(ConstantesAplicativo.estadoCreditoAnulado);
+    			creditoVO.setCredFechamodificacion(ValidaString.fechaSystem());
+    			creditoVO.setCredHora(ValidaString.horaSystem());
+    			creditoVO.setCredRegistradopor(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua());
+    			gestionFacadeContable.persistCredito(creditoVO);
+    			//Anular Pagare
+    			creditoVO.getPagare().setPagaEstado(ConstantesAplicativo.estadoAnulado);
+    			creditoVO.getPagare().setPagaFechamodificacion(ValidaString.fechaSystem());
+    			creditoVO.getPagare().setPagaHora(ValidaString.horaSystem());
+    			creditoVO.getPagare().setPagaRegistradopor(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua());
+    			gestionFacadeContable.persistPagare(creditoVO.getPagare());
+    			//Actualizar o reintegrar al presupuesto
+    			/*System.out.println("---------------------------------------------");
+    			System.out.println("presupuesto: ["+creditoVO.getPresupuesto().getPresValor()+"]");
+    			System.out.println("monto credito: ["+creditoVO.getCredMontocredito()+"]");
+    			System.out.println("valor calculo: ["+(creditoVO.getPresupuesto().getPresValor()+creditoVO.getCredMontocredito())+"]");
+    			System.out.println("---------------------------------------------");*/
+    			creditoVO.getPresupuesto().setPresValor(creditoVO.getPresupuesto().getPresValor()+creditoVO.getCredMontocredito());
+    			creditoVO.getPresupuesto().setPresFechamodificacion(ValidaString.fechaSystem());
+    			creditoVO.getPresupuesto().setPresHora(ValidaString.horaSystem());
+    			creditoVO.getPresupuesto().setPresRegistradopor(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua());
+    			gestionFacadeContable.persistPresupuesto(creditoVO.getPresupuesto());
+    		}
+    		request.getSession().removeAttribute("creditoVO");
+    		estado="findRefCredito";
+    		//estado="creditoAnular";
+    	} catch (Exception e) {
+			addActionMessage(getText("error.aplicacion"));
+			e.printStackTrace();
+		}
+		System.out.println("result: ["+result+"]");
+    	return result;
+	}
 	@SkipValidation
     public String imprimirLiqHis(){
 		String  result = Action.SUCCESS; 

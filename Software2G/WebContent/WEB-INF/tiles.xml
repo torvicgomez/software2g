@@ -33,4 +33,9 @@
 		<put-attribute name="body" value="/institucion/listInstitucion.jsp" />
 	</definition>
 	
+	<!-- PORTAL ACTION ROLES - FUNCIONALIDADES -->
+	<definition name="portal.listRoles" extends="baseLayoutPortal" >
+		<put-attribute name="body" value="/adminPortal/listRoles.jsp" />
+	</definition>
+        
 </tiles-definitions>

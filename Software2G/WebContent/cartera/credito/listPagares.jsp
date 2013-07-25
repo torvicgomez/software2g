@@ -108,7 +108,9 @@
 								<s:iterator value="listPagare" id="data">
 									<tr>
 										<td width="5%">
-											<a onclick="javascript:editar('<s:property value="pagaId"/>');">Editar</a>
+											<s:if test="pagaEstado!=\"2\""> 
+												<a onclick="javascript:editar('<s:property value="pagaId"/>');">Editar</a>
+											</s:if>
 										</td>
 										<td width="5%">
 											<a onclick="javascript:ver('<s:property value="pagaId"/>');">Ver</a>
@@ -119,6 +121,7 @@
 										<td width="10%">
 											<s:if test="pagaEstado==\"1\"">ACTIVO</s:if>
 											<s:elseif test="pagaEstado==\"0\"">INACTIVO</s:elseif>
+											<s:elseif test="pagaEstado==\"2\"">ANULADO</s:elseif>
 											<!--<s:property value="pagaEstado"/>-->
 										</td>
 										<td width="35%">
@@ -289,7 +292,7 @@
 										<s:text name="pagare.estado"></s:text>
 									</td>
 									<td class="text"  valign="top">
-										<s:select list="#{'1':'ACTIVO','0':'INACTIVO'}" name="pagareVO.pagaEstado"/>
+										<s:select list="#{'1':'ACTIVO','0':'INACTIVO','2':'ANULAR'}" name="pagareVO.pagaEstado"/>
 									</td>
 								</tr>
 							</table>

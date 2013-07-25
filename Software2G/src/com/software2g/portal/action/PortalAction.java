@@ -411,6 +411,28 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
     	return result;
 	}
 	
+	@SkipValidation
+	public String listRoles(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		if(request.getSession().getAttribute("url")==null||((String)request.getSession().getAttribute("url")).equals("")){
+    			String url = request.getParameter("url")==null?"":(String)request.getParameter("url");
+    			request.getSession().setAttribute("url", url);
+    		}else if(request.getParameter("url")!=null){
+    			request.getSession().setAttribute("url", (String)request.getParameter("url"));
+    		}
+    		
+    		estado="listarRoles";
+    		
+    	} catch (Exception e) {
+			addActionMessage(getText("error.aplicacion"));
+			e.printStackTrace();
+		}
+		System.out.println("result: ["+result+"]");
+    	return result;
+	}
+	
+	
 	public HttpServletRequest getRequest() {return request;}
 	public void setRequest(HttpServletRequest request) {this.request = request;}
 	public HttpServletResponse getResponse() {return response;}

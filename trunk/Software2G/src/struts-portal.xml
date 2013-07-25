@@ -96,5 +96,13 @@
 			<result name="success" type="tiles">portal.listinstitucion</result>
         </action>
         
+        
+        <!-- PORTAL ACTION ROLES - FUNCIONALIDADES -->
+        <action name="listRoles" method="listRoles" class="PortalAction">
+        	<result name="success" type="tiles">portal.listRoles</result>
+        </action>
+        
+        
+        
     </package>
 </struts>

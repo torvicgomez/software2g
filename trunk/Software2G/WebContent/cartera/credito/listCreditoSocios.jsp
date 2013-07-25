@@ -144,7 +144,9 @@
 								<s:iterator value="listCredito" id="data">
 									<tr>
 										<td width="5%">
-											<a onclick="javascript:pagosCredito('<s:property value="credId"/>');">Pagos</a>
+											<s:if test="credEstado!='ANULADO'">
+												<a onclick="javascript:pagosCredito('<s:property value="credId"/>');">Pagos</a>
+											</s:if>
 										</td>
 										<td width="15%">
 											<s:property value="credId"/>

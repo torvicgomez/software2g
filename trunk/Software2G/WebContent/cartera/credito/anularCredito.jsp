@@ -22,6 +22,7 @@
 				<tr>
 					<td>
 						<h1><strong><s:text name="Anular Credito"></s:text></strong></h1>
+						
 						<s:if test="estado==null||estado=='findRefCredito'">
 							<s:submit value="Buscar" action="anularCredito" cssClass="button"></s:submit>
 						</s:if>
@@ -133,6 +134,9 @@
 										<s:if test="creditoVO.sepuedeAnular=='NO'">
 											<strong><font color="#FF0000" size="4">NO SE PUEDE ANULAR EL CREDITO PORQUE POSEE PAGOS ASOCIADOS.</font></strong>
 										</s:if>
+										<s:elseif test="creditoVO.sepuedeAnular=='SI'">
+											<s:submit value="Anular Credito" action="anularCredPag" cssClass="button"></s:submit>
+										</s:elseif>
 									</td>
 								</tr>
 							</table>

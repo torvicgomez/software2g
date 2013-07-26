@@ -37,4 +37,5 @@ public interface IPagareDao {
 	public void removePagare(Pagare pagare);
 	
 	public List<Pagare> findAllTitularesCredito(String datoFind, String tipoFind);
+	public String verificarPagosPagare(long idPagare);
 }

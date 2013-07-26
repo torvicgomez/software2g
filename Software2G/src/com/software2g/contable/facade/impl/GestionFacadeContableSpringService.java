@@ -252,6 +252,17 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 		}
 	}
 	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Credito findCreditosXPagare(long idPagare) throws Exception {
+		try {
+			return getCreditoDao().findCreditosXPagare(idPagare);
+		} catch (RuntimeException e) {
+			//throw new Exception("findCreditosXPagare failed: " + e.getMessage());
+			return null;
+		}
+	}
+	
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */
@@ -620,6 +631,15 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 			return getPagareDao().findAllTitularesCredito(datoFind, tipoFind);
 		} catch (RuntimeException e) {
 			throw new Exception("findAllPagares failed: " + e.getMessage());
+		}
+	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public String verificarPagosPagare(long idPagare) throws Exception {
+		try {
+			return getPagareDao().verificarPagosPagare(idPagare);
+		} catch (RuntimeException e) {
+			throw new Exception("verificarPagosPagare failed: " + e.getMessage());
 		}
 	}
 	

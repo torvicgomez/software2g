@@ -256,8 +256,14 @@
 										<s:text name="pagare.valorprestamo"></s:text>
 									</td>
 									<td class="text" width="80%" align="left"  valign="top">
-										<s:hidden name="pagareVO.pagaMonto"></s:hidden>
-										<s:property value="pagareVO.pagaMontoView"/>
+										<s:hidden name="pagareVO.isAnulable"></s:hidden>
+										<s:if test="pagareVO.isAnulable==\"S\"">
+											<s:textfield name="pagareVO.pagaMonto" size="30"></s:textfield>
+										</s:if>
+										<s:else>
+											<s:hidden name="pagareVO.pagaMonto"></s:hidden>
+											<s:property value="pagareVO.pagaMontoView"/>
+										</s:else>
 									</td>
 								</tr>
 								<tr>
@@ -292,7 +298,13 @@
 										<s:text name="pagare.estado"></s:text>
 									</td>
 									<td class="text"  valign="top">
-										<s:select list="#{'1':'ACTIVO','0':'INACTIVO','2':'ANULAR'}" name="pagareVO.pagaEstado"/>
+										<s:if test="pagareVO.isAnulable==\"S\"">
+											<s:select list="#{'1':'ACTIVO','2':'ANULAR'}" name="pagareVO.pagaEstado"/>
+										</s:if>
+										<s:else>
+											<s:hidden name="pagareVO.pagaEstado"></s:hidden>
+											<s:property value="pagareVO.pagaEstadoView"/>
+										</s:else>
 									</td>
 								</tr>
 							</table>

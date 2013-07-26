@@ -28,6 +28,8 @@ public interface ICreditoDao {
 	 */
 	public List<Credito> findAllCreditos();
 	public List<Credito> findAllCreditosXCliente(String documentoPers, Integer idTipoDoc);
+	public Credito findCreditosXPagare(long idPagare);
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

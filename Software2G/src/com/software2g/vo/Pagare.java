@@ -29,6 +29,9 @@ public class Pagare implements Serializable {
 	@Column(name="paga_estado")
 	private String pagaEstado;
 
+	@Transient
+	private String pagaEstadoView;
+	
 	@Column(name="paga_fechacreapagare")
 	private String pagaFechacreapagare;
 
@@ -58,6 +61,8 @@ public class Pagare implements Serializable {
 	
 	@Transient
 	private String findDeudor;
+	@Transient
+	private String isAnulable;
 	
 	//bi-directional many-to-one association to Credito
 	@OneToMany(mappedBy="pagare")
@@ -214,5 +219,27 @@ public class Pagare implements Serializable {
 	public String getPagaMontoView() {
 		return ValidaString.formatToMoney(pagaMonto);
 	}
+
+	public String getIsAnulable() {
+		return isAnulable;
+	}
+
+	public void setIsAnulable(String isAnulable) {
+		this.isAnulable = isAnulable;
+	}
+
+	public String getPagaEstadoView() {
+		if(this.pagaEstado!=null){
+			if(this.pagaEstado.equals("1"))
+				pagaEstadoView = "ACTIVO";
+			else if(this.pagaEstado.equals("0"))
+				pagaEstadoView = "INACTIVO";
+			else if(this.pagaEstado.equals("2"))
+				pagaEstadoView = "ANULAR";
+		}else
+			pagaEstadoView = "ACTIVO";
+		return pagaEstadoView;
+	}
+
 	
 }

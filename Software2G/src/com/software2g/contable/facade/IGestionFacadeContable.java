@@ -40,6 +40,7 @@ public interface IGestionFacadeContable {
 	public Credito findCreditoById(long id) throws Exception;
 	public List<Credito> findAllCreditos() throws Exception;
 	public List<Credito> findAllCreditosXCliente(String documentoPers, Integer idTipoDoc) throws Exception;
+	public Credito findCreditosXPagare(long idPagare) throws Exception;
 	public void persistCredito(Credito credito) throws Exception;
 	public void removeCredito(Credito credito) throws Exception;
 	//-----------------------------------------------------------
@@ -95,6 +96,7 @@ public interface IGestionFacadeContable {
 	public void persistPagare(Pagare pagare) throws Exception;
 	public void removePagare(Pagare pagare) throws Exception;
 	public List<Pagare> findAllTitularesCredito(String datoFind, String tipoFind) throws Exception;
+	public String verificarPagosPagare(long idPagare) throws Exception;
 	//-----------------------------------------------------------
 	//-----------------------------------------------------------
 	//-----------------------presupuestodonante-------------------------------

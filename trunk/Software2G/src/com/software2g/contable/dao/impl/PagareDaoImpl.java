@@ -119,4 +119,22 @@ public class PagareDaoImpl implements IPagareDao {
         }
 	}
 	
+	@SuppressWarnings("unchecked")
+	public String verificarPagosPagare(long idPagare) {
+        try {
+    		String sqlString = "select case when count(pag.paga_id)<= 0 then 'S' else 'N' end as isAnulable " +
+    				" from contable.pagare pag " +
+    				" inner join contable.credito cre on (pag.paga_id = cre.paga_id) " +
+    				" inner join contable.abono abo on (cre.cred_id = abo.cred_id) " +
+    				" where pag.paga_id = "+idPagare+" ";
+            Query query = em.createNativeQuery( sqlString );
+            return query.getSingleResult().toString();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
 }

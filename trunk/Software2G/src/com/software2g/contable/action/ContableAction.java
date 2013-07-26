@@ -819,6 +819,7 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     	try {
     		if((String)request.getParameter("id")!=null&&(Integer.parseInt((String)request.getParameter("id")))>0){
     			setPagareVO(gestionFacadeContable.findPagareById(Long.parseLong((String)request.getParameter("id"))));
+    			pagareVO.setIsAnulable(gestionFacadeContable.verificarPagosPagare(Long.parseLong((String)request.getParameter("id"))));
     			estado="editarPagare";
     		}else{
     			setListTipoPagare(gestionFacadeContable.findAllTipopagares());
@@ -891,13 +892,90 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     			if(!hasActionMessages()){
     				if(pagareVO.getPagaEstado()==null||pagareVO.getPagaEstado().equals(""))
     						pagareVO.setPagaEstado(ConstantesAplicativo.estadoActivo);
-    				pagareVO.setPagaFechacreapagare(ValidaString.fechaSystem());
-    				pagareVO.setPagaFechamodificacion(ValidaString.fechaSystem());
-    				pagareVO.setPagaHora(ValidaString.horaSystem());
-    				pagareVO.setPagaRegistradopor(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua());
-    				gestionFacadeContable.persistPagare(pagareVO);
-    				setListPagare(gestionFacadeContable.findAllPagares());
-    	    		estado="listarPagares";
+    				
+    				if(pagareVO.getPagaId()<=0){
+    					pagareVO.setPagaFechacreapagare(ValidaString.fechaSystem());
+        				pagareVO.setPagaFechamodificacion(ValidaString.fechaSystem());
+        				pagareVO.setPagaHora(ValidaString.horaSystem());
+        				pagareVO.setPagaRegistradopor(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua());
+        				gestionFacadeContable.persistPagare(pagareVO);
+        				setListPagare(gestionFacadeContable.findAllPagares());
+        	    		estado="listarPagares";
+    				}else{
+    					creditoVO = gestionFacadeContable.findCreditosXPagare(pagareVO.getPagaId());
+    					if(creditoVO!=null){
+	    					System.out.println("*************************************************************");
+	    					System.out.println("*************************************************************");
+	    					System.out.println("pagareVO.getPagaMonto(): ["+pagareVO.getPagaMonto()+"]");
+	    					System.out.println("creditoVO.getCredMontocredito(): ["+creditoVO.getCredMontocredito()+"]");
+	    					System.out.println("operacion: ["+((Double.parseDouble(pagareVO.getPagaMonto())-creditoVO.getCredMontocredito()))+"]");
+	    					System.out.println("creditoVO.getPresupuesto().getPresValor(): ["+creditoVO.getPresupuesto().getPresValor()+"]");
+	    					System.out.println("*************************************************************");
+	    					System.out.println("*************************************************************");
+	    					//double operacion = Math.abs((Double.parseDouble(pagareVO.getPagaMonto())-creditoVO.getCredMontocredito()));
+	    					double operacion = (Double.parseDouble(pagareVO.getPagaMonto())-creditoVO.getCredMontocredito());
+	    					if( operacion <= creditoVO.getPresupuesto().getPresValor()){
+	    						pagareVO.setPagaFechacreapagare(ValidaString.fechaSystem());
+	    						pagareVO.setPagaFechamodificacion(ValidaString.fechaSystem());
+	    						pagareVO.setPagaHora(ValidaString.horaSystem());
+	    						pagareVO.setPagaRegistradopor(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua());
+	    						gestionFacadeContable.persistPagare(pagareVO);
+	    						System.out.println("------------------------------------------------------");
+	    	    				System.out.println("------------------------------------------------------");
+	    	    				System.out.println("pagareVO.getIsAnulable(): ["+pagareVO.getIsAnulable()+"]");
+	    	    				System.out.println("------------------------------------------------------");
+	    	    				System.out.println("------------------------------------------------------");
+	    	    				if(pagareVO.getIsAnulable()!=null&&pagareVO.getIsAnulable().equals("S")){
+	    	    					System.out.println("***********************************");
+	    	    					System.out.println("creditoVO: ["+creditoVO+"]");
+	    	    					System.out.println("***********************************");
+	    	    					if(pagareVO.getPagaEstado().equals("2")){
+	    	    						//Anular Credito
+	    	    						creditoVO.setCredEstado(ConstantesAplicativo.estadoCreditoAnulado);
+	    	    						creditoVO.setCredFechamodificacion(ValidaString.fechaSystem());
+	    	    						creditoVO.setCredHora(ValidaString.horaSystem());
+	    	    						creditoVO.setCredRegistradopor(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua());
+	    	    	    				gestionFacadeContable.persistCredito(creditoVO);
+	    	    						//Actualizar Presupuesto
+	    	    	    				creditoVO.getPresupuesto().setPresValor(creditoVO.getPresupuesto().getPresValor()+creditoVO.getCredMontocredito());
+	    	    	        			creditoVO.getPresupuesto().setPresFechamodificacion(ValidaString.fechaSystem());
+	    	    	        			creditoVO.getPresupuesto().setPresHora(ValidaString.horaSystem());
+	    	    	        			creditoVO.getPresupuesto().setPresRegistradopor(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua());
+	    	    	        			gestionFacadeContable.persistPresupuesto(creditoVO.getPresupuesto());
+	    	    					}else{
+	    	    						//Actualizar monto del credito.
+	    	    						creditoVO.setCredMontocredito(Double.parseDouble(pagareVO.getPagaMonto()));
+	    	    						creditoVO.setCredSaldo(Double.parseDouble(pagareVO.getPagaMonto()));
+	    	    						creditoVO.setCredFechamodificacion(ValidaString.fechaSystem());
+	    	    						creditoVO.setCredHora(ValidaString.horaSystem());
+	    	    						creditoVO.setCredRegistradopor(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua());
+	    	    	    				gestionFacadeContable.persistCredito(creditoVO);
+	    	    	    				creditoVO.getPresupuesto().setPresValor(creditoVO.getPresupuesto().getPresValor()-(operacion));
+	    	    	        			creditoVO.getPresupuesto().setPresFechamodificacion(ValidaString.fechaSystem());
+	    	    	        			creditoVO.getPresupuesto().setPresHora(ValidaString.horaSystem());
+	    	    	        			creditoVO.getPresupuesto().setPresRegistradopor(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua());
+	    	    	        			gestionFacadeContable.persistPresupuesto(creditoVO.getPresupuesto());
+	    	    					}
+	    	    				}
+	    	    				creditoVO = null;
+	    	    				setListPagare(gestionFacadeContable.findAllPagares());
+	    	    	    		estado="listarPagares";
+	    					}else{
+	    						addActionMessage(getText("validacion.montocredito","montopagare",""));
+	    						setPagareVO(gestionFacadeContable.findPagareById(pagareVO.getPagaId()));
+	    		    			pagareVO.setIsAnulable(gestionFacadeContable.verificarPagosPagare(pagareVO.getPagaId()));
+	    		    			estado="editarPagare";
+	    					}
+    					}else{
+    						pagareVO.setPagaFechacreapagare(ValidaString.fechaSystem());
+    						pagareVO.setPagaFechamodificacion(ValidaString.fechaSystem());
+    						pagareVO.setPagaHora(ValidaString.horaSystem());
+    						pagareVO.setPagaRegistradopor(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua());
+    						gestionFacadeContable.persistPagare(pagareVO);
+    						setListPagare(gestionFacadeContable.findAllPagares());
+            	    		estado="listarPagares";
+    					}
+    				}
     			}else{
     				setListTipoPagare(gestionFacadeContable.findAllTipopagares());
     	    		estado="crearPagare";

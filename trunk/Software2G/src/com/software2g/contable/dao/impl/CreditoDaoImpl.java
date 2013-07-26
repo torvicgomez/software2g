@@ -106,6 +106,26 @@ public class CreditoDaoImpl implements ICreditoDao {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
+	public Credito findCreditosXPagare(long idPagare) {
+        try {
+    		String jpqlString = "select credito from " + Credito.class.getSimpleName() + " credito " +
+    				" where credito.pagare.pagaId =:idPagare ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("idPagare", idPagare);
+            return (Credito)query.getSingleResult();
+        }catch  (Exception e){
+        	e.printStackTrace();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+		return null;
+	}
+	
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

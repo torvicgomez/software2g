@@ -1229,10 +1229,13 @@ public class GestionFacadeContableSpringService implements IGestionFacadeContabl
 					creditoVO.getTipocredito().getTicrTasainteresvencido(), diasLiquidados));
 			abonoVO.setAbonValorinteresmora(this.valorInteresMoraCredito(creditoVO.getCredSaldo(), 
 					creditoVO.getTipocredito().getTicrInteresmoramesven(), diasMora));
+			
 			abonoVO.setAbonValorseguro(this.valorSeguroCredito());
 			abonoVO.setAbonOtrocargo(this.valorOtrosCargosCredito());
+			
 			abonoVO.setAbonValorcapital(this.valorAbonoCapital(creditoVO.getCredMontocredito(), 
 					creditoVO.getTipocredito().getTicrTiempomes(), diasLiquidados));
+			
 			abonoVO.setAbonValortotal(this.valorTotalaPagar(abonoVO.getAbonValorcapital(), 
 					abonoVO.getAbonValorinteres(), abonoVO.getAbonValorinteresmora(), 
 					abonoVO.getAbonValorseguro(), abonoVO.getAbonOtrocargo()));

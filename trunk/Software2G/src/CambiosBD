@@ -331,6 +331,38 @@ CREATE TRIGGER tr_u_contable_abono AFTER UPDATE ON contable.abono FOR EACH ROW E
 insert into contable.tipocredito values (nextval('contable.s_ticr_id'), 'CREDITO TIPO B',36,3,1,1,'1',CURRENT_DATE,to_char(current_timestamp,'HH24:MI:SS'),'vhgomezl',12)
 --
 
+CREATE TABLE contable.tipocobrorecargos
+(
+  tcre_id numeric(30,0) NOT NULL,
+  tcre_nombre character varying(50),
+  tcre_fechamodificacion character varying(10),
+  tcre_hora character varying(8),
+  tcre_registradopor character varying(30),
+  CONSTRAINT pk_tipocobrorecargo PRIMARY KEY (tcre_id )
+)WITH (OIDS=FALSE);
+
+
+CREATE TABLE contable.otrosrecargos
+(
+  otre_id numeric(30,0) NOT NULL,
+  tcre_id numeric(30,0) NOT NULL,
+  cred_id numeric(30,0) NOT NULL,
+  otcre_descripcion character varying(100),
+  otre_monto double precision,
+  otre_saldo double precision,
+  otre_estado character varying(15),
+  otre_fechamodificacion character varying(10),
+  otre_hora character varying(8),
+  otre_registradopor character varying(30),
+  CONSTRAINT pk_otrorecargo PRIMARY KEY (otre_id ),
+  CONSTRAINT fk_otrorecargo_credito FOREIGN KEY (cred_id)
+      REFERENCES contable.credito (cred_id) MATCH SIMPLE
+      ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT fk_otrorecargo_tipocobrorecargo FOREIGN KEY (tcre_id)
+      REFERENCES contable.tipocobrorecargos (tcre_id) MATCH SIMPLE
+      ON UPDATE RESTRICT ON DELETE RESTRICT
+)WITH (OIDS=FALSE);
+
 
 
 

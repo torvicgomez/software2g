@@ -1,2 +1,3 @@
 1000|root|Administracion Portal
-1001|1000|Roles|listRoles.action?url=Administracion Portal::>Roles|body
+1001|1000|Roles|rol.action?url=Administracion Portal::>Roles|body
+1002|1000|Roles|listRoles.action?url=Administracion Portal::>Roles|body

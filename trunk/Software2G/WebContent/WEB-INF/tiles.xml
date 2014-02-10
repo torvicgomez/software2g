@@ -37,5 +37,6 @@
 	<definition name="portal.listRoles" extends="baseLayoutPortal" >
 		<put-attribute name="body" value="/adminPortal/listRoles.jsp" />
 	</definition>
+	
         
 </tiles-definitions>

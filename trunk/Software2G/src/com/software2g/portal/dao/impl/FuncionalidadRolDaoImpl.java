@@ -97,7 +97,8 @@ public class FuncionalidadRolDaoImpl implements IFuncionalidadRolDao {
 	@SuppressWarnings("unchecked")
 	public List<Funcionalidadrol> findAllFuncionalidadrols(Integer idRol) {
         try {
-    		String jpqlString = "select funcionalidadrol from " + Funcionalidadrol.class.getSimpleName() + " funcionalidadrol where funcionalidadrol.id.idRol = :idRol ";
+    		String jpqlString = "select funcionalidadrol from " + Funcionalidadrol.class.getSimpleName() + " funcionalidadrol " +
+    				"where funcionalidadrol.id.idRol =:idRol ";
             Query query = em.createQuery( jpqlString );
             query.setParameter("idRol", idRol);
             return query.getResultList();

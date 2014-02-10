@@ -6,21 +6,13 @@
 	Usuario userLogin = (Usuario)request.getSession().getAttribute("usuarioVO");
  %>
 <table width="100%" height="100%" border="0">
-  <!--<tr>
-    <td align="center">
-   		<strong>
-   			<font size="2" color="#FF0000"><s:text name="messages.construction"></s:text></font>
-   		</strong>
-    </td>
-  </tr>-->
   <tr>
-    <!--background="<s:url value="/imagenes/imagenRight.gif"/>"-->
     <td align="right" valign="middle">
-    	<img src="<s:url value="/imagenes/Mujer.png"/>">
+<%--     	<img src="<s:url value="/imagenes/Mujer.png"/>"> --%>
     	<strong><font size="2" color="31659C"><br>
     		<%=userLogin.getPersona().getNombreCompleto().toUpperCase()%><br>
    			<%=userLogin.getPersona().getEmailPers()%>&nbsp;&nbsp;-&nbsp;&nbsp;<%=userLogin.getLoginUsua()%><br>
-   			<a href="../salir.action" target="_parent">Salir</a>
+   			<a href="/Software2G/salir.action" target="_parent">Salir</a>
    		</font></strong>
     </td>
    </tr>

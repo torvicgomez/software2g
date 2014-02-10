@@ -134,6 +134,9 @@
 										<s:if test="creditoVO.sepuedeAnular=='NO'">
 											<strong><font color="#FF0000" size="4">NO SE PUEDE ANULAR EL CREDITO PORQUE POSEE PAGOS ASOCIADOS.</font></strong>
 										</s:if>
+										<s:elseif test="creditoVO.credEstado=='ANULADO'">
+											<strong><font color="#FF0000" size="4">EL CREDITO YA SE ENCUENTRA ANULADO.</font></strong>
+										</s:elseif>
 										<s:elseif test="creditoVO.sepuedeAnular=='SI'">
 											<s:submit value="Anular Credito" action="anularCredPag" cssClass="button"></s:submit>
 										</s:elseif>

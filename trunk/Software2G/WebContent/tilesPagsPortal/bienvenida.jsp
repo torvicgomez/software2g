@@ -11,7 +11,8 @@
 	<tr valign="bottom">
 		<td width="100%" align="center" >
 			<p>
-				<img alt="" src="../imagenes/acafetocafe.jpg" width="400" height="400"  >
+<!-- 				<img alt="" src="../imagenes/acafetocafe.jpg" width="400" height="400"  > -->
+				<strong><font size="50">Bienvenidos al Admin Portal!!!!!</font></strong>
 			</p>
 		</td>
 	</tr>

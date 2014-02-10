@@ -22,7 +22,7 @@ public interface IRolDao {
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
-	public Rol findRolById(java.lang.Integer id);
+	public Rol findRolById(Integer id);
 	/**
 	 * Return all persistent instances of the <code>Rol</code> entity.
 	 */

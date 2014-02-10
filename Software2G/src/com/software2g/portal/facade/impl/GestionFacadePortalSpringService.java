@@ -236,7 +236,8 @@ public class GestionFacadePortalSpringService implements IGestionFacadePortal{
 		try {
 			getFuncionalidadDao().persistFuncionalidad(funcionalidad);
 		} catch (RuntimeException e) {
-			throw new Exception("persistFuncionalidad failed: " + e.getMessage());
+			//throw new Exception("persistFuncionalidad failed: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	/**
@@ -406,7 +407,7 @@ public class GestionFacadePortalSpringService implements IGestionFacadePortal{
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Rol findRolById(java.lang.Integer id) throws Exception {
+	public Rol findRolById(Integer id) throws Exception {
 		try {
 			return getRolDao().findRolById(id);
 		} catch (RuntimeException e) {
@@ -720,5 +721,6 @@ public class GestionFacadePortalSpringService implements IGestionFacadePortal{
 			throw new Exception("findAllMunicipios failed: " + e.getMessage());
 		}
 	}
+	
 }
 

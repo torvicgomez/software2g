@@ -5,7 +5,7 @@
 
 
 <struts>
-    <package name="default" extends="struts-default">    	
+    <package name="adminPortal" extends="struts-default">    	
         <result-types>
 			<result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
 		</result-types>
@@ -98,9 +98,14 @@
         
         
         <!-- PORTAL ACTION ROLES - FUNCIONALIDADES -->
-        <action name="listRoles" method="listRoles" class="PortalAction">
-        	<result name="success" type="tiles">portal.listRoles</result>
+        <action name="rol" method="rolMethod" class="PortalAction">
+        	<result name="success" type="tiles">adminportal.rol</result>
         </action>
+        <action name="funcionalidad" method="funcionalidadMethod" class="PortalAction">
+        	<result name="success" type="tiles">adminportal.funcionalidad</result>
+        </action>
+        
+        
         
         
         

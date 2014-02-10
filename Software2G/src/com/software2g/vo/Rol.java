@@ -24,15 +24,24 @@ public class Rol implements Serializable {
 	@Column(name="descripcion_rol")
 	private String descripcionRol;
 
+	@Column(name="fechacambio")
 	private String fechacambio;
 
+	@Column(name="horacambio")
 	private String horacambio;
 
 	@Column(name="nombre_rol")
 	private String nombreRol;
 
+	@Column(name="registradopor")
 	private String registradopor;
 
+	@Column(name="etiqueta_rol")
+	private String etiquetaRol;
+	
+	@Column(name="estado_rol")
+	private String estadoRol;
+	
 	//bi-directional many-to-one association to Funcionalidadrol
 	@OneToMany(mappedBy="rol")
 	private List<Funcionalidadrol> funcionalidadrols;
@@ -108,4 +117,28 @@ public class Rol implements Serializable {
 		this.rolusuarios = rolusuarios;
 	}
 
+	public String getEtiquetaRol() {
+		return etiquetaRol;
+	}
+
+	public void setEtiquetaRol(String etiquetaRol) {
+		this.etiquetaRol = etiquetaRol;
+	}
+
+	public String getEstadoRol() {
+		return estadoRol;
+	}
+
+	public void setEstadoRol(String estadoRol) {
+		this.estadoRol = estadoRol;
+	}
+
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.registradopor=data.get(0);
+			this.fechacambio=data.get(1);
+			this.horacambio=data.get(2);
+		}
+		
+	}
 }

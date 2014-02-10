@@ -50,7 +50,8 @@
  		<property name="definitions"> 
  			<list> 
  				<value>/WEB-INF/tiles.xml</value>
- 				<value>/WEB-INF/tiles-contable.xml</value>   
+ 				<value>/WEB-INF/tiles-contable.xml</value>
+ 				<value>/WEB-INF/tiles-adminPortal.xml</value>   
  			</list> 
  		</property> 
  	</bean>

@@ -13,4 +13,18 @@ public final class ConstantesAplicativo {
 	public static final String estadoCreditoAnulado="ANULADO";
 	public static final String textomsgCredito="CREDITO";
 	
+	public static final String urlFuncionalidades=".action?estado=all&funcPosicionado=";
+	
+	public static final String constanteEstadoAll = "all";
+	public static final String constanteEstadoAdd = "add";
+	public static final String constanteEstadoQuery = "query";
+	public static final String constanteEstadoEdit = "edit";
+	public static final String constanteEstadoAbstract = "abstract";
+	public static final String constanteEstadoSave = "save";
+	public static final String constanteEstadoLink = "link";
+	public static final String constanteEstadoAddGrid = "addGrid";
+	public static final String constanteEstadoDeleteGrid = "delGrid";
+	public static final String constanteEstadoSubEdit = "subedit";
+	public static final String constanteEstadoSearch = "search";
+	
 }

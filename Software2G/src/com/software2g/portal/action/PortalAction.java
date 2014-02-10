@@ -2,6 +2,7 @@ package com.software2g.portal.action;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -16,13 +17,17 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import com.software2g.portal.facade.IGestionFacadePortal;
+import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
+import com.software2g.vo.Aplicacion;
 import com.software2g.vo.Departamento;
+import com.software2g.vo.Funcionalidad;
 import com.software2g.vo.Funcionalidadrol;
 import com.software2g.vo.Institucion;
 import com.software2g.vo.Municipio;
 import com.software2g.vo.Pais;
 import com.software2g.vo.Persona;
+import com.software2g.vo.Rol;
 import com.software2g.vo.Rolusuario;
 import com.software2g.vo.Tipodocumento;
 import com.software2g.vo.Usuario;
@@ -34,6 +39,9 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
 	private HttpServletResponse response;
 	private IGestionFacadePortal gestionFacadePortal;
 	private String estado;
+	private String url;
+	private String funcPosicionado;
+	private String id;
 	
 	private List<Tipodocumento> listTipoDoc;
 	private List<UtilGenerico> listSexo;
@@ -45,6 +53,11 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
 	private List<Pais> listPais;
 	private List<Departamento> listDepartamento;
 	private List<Municipio> listMunicipio;
+	private List<Rol> listRol;
+	private Rol rol;
+	private Funcionalidad funcionalidad; 
+	private List<Funcionalidad> listFuncionalidad;
+	private List<Aplicacion> listAplicacion;
 	
 	public PortalAction(IGestionFacadePortal gestionFacadePortal) {
         this.gestionFacadePortal = gestionFacadePortal;
@@ -71,6 +84,17 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
 		System.out.println("result: ["+result+"]");
     	return result;
     }
+	
+	private void getFuncionPosicionado(){	
+		if(request.getSession().getAttribute("funcPosicionado")==null){
+			request.getSession().setAttribute("funcPosicionado",funcPosicionado);
+		}else{
+			String funcCambio = (String) request.getSession().getAttribute("funcPosicionado");
+			if(!funcPosicionado.equals(funcCambio))
+				request.getSession().setAttribute("funcPosicionado",funcPosicionado);
+		}
+		System.out.println("######>>>>>>>funcPosicionado>>>>"+funcPosicionado);
+	}
 	
 	@SkipValidation
 	public String formCrearPersonal(){
@@ -412,24 +436,91 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
 	}
 	
 	@SkipValidation
-	public String listRoles(){
+	public String rolMethod(){
 		String  result = Action.SUCCESS; 
     	try { 
-    		if(request.getSession().getAttribute("url")==null||((String)request.getSession().getAttribute("url")).equals("")){
-    			String url = request.getParameter("url")==null?"":(String)request.getParameter("url");
-    			request.getSession().setAttribute("url", url);
-    		}else if(request.getParameter("url")!=null){
-    			request.getSession().setAttribute("url", (String)request.getParameter("url"));
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>PortalAction>>>>rolMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listRol = gestionFacadePortal.findAllRols();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			if(ValidaString.isNullOrEmptyString(rol.getNombreRol()))
+    				addActionError(getText("validacion.requerido","nombre","Nombre"));
+    			if(ValidaString.isNullOrEmptyString(rol.getEtiquetaRol()))
+    				addActionError(getText("validacion.requerido","etiqueta","Etiqueta"));
+    			if(ValidaString.isNullOrEmptyString(rol.getDescripcionRol()))
+    				addActionError(getText("validacion.requerido","descripcion","Descripción"));
+    			if(!hasActionErrors()){
+    				rol.setDatosAud(this.getDatosAud());
+    				ValidaString.imprimirObject(rol);
+    				gestionFacadePortal.persistRol(rol);
+    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				addActionMessage(getText("accion.satisfactoria"));
+    			}
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit) || estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			rol = gestionFacadePortal.findRolById(getIdInteger()); 
     		}
-    		
-    		estado="listarRoles";
-    		
-    	} catch (Exception e) {
-			addActionMessage(getText("error.aplicacion"));
-			e.printStackTrace();
-		}
-		System.out.println("result: ["+result+"]");
-    	return result;
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion1"));
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>PortalAction>>>>rolMethod >>>>estado salida-->>"+estado);
+    	return Action.SUCCESS;
+	}
+	
+	@SkipValidation
+	public String funcionalidadMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>PortalAction>>>>funcionalidadMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listFuncionalidad = gestionFacadePortal.findAllFuncionalidads();
+    		}if(estado.equals(ConstantesAplicativo.constanteEstadoAdd)){
+    			listFuncionalidad = gestionFacadePortal.findAllFuncionalidads();
+    			listAplicacion = gestionFacadePortal.findAllAplicacions();
+//    			if(funcionalidad==null)
+//    				funcionalidad = new Funcionalidad();
+//    			funcionalidad.setUrlFunc(ConstantesAplicativo.urlFuncionalidades);
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			if(ValidaString.isNullOrEmptyString(funcionalidad.getNombreFunc()))
+    				addActionError(getText("validacion.requerido","nombre","Nombre"));
+    			if(ValidaString.isNullOrEmptyString(funcionalidad.getEtiquetaFunc()))
+    				addActionError(getText("validacion.requerido","etiqueta","Etiqueta"));
+    			if(ValidaString.isNullOrEmptyString(funcionalidad.getUrlFunc()))
+    				addActionError(getText("validacion.requerido","urlFuncion","Acción Funcionalidad"));
+    			if(ValidaString.isNullOrEmptyString(funcionalidad.getDescripcionFunc()))
+    				addActionError(getText("validacion.requerido","descripcion","Descripción"));
+    			if(!hasActionErrors()){
+    				System.out.println("Id Aplicacion: ["+funcionalidad.getAplicacion().getIdApli()+"]");
+    				System.out.println("Id Funcionalidad Padre: ["+funcionalidad.getFuncionalidad().getIdFunc()+"]");
+    				if(funcionalidad.getFuncionalidad().getIdFunc()<0)
+    					funcionalidad.getFuncionalidad().setIdFunc(null);
+    				funcionalidad.setDatosAud(this.getDatosAud());
+    				ValidaString.imprimirObject(funcionalidad);
+    				gestionFacadePortal.persistFuncionalidad(funcionalidad);
+    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				addActionMessage(getText("accion.satisfactoria"));
+    				funcionalidad.setFuncionalidad(gestionFacadePortal.findFuncionalidadById(funcionalidad.getFuncionalidad().getIdFunc()));
+        			funcionalidad.setAplicacion(gestionFacadePortal.findAplicacionById(funcionalidad.getAplicacion().getIdApli()));
+    			}else{
+    				listFuncionalidad = gestionFacadePortal.findAllFuncionalidads();
+    				listFuncionalidad = gestionFacadePortal.findAllFuncionalidads();
+    				listAplicacion = gestionFacadePortal.findAllAplicacions();
+    			}
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit) || estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			funcionalidad = gestionFacadePortal.findFuncionalidadById(getIdInteger());
+    			listFuncionalidad = gestionFacadePortal.findAllFuncionalidads(); 
+    			listAplicacion = gestionFacadePortal.findAllAplicacions();
+    		}
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion1"));
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>PortalAction>>>>funcionalidadMethod>>>>estado salida-->>"+estado);
+    	return Action.SUCCESS;
 	}
 	
 	
@@ -443,7 +534,20 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
 	public void setServletRequest(HttpServletRequest request) {this.request = request;}
 	public String getEstado() {return estado;}
 	public void setEstado(String estado) {this.estado = estado;}
-
+	public String getUrl() {return url;}
+	public void setUrl(String url) {this.url = url;}
+	public void setFuncPosicionado(String funcPosicionado) {this.funcPosicionado = funcPosicionado;}
+	public String getFuncPosicionado() {return funcPosicionado;}
+	public String getId() {return id;}
+	public void setId(String id) {this.id = id;}
+	public long getIdLong() {return Long.parseLong(id);}
+	public Integer getIdInteger() {return Integer.parseInt(id);}
+	public List<String> getDatosAud(){
+//		System.out.println("usuario:["+((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua()+"]");
+		return Arrays.asList(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua(),
+				ValidaString.fechaSystem(),
+				ValidaString.horaSystem());
+	}
 	//************************************************************************
 	// Metodos Get & Set Manejo de Persona
 	//************************************************************************
@@ -467,5 +571,15 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
 	public void setListDepartamento(List<Departamento> listDepartamento) {this.listDepartamento = listDepartamento;}
 	public List<Municipio> getListMunicipio() {return listMunicipio;}
 	public void setListMunicipio(List<Municipio> listMunicipio) {this.listMunicipio = listMunicipio;}
+	public List<Rol> getListRol() {return listRol;}
+	public void setListRol(List<Rol> listRol) {this.listRol = listRol;}
+	public Rol getRol() {return rol;}
+	public void setRol(Rol rol) {this.rol = rol;}
+	public Funcionalidad getFuncionalidad() {return funcionalidad;}
+	public void setFuncionalidad(Funcionalidad funcionalidad) {this.funcionalidad = funcionalidad;}
+	public List<Funcionalidad> getListFuncionalidad() {return listFuncionalidad;}
+	public void setListFuncionalidad(List<Funcionalidad> listFuncionalidad) {this.listFuncionalidad = listFuncionalidad;}
+	public List<Aplicacion> getListAplicacion() {return listAplicacion;}
+	public void setListAplicacion(List<Aplicacion> listAplicacion) {this.listAplicacion = listAplicacion;}
 	
 }

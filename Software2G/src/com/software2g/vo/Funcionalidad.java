@@ -30,13 +30,16 @@ public class Funcionalidad implements Serializable {
 	@Column(name="etiqueta_func")
 	private String etiquetaFunc;
 
+	@Column(name="fechacambio")
 	private String fechacambio;
 
+	@Column(name="horacambio")
 	private String horacambio;
 
 	@Column(name="nombre_func")
 	private String nombreFunc;
 
+	@Column(name="registradopor")
 	private String registradopor;
 
 	@Column(name="url_func")
@@ -167,4 +170,12 @@ public class Funcionalidad implements Serializable {
 		this.funcionalidadrols = funcionalidadrols;
 	}
 
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.registradopor=data.get(0);
+			this.fechacambio=data.get(1);
+			this.horacambio=data.get(2);
+		}
+		
+	}
 }

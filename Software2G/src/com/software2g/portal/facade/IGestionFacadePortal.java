@@ -81,7 +81,7 @@ public interface IGestionFacadePortal {
 	//--------------------------------------------------------------------------
 	//Metodos Entidad Rol
 	public Rol findRolById(java.lang.Integer id) throws Exception;
-	public List<Rol> findAllRols() throws Exception;
+	public List<Rol> findAllRols() throws Exception; 
 	public void persistRol(Rol rol) throws Exception;
 	public void removeRol(Rol rol) throws Exception;
 	//FIN --- Metodos Entidad Rol

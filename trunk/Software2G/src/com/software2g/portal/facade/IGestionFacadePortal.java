@@ -48,6 +48,7 @@ public interface IGestionFacadePortal {
 	public List<Funcionalidad> findAllFuncionalidads() throws Exception;
 	public void persistFuncionalidad(Funcionalidad funcionalidad) throws Exception;
 	public void removeFuncionalidad(Funcionalidad funcionalidad) throws Exception;
+	public List<Funcionalidad> getFunctionApplication(String funcIdPadre, String funcId, long rolId) throws Exception;
 	//FIN --- Metodos Entidad Funcionalidad
 	//--------------------------------------------------------------------------
 	
@@ -155,5 +156,6 @@ public interface IGestionFacadePortal {
 	public List<Municipio> findAllMunicipios(long idDpto) throws Exception;
 	//FIN --- Metodos Entidad Municipio
 	//--------------------------------------------------------------------------
-	
+
+	public boolean crearFile(String path, String nameFile, String ext, String tipoFile) throws Exception;
 }

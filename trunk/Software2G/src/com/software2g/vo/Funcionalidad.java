@@ -16,7 +16,7 @@ public class Funcionalidad implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="FUNCIONALIDAD_IDFUNC_GENERATOR", sequenceName="PORTAL.SEQ_FUNCIONALIDAD")
+	@SequenceGenerator(name="FUNCIONALIDAD_IDFUNC_GENERATOR", sequenceName="PORTAL.SEQ_FUNCIONALIDAD", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="FUNCIONALIDAD_IDFUNC_GENERATOR")
 	@Column(name="id_func")
 	private Integer idFunc;
@@ -63,6 +63,9 @@ public class Funcionalidad implements Serializable {
 	@OneToMany(mappedBy="funcionalidad")
 	private List<Funcionalidadrol> funcionalidadrols;
 
+	@Transient
+	private String checked;
+	
 	public Funcionalidad() {
 	}
 
@@ -176,6 +179,15 @@ public class Funcionalidad implements Serializable {
 			this.fechacambio=data.get(1);
 			this.horacambio=data.get(2);
 		}
-		
 	}
+
+	public String getChecked() {
+		return checked;
+	}
+
+	public void setChecked(String checked) {
+		this.checked = checked;
+	}
+	
+	
 }

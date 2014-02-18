@@ -48,7 +48,105 @@
 				document.form.action="rol.action?estado=<%=ConstantesAplicativo.constanteEstadoEdit%>&id="+param;
 				document.form.submit();
 			}
+			
+			function resumen(param){
+				document.form.action="rol.action?estado=<%=ConstantesAplicativo.constanteEstadoAbstract%>&id="+param;
+				document.form.submit();
+			}
+			
+			function asociar(param){
+				document.form.action="rol.action?estado=<%=ConstantesAplicativo.constanteEstadoAssociate%>&id="+param;
+				document.form.submit();
+			}
+			
 		</script>
+		<%
+			String nameFileFuncRol = request.getSession().getAttribute("nameFileFuncRol")!=null
+						&&!((String)request.getSession().getAttribute("nameFileFuncRol")).equals("")
+						?(String)request.getSession().getAttribute("nameFileFuncRol"):"";
+		%>
+		<s:if test="estado=='associate'">
+			<script type="text/javascript" src="/Software2G/file/configuracionRol/<%=nameFileFuncRol%>.js"></script>
+		<script type="text/javascript">
+		var setting = {
+			view: {
+				selectedMulti: false
+			},
+			check: {
+				enable: true
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				onCheck: onCheck
+			}
+		};
+
+		function onCheck(e, treeId, treeNode) {
+			//showLog("[ "+getTime()+" onCheck ]&nbsp;&nbsp;&nbsp;&nbsp;" + treeNode.id );
+			type = e.data.type;
+			alert('type: ['+type+']');
+			alert('treeId: ['+treeId+']');
+			alert('treeNode.name: ['+treeNode.name+']');
+			alert('treeNode.checked: ['+treeNode.checked+']');
+		}		
+		
+		function checkNode(e) {
+			var zTree = $.fn.zTree.getZTreeObj("treeMenuFunc"),
+			type = e.data.type,
+			nodes = zTree.getSelectedNodes();
+			if (type.indexOf("All")<0 && nodes.length == 0) {
+				alert("Please select one node at first...");
+			}
+
+			if (type == "checkAllTrue") {
+				zTree.checkAllNodes(true);
+			} else if (type == "checkAllFalse") {
+				zTree.checkAllNodes(false);
+			} else {
+				var callbackFlag = $("#callbackTrigger").attr("checked");
+				for (var i=0, l=nodes.length; i<l; i++) {
+					if (type == "checkTrue") {
+						zTree.checkNode(nodes[i], true, false, callbackFlag);
+					} else if (type == "checkFalse") {
+						zTree.checkNode(nodes[i], false, false, callbackFlag);
+					} else if (type == "toggle") {
+						zTree.checkNode(nodes[i], null, false, callbackFlag);
+					}else if (type == "checkTruePS") {
+						zTree.checkNode(nodes[i], true, true, callbackFlag);
+					} else if (type == "checkFalsePS") {
+						zTree.checkNode(nodes[i], false, true, callbackFlag);
+					} else if (type == "togglePS") {
+						zTree.checkNode(nodes[i], null, true, callbackFlag);
+					}
+				}
+			}
+		}
+
+		function setAutoTrigger(e) {
+			var zTree = $.fn.zTree.getZTreeObj("treeMenuFunc");
+			zTree.expandAll(true);
+			zTree.setting.check.autoCheckTrigger = $("#autoCallbackTrigger").attr("checked");
+			$("#autoCheckTriggerValue").html(zTree.setting.check.autoCheckTrigger ? "true" : "false");
+		}
+
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeMenuFunc"), setting, zNodesRol);
+			$("#checkTrue").bind("click", {type:"checkTrue"}, checkNode);
+			$("#checkFalse").bind("click", {type:"checkFalse"}, checkNode);
+			$("#toggle").bind("click", {type:"toggle"}, checkNode);
+			$("#checkTruePS").bind("click", {type:"checkTruePS"}, checkNode);
+			$("#checkFalsePS").bind("click", {type:"checkFalsePS"}, checkNode);
+			$("#togglePS").bind("click", {type:"togglePS"}, checkNode);
+			$("#checkAllTrue").bind("click", {type:"checkAllTrue"}, checkNode);
+			$("#checkAllFalse").bind("click", {type:"checkAllFalse"}, checkNode);
+			$("#autoCallbackTrigger").bind("change", {}, setAutoTrigger);
+		});
+	</script>
+	</s:if>
 	</head>
 	<body id="dt_example">
 		<s:form id="form">
@@ -71,7 +169,7 @@
 							</td>
 						</tr>
 					</s:elseif>
-					<s:elseif test="estado=='abstract'">
+					<s:elseif test="estado=='abstract'||estado=='associate'">
 						<tr>
 							<td class="css_right">
 								<input type="button" value="<s:text name="labelbutton.volver"></s:text>" onclick="volver();" class="buttonSV"/>
@@ -86,6 +184,7 @@
 								<s:if test="estado=='all'">
 									<th><s:text name="columna.edit"></s:text></th>
 								</s:if>
+								<th><s:text name="roles.funcionalidades"></s:text></th>
 								<th><s:text name="roles.nombrerol"></s:text></th>
 								<th><s:text name="roles.etiqueta"></s:text></th>
 								<th><s:text name="roles.descripcionrol"></s:text></th>
@@ -103,6 +202,12 @@
 											</a>
 										</td>
 									</s:if>
+									<td align="center">
+										<a onclick="asociar('${data.idRol}');">
+<%-- 												<img align="middle" src="<s:url value="/imagenes/icon_edit.png"/>" alt="Editar" width="18" height="18"> --%>
+											Asociar
+										</a>
+									</td>
 									<td><s:property value="nombreRol"/></td>
 									<td><s:property value="etiquetaRol"/></td>
 									<td><s:property value="descripcionRol"/></td>
@@ -151,7 +256,7 @@
 						</tr>
 					</table>
 				</s:elseif>
-				<s:elseif test="estado=='abstract'">
+				<s:elseif test="estado=='abstract'||estado=='associate'">
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<tr>
 							<td class="leftLabel" width="130"><s:text name="roles.nombrerol"></s:text></td>
@@ -172,6 +277,14 @@
 								<s:else><s:text name="global.estadoInactivo"></s:text></s:else>
 							</td>
 						</tr>
+						<s:if test="estado=='associate'">
+							<tr>
+								<td></td>
+								<td>
+									<ul id="treeMenuFunc" class="ztree"></ul>
+								</td>
+							</tr>
+						</s:if>
 					</table>
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<tr>

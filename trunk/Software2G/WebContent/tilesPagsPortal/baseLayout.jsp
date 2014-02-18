@@ -27,7 +27,12 @@
 <%-- 		<script type="text/javascript" language="javascript" src="<s:url value='/js/jquery.chromatable.js'/>"></script> --%>
 <%-- 		<script type="text/javascript" language="javascript" src="<s:url value='/js/util.js'/>"></script> --%>
 <%-- 		<script type="text/javascript" language="javascript" src="<s:url value='/js/divUbicacion.js'/>"></script> --%>
-		
+	
+		<link href="<s:url value='/js/zTreeMenu/css/zTreeStyle/zTreeStyle.css'/>" rel="stylesheet" type="text/css" />
+<%-- 		<link href="<s:url value='/js/zTreeMenu/css/demo.css'/>" rel="stylesheet" type="text/css" /> --%>
+<%-- 		<script type="text/javascript" src="<s:url value='/js/zTreeMenu/js/jquery-1.4.4.min.js'/>"></script> --%>
+		<script type="text/javascript" src="<s:url value='/js/zTreeMenu/js/jquery.ztree.core-3.5.js'/>"></script>
+		<script type="text/javascript" src="<s:url value='/js/zTreeMenu/js/jquery.ztree.excheck-3.5.js'/>"></script>
 		<script language="JavaScript" type="text/JavaScript">
 			function disableKeys() {
 				var keyCode = (document.all) ? event.keyCode : e.which;

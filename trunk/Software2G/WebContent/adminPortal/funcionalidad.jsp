@@ -48,6 +48,12 @@
 				document.form.action="funcionalidad.action?estado=<%=ConstantesAplicativo.constanteEstadoEdit%>&id="+param;
 				document.form.submit();
 			}
+			
+			function resumen(param){
+				document.form.action="funcionalidad.action?estado=<%=ConstantesAplicativo.constanteEstadoAbstract%>&id="+param;
+				document.form.submit();
+			}
+			
 		</script>
 	</head>
 	<body id="dt_example">
@@ -151,7 +157,7 @@
 						<tr>
 							<td class="leftLabel"><s:text name="funcionalidades.funcionalidadPadres"></s:text></td>
 							<td>
-								<s:select list="listFuncionalidad" name="funcionalidad.funcionalidad.idFunc" listKey="idFunc" listValue="nombreFunc" headerKey="" headerValue="Función Padre" cssClass="inputs"/>
+								<s:select list="listFuncionalidad" name="funcionalidad.funcionalidad.idFunc" listKey="idFunc" listValue="nombreFunc" headerKey="0" headerValue="Función Padre" cssClass="inputs"/>
 							</td>
 						</tr>
 						<tr>
@@ -194,7 +200,11 @@
 						</tr>
 						<tr>
 							<td class="leftLabel" width="130"><s:text name="funcionalidades.funcionalidadPadres"></s:text></td>
-							<td class="text"><s:property value="funcionalidad.funcionalidad.nombreFunc"/></td>
+							<td class="text">
+								<s:if test="funcionalidad.funcionalidad!=null&&funcionalidad.funcionalidad.idFunc>0">
+									<s:property value="funcionalidad.funcionalidad.nombreFunc"/>
+								</s:if><s:else>Función Padre</s:else>
+							</td>
 						</tr>
 						<tr>
 							<td class="leftLabel" width="130"><s:text name="funcionalidades.aplicacion"></s:text></td>

@@ -1,5 +1,6 @@
 package com.software2g.portal.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import javax.persistence.Query;
 
 import com.software2g.portal.dao.IFuncionalidadDao;
 import com.software2g.vo.Funcionalidad;
+import com.software2g.vo.Funcionalidadrol;
 
 import org.springframework.stereotype.Repository;
 
@@ -90,4 +92,54 @@ public class FuncionalidadDaoImpl implements IFuncionalidadDao {
 		 The merge method returns a managed copy of the given detached entity.*/
 		em.remove(em.merge(funcionalidad));
 	}
+	
+	public List<Funcionalidad> getFunctionApplication(String funcIdPadre, String funcId, long rolId){
+		List<Funcionalidad> funcionalidades = null;
+		try {
+    		String sqlString = " select func.id_func, func.id_func_padre, func.nombre_func, " +
+    				" func.etiqueta_func, func.estado_func, " +
+    				" case when funr.id_rol is not null then 'S' else 'N' end as existe " +
+    				" from portal.funcionalidad func" +
+    				" left outer join portal.funcionalidadrol funr on (func.id_func = funr.id_func and funr.id_rol = "+rolId+") " +
+    				" where func.id_func_padre "+(funcIdPadre!=null&&!funcIdPadre.equals("")?" = "+funcIdPadre:"is null ")+" " +
+					" "+(funcId!=null&&!funcId.equals("")?"and func.id_func = "+funcId+"":"")+" " + 
+					" order by func.etiqueta_func asc ";
+//    		System.out.println("********************************************");
+//    		System.out.println("SQL:["+sqlString+"]");
+//    		System.out.println("rolId: ["+rolId+"]");
+//    		System.out.println("********************************************");
+            Query query = em.createNativeQuery( sqlString ); 
+            List<Object[]> listFunctionApl = query.getResultList();
+            if(listFunctionApl!=null&&listFunctionApl.size()>0){
+            	funcionalidades = new ArrayList<Funcionalidad>();
+            	for(Object[] elem:listFunctionApl){
+            		Funcionalidad dato = new Funcionalidad();
+            		dato.setIdFunc(Integer.parseInt(elem[0].toString()));
+            		//Creacion de objeto padre
+            		if(elem[1]!=null){
+            			Funcionalidad datoPadre = new Funcionalidad();
+            			datoPadre.setIdFunc(Integer.parseInt(elem[1].toString()));
+            			dato.setFuncionalidad(datoPadre);
+            		}
+            		//Fin creacion objeto padre
+            		dato.setNombreFunc((String)elem[2]);
+            		dato.setEtiquetaFunc((String)elem[3]);
+            		dato.setEstadoFunc((String)elem[4]);
+            		dato.setChecked((String)elem[5]);
+            		dato.setFuncionalidads(getFunctionApplication(String.valueOf(dato.getIdFunc()),null,rolId));
+            		funcionalidades.add(dato);
+            	}
+            }
+            return funcionalidades;
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        } 
+	}
+	
+	
+	
+	
 }

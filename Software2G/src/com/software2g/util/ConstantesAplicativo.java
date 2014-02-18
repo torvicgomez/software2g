@@ -26,5 +26,9 @@ public final class ConstantesAplicativo {
 	public static final String constanteEstadoDeleteGrid = "delGrid";
 	public static final String constanteEstadoSubEdit = "subedit";
 	public static final String constanteEstadoSearch = "search";
+	public static final String constanteEstadoAssociate = "associate";
 	
+	public static final String constanteTipoFileJSFuncRol = "functionrol";
+	public static final String constanteTipoFileJSTreeMenu = "treemenu";
+	public static final String constanteExtensionFileJS = ".js"; 
 }

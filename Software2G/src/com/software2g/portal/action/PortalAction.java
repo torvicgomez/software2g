@@ -457,8 +457,24 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
     				estado = ConstantesAplicativo.constanteEstadoAbstract;
     				addActionMessage(getText("accion.satisfactoria"));
     			}
-    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit) || estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
-    			rol = gestionFacadePortal.findRolById(getIdInteger()); 
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit) 
+    				|| estado.equals(ConstantesAplicativo.constanteEstadoAbstract)
+    				|| estado.equals(ConstantesAplicativo.constanteEstadoAssociate)){
+    			System.out.println("Entra esta parte!!!!!");
+    			System.out.println("Id Rol: ["+getIdInteger()+"]");
+    			rol = gestionFacadePortal.findRolById(getIdInteger());
+    			if(estado.equals(ConstantesAplicativo.constanteEstadoAssociate)){
+    				request.getSession().setAttribute("nameFileFuncRol", "pruebaRol");
+    				String nameFile = "rol_"+getIdInteger();
+    				String path = request.getServletContext().getRealPath("/")+"file\\configuracionRol\\"; 
+    				System.out.println("nameFile: ["+nameFile+"]");
+    				System.out.println("path: ["+path+"]");
+    				System.out.println("extension: ["+ConstantesAplicativo.constanteExtensionFileJS+"]");
+//    				System.out.println("path0:["+request.getServletContext().getRealPath("/")+"]");
+    				gestionFacadePortal.crearFile(path, nameFile,   
+    						ConstantesAplicativo.constanteExtensionFileJS, 
+    						ConstantesAplicativo.constanteTipoFileJSFuncRol); 
+    			}
     		}
     	} catch(Exception e){
     		e.printStackTrace();
@@ -468,6 +484,8 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
     	System.out.println("######>>>>>>>PortalAction>>>>rolMethod >>>>estado salida-->>"+estado);
     	return Action.SUCCESS;
 	}
+	
+	
 	
 	@SkipValidation
 	public String funcionalidadMethod(){
@@ -495,21 +513,25 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
     			if(!hasActionErrors()){
     				System.out.println("Id Aplicacion: ["+funcionalidad.getAplicacion().getIdApli()+"]");
     				System.out.println("Id Funcionalidad Padre: ["+funcionalidad.getFuncionalidad().getIdFunc()+"]");
-    				if(funcionalidad.getFuncionalidad().getIdFunc()<0)
-    					funcionalidad.getFuncionalidad().setIdFunc(null);
+    				if(funcionalidad.getFuncionalidad().getIdFunc()<=0)
+    					funcionalidad.setFuncionalidad(null);
     				funcionalidad.setDatosAud(this.getDatosAud());
     				ValidaString.imprimirObject(funcionalidad);
     				gestionFacadePortal.persistFuncionalidad(funcionalidad);
     				estado = ConstantesAplicativo.constanteEstadoAbstract;
     				addActionMessage(getText("accion.satisfactoria"));
-    				funcionalidad.setFuncionalidad(gestionFacadePortal.findFuncionalidadById(funcionalidad.getFuncionalidad().getIdFunc()));
-        			funcionalidad.setAplicacion(gestionFacadePortal.findAplicacionById(funcionalidad.getAplicacion().getIdApli()));
+    				funcionalidad.setAplicacion(gestionFacadePortal.findAplicacionById(funcionalidad.getAplicacion().getIdApli()));
+    				System.out.println("funcionalidad padre:["+funcionalidad.getFuncionalidad()+"]");
+    				if(funcionalidad.getFuncionalidad()!=null&&funcionalidad.getFuncionalidad().getIdFunc()>0)
+    					funcionalidad.setFuncionalidad(gestionFacadePortal.findFuncionalidadById(funcionalidad.getFuncionalidad().getIdFunc()));
     			}else{
     				listFuncionalidad = gestionFacadePortal.findAllFuncionalidads();
     				listFuncionalidad = gestionFacadePortal.findAllFuncionalidads();
     				listAplicacion = gestionFacadePortal.findAllAplicacions();
     			}
-    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit) || estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit) 
+    				|| estado.equals(ConstantesAplicativo.constanteEstadoAbstract)
+    				|| estado.equals(ConstantesAplicativo.constanteEstadoAssociate)){
     			funcionalidad = gestionFacadePortal.findFuncionalidadById(getIdInteger());
     			listFuncionalidad = gestionFacadePortal.findAllFuncionalidads(); 
     			listAplicacion = gestionFacadePortal.findAllAplicacions();

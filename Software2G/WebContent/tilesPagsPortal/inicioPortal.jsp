@@ -22,6 +22,7 @@
 <link href="<s:url value='/js/zTreeMenu/css/zTreeStyle/zTreeStyle.css'/>" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<s:url value='/js/zTreeMenu/js/jquery-1.4.4.min.js'/>"></script>
 <script type="text/javascript" src="<s:url value='/js/zTreeMenu/js/jquery.ztree.core-3.5.js'/>"></script>
+<script type="text/javascript" src="<s:url value='/js/zTreeMenu/js/jquery.ztree.excheck-3.5.js'/>"></script>
 <script type="text/javascript" src="file/configuracionUser/<%=nameFileFuncUser %>.js"></script>
   <style>
 	body {
@@ -35,15 +36,11 @@
 		color:#333; font-size:12px; 
 		font-family:dotum, Verdana, Arial, Helvetica, AppleGothic, sans-serif;
 	}
-	#testIframe {margin-left: 10px;}
   </style>
   
  <script type="text/javascript" >
-  <!--
 	var zTree;
-	var demoIframe;
-	
-
+	var bodyIframe;
 	var setting = {
 		view: {
 			dblClickExpand: false,
@@ -65,7 +62,7 @@
 					zTree.expandNode(treeNode);
 					return false;
 				} else {
-					demoIframe.attr("src",treeNode.file );
+					bodyIframe.attr("src",treeNode.file );
 					return true;
 				}
 			}
@@ -75,28 +72,10 @@
 	$(document).ready(function(){
 		var t = $("#tree");
 		t = $.fn.zTree.init(t, setting, zNodes);
-		demoIframe = $("#testIframe");
-		//demoIframe.bind("load", loadReady);
-		//var zTree = $.fn.zTree.getZTreeObj("tree");
-		//zTree.selectNode(zTree.getNodeByParam("id", 101));
-		//var sNodes = zTree.getSelectedNodes();
-		//if (sNodes.length > 0) {
-		//	var isOpen = sNodes[0].open;
-		//}
+		bodyIframe = $("#bodyIframe");
 		var treeObj = $.fn.zTree.getZTreeObj("tree");
 		treeObj.expandAll(true);
 	});
-
-	/*function loadReady() {
-		var bodyH = demoIframe.contents().find("body").get(0).scrollHeight,
-		htmlH = demoIframe.contents().find("html").get(0).scrollHeight,
-		maxH = Math.max(bodyH, htmlH), minH = Math.min(bodyH, htmlH),
-		h = demoIframe.height() >= maxH ? minH:maxH ;
-		if (h < 530) h = 530;
-		demoIframe.height(h);
-	}*/
-
-  //-->
   </script>
 <html>
 <head>
@@ -122,8 +101,8 @@
 		</tr>
 		<tr>
 			<td>
-	  			<iframe id="testIframe"
-	  				name="testIframe"
+	  			<iframe id="bodyIframe"
+	  				name="bodyIframe"
 	  				frameborder="0"
 	  				scrolling="auto"
 	  				width="100%"

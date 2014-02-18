@@ -34,8 +34,7 @@
 	#testIframe {margin-left: 10px;}
   </style>
   
- <SCRIPT type="text/javascript" >
-  <!--
+ <script type="text/javascript" >
 	var zTree;
 	var demoIframe;
 
@@ -60,45 +59,40 @@
 					zTree.expandNode(treeNode);
 					return false;
 				} else {
-					demoIframe.attr("src",treeNode.file );
-					//+ ".html"
+					bodyIframe.attr("src",treeNode.file );
 					return true;
 				}
 			}
 		}
 	};
-
 	
-//1001|1000|Administración Personal|listPersonal.action?url=Personal::>Administración Personal|body
 	$(document).ready(function(){
 		var t = $("#tree");
 		t = $.fn.zTree.init(t, setting, zNodes);
-		demoIframe = $("#testIframe");
-		demoIframe.bind("load", loadReady);
+		bodyIframe = $("#bodyIframe");
+		bodyIframe.bind("load", loadReady);
 		var zTree = $.fn.zTree.getZTreeObj("tree");
 		zTree.selectNode(zTree.getNodeByParam("id", 101));
 	
 	});
 
 	function loadReady() {
-		var bodyH = demoIframe.contents().find("body").get(0).scrollHeight,
-		htmlH = demoIframe.contents().find("html").get(0).scrollHeight,
+		var bodyH = bodyIframe.contents().find("body").get(0).scrollHeight,
+		htmlH = bodyIframe.contents().find("html").get(0).scrollHeight,
 		maxH = Math.max(bodyH, htmlH), minH = Math.min(bodyH, htmlH),
-		h = demoIframe.height() >= maxH ? minH:maxH ;
+		h = bodyIframe.height() >= maxH ? minH:maxH ;
 		if (h < 530) h = 530;
-		demoIframe.height(h);
+		bodyIframe.height(h);
 	}
-
-  //-->
-  </SCRIPT>
+  </script>
   <table border="0"  width="99%" align="center" >
   	<tr>
   		<td width="25%" align="left" valign="top" style="BORDER-RIGHT: #999999 1px dashed">
   			<ul id="tree" class="ztree" style="width:260px; overflow:auto;"></ul>
   		</td>
   		<td width="70%">
-  			<iframe id="testIframe"
-  				name="testIframe"
+  			<iframe id="bodyIframe"
+  				name="bodyIframe"
   				frameborder="0"
   				scrolling="auto"
   				width="100%"

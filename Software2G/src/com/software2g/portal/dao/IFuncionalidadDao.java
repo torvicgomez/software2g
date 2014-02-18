@@ -35,4 +35,5 @@ public interface IFuncionalidadDao {
 	 * Remove the given persistent instance.
 	 */
 	public void removeFuncionalidad(Funcionalidad funcionalidad);
+	public List<Funcionalidad> getFunctionApplication(String funcIdPadre, String funcId, long rolId);
 }

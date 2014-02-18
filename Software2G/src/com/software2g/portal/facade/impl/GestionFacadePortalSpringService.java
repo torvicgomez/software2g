@@ -1,5 +1,8 @@
 package com.software2g.portal.facade.impl;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,7 @@ import com.software2g.portal.dao.IRolUsuarioDao;
 import com.software2g.portal.dao.ITipoDocumentoDao;
 import com.software2g.portal.dao.IUsuarioDao;
 import com.software2g.portal.facade.IGestionFacadePortal;
+import com.software2g.util.ConstantesAplicativo;
 import com.software2g.vo.Aplicacion;
 import com.software2g.vo.Departamento;
 import com.software2g.vo.Funcionalidad;
@@ -720,6 +724,70 @@ public class GestionFacadePortalSpringService implements IGestionFacadePortal{
 		} catch (RuntimeException e) {
 			throw new Exception("findAllMunicipios failed: " + e.getMessage());
 		}
+	}
+	
+	public List<Funcionalidad> getFunctionApplication(String funcIdPadre, String funcId, long rolId) throws Exception {
+		try {
+			return getFuncionalidadDao().getFunctionApplication(funcIdPadre, funcId, rolId);
+		} catch (RuntimeException e) {
+			//throw new Exception("getFunctionApplication failed: " + e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public boolean crearFile(String path, String nameFile, String ext, String tipoFile) throws Exception{
+		boolean result = false;
+		try {
+			System.out.println("archivo: ["+path+nameFile+ext+"]");
+			File file = new File(path+nameFile+ext);
+			if(file.exists())
+				file.delete();
+			System.out.println("Continua!!!!!!!");
+			FileWriter createFile = new FileWriter(path+nameFile+ext);
+			System.out.println("tipo file: ["+tipoFile+"]");
+			if(tipoFile.equals(ConstantesAplicativo.constanteTipoFileJSFuncRol)){
+				this.crearJSFileFunctionRol(createFile);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+		return result;
+	}
+	
+	private boolean crearJSFileFunctionRol(FileWriter file) throws Exception{
+		boolean result = false;
+		try {
+			System.out.println("entra esta parte!!!!!!!!!!!!!!!111111111");
+			List<Funcionalidad> list = getFunctionApplication(null, null, 1);
+			if(list!=null&&list.size()>0){
+				String nodo = imprimirListaFunction(list);
+				System.out.println("*******************************************");
+				System.out.println("*******************************************");
+				System.out.println("nodos: ["+nodo+"]");
+				System.out.println("*******************************************");
+				System.out.println("*******************************************");
+			}else
+				System.out.println("Lista Nula!!!!!!");
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		} 
+		return result;
+	}
+	
+	
+	private String imprimirListaFunction(List<Funcionalidad> list){
+		String nodo = "";
+		if(list!=null&&list.size()>0){
+			for(Funcionalidad elem:list){
+				System.out.println("funcion Etiqueta: ["+elem.getEtiquetaFunc()+"]");
+				nodo += "{id:"+elem.getIdFunc()+", pId:"+(elem.getFuncionalidad()!=null&&elem.getFuncionalidad().getIdFunc()>0?elem.getFuncionalidad().getIdFunc():"0")+"" +
+						", name:\"["+elem.getEtiquetaFunc()+"] - "+elem.getNombreFunc()+"\", checked:"+(elem.getChecked().equals("S")?"true":"false")+" }, \n";
+				if(elem.getFuncionalidads()!=null&&elem.getFuncionalidads().size()>0)
+					nodo += imprimirListaFunction(elem.getFuncionalidads());
+			}
+		}
+		return nodo;
 	}
 	
 }

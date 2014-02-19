@@ -747,8 +747,9 @@ public class GestionFacadePortalSpringService implements IGestionFacadePortal{
 			FileWriter createFile = new FileWriter(path+nameFile+ext);
 			System.out.println("tipo file: ["+tipoFile+"]");
 			if(tipoFile.equals(ConstantesAplicativo.constanteTipoFileJSFuncRol)){
-				this.crearJSFileFunctionRol(createFile);
+				result = this.crearJSFileFunctionRol(createFile);
 			}
+			createFile.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 
@@ -758,17 +759,18 @@ public class GestionFacadePortalSpringService implements IGestionFacadePortal{
 	private boolean crearJSFileFunctionRol(FileWriter file) throws Exception{
 		boolean result = false;
 		try {
-			System.out.println("entra esta parte!!!!!!!!!!!!!!!111111111");
 			List<Funcionalidad> list = getFunctionApplication(null, null, 1);
 			if(list!=null&&list.size()>0){
 				String nodo = imprimirListaFunction(list);
+				nodo = "var zNodesRol =["+(nodo.substring(0,nodo.lastIndexOf(",")))+"];";
 				System.out.println("*******************************************");
 				System.out.println("*******************************************");
-				System.out.println("nodos: ["+nodo+"]");
+				System.out.println("nodos:"+nodo);
 				System.out.println("*******************************************");
 				System.out.println("*******************************************");
-			}else
-				System.out.println("Lista Nula!!!!!!");
+				file.write(nodo);
+				result = true;
+			}
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 		} 
@@ -782,7 +784,9 @@ public class GestionFacadePortalSpringService implements IGestionFacadePortal{
 			for(Funcionalidad elem:list){
 				System.out.println("funcion Etiqueta: ["+elem.getEtiquetaFunc()+"]");
 				nodo += "{id:"+elem.getIdFunc()+", pId:"+(elem.getFuncionalidad()!=null&&elem.getFuncionalidad().getIdFunc()>0?elem.getFuncionalidad().getIdFunc():"0")+"" +
-						", name:\"["+elem.getEtiquetaFunc()+"] - "+elem.getNombreFunc()+"\", checked:"+(elem.getChecked().equals("S")?"true":"false")+" }, \n";
+						", name:\"["+elem.getEtiquetaFunc()+"] - "+elem.getNombreFunc()+"\", checked:"+(elem.getChecked().equals("S")?"true":"false")+"" +
+						" "+(elem.getFuncionalidads()!=null&&elem.getFuncionalidads().size()>0?", open:true":"")+"" +
+						" "+(elem.getEstadoFunc().equals(ConstantesAplicativo.constanteEstadoInactivo)?", chkDisabled:true, font:{'color':'red'}":"")+"}, \n";
 				if(elem.getFuncionalidads()!=null&&elem.getFuncionalidads().size()>0)
 					nodo += imprimirListaFunction(elem.getFuncionalidads());
 			}

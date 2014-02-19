@@ -66,14 +66,18 @@
 						?(String)request.getSession().getAttribute("nameFileFuncRol"):"";
 		%>
 		<s:if test="estado=='associate'">
+			<%=nameFileFuncRol%>
 			<script type="text/javascript" src="/Software2G/file/configuracionRol/<%=nameFileFuncRol%>.js"></script>
 		<script type="text/javascript">
 		var setting = {
 			view: {
-				selectedMulti: false
+				selectedMulti: false,
+				fontCss: getFont,
+				nameIsHTML: true
 			},
 			check: {
-				enable: true
+				enable: true,
+				chkDisabledInherit: true
 			},
 			data: {
 				simpleData: {
@@ -133,6 +137,30 @@
 			$("#autoCheckTriggerValue").html(zTree.setting.check.autoCheckTrigger ? "true" : "false");
 		}
 
+		function disabledNode(e) {
+			var zTree = $.fn.zTree.getZTreeObj("treeMenuFunc"),
+			disabled = e.data.disabled,
+			nodes = zTree.getSelectedNodes();
+			if (nodes.length == 0) {
+				alert("Please select one node at first...");
+			}
+			if (disabled) {
+				inheritParent = $("#py").attr("checked");
+				inheritChildren = $("#sy").attr("checked");
+			} else {
+				inheritParent = $("#pn").attr("checked");
+				inheritChildren = $("#sn").attr("checked");
+			}
+
+			for (var i=0, l=nodes.length; i<l; i++) {
+				zTree.setChkDisabled(nodes[i], disabled, inheritParent, inheritChildren);
+			}
+		}
+		
+		function getFont(treeId, node) {
+			return node.font ? node.font : {};
+		}
+		
 		$(document).ready(function(){
 			$.fn.zTree.init($("#treeMenuFunc"), setting, zNodesRol);
 			$("#checkTrue").bind("click", {type:"checkTrue"}, checkNode);
@@ -143,6 +171,8 @@
 			$("#togglePS").bind("click", {type:"togglePS"}, checkNode);
 			$("#checkAllTrue").bind("click", {type:"checkAllTrue"}, checkNode);
 			$("#checkAllFalse").bind("click", {type:"checkAllFalse"}, checkNode);
+			$("#disabledTrue").bind("click", {disabled: true}, disabledNode);
+			$("#disabledFalse").bind("click", {disabled: false}, disabledNode);
 			$("#autoCallbackTrigger").bind("change", {}, setAutoTrigger);
 		});
 	</script>

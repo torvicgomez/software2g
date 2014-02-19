@@ -464,16 +464,12 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
     			System.out.println("Id Rol: ["+getIdInteger()+"]");
     			rol = gestionFacadePortal.findRolById(getIdInteger());
     			if(estado.equals(ConstantesAplicativo.constanteEstadoAssociate)){
-    				request.getSession().setAttribute("nameFileFuncRol", "pruebaRol");
     				String nameFile = "rol_"+getIdInteger();
     				String path = request.getServletContext().getRealPath("/")+"file\\configuracionRol\\"; 
-    				System.out.println("nameFile: ["+nameFile+"]");
-    				System.out.println("path: ["+path+"]");
-    				System.out.println("extension: ["+ConstantesAplicativo.constanteExtensionFileJS+"]");
-//    				System.out.println("path0:["+request.getServletContext().getRealPath("/")+"]");
     				gestionFacadePortal.crearFile(path, nameFile,   
     						ConstantesAplicativo.constanteExtensionFileJS, 
-    						ConstantesAplicativo.constanteTipoFileJSFuncRol); 
+    						ConstantesAplicativo.constanteTipoFileJSFuncRol);
+    				request.getSession().setAttribute("nameFileFuncRol", nameFile);
     			}
     		}
     	} catch(Exception e){

@@ -31,4 +31,7 @@ public final class ConstantesAplicativo {
 	public static final String constanteTipoFileJSFuncRol = "functionrol";
 	public static final String constanteTipoFileJSTreeMenu = "treemenu";
 	public static final String constanteExtensionFileJS = ".js"; 
+	
+	public static final String constanteEstadoActivo = "ACTIVO";
+	public static final String constanteEstadoInactivo = "INACTIVO";
 }

@@ -50,6 +50,9 @@ public class Rol implements Serializable {
 	@OneToMany(mappedBy="rol")
 	private List<Rolusuario> rolusuarios;
 
+	@Transient
+	private String valoresFuncRol;
+	
 	public Rol() {
 	}
 
@@ -141,4 +144,13 @@ public class Rol implements Serializable {
 		}
 		
 	}
+
+	public String getValoresFuncRol() {
+		return valoresFuncRol;
+	}
+
+	public void setValoresFuncRol(String valoresFuncRol) {
+		this.valoresFuncRol = valoresFuncRol;
+	}
+	
 }

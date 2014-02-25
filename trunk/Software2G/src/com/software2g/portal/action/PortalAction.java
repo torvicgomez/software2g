@@ -1,5 +1,7 @@
 package com.software2g.portal.action;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,6 +60,7 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
 	private Funcionalidad funcionalidad; 
 	private List<Funcionalidad> listFuncionalidad;
 	private List<Aplicacion> listAplicacion;
+	private InputStream strFunctionRol;
 	
 	public PortalAction(IGestionFacadePortal gestionFacadePortal) {
         this.gestionFacadePortal = gestionFacadePortal;
@@ -599,5 +602,21 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
 	public void setListFuncionalidad(List<Funcionalidad> listFuncionalidad) {this.listFuncionalidad = listFuncionalidad;}
 	public List<Aplicacion> getListAplicacion() {return listAplicacion;}
 	public void setListAplicacion(List<Aplicacion> listAplicacion) {this.listAplicacion = listAplicacion;}
+
+	public InputStream getStrFunctionRol() {
+		String result = "";
+		String id = request.getParameter("id");
+		String pId = request.getParameter("pId");
+		String checked = request.getParameter("checked");
+		result = id+";"+pId+";"+checked+"<br>";
+		System.out.println("**********************************************+");
+		System.out.println("**********************************************+");
+		System.out.println("result: ["+result+"]");
+		System.out.println("**********************************************+");
+		System.out.println("**********************************************+");
+		strFunctionRol = new ByteArrayInputStream(result.getBytes());
+		return strFunctionRol;
+	}
+
 	
 }

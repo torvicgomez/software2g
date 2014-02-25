@@ -104,7 +104,14 @@
         <action name="funcionalidad" method="funcionalidadMethod" class="PortalAction">
         	<result name="success" type="tiles">adminportal.funcionalidad</result>
         </action>
-        
+        <action name="cargarFuncRol" class="PortalAction">
+        	<result name="success" type="stream">
+				<param name="contentType">text/html</param>
+    			<param name="inputName">strFunctionRol</param>
+    			<param name="charSet">iso-8859-1</param>
+			</result>
+        </action>
+		        
         
         
         

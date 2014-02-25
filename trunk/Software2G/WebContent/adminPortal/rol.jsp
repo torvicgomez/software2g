@@ -66,7 +66,6 @@
 						?(String)request.getSession().getAttribute("nameFileFuncRol"):"";
 		%>
 		<s:if test="estado=='associate'">
-			<%=nameFileFuncRol%>
 			<script type="text/javascript" src="/Software2G/file/configuracionRol/<%=nameFileFuncRol%>.js"></script>
 		<script type="text/javascript">
 		var setting = {
@@ -91,11 +90,13 @@
 
 		function onCheck(e, treeId, treeNode) {
 			//showLog("[ "+getTime()+" onCheck ]&nbsp;&nbsp;&nbsp;&nbsp;" + treeNode.id );
-			type = e.data.type;
-			alert('type: ['+type+']');
-			alert('treeId: ['+treeId+']');
-			alert('treeNode.name: ['+treeNode.name+']');
-			alert('treeNode.checked: ['+treeNode.checked+']');
+			var valor = document.getElementById("valoresFuncRol").value;
+			document.getElementById("valoresFuncRol").value = valor+treeNode.id+";"+treeNode.pId+";"+treeNode.checked+"###";
+// 			alert('treeNode.id: ['+treeNode.id+']');
+// 			alert('treeNode.pId: ['+treeNode.pId+']');
+// 			alert('treeNode.name: ['+treeNode.name+']');
+// 			alert('treeNode.checked: ['+treeNode.checked+']');
+			$("#funciones").load('cargarFuncRol.action?id='+treeNode.id+'&pId='+treeNode.pId+'&checked='+treeNode.checked);
 		}		
 		
 		function checkNode(e) {
@@ -181,6 +182,9 @@
 	<body id="dt_example">
 		<s:form id="form">
 			<s:hidden name="funcPosicionado"></s:hidden>
+			<s:textfield name="rol.valoresFuncRol" id="valoresFuncRol" size="100"></s:textfield>
+			<div id="funciones">
+			</div>
 			<div id="demo">
 				<table cellpadding="0" cellspacing="0" border="0" class="display">
 					<tr><td>

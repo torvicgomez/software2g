@@ -61,6 +61,7 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
 	private List<Funcionalidad> listFuncionalidad;
 	private List<Aplicacion> listAplicacion;
 	private InputStream strFunctionRol;
+	private List<Object> listFuncRol;
 	
 	public PortalAction(IGestionFacadePortal gestionFacadePortal) {
         this.gestionFacadePortal = gestionFacadePortal;
@@ -446,6 +447,7 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
     		System.out.println("######>>>>>>>PortalAction>>>>rolMethod>>>>estado entrada-->>"+estado);
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
     			listRol = gestionFacadePortal.findAllRols();
+    			request.getSession().removeAttribute("listFuncRol");
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			if(ValidaString.isNullOrEmptyString(rol.getNombreRol()))
     				addActionError(getText("validacion.requerido","nombre","Nombre"));
@@ -469,10 +471,11 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
     			if(estado.equals(ConstantesAplicativo.constanteEstadoAssociate)){
     				String nameFile = "rol_"+getIdInteger();
     				String path = request.getServletContext().getRealPath("/")+"file\\configuracionRol\\"; 
-    				gestionFacadePortal.crearFile(path, nameFile,   
+    				List<Funcionalidad> listFuncRol = gestionFacadePortal.crearFile(path, nameFile,   
     						ConstantesAplicativo.constanteExtensionFileJS, 
     						ConstantesAplicativo.constanteTipoFileJSFuncRol);
     				request.getSession().setAttribute("nameFileFuncRol", nameFile);
+    				request.getSession().setAttribute("listFuncRol", listFuncRol);
     			}
     		}
     	} catch(Exception e){
@@ -602,13 +605,66 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
 	public void setListFuncionalidad(List<Funcionalidad> listFuncionalidad) {this.listFuncionalidad = listFuncionalidad;}
 	public List<Aplicacion> getListAplicacion() {return listAplicacion;}
 	public void setListAplicacion(List<Aplicacion> listAplicacion) {this.listAplicacion = listAplicacion;}
+	public List<Object> getListFuncRol() {return listFuncRol;}
+	public void setListFuncRol(List<Object> listFuncRol) {this.listFuncRol = listFuncRol;}
 
 	public InputStream getStrFunctionRol() {
-		String result = "";
 		String id = request.getParameter("id");
 		String pId = request.getParameter("pId");
 		String checked = request.getParameter("checked");
-		result = id+";"+pId+";"+checked+"<br>";
+		System.out.println("*********************************************************************");
+		System.out.println("*********************************************************************");
+		System.out.println("*********************************************************************");
+		List<Funcionalidad> list = (List<Funcionalidad>)request.getSession().getAttribute("listFuncRol");
+		System.out.println("listFuncionalidades: ["+list+"]");
+		System.out.println("id: ["+id+"]");
+		System.out.println("pId: ["+pId+"]");
+		System.out.println("checked: ["+checked+"]");
+		try {
+			list = gestionFacadePortal.marcarFuncRol(list, Integer.parseInt(id), !pId.equals("null")?Integer.parseInt(pId):null, checked);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("*********************************************************************");
+		System.out.println("*********************************************************************");
+		System.out.println("*********************************************************************");
+		
+		
+		List<Object[]> listFuncRol = (List<Object[]>)request.getSession().getAttribute("listFuncRol1");
+		System.out.println("listFuncRol: ["+listFuncRol+"]");
+		if(listFuncRol==null)
+			listFuncRol = new ArrayList<Object[]>();
+		if(listFuncRol!=null&&listFuncRol.size()>0){
+			boolean band=false;
+			System.out.println("listFuncRol.size(): ["+listFuncRol.size()+"]");
+			for(Object[] elem:listFuncRol){
+				System.out.println("elem[0]: ["+elem[0]+"]==["+id+"] : id");
+				if(elem[0].toString().equals(id)){
+					elem[2] = checked;
+					band = true;
+					break;
+				}
+			}
+			System.out.println("band: ["+band+"]");
+			if(!band){
+				Object[] data = {id, pId, checked};
+				listFuncRol.add(data);
+			}
+		}else{
+			Object[] data = {id, pId, checked};
+			listFuncRol.add(data);
+		}
+		request.getSession().setAttribute("listFuncRol1",listFuncRol);
+		String result = "";
+		System.out.println("listFuncRol.size(): ["+listFuncRol.size()+"]");
+		for(Object[] elem:listFuncRol){
+			result += elem[0]+";"+elem[1]+";"+elem[2]+"<br>";
+		}
+		//result = id+";"+pId+";"+checked+"<br>";
 		System.out.println("**********************************************+");
 		System.out.println("**********************************************+");
 		System.out.println("result: ["+result+"]");
@@ -618,5 +674,16 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
 		return strFunctionRol;
 	}
 
-	
+	@SkipValidation
+	public String calendarioMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		System.out.println("En Construcción!!!!!");
+    	} catch (Exception e) {
+			addActionMessage(getText("error.aplicacion"));
+			e.printStackTrace();
+		}
+		System.out.println("result: ["+result+"]");
+    	return result;
+	}
 }

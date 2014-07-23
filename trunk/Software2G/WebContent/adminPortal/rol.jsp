@@ -92,11 +92,12 @@
 			//showLog("[ "+getTime()+" onCheck ]&nbsp;&nbsp;&nbsp;&nbsp;" + treeNode.id );
 			var valor = document.getElementById("valoresFuncRol").value;
 			document.getElementById("valoresFuncRol").value = valor+treeNode.id+";"+treeNode.pId+";"+treeNode.checked+"###";
+			var check = treeNode.checked?'S':'N';
 // 			alert('treeNode.id: ['+treeNode.id+']');
 // 			alert('treeNode.pId: ['+treeNode.pId+']');
 // 			alert('treeNode.name: ['+treeNode.name+']');
 // 			alert('treeNode.checked: ['+treeNode.checked+']');
-			$("#funciones").load('cargarFuncRol.action?id='+treeNode.id+'&pId='+treeNode.pId+'&checked='+treeNode.checked);
+			$("#funciones").load('cargarFuncRol.action?id='+treeNode.id+'&pId='+treeNode.pId+'&checked='+check);
 		}		
 		
 		function checkNode(e) {

@@ -736,8 +736,8 @@ public class GestionFacadePortalSpringService implements IGestionFacadePortal{
 		}
 	}
 	
-	public boolean crearFile(String path, String nameFile, String ext, String tipoFile) throws Exception{
-		boolean result = false;
+	public List<Funcionalidad> crearFile(String path, String nameFile, String ext, String tipoFile) throws Exception{
+		List<Funcionalidad> resultList = null;
 		try {
 			System.out.println("archivo: ["+path+nameFile+ext+"]");
 			File file = new File(path+nameFile+ext);
@@ -747,21 +747,21 @@ public class GestionFacadePortalSpringService implements IGestionFacadePortal{
 			FileWriter createFile = new FileWriter(path+nameFile+ext);
 			System.out.println("tipo file: ["+tipoFile+"]");
 			if(tipoFile.equals(ConstantesAplicativo.constanteTipoFileJSFuncRol)){
-				result = this.crearJSFileFunctionRol(createFile);
+				resultList = this.crearJSFileFunctionRol(createFile);
 			}
 			createFile.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 
-		return result;
+		return resultList;
 	}
 	
-	private boolean crearJSFileFunctionRol(FileWriter file) throws Exception{
-		boolean result = false;
+	private List<Funcionalidad> crearJSFileFunctionRol(FileWriter file) throws Exception{
+		List<Funcionalidad> resultList = null;
 		try {
-			List<Funcionalidad> list = getFunctionApplication(null, null, 1);
-			if(list!=null&&list.size()>0){
-				String nodo = imprimirListaFunction(list);
+			resultList = getFunctionApplication(null, null, 1);
+			if(resultList!=null&&resultList.size()>0){
+				String nodo = imprimirListaFunction(resultList);
 				nodo = "var zNodesRol =["+(nodo.substring(0,nodo.lastIndexOf(",")))+"];";
 				System.out.println("*******************************************");
 				System.out.println("*******************************************");
@@ -769,12 +769,11 @@ public class GestionFacadePortalSpringService implements IGestionFacadePortal{
 				System.out.println("*******************************************");
 				System.out.println("*******************************************");
 				file.write(nodo);
-				result = true;
 			}
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 		} 
-		return result;
+		return resultList;
 	}
 	
 	
@@ -794,5 +793,45 @@ public class GestionFacadePortalSpringService implements IGestionFacadePortal{
 		return nodo;
 	}
 	
+	private void findIdFunction(List<Funcionalidad> list, Integer idFunc, Integer idFuncPadre, String checked){
+		System.out.println("idFunc: ["+idFunc+"] -- idFuncPadre: ["+idFuncPadre+"] -- checked: ["+checked+"]");
+		if(list!=null&&list.size()>0){
+			System.out.println("entra!!!!");
+			for(Funcionalidad elem:list){
+				System.out.println("elem.getIdFunc: ["+elem.getIdFunc()+"]==["+idFunc+"]");
+				if(idFuncPadre!=null&&idFuncPadre>0&&elem.getFuncionalidad()!=null&&elem.getFuncionalidad().getIdFunc().equals(idFuncPadre)){
+					System.out.println("checked Actual: ["+elem.getFuncionalidad().getChecked()+"]");
+					elem.getFuncionalidad().setChecked(checked);
+					elem.setChecked(checked);
+					idFuncPadre = elem.getIdFunc();
+					System.out.println("Entra esta parte!!!!!!!!! FuncionPADRE");
+					System.out.println("checked: ["+checked+"]");
+				}
+				if(elem.getIdFunc().equals(idFunc)){
+					elem.setChecked(checked); 
+					System.out.println("Entra esta parte!!!!!!!!!");
+					System.out.println("checked: ["+checked+"]");
+				}
+				if(elem.getFuncionalidads()!=null&&elem.getFuncionalidads().size()>0)
+					findIdFunction(elem.getFuncionalidads(),idFunc, idFuncPadre, checked);
+			}
+		}
+	}
+	
+	public List<Funcionalidad> marcarFuncRol(List<Funcionalidad> list, Integer idFunc, Integer idFuncPadre, String checked) throws Exception{
+		try {
+			findIdFunction(list, idFunc, idFuncPadre, checked);
+			String nodo = imprimirListaFunction(list);
+			nodo = "var zNodesRol =["+(nodo.substring(0,nodo.lastIndexOf(",")))+"];";
+			System.out.println("*******************************************");
+			System.out.println("*******************************************");
+			System.out.println("nodos:"+nodo);
+			System.out.println("*******************************************");
+			System.out.println("*******************************************");
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		} 
+		return list;
+	}
 }
 

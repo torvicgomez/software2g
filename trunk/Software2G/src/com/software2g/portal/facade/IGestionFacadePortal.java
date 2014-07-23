@@ -157,5 +157,6 @@ public interface IGestionFacadePortal {
 	//FIN --- Metodos Entidad Municipio
 	//--------------------------------------------------------------------------
 
-	public boolean crearFile(String path, String nameFile, String ext, String tipoFile) throws Exception;
+	public List<Funcionalidad> crearFile(String path, String nameFile, String ext, String tipoFile) throws Exception;
+	public List<Funcionalidad> marcarFuncRol(List<Funcionalidad> list, Integer idFunc, Integer idFuncPadre, String checked) throws Exception;
 }

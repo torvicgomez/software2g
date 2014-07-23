@@ -19,7 +19,7 @@
 <%-- <link href="<s:url value='/css/demo_page.css'/>" rel="stylesheet" type="text/css" /> --%>
 <%-- <link href="<s:url value='/css/scheme1.css'/>" rel="stylesheet" type="text/css" /> --%>
 <%-- <link href="<s:url value='/css/demo_table.css'/>" rel="stylesheet" type="text/css" />  --%>
-<link href="<s:url value='/js/zTreeMenu/css/zTreeStyle/zTreeStyle.css'/>" rel="stylesheet" type="text/css" />
+<link href="<s:url value='/js/zTreeMenu/css/zTreeStyle/zTreeStyle.css'/>" rel="stylesheet type="text/css" />
 <script type="text/javascript" src="<s:url value='/js/zTreeMenu/js/jquery-1.4.4.min.js'/>"></script>
 <script type="text/javascript" src="<s:url value='/js/zTreeMenu/js/jquery.ztree.core-3.5.js'/>"></script>
 <script type="text/javascript" src="<s:url value='/js/zTreeMenu/js/jquery.ztree.excheck-3.5.js'/>"></script>

@@ -6,4 +6,5 @@
 	<include file="struts-pruebasUtil.xml"></include>   
     <include file="struts-portal.xml"></include>
     <include file="struts-contable.xml"></include>
+    <include file="struts-calendario.xml"></include>
 </struts>

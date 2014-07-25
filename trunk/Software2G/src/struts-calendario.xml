@@ -53,6 +53,8 @@
         <action name="calendario" method="calendarioMethod" class="AgendaAction">
         	<result name="success" type="tiles">calendario.inicioCalendario</result> 
         </action>
-        
+        <action name="paramCalendario" method="paramCalendarioMethod" class="AgendaAction">
+        	<result name="success" type="tiles">calendario.parametrosCalendario</result> 
+        </action>
     </package>
 </struts>

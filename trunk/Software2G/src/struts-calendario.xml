@@ -50,8 +50,8 @@
 		</global-results>
         
         <!-- CALENDARIO ACTION -->
-        <action name="calendario" method="calendarioMethod" class="PortalAction">
-        	<result name="success" type="tiles">calendario.inicioCalendario</result>
+        <action name="calendario" method="calendarioMethod" class="AgendaAction">
+        	<result name="success" type="tiles">calendario.inicioCalendario</result> 
         </action>
         
     </package>

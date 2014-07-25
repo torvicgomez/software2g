@@ -106,7 +106,7 @@
 	  				frameborder="0"
 	  				scrolling="auto"
 	  				width="100%"
-	  				height="520px"
+	  				height="850px"
 	  				src="<s:url value='/tilesPagsPortal/bienvenida.jsp'/>">
 	  			</iframe>
 	  		</td>

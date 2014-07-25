@@ -40,6 +40,12 @@
 		<class>com.software2g.vo.Tipopagare</class>
 		<class>com.software2g.vo.Pais</class>
 		<class>com.software2g.vo.Departamento</class>
-		<class>com.software2g.vo.Municipio</class> 
+		<class>com.software2g.vo.Municipio</class>
+		<class>com.software2g.vo.Agenda</class>
+		<class>com.software2g.vo.Evento</class>
+		<class>com.software2g.vo.Jorandalaboral</class>
+		<class>com.software2g.vo.Parametroscalendario</class>
+		<class>com.software2g.vo.Profesional</class>
+		<class>com.software2g.vo.Tiemponodisponible</class> 
 	</persistence-unit>
 </persistence>

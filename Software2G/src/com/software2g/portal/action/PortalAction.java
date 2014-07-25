@@ -674,16 +674,4 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
 		return strFunctionRol;
 	}
 
-	@SkipValidation
-	public String calendarioMethod(){
-		String  result = Action.SUCCESS; 
-    	try { 
-    		System.out.println("En Construcción!!!!!");
-    	} catch (Exception e) {
-			addActionMessage(getText("error.aplicacion"));
-			e.printStackTrace();
-		}
-		System.out.println("result: ["+result+"]");
-    	return result;
-	}
 }

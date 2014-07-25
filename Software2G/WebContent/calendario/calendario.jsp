@@ -176,6 +176,8 @@
 </style>
 </head>
 <body>
-	<div id='calendar'></div>
+	<table align="center" width="99%" height="100%">
+		<tr><td><div id='calendar'></div></td></tr>
+	</table>
 </body>
 </html>

@@ -628,7 +628,7 @@ public class GestionFacadePortalSpringService implements IGestionFacadePortal{
 		try {
 			return getUsuarioDao().findUsuarioById(login,password,estado);
 		} catch (RuntimeException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 			//throw new Exception("findUsuarioById failed with the login " + login + " and estado " + estado + " : " + e.getMessage());
 			return null;
 		}
@@ -642,6 +642,8 @@ public class GestionFacadePortalSpringService implements IGestionFacadePortal{
 	public Usuario cargarPortalUser(Usuario usuarioVO, String estado) throws Exception{
 		String password = usuarioVO.getPasswordUsua();
 		System.out.println("password: ["+password+"]");
+		System.out.println("usuario: ["+usuarioVO.getLoginUsua()+"]");
+		System.out.println("estado: ["+estado+"]");
 		Usuario userLogin = findUsuarioById(usuarioVO.getLoginUsua(),usuarioVO.getPasswordUsua(),estado);
 		if(userLogin!=null){
 			System.out.println("Entra esta parte *****************+");

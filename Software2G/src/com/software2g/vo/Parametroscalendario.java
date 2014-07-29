@@ -1,6 +1,8 @@
 package com.software2g.vo;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -9,12 +11,12 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="PARAMETROSCALENDARIO", schema="HISCLINICA")
+@Table(name="\"PARAMETROSCALENDARIO\"", schema="\"HISCLINICA\"")
 public class Parametroscalendario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="PARAMETROSCALENDARIO_PACAID_GENERATOR", sequenceName="HISCLINICA.SEQ_PACA_ID")
+	@SequenceGenerator(name="PARAMETROSCALENDARIO_PACAID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_PACA_ID\"", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PARAMETROSCALENDARIO_PACAID_GENERATOR")
 	@Column(name="paca_id")
 	private long pacaId;
@@ -85,4 +87,11 @@ public class Parametroscalendario implements Serializable {
 		this.pacaVariable = pacaVariable;
 	}
 
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.pacaRegistradopor=data.get(0);
+			this.pacaFechacambio=data.get(1);
+			this.pacaHoracambio=data.get(2);
+		}
+	}
 }

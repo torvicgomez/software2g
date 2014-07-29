@@ -1,5 +1,6 @@
 package com.software2g.agenda.action;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,9 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import com.software2g.agenda.facade.IGestionFacadeAgenda;
 import com.software2g.util.ConstantesAplicativo;
+import com.software2g.util.ValidaString;
 import com.software2g.vo.Parametroscalendario;
+import com.software2g.vo.Usuario;
 
 public class AgendaAction extends ActionSupport implements ServletRequestAware,ServletResponseAware {
 	private static final long serialVersionUID = 1L;
@@ -23,9 +26,15 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private IGestionFacadeAgenda gestionFacadeAgenda;
 	private String estado;
 	private String funcPosicionado;
+	private String id;
 
 	private List<Parametroscalendario> listParametroCalendrio;
 	private Parametroscalendario parametroCalendario;
+	
+	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
+	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
+	public Parametroscalendario getParametroCalendario() {return parametroCalendario;}
+	public void setParametroCalendario(Parametroscalendario parametroCalendario) {this.parametroCalendario = parametroCalendario;}
 	
 	@SkipValidation
 	public String calendarioMethod(){
@@ -58,35 +67,21 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     		System.out.println("######>>>>>>>AgendaAction>>>>paramCalendarioMethod>>>>estado entrada-->>"+estado);
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
     			listParametroCalendrio = gestionFacadeAgenda.findAllParametroscalendarios();
-    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAdd)){
-    			System.out.println("Construcción!!!!!!!");
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
-    			/*if(ValidaString.isNullOrEmptyString(costo.getCostNombre()))
-    				addActionError(getText("validacion.requerido","costNombre","Nombre Costo"));
-    			if(ValidaString.isNullOrEmptyString(costo.getCostDescripcion()))
-    				addActionError(getText("validacion.requerido","costDescripcion","Descripcion"));
+    			if(ValidaString.isNullOrEmptyString(parametroCalendario.getPacaVariable()))
+    				addActionError(getText("validacion.requerido","pacaVariable","Variable"));
+    			if(ValidaString.isNullOrEmptyString(parametroCalendario.getPacaValor()))
+    				addActionError(getText("validacion.requerido","pacaValor","Valor"));
     			if(!hasActionErrors()){
-    				usuarioLogin = (UsuarioLogin)request.getSession().getAttribute("UsuarioLogin");
-        			costo.setCostRegistradopor(usuarioLogin.getIdUsuario());
-        			costo.setCostFechacambio(new Date());
-    				gestionFacadeAsigViajes.persistCosto(costo);
-    				costo.setTipocosto(gestionFacadeAsigViajes.findTipocostoById(costo.getTipocosto().getTcosId()));
-    				costo.setMecanismocriterioviaje(gestionFacadeAsigViajes.findMecanismocriterioviajeById(costo.getMecanismocriterioviaje().getMecaId()));
+    				parametroCalendario.setDatosAud(this.getDatosAud());
+    				ValidaString.imprimirObject(parametroCalendario);
+    				gestionFacadeAgenda.persistParametroscalendario(parametroCalendario);
     				estado = ConstantesAplicativo.constanteEstadoAbstract;
     				addActionMessage(getText("accion.satisfactoria"));
-    			}else{
-    				listMecanismocriterioviajes = gestionFacadeAsigViajes.findAllMecanismocriterioviajes();
-        			listTipoCosto = gestionFacadeAsigViajes.findAllTipocostos();
-    			}*/
-    			System.out.println("Construcción!!!!!!!");
+    			}
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
-    			/*listMecanismocriterioviajes = gestionFacadeAsigViajes.findAllMecanismocriterioviajes();
-    			listTipoCosto = gestionFacadeAsigViajes.findAllTipocostos();
-    			costo = gestionFacadeAsigViajes.findCostoById(getIdLong());
-    			*/
-    			System.out.println("Construcción!!!!!!!");
+    			parametroCalendario = gestionFacadeAgenda.findParametroscalendarioById(getIdLong());
     		}
-    			
     	} catch(Exception e){
     		e.printStackTrace();
     		addActionError(getText("error.aplicacion"));
@@ -108,4 +103,13 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setGestionFacadeAgenda(IGestionFacadeAgenda gestionFacadeAgenda) {this.gestionFacadeAgenda = gestionFacadeAgenda;}
 	public String getFuncPosicionado() {return funcPosicionado;}
 	public void setFuncPosicionado(String funcPosicionado) {this.funcPosicionado = funcPosicionado;}
+	public String getId() {return id;}
+	public void setId(String id) {this.id = id;}
+	public long getIdLong() {return Long.parseLong(id);}
+	public Integer getIdInteger() {return Integer.parseInt(id);}
+	public List<String> getDatosAud(){
+		return Arrays.asList(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua(),
+				ValidaString.fechaSystem(),
+				ValidaString.horaSystem());
+	}
 }

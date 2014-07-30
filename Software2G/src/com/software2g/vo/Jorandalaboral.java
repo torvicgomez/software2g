@@ -1,6 +1,8 @@
 package com.software2g.vo;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -9,12 +11,12 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="JORANDALABORAL", schema="HISCLINICA")
+@Table(name="\"JORANDALABORAL\"", schema="\"HISCLINICA\"")
 public class Jorandalaboral implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="JORANDALABORAL_JORAID_GENERATOR", sequenceName="HISCLINICA.SEQ_JORA_ID")
+	@SequenceGenerator(name="JORANDALABORAL_JORAID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_JORA_ID\"")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="JORANDALABORAL_JORAID_GENERATOR")
 	@Column(name="jora_id")
 	private long joraId;
@@ -108,5 +110,12 @@ public class Jorandalaboral implements Serializable {
 	public void setProfesional(Profesional profesional) {
 		this.profesional = profesional;
 	}
-
+	
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.joraRegistradopor=data.get(0);
+			this.joraFechacambio=data.get(1);
+			this.joraHoracambio=data.get(2);
+		}
+	}
 }

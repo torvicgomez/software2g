@@ -13,9 +13,11 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
+import com.software2g.agenda.dao.impl.JornadaLaboralDAOImpl;
 import com.software2g.agenda.facade.IGestionFacadeAgenda;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
+import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Parametroscalendario;
 import com.software2g.vo.Usuario;
 
@@ -30,11 +32,17 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 
 	private List<Parametroscalendario> listParametroCalendrio;
 	private Parametroscalendario parametroCalendario;
+	private List<Jorandalaboral> listJornadaLaboral;
+	private Jorandalaboral jornadaLaboral;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
 	public Parametroscalendario getParametroCalendario() {return parametroCalendario;}
 	public void setParametroCalendario(Parametroscalendario parametroCalendario) {this.parametroCalendario = parametroCalendario;}
+	public List<Jorandalaboral> getListJornadaLaboral() {return listJornadaLaboral;}
+	public void setListJornadaLaboral(List<Jorandalaboral> listJornadaLaboral) {this.listJornadaLaboral = listJornadaLaboral;}
+	public Jorandalaboral getJornadaLaboral() {return jornadaLaboral;}
+	public void setJornadaLaboral(Jorandalaboral jornadaLaboral) {this.jornadaLaboral = jornadaLaboral;}
 	
 	@SkipValidation
 	public String calendarioMethod(){
@@ -89,6 +97,38 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     	System.out.println("######>>>>>>>AgendaAction>>>>paramCalendarioMethod>>>>estado salida-->>"+estado);
     	return Action.SUCCESS;
 	}
+	
+	@SkipValidation
+	public String jornadaLaboralMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>AgendaAction>>>>jornadaLaboralMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listParametroCalendrio = gestionFacadeAgenda.findAllParametroscalendarios();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			if(ValidaString.isNullOrEmptyString(parametroCalendario.getPacaVariable()))
+    				addActionError(getText("validacion.requerido","pacaVariable","Variable"));
+    			if(ValidaString.isNullOrEmptyString(parametroCalendario.getPacaValor()))
+    				addActionError(getText("validacion.requerido","pacaValor","Valor"));
+    			if(!hasActionErrors()){
+    				parametroCalendario.setDatosAud(this.getDatosAud());
+    				ValidaString.imprimirObject(parametroCalendario);
+    				gestionFacadeAgenda.persistParametroscalendario(parametroCalendario);
+    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				addActionMessage(getText("accion.satisfactoria"));
+    			}
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			parametroCalendario = gestionFacadeAgenda.findParametroscalendarioById(getIdLong());
+    		}
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>AgendaAction>>>>jornadaLaboralMethod>>>>estado salida-->>"+estado);
+    	return Action.SUCCESS;
+	}
+	
 	
 	public AgendaAction(IGestionFacadeAgenda gestionFacadeAgenda) {this.gestionFacadeAgenda = gestionFacadeAgenda;}
 	public HttpServletRequest getRequest() {return request;}

@@ -19,4 +19,9 @@
 	<definition name="calendario.parametrosCalendario" extends="baseLayoutPortal">
 		<put-attribute name="body" value="/calendario/parametrosCalendario.jsp" />
 	</definition>
+	
+	<definition name="calendario.jornadaLaboral" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/calendario/jornadaLaboral.jsp" />
+	</definition>
+	
 </tiles-definitions>

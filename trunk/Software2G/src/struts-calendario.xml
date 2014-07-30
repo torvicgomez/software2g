@@ -56,5 +56,9 @@
         <action name="paramCalendario" method="paramCalendarioMethod" class="AgendaAction">
         	<result name="success" type="tiles">calendario.parametrosCalendario</result> 
         </action>
+        <action name="jornadaLaboral" method="jornadaLaboralMethod" class="AgendaAction">
+        	<result name="success" type="tiles">calendario.jornadaLaboral</result> 
+        </action>
+        
     </package>
 </struts>

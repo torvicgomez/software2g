@@ -115,6 +115,7 @@
         <property name="parametroCalendarioDao"><bean class="com.software2g.agenda.dao.impl.ParametroCalendarioDAOImpl"/></property>
         <property name="profesionalDao"><bean class="com.software2g.agenda.dao.impl.ProfesionalDAOImpl"/></property>
         <property name="tiempoNoDisponibleDao"><bean class="com.software2g.agenda.dao.impl.TiempoNoDisponibleJDAOImpl"/></property>
+        <property name="personaDao"><bean class="com.software2g.portal.dao.impl.PersonaDaoImpl"/></property>
 	</bean>    
 	
 </beans>

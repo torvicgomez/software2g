@@ -13,10 +13,12 @@ import com.software2g.agenda.dao.IParametroCalendarioDao;
 import com.software2g.agenda.dao.IProfesionalDao;
 import com.software2g.agenda.dao.ITiempoNoDisponibleDao;
 import com.software2g.agenda.facade.IGestionFacadeAgenda;
+import com.software2g.portal.dao.IPersonaDao;
 import com.software2g.vo.Agenda;
 import com.software2g.vo.Evento;
 import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Parametroscalendario;
+import com.software2g.vo.Persona;
 import com.software2g.vo.Profesional;
 import com.software2g.vo.Tiemponodisponible;
 
@@ -34,6 +36,8 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 	IProfesionalDao profesionalDao;
 	@Autowired
 	ITiempoNoDisponibleDao tiempoNoDisponibleDao;
+	@Autowired
+	IPersonaDao personaDao;
 	
 	public IAgendaDao getAgendaDao() {return agendaDao;}
 	public void setAgendaDao(IAgendaDao agendaDao) {this.agendaDao = agendaDao;}
@@ -47,6 +51,8 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 	public void setProfesionalDao(IProfesionalDao profesionalDao) {this.profesionalDao = profesionalDao;}
 	public ITiempoNoDisponibleDao getTiempoNoDisponibleDao() {return tiempoNoDisponibleDao;}
 	public void setTiempoNoDisponibleDao(ITiempoNoDisponibleDao tiempoNoDisponibleDao) {this.tiempoNoDisponibleDao = tiempoNoDisponibleDao;}
+	public IPersonaDao getPersonaDao() {return personaDao;}
+	public void setPersonaDao(IPersonaDao personaDao) {this.personaDao = personaDao;}
 	
 	//-----------------------------------------------------------------------
 	// Agenda
@@ -276,6 +282,16 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 		}
 	}
 
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Profesional> findAllProfesionalXIdPersona(long idPersona) throws Exception {
+		try {
+			return getProfesionalDao().findAllProfesionalXIdPersona(idPersona);
+		} catch (RuntimeException e) {
+			throw new Exception("findAllProfesionalXIdPersona failed: " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */
@@ -349,4 +365,65 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 	//-----------------------------------------------------------------------
 	// Fin Tiempo No Disponible
 	//-----------------------------------------------------------------------
+	//-----------------------------------------------------------------------
+	// Persona
+	//-----------------------------------------------------------------------
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Persona> findAllPersonasProfesionales(String datoFind) throws Exception {
+		try {
+			return getPersonaDao().findAllPersonasProfesionales(datoFind);
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			return null;
+			//throw new Exception("findAllPersonasProfesionales failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Persona findPersonaById(java.lang.Long id) throws Exception {
+		try {
+			return getPersonaDao().findPersonaById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findPersonaById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Persona</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Persona> findAllPersonas() throws Exception {
+		try {
+			return getPersonaDao().findAllPersonas();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllPersonas failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistPersona(Persona persona) throws Exception {
+		try {
+			getPersonaDao().persistPersona(persona);
+		} catch (RuntimeException e) {
+			throw new Exception("persistPersona failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removePersona(Persona persona) throws Exception {
+		try {
+			getPersonaDao().removePersona(persona);
+		} catch (RuntimeException e) {
+			throw new Exception("removePersona failed: " + e.getMessage());
+		}
+	}
+	//-----------------------------------------------------------------------
+	// FIN Persona
+	//-----------------------------------------------------------------------
+	
 }

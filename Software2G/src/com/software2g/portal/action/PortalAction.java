@@ -343,7 +343,7 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
 		String  result = Action.SUCCESS; 
     	try { 
     		String idPersona = (String)request.getParameter("id");
-    		setPersonaVO(gestionFacadePortal.findPersonaById(Integer.parseInt(idPersona)));
+    		setPersonaVO(gestionFacadePortal.findPersonaById(Long.parseLong(idPersona)));
     		listTipoDoc=gestionFacadePortal.findAllTipodocumentos();
     		listSexo = cargarListSexo();
     		listEstadoCivil = cargarListEstadoCivil();

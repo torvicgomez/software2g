@@ -2,10 +2,14 @@ package com.software2g.agenda.facade;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.software2g.vo.Agenda;
 import com.software2g.vo.Evento;
 import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Parametroscalendario;
+import com.software2g.vo.Persona;
 import com.software2g.vo.Profesional;
 import com.software2g.vo.Tiemponodisponible;
 
@@ -123,6 +127,7 @@ public interface IGestionFacadeAgenda {
 	 * Remove the given persistent instance.
 	 */
 	public void removeProfesional(Profesional profesional) throws Exception;
+	public List<Profesional> findAllProfesionalXIdPersona(long idPersona) throws Exception;
 	//-----------------------------------------------------------------------
 	// Fin Profesional
 	//-----------------------------------------------------------------------	
@@ -149,5 +154,16 @@ public interface IGestionFacadeAgenda {
 	//-----------------------------------------------------------------------
 	// Fin Tiempo No Disponible
 	//-----------------------------------------------------------------------	
-
+	//-----------------------------------------------------------------------
+	// Persona
+	//-----------------------------------------------------------------------
+	public List<Persona> findAllPersonasProfesionales(String datoFind) throws Exception;
+	public Persona findPersonaById(java.lang.Long id) throws Exception;
+	public List<Persona> findAllPersonas() throws Exception;
+	public void persistPersona(Persona persona) throws Exception;
+	public void removePersona(Persona persona) throws Exception;
+	//-----------------------------------------------------------------------
+	// FIN Persona
+	//-----------------------------------------------------------------------
+	
 }

@@ -167,7 +167,7 @@ public interface IGestionFacadeContable {
 	//-----------------------------------------------------------
 	//-----------------------persona-------------------------------
 	public List<Persona> findAllPersonas(String datoFind, String tipoFind)throws Exception;
-	public Persona findPersonaById(java.lang.Integer id) throws Exception;
+	public Persona findPersonaById(java.lang.Long id) throws Exception;
 	//-----------------------------------------------------------
 	
 	//--------------------------------------------------------------------------

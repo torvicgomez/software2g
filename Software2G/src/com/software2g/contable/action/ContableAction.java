@@ -861,7 +861,7 @@ public class ContableAction extends ActionSupport implements ServletRequestAware
     		if(idDeudor!=null&&Integer.parseInt(idDeudor)>0){
     			if(getPagareVO()==null)
     				pagareVO = new Pagare();
-    			getPagareVO().setPersona(gestionFacadeContable.findPersonaById(Integer.parseInt(idDeudor)));
+    			getPagareVO().setPersona(gestionFacadeContable.findPersonaById(Long.parseLong(idDeudor)));
     			listPersonas = null;
     		}
     		estado="crearPagare";

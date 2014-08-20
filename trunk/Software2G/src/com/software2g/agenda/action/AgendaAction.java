@@ -1,7 +1,8 @@
 package com.software2g.agenda.action;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,12 +14,13 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
-import com.software2g.agenda.dao.impl.JornadaLaboralDAOImpl;
 import com.software2g.agenda.facade.IGestionFacadeAgenda;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Parametroscalendario;
+import com.software2g.vo.Persona;
+import com.software2g.vo.Profesional;
 import com.software2g.vo.Usuario;
 
 public class AgendaAction extends ActionSupport implements ServletRequestAware,ServletResponseAware {
@@ -34,6 +36,11 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private Parametroscalendario parametroCalendario;
 	private List<Jorandalaboral> listJornadaLaboral;
 	private Jorandalaboral jornadaLaboral;
+	private Profesional profesional;
+	private List<Profesional> listProfesional;
+	private List<Persona> listPersona;
+	private InputStream strProfesional;
+	private Persona persona;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -43,6 +50,14 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setListJornadaLaboral(List<Jorandalaboral> listJornadaLaboral) {this.listJornadaLaboral = listJornadaLaboral;}
 	public Jorandalaboral getJornadaLaboral() {return jornadaLaboral;}
 	public void setJornadaLaboral(Jorandalaboral jornadaLaboral) {this.jornadaLaboral = jornadaLaboral;}
+	public Profesional getProfesional() {return profesional;}
+	public void setProfesional(Profesional profesional) {this.profesional = profesional;}
+	public List<Profesional> getListProfesional() {return listProfesional;}
+	public void setListProfesional(List<Profesional> listProfesional) {this.listProfesional = listProfesional;}
+	public Persona getPersona() {return persona;}
+	public void setPersona(Persona persona) {this.persona = persona;}
+	public List<Persona> getListPersona() {return listPersona;}
+	public void setListPersona(List<Persona> listPersona) {this.listPersona = listPersona;}
 	
 	@SkipValidation
 	public String calendarioMethod(){
@@ -105,7 +120,24 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     		getFuncionPosicionado();
     		System.out.println("######>>>>>>>AgendaAction>>>>jornadaLaboralMethod>>>>estado entrada-->>"+estado);
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
-    			listParametroCalendrio = gestionFacadeAgenda.findAllParametroscalendarios();
+    			listJornadaLaboral = gestionFacadeAgenda.findAllJorandalaborals();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAdd)){
+    			String idPersona = request.getParameter("idPersona");
+    			System.out.println("idPersona:["+idPersona+"]");
+    			if(idPersona!=null&&!idPersona.equals("")){
+    				persona = gestionFacadeAgenda.findPersonaById(Long.parseLong(idPersona));
+    				if(persona!=null){
+    					System.out.println("persona : ["+persona.getNombreCompleto()+"]");
+    					persona.setProfesional(gestionFacadeAgenda.findAllProfesionalXIdPersona(persona.getIdPers()));
+    					if(persona.getProfesional()!=null&&persona.getProfesional().size()>0){
+    						for(Profesional elem:persona.getProfesional()){
+    							System.out.println("ProfId:["+elem.getProfId()+"]");
+    						}
+    					}else
+    						System.out.println("Persona no tiene profesiones asociadas");
+    				}else
+    					System.out.println("Persona Null!!!!!!!!");
+    			}
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			if(ValidaString.isNullOrEmptyString(parametroCalendario.getPacaVariable()))
     				addActionError(getText("validacion.requerido","pacaVariable","Variable"));
@@ -152,4 +184,24 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 				ValidaString.fechaSystem(),
 				ValidaString.horaSystem());
 	}
+	public InputStream getStrProfesional() {
+		try{
+			String find = request.getParameter("find");
+			String option = "";
+			if(find!=null&&!find.equals("")){
+				listPersona = gestionFacadeAgenda.findAllPersonasProfesionales(find);
+				if(listPersona!=null){
+					for(Persona elem:listPersona){
+						option += "<div><a class=\"suggest-element\" data=\""+elem.getNombreCompleto()+" - "+elem.getEmailPers()+" - "+elem.getTelefonoPers()+"\" id=\""+elem.getIdPers()+"\">"+elem.getNombreCompleto()+" - "+elem.getEmailPers()+" - "+elem.getTelefonoPers()+"</a></div>";
+					}
+				}
+			}
+			this.strProfesional = new ByteArrayInputStream(option.getBytes());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return strProfesional;
+	}
+	
+	
 }

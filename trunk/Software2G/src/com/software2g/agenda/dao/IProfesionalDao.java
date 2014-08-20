@@ -35,4 +35,5 @@ public interface IProfesionalDao {
 	 * Remove the given persistent instance.
 	 */
 	public void removeProfesional(Profesional profesional);
+	public List<Profesional> findAllProfesionalXIdPersona(long idPersona);
 }

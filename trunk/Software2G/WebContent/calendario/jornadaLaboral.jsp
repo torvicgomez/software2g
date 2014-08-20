@@ -17,7 +17,7 @@
 	<SCRIPT type="text/javascript" src="<s:url value="/scripts/calendarnew.js"/>"></SCRIPT>
 	<script type="text/javascript" charset="ISO-8859-1"> 
 	$(document).ready(function() {
-			$('#parametrosCalendario').dataTable( { 
+			$('#jornadaLaboral').dataTable( { 
 				"sPaginationType": "full_numbers",
 				"bLengthChange": true,
 				"bFilter": true,
@@ -39,30 +39,63 @@
 					}
 				}
 			} );
-	} );
+			
+			
+			//Al escribr dentro del input con id="service"
+		    $('#findProfesional').keyup(function(){
+		        //Obtenemos el value del input
+		        var service = $(this).val(); 
+		        var dataString = 'service='+service;
+		        //Le pasamos el valor del input al ajax
+		        $.ajax({
+		            type: "POST",
+		            url: "autocompletadoProfesional.action?find="+service,
+		            data: dataString,
+		            success: function(data) {
+		                //Escribimos las sugerencias que nos manda la consulta
+		                $('#profesionales').fadeIn(1000).html(data);
+		                //Al hacer click en algua de las sugerencias
+		                $('.suggest-element').live('click', function(){
+		                    //Obtenemos la id unica de la sugerencia pulsada
+		                    var id = $(this).attr('id');
+		                    //Editamos el valor del input con data de la sugerencia pulsada
+		                    $('#findProfesional').val($('#'+id).attr('data'));
+		                    //Hacemos desaparecer el resto de sugerencias
+		                    $('#profesionales').fadeOut(1000);
+		                    cargarDatosPersonales(id);
+		                });              
+		            }
+		        });
+		    });
+	} ); 
 	
 	function agregar(){
-		document.form.action="paramCalendario.action?estado=<%=ConstantesAplicativo.constanteEstadoAdd%>";
+		document.form.action="jornadaLaboral.action?estado=<%=ConstantesAplicativo.constanteEstadoAdd%>";
+		document.form.submit();
+	}
+	
+	function cargarDatosPersonales(idPersona){
+		document.form.action="jornadaLaboral.action?estado=<%=ConstantesAplicativo.constanteEstadoAdd%>&idPersona="+idPersona;
 		document.form.submit();
 	}
 	
 	function registrar(){
-		document.form.action="paramCalendario.action?estado=<%=ConstantesAplicativo.constanteEstadoSave%>";
+		document.form.action="jornadaLaboral.action?estado=<%=ConstantesAplicativo.constanteEstadoSave%>";
 		document.form.submit();
 	}
 	
 	function volver(){
-		document.form.action="paramCalendario.action?estado=<%=ConstantesAplicativo.constanteEstadoAll%>";
+		document.form.action="jornadaLaboral.action?estado=<%=ConstantesAplicativo.constanteEstadoAll%>";
 		document.form.submit();
 	}
 	
 	function detalle(param){
-		document.form.action="paramCalendario.action?estado=<%=ConstantesAplicativo.constanteEstadoEdit%>&id="+param;
+		document.form.action="jornadaLaboral.action?estado=<%=ConstantesAplicativo.constanteEstadoEdit%>&id="+param;
 		document.form.submit();
 	}
 	
 	function resumen(param){
-		document.form.action="paramCalendario.action?estado=<%=ConstantesAplicativo.constanteEstadoAbstract%>&id="+param;
+		document.form.action="jornadaLaboral.action?estado=<%=ConstantesAplicativo.constanteEstadoAbstract%>&id="+param;
 		document.form.submit();
 	}
 	
@@ -73,7 +106,7 @@
 		<s:hidden name="funcPosicionado"></s:hidden>
 		<div id="demo">
 				<table border="0" width="100%" align="center">
-					<tr><td><h1><strong><s:text name="titulo.paramCalendario"></s:text></strong></h1></td></tr>
+					<tr><td><h1><strong><s:text name="titulo.jornadaLaboral"></s:text></strong></h1></td></tr>
 					<s:if test="estado=='all'">
 						<tr><td class="css_right">
 							<input type="button" value="<s:text name="labelbutton.agregar"></s:text>" onclick="agregar();" class="buttonSV"/>
@@ -96,22 +129,22 @@
 					</s:elseif>
 				</table>
 				<s:if test="estado==null||estado=='all'">
-					<table cellpadding="0" cellspacing="0" border="0" class="display" id="parametrosCalendario">
+					<table cellpadding="0" cellspacing="0" border="0" class="display" id="jornadaLaboral">
 						<thead>
 							<tr>
 								<th align="left"  width="30%"><s:text name="columna.edit"></s:text></th>
-								<th align="left"  width="30%"><s:text name="paramCalendario.variable"></s:text></th>
-								<th align="left"  width="10%"><s:text name="paramCalendario.valor"></s:text></th>
-								<th align="left"  width="15%"><s:text name="paramCalendario.fechahoraregistro"></s:text></th>
+								<th align="left"  width="30%"><s:text name="columna.dtll"></s:text></th>
+								<th align="left"  width="10%"><s:text name="jornadaLaboral.profesional"></s:text></th>
+								<th align="left"  width="15%"><s:text name="jornadaLaboral.fechahoraregistro"></s:text></th>
 							</tr>
 						</thead>
 						<tbody>
-						<s:iterator value="listParametroCalendrio" id="data">
+						<s:iterator value="listJornadaLaboral" id="data">
 							<tr>
 								<td width="5%"><a onclick="javascript:detalle('<s:property value="pacaId"/>');">Editar</a></td>
-								<td width="20%"><s:property value="pacaVariable"/></td>
-								<td width="20%"><s:property value="pacaValor"/></td>
-								<td width="35%"><s:property value="pacaFechacambio"/> - <s:property value="pacaHoracambio"/></td>
+								<td width="20%"><a onclick="javascript:detalle('<s:property value="pacaId"/>');">Detalle</a></td>
+								<td width="20%"><s:property value="profesional.persId"/></td>
+								<td width="35%"><s:property value="joraFechacambio"/> - <s:property value="joraHoracambio"/></td>
 							</tr>
 						</s:iterator>
 						</tbody>
@@ -120,16 +153,19 @@
 				<s:elseif test="estado=='add'||estado=='edit'||estado=='save'">
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<tr>
-							<td class="leftLabel"><s:text name="paramCalendario.variable"></s:text></td>
+							<td class="leftLabel"><s:text name="jornadaLaboral.findProfesional"></s:text></td>
 							<td>
-								<s:hidden name="parametroCalendario.pacaId" id="pacaId"></s:hidden>
-								<s:textfield name="parametroCalendario.pacaVariable" id="pacaVariable" size="30" maxlength="30" cssClass="inputs"></s:textfield>
+								<s:textfield name="profesional.findProfesional" id="findProfesional" size="100" cssClass="inputs"  placeholder="Nombre - Email - Teléfono" ></s:textfield>
+								<br><div id="profesionales" style="display: none;"></div>
 							</td>
-						</tr>
+						</tr> 
 						<tr>
-							<td class="leftLabel"><s:text name="paramCalendario.valor"></s:text></td>
-							<td>
-								<s:textfield name="parametroCalendario.pacaValor" id="pacaValor" size="30" maxlength="30" cssClass="inputs"></s:textfield>
+							<td colspan="2">
+								<table cellpadding="0" cellspacing="0" border="0" class="display">
+									<tr>
+										<td class="leftLabel"><s:text name="jornadaLaboral.findProfesional"></s:text></td>
+									</tr>
+								</table>
 							</td>
 						</tr>
 					</table>

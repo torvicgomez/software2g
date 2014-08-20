@@ -2,6 +2,7 @@ package com.software2g.vo;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -10,22 +11,26 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="PROFESIONAL", schema="HISCLINICA")
+@Table(name="\"PROFESIONAL\"", schema="\"HISCLINICA\"")
 public class Profesional implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="PROFESIONAL_PROFID_GENERATOR", sequenceName="HISCLINICA.SEQ_PROF_ID")
+	@SequenceGenerator(name="PROFESIONAL_PROFID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_PROF_ID\"")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PROFESIONAL_PROFID_GENERATOR")
 	@Column(name="prof_id")
 	private long profId;
 
-	@Id
-	@SequenceGenerator(name="PROFESIONAL_PERSID_GENERATOR", sequenceName="HISCLINICA.SEQ_PROF_ID")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PROFESIONAL_PERSID_GENERATOR")
-	@Column(name="pers_id", insertable=false)
-	private long persId;
-
+//	@Id
+//	@SequenceGenerator(name="PROFESIONAL_PERSID_GENERATOR", sequenceName="HISCLINICA.SEQ_PROF_ID")
+//	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PROFESIONAL_PERSID_GENERATOR")
+//	@Column(name="pers_id", insertable=false)
+//	private long persId;
+	
+	@ManyToOne
+	@JoinColumn(name="pers_id")
+	private Persona persona;
+	
 	@Column(name="prof_fechacambio")
 	private String profFechacambio;
 
@@ -43,6 +48,9 @@ public class Profesional implements Serializable {
 	@OneToMany(mappedBy="profesional")
 	private List<Jorandalaboral> jorandalaborals;
 
+	@Transient
+	private String findProfesional;
+	
 	public Profesional() {
 	}
 
@@ -54,13 +62,13 @@ public class Profesional implements Serializable {
 		this.profId = profId;
 	}
 
-	public long getPersId() {
-		return this.persId;
-	}
-
-	public void setPersId(long persId) {
-		this.persId = persId;
-	}
+//	public long getPersId() {
+//		return this.persId;
+//	}
+//
+//	public void setPersId(long persId) {
+//		this.persId = persId;
+//	}
 
 	public String getProfFechacambio() {
 		return this.profFechacambio;
@@ -100,6 +108,22 @@ public class Profesional implements Serializable {
 
 	public void setJorandalaborals(List<Jorandalaboral> jorandalaborals) {
 		this.jorandalaborals = jorandalaborals;
+	}
+
+	public String getFindProfesional() {
+		return findProfesional;
+	}
+
+	public void setFindProfesional(String findProfesional) {
+		this.findProfesional = findProfesional;
+	}
+
+	public Persona getPersona() {
+		return persona;
+	}
+
+	public void setPersona(Persona persona) {
+		this.persona = persona;
 	}
 
 }

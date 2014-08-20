@@ -362,7 +362,7 @@ public class GestionFacadePortalSpringService implements IGestionFacadePortal{
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Persona findPersonaById(java.lang.Integer id) throws Exception {
+	public Persona findPersonaById(java.lang.Long id) throws Exception {
 		try {
 			return getPersonaDao().findPersonaById(id);
 		} catch (RuntimeException e) {

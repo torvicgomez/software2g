@@ -19,7 +19,7 @@ public class Persona implements Serializable {
 	@SequenceGenerator(name="PERSONA_IDPERS_GENERATOR", sequenceName="PORTAL.SEQ_PERSONA")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PERSONA_IDPERS_GENERATOR")
 	@Column(name="id_pers")
-	private Integer idPers;
+	private long idPers;
 
 	@Column(name="documento_pers")
 	private String documentoPers;
@@ -85,15 +85,18 @@ public class Persona implements Serializable {
 	@JoinColumn(name="id_mcpo")
 	private Municipio municipio;
 	
-	
+	//bi-directional many-to-one association to Profesional
+	@OneToMany(mappedBy="persona")
+	private List<Profesional> profesional;
+		
 	public Persona() {
 	}
 
-	public Integer getIdPers() {
+	public long getIdPers() {
 		return this.idPers;
 	}
 
-	public void setIdPers(Integer idPers) {
+	public void setIdPers(long idPers) {
 		this.idPers = idPers;
 	}
 
@@ -264,4 +267,13 @@ public class Persona implements Serializable {
 	public String getUbicacionPersona(){
 		return this.municipio.getDepartamento().getPais().getNompais().toUpperCase()+"-"+this.municipio.getDepartamento().getNomdpto().toUpperCase()+"-"+this.municipio.getNommunicipio().toUpperCase();
 	}
+
+	public List<Profesional> getProfesional() {
+		return profesional;
+	}
+
+	public void setProfesional(List<Profesional> profesional) {
+		this.profesional = profesional;
+	}
+	
 }

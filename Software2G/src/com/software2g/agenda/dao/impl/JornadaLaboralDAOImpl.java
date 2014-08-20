@@ -90,4 +90,19 @@ public class JornadaLaboralDAOImpl implements IJornadaLaboralDao {
 		 The merge method returns a managed copy of the given detached entity.*/
 		em.remove(em.merge(jorandalaboral));
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Jorandalaboral> findAllJorandalaboralXProfesiona() {
+        try {
+    		String jpqlString = "select jorandalaboral from " + Jorandalaboral.class.getSimpleName() + " jorandalaboral" +
+    				" gr";
+            Query query = em.createQuery( jpqlString );
+            return query.getResultList();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
 }

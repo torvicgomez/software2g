@@ -90,4 +90,20 @@ public class ProfesionalDAOImpl implements IProfesionalDao {
 		 The merge method returns a managed copy of the given detached entity.*/
 		em.remove(em.merge(profesional));
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Profesional> findAllProfesionalXIdPersona(long idPersona) {
+        try {
+    		String jpqlString = "select profesional from " + Profesional.class.getSimpleName() + " profesional " +
+    				" where profesional.persona.idPers =:idPersona ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("idPersona", idPersona);
+            return query.getResultList();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
 }

@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import com.software2g.portal.dao.IPersonaDao;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Persona;
+import com.software2g.vo.Profesional;
 
 import org.springframework.stereotype.Repository;
 
@@ -59,7 +60,7 @@ public class PersonaDaoImpl implements IPersonaDao {
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
-	public Persona findPersonaById(java.lang.Integer id) {
+	public Persona findPersonaById(java.lang.Long id) {
 		return (Persona)em.find(Persona.class, id);
 	}
 	/**
@@ -115,6 +116,29 @@ public class PersonaDaoImpl implements IPersonaDao {
     			jpqlString += " where persona.documentoPers like :datoFind ";
     		jpqlString += " order by persona.pnombrePers, persona.snombrePers, persona.papellidoPers, persona.sapellidoPers asc ";
             Query query = em.createQuery( jpqlString );
+            query.setParameter("datoFind", "%"+datoFind.toLowerCase()+"%");
+            return query.getResultList();
+        }finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Persona> findAllPersonasProfesionales(String datoFind) {
+        try {
+    		String sqlString = " select distinct persona from " + Persona.class.getSimpleName() + " persona " +
+    				" join persona.profesional profesional " +
+    				" where lower(persona.pnombrePers) like :datoFind " +
+    				" or lower(persona.snombrePers) like :datoFind " +
+    				" or lower(persona.papellidoPers) like :datoFind " +
+    				" or lower(persona.sapellidoPers) like :datoFind " +
+    				" or persona.documentoPers like :datoFind " +
+    				" or persona.emailPers like :datoFind " +
+    				" or persona.telefonoPers like :datoFind " +
+    				" order by persona.pnombrePers, persona.snombrePers, persona.papellidoPers, persona.sapellidoPers asc ";
+			Query query = em.createQuery( sqlString );
             query.setParameter("datoFind", "%"+datoFind.toLowerCase()+"%");
             return query.getResultList();
         }finally {

@@ -22,7 +22,7 @@ public interface IPersonaDao {
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
-	public Persona findPersonaById(java.lang.Integer id);
+	public Persona findPersonaById(java.lang.Long id);
 	/**
 	 * Return all persistent instances of the <code>Persona</code> entity.
 	 */
@@ -37,4 +37,5 @@ public interface IPersonaDao {
 	public void removePersona(Persona persona);
 	
 	public List<Persona> findAllPersonas(String datoFind, String tipoFind);
+	public List<Persona> findAllPersonasProfesionales(String datoFind);
 }

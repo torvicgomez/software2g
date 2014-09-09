@@ -184,6 +184,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 				ValidaString.fechaSystem(),
 				ValidaString.horaSystem());
 	}
+	
 	public InputStream getStrProfesional() {
 		try{
 			String find = request.getParameter("find");

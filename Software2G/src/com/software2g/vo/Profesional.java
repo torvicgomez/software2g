@@ -40,6 +40,9 @@ public class Profesional implements Serializable {
 	@Column(name="prof_registradopor")
 	private String profRegistradopor;
 
+	@Column(name="prof_especialidad")
+	private String profEspecialidad;
+	
 	//bi-directional many-to-one association to Agenda
 	@OneToMany(mappedBy="profesional")
 	private List<Agenda> agendas;
@@ -50,6 +53,9 @@ public class Profesional implements Serializable {
 
 	@Transient
 	private String findProfesional;
+	
+	@Transient
+	private String selectProfesion;
 	
 	public Profesional() {
 	}
@@ -126,4 +132,20 @@ public class Profesional implements Serializable {
 		this.persona = persona;
 	}
 
+	public String getProfEspecialidad() {
+		return profEspecialidad;
+	}
+
+	public void setProfEspecialidad(String profEspecialidad) {
+		this.profEspecialidad = profEspecialidad;
+	}
+
+	public String getSelectProfesion() {
+		return selectProfesion;
+	}
+
+	public void setSelectProfesion(String selectProfesion) {
+		this.selectProfesion = selectProfesion;
+	}
+	
 }

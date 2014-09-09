@@ -44,6 +44,15 @@ public class Jorandalaboral implements Serializable {
 	@JoinColumn(name="id_profesional")
 	private Profesional profesional;
 
+	@Column(name="jora_horarecesoini")
+	private String joraHorarecesoini;
+
+	@Column(name="jora_horarecesofin")
+	private String joraHorarecesofin;
+	
+	@Transient
+	private List<String> listDiasSemana; 
+	
 	public Jorandalaboral() {
 	}
 
@@ -118,4 +127,29 @@ public class Jorandalaboral implements Serializable {
 			this.joraHoracambio=data.get(2);
 		}
 	}
+
+	public String getJoraHorarecesoini() {
+		return joraHorarecesoini;
+	}
+
+	public void setJoraHorarecesoini(String joraHorarecesoini) {
+		this.joraHorarecesoini = joraHorarecesoini;
+	}
+
+	public String getJoraHorarecesofin() {
+		return joraHorarecesofin;
+	}
+
+	public void setJoraHorarecesofin(String joraHorarecesofin) {
+		this.joraHorarecesofin = joraHorarecesofin;
+	}
+
+	public List<String> getListDiasSemana() {
+		return listDiasSemana;
+	}
+
+	public void setListDiasSemana(List<String> listDiasSemana) {
+		this.listDiasSemana = listDiasSemana;
+	}
+
 }

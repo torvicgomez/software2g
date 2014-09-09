@@ -15,9 +15,12 @@
         <link href="<s:url value='/css/scheme1.css'/>" rel="stylesheet" type="text/css" />
         <link href="<s:url value='/css/demo_table.css'/>" rel="stylesheet" type="text/css" />
         <link href="<s:url value='/css/calendar-blue.css'/>" rel="stylesheet" type="text/css" />
+        <link href="<s:url value='/css/jquery-ui.css'/>" rel="stylesheet" type="text/css" />
+        <link href="<s:url value='/css/jquery.ui.timepicker.css'/>" rel="stylesheet" type="text/css" />
         
         <script type="text/javascript" language="javascript" src="<s:url value='/js/jquery.js'/>"></script>
-<%--         <script type="text/javascript" language="javascript" src="<s:url value='/js/jquery-ui.js'/>"></script> --%>
+        <script type="text/javascript" language="javascript" src="<s:url value='/js/jquery-ui.js'/>"></script>
+		<script type="text/javascript" language="javascript" src="<s:url value='/js/jquery.ui.timepicker.js'/>"></script>
 		<script type="text/javascript" language="javascript" src="<s:url value='/js/jquery.dataTables.js'/>"></script>
 		<script type="text/javascript" language="javascript" src="<s:url value='/js/jquery.dataTables.min.js'/>"></script>
 		<script type="text/javascript" language="javascript" src="<s:url value='/js/jquery.cookie.js'/>"></script>

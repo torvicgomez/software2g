@@ -9,7 +9,11 @@
 	<link href="<s:url value='/css/demo_page.css'/>" rel="stylesheet" type="text/css" />
 	<link href="<s:url value='/css/demo_table.css'/>" rel="stylesheet" type="text/css" />
 	<link href="<s:url value='/syntax/css/shCore.css'/>" rel="stylesheet" type="text/css" />
+	<link href="<s:url value='/css/jquery-ui.css'/>" rel="stylesheet" type="text/css" />
+    <link href="<s:url value='/css/jquery.ui.timepicker.css'/>" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" language="javascript" src="<s:url value='/js/jquery.js'/>"></script>
+	<script type="text/javascript" language="javascript" src="<s:url value='/js/jquery-ui.js'/>"></script>
+	<script type="text/javascript" language="javascript" src="<s:url value='/js/jquery.ui.timepicker.js'/>"></script>
 	<script type="text/javascript" language="javascript" src="<s:url value='/js/jquery.dataTables.js'/>"></script>
 	<script type="text/javascript" language="javascript" src="<s:url value='/js/jquery.dataTables.min.js'/>"></script>
 	<SCRIPT type="text/javascript" src="<s:url value="/scripts/calendar-stripped.js"/>"></SCRIPT> 
@@ -59,7 +63,7 @@
 		                    //Obtenemos la id unica de la sugerencia pulsada
 		                    var id = $(this).attr('id');
 		                    //Editamos el valor del input con data de la sugerencia pulsada
-		                    $('#findProfesional').val($('#'+id).attr('data'));
+		                    //$('#findProfesional').val($('#'+id).attr('data'));
 		                    //Hacemos desaparecer el resto de sugerencias
 		                    $('#profesionales').fadeOut(1000);
 		                    cargarDatosPersonales(id);
@@ -67,6 +71,34 @@
 		            }
 		        });
 		    });
+		    
+		    $('#joraHoraingreso').timepicker({
+				    showNowButton: true,
+				    showDeselectButton: true,
+				    defaultTime: '',  // removes the highlighted time for when the input is empty. 
+				    showCloseButton: true
+			});
+			
+			$('#joraHorasalida').timepicker({
+				    showNowButton: true,
+				    showDeselectButton: true,
+				    defaultTime: '',  // removes the highlighted time for when the input is empty. 
+				    showCloseButton: true
+			});
+		
+			$('#joraHorarecesoini').timepicker({
+				    showNowButton: true,
+				    showDeselectButton: true,
+				    defaultTime: '',  // removes the highlighted time for when the input is empty. 
+				    showCloseButton: true
+			});
+			
+			$('#joraHorarecesofin').timepicker({
+				    showNowButton: true,
+				    showDeselectButton: true,
+				    defaultTime: '',  // removes the highlighted time for when the input is empty. 
+				    showCloseButton: true
+			}); 	
 	} ); 
 	
 	function agregar(){
@@ -154,20 +186,115 @@
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<tr>
 							<td class="leftLabel"><s:text name="jornadaLaboral.findProfesional"></s:text></td>
-							<td>
+							<td col>
 								<s:textfield name="profesional.findProfesional" id="findProfesional" size="100" cssClass="inputs"  placeholder="Nombre - Email - Teléfono" ></s:textfield>
 								<br><div id="profesionales" style="display: none;"></div>
 							</td>
-						</tr> 
-						<tr>
-							<td colspan="2">
-								<table cellpadding="0" cellspacing="0" border="0" class="display">
-									<tr>
-										<td class="leftLabel"><s:text name="jornadaLaboral.findProfesional"></s:text></td>
-									</tr>
-								</table>
-							</td>
 						</tr>
+						<s:if test="persona.idPers>0">
+							<tr>
+								<td colspan="2" class="leftLabel"><s:text name="jornadaLaboral.datosProfesional"></s:text></td>
+							</tr>
+							<tr>
+								<td class="leftLabel"><s:text name="jornadaLaboral.profesional"></s:text></td>
+								<td><s:property value="persona.nombreCompleto"/></td>
+							</tr> 
+							<tr>
+								<td class="leftLabel"><s:text name="jornadaLaboral.emailProfesional"></s:text></td>
+								<td><s:property value="persona.emailPers"/></td>
+							</tr>
+							<tr>
+								<td class="leftLabel"><s:text name="jornadaLaboral.telefonoProfesional"></s:text></td>
+								<td><s:property value="persona.telefonoPers"/></td>
+							</tr>
+							<tr>
+								<td class="leftLabel"><s:text name="jornadaLaboral.especialidadProf"></s:text></td>
+								<td>
+									<table cellpadding="0" cellspacing="0" border="0" class="display">
+										<s:iterator value="persona.profesional" id="data" status="stat">
+											<tr>
+												<td><s:checkbox name="persona.profesional[%{#stat.index}].selectProfesion"></s:checkbox><s:property value="profEspecialidad"/></td>
+											</tr>
+										</s:iterator>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="leftLabel"><s:text name="titulo.jornadaLaboral"></s:text></td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<table cellpadding="0" cellspacing="0" border="0" class="display">
+										<tr>
+											<td class="leftLabel"><s:text name="jornadaLaboral.nombrejornada"></s:text></td>
+											<td colspan="3"><s:textfield name="jornadaLaboral.joraNombre" id="joraNombre" cssClass="inputs" size="50"></s:textfield></td>
+										</tr>
+										<tr>
+											<td class="leftLabel"><s:text name="jornadaLaboral.horainiciojor"></s:text></td>
+											<td><s:textfield name="jornadaLaboral.joraHoraingreso" id="joraHoraingreso" cssClass="inputs"></s:textfield></td>
+											<td class="leftLabel"><s:text name="jornadaLaboral.horafinaljor"></s:text></td>
+											<td><s:textfield name="jornadaLaboral.joraHorasalida" id="joraHorasalida" cssClass="inputs"></s:textfield></td>
+										</tr>
+										<tr>
+											<td class="leftLabel"><s:text name="jornadaLaboral.horainiciorecjor"></s:text></td>
+											<td><s:textfield name="jornadaLaboral.joraHorarecesoini" id="joraHorarecesoini" cssClass="inputs"></s:textfield></td>
+											<td class="leftLabel"><s:text name="jornadaLaboral.horafinalrecjor"></s:text></td>
+											<td><s:textfield name="jornadaLaboral.joraHorarecesofin" id="joraHorarecesofin" cssClass="inputs"></s:textfield></td>
+										</tr>
+										<tr>
+											<td class="leftLabel"><s:text name="jornadaLaboral.diasjornada"></s:text></td>
+											<td colspan="3">
+												<s:checkbox name="jornadaLaboral.listDiasSemana[0]">Lunes</s:checkbox>
+												<s:checkbox name="jornadaLaboral.listDiasSemana[1]">Martes</s:checkbox>
+												<s:checkbox name="jornadaLaboral.listDiasSemana[2]">Miércoles</s:checkbox>
+												<s:checkbox name="jornadaLaboral.listDiasSemana[3]">Jueves</s:checkbox>
+												<s:checkbox name="jornadaLaboral.listDiasSemana[4]">Viernes</s:checkbox>
+												<s:checkbox name="jornadaLaboral.listDiasSemana[5]">Sábado</s:checkbox>
+												<s:checkbox name="jornadaLaboral.listDiasSemana[6]">Domingo</s:checkbox>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="4" class="css_right"><input type="button" value="<s:text name="labelbutton.agregar"></s:text>" onclick="agregarGrilla();" class="buttonSV"/></td>
+										</tr>
+										<tr>
+											<td colspan="2" class="text">
+												<s:if test="listLugarDestino!=null&&listLugarDestino.size()>0">
+													<table cellpadding="0" cellspacing="0" border="1" class="display" id="paradasProgramadas"> 
+														<thead>
+															<tr>
+																<th><s:text name="lugarParada.orden"></s:text></th>
+																<th><s:text name="lugarParada.parada"></s:text></th>
+																<th><s:text name="lugarParada.tipoParada"></s:text></th>
+																<th></th>
+															</tr>
+														</thead>
+														<tbody>
+															<s:iterator value="listLugarDestino" id="data" status="stat">
+																<tr>
+																	<td>${stat.index+1}</td>
+																	<td>
+																		<s:if test="ludeOrden==0"><s:property value="ludeOrigen"/></s:if>
+																		<s:elseif test="ludeOrden==99"><s:property value="ludeFinviaje"/></s:elseif>
+																		<s:else><s:property value="ludeParada"/></s:else>
+																	</td>
+																	<td>
+																		<s:if test="ludeOrden==0"><s:text name="lugarParada.labelGridOrigen"></s:text></s:if>
+																		<s:elseif test="ludeOrden==99"><s:text name="lugarParada.labelGridDestino"></s:text></s:elseif>
+																		<s:else><s:text name="lugarParada.labelGridParada"></s:text></s:else>
+																	</td>
+																	<td class="right"><input type="button" value="<s:text name="labelbutton.eliminarGrilla"></s:text>" onclick="eliminarGrilla('${stat.index}');" class="buttonSV"/></td>
+																</tr>
+															</s:iterator>
+														</tbody>
+													</table>	
+												</s:if>
+												<s:else><s:text name="advertencia.noregistros"></s:text></s:else>	
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</s:if>
 					</table>
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<tr>

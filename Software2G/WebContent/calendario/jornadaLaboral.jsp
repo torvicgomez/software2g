@@ -64,6 +64,7 @@
 		                    var id = $(this).attr('id');
 		                    //Editamos el valor del input con data de la sugerencia pulsada
 		                    //$('#findProfesional').val($('#'+id).attr('data'));
+		                    $('#findProfesional').val('');
 		                    //Hacemos desaparecer el resto de sugerencias
 		                    $('#profesionales').fadeOut(1000);
 		                    cargarDatosPersonales(id);
@@ -131,6 +132,15 @@
 		document.form.submit();
 	}
 	
+	function agregarGrilla(){
+		document.form.action="jornadaLaboral.action?estado=<%=ConstantesAplicativo.constanteEstadoAddGrid%>";
+		document.form.submit();
+	}
+	
+	function eliminarGrilla(param){
+		document.form.action="jornadaLaboral.action?estado=<%=ConstantesAplicativo.constanteEstadoDeleteGrid%>&posList="+param;
+		document.form.submit();
+	}
 	</script>
 </head>
 <body id="dt_example">
@@ -186,7 +196,8 @@
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<tr>
 							<td class="leftLabel"><s:text name="jornadaLaboral.findProfesional"></s:text></td>
-							<td col>
+							<td>
+								<s:hidden name="persona.idPers"></s:hidden>
 								<s:textfield name="profesional.findProfesional" id="findProfesional" size="100" cssClass="inputs"  placeholder="Nombre - Email - Teléfono" ></s:textfield>
 								<br><div id="profesionales" style="display: none;"></div>
 							</td>
@@ -244,20 +255,21 @@
 										<tr>
 											<td class="leftLabel"><s:text name="jornadaLaboral.diasjornada"></s:text></td>
 											<td colspan="3">
-												<s:checkbox name="jornadaLaboral.listDiasSemana[0]">Lunes</s:checkbox>
-												<s:checkbox name="jornadaLaboral.listDiasSemana[1]">Martes</s:checkbox>
-												<s:checkbox name="jornadaLaboral.listDiasSemana[2]">Miércoles</s:checkbox>
-												<s:checkbox name="jornadaLaboral.listDiasSemana[3]">Jueves</s:checkbox>
-												<s:checkbox name="jornadaLaboral.listDiasSemana[4]">Viernes</s:checkbox>
-												<s:checkbox name="jornadaLaboral.listDiasSemana[5]">Sábado</s:checkbox>
-												<s:checkbox name="jornadaLaboral.listDiasSemana[6]">Domingo</s:checkbox>
+												<s:checkbox name="jornadaLaboral.listDiasSemana[0]"></s:checkbox>Lunes
+												<s:checkbox name="jornadaLaboral.listDiasSemana[1]"></s:checkbox>Martes
+												<s:checkbox name="jornadaLaboral.listDiasSemana[2]"></s:checkbox>Miércoles
+												<s:checkbox name="jornadaLaboral.listDiasSemana[3]"></s:checkbox>Jueves
+												<s:checkbox name="jornadaLaboral.listDiasSemana[4]"></s:checkbox>Viernes
+												<s:checkbox name="jornadaLaboral.listDiasSemana[5]"></s:checkbox>Sábado
+												<s:checkbox name="jornadaLaboral.listDiasSemana[6]"></s:checkbox>Domingo
 											</td>
 										</tr>
 										<tr>
-											<td colspan="4" class="css_right"><input type="button" value="<s:text name="labelbutton.agregar"></s:text>" onclick="agregarGrilla();" class="buttonSV"/></td>
+											<td></td><td></td><td></td>
+											<td class="css_right"><input type="button" value="<s:text name="labelbutton.agregar"></s:text>" onclick="agregarGrilla();" class="buttonSV"/></td>
 										</tr>
 										<tr>
-											<td colspan="2" class="text">
+											<td colspan="4" class="text">
 												<s:if test="listLugarDestino!=null&&listLugarDestino.size()>0">
 													<table cellpadding="0" cellspacing="0" border="1" class="display" id="paradasProgramadas"> 
 														<thead>

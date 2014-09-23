@@ -46,6 +46,61 @@
 		<class>com.software2g.vo.Jorandalaboral</class>
 		<class>com.software2g.vo.Parametroscalendario</class>
 		<class>com.software2g.vo.Profesional</class>
-		<class>com.software2g.vo.Tiemponodisponible</class> 
+		<class>com.software2g.vo.Tiemponodisponible</class>
+		<class>com.software2g.vo.Acudiente</class>
+		<class>com.software2g.vo.Anamnesi</class>
+		<class>com.software2g.vo.Antecesentesflia</class>
+		<class>com.software2g.vo.Clasediagnostico</class>
+		<class>com.software2g.vo.Codigoenfermedade</class>
+		<class>com.software2g.vo.Consulta</class>
+		<class>com.software2g.vo.Convenio</class>
+		<class>com.software2g.vo.ConvenioPK</class>
+		<class>com.software2g.vo.Dependencia</class>
+		<class>com.software2g.vo.Diagnostico</class>
+		<class>com.software2g.vo.Direccion</class>
+		<class>com.software2g.vo.Enfermedad</class>
+		<class>com.software2g.vo.Enfermedadsufrida</class>
+		<class>com.software2g.vo.Especificacionformula</class>
+		<class>com.software2g.vo.Especificacionpartecuerpo</class>
+		<class>com.software2g.vo.Especificaexamen</class>
+		<class>com.software2g.vo.Estadocivil</class>
+		<class>com.software2g.vo.Estadomedicamento</class>
+		<class>com.software2g.vo.Examen</class>
+		<class>com.software2g.vo.Examenpartecuerpo</class>
+		<class>com.software2g.vo.Finalidad</class>
+		<class>com.software2g.vo.Formulacion</class>
+		<class>com.software2g.vo.Frecuencia</class>
+		<class>com.software2g.vo.Listaexamenconsulta</class>
+		<class>com.software2g.vo.Motivo</class>
+		<class>com.software2g.vo.Paciente</class>
+		<class>com.software2g.vo.Pai</class>
+		<class>com.software2g.vo.Parentesco</class>
+		<class>com.software2g.vo.Partescuerpo</class>
+		<class>com.software2g.vo.Personapertenece</class>
+		<class>com.software2g.vo.PersonapertenecePK</class>
+		<class>com.software2g.vo.Posicion</class>
+		<class>com.software2g.vo.Registroexamen</class>
+		<class>com.software2g.vo.Registroformulacion</class>
+		<class>com.software2g.vo.Remision</class>
+		<class>com.software2g.vo.Seguridadsocial</class>
+		<class>com.software2g.vo.Servicio</class>
+		<class>com.software2g.vo.Sintomacomun</class>
+		<class>com.software2g.vo.Sintoma</class>
+		<class>com.software2g.vo.Telefono</class>
+		<class>com.software2g.vo.Tipodato</class>
+		<class>com.software2g.vo.Tipodiagnostico</class>
+		<class>com.software2g.vo.Tipodocumentoinst</class>
+		<class>com.software2g.vo.Tipoespecialidad</class>
+		<class>com.software2g.vo.Tiposervicio</class>
+		<class>com.software2g.vo.Tipoubicacion</class>
+		<class>com.software2g.vo.Tipovirtuallink</class>
+		<class>com.software2g.vo.Tomasinodroga</class>
+		<class>com.software2g.vo.Ubicaciondireccion</class>
+		<class>com.software2g.vo.Ubicaciontelefono</class>
+		<class>com.software2g.vo.Ubicacionvirtual</class>
+		<class>com.software2g.vo.Unidade</class>
+		<class>com.software2g.vo.Variableexamen</class>
+		<class>com.software2g.vo.Variableformulacion</class>
+		<class>com.software2g.vo.Virtuallink</class> 
 	</persistence-unit>
 </persistence>

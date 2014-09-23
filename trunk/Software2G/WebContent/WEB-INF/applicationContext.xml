@@ -118,4 +118,316 @@
         <property name="personaDao"><bean class="com.software2g.portal.dao.impl.PersonaDaoImpl"/></property>
 	</bean>    
 	
+
+    <bean class="com.software2g.historia_clinica.facade.impl.AcudienteSpringService" id="AcudienteService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.AcudienteDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.AnamnesisSpringService" id="AnamnesisService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.AnamnesisDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.AntecedentesFliaSpringService" id="AntecedentesFliaService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.AntecedentesFliaDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.ClaseDiagnosticoSpringService" id="ClaseDiagnosticoService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.ClaseDiagnosticoDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.CodigoEnfermedadesSpringService" id="CodigoEnfermedadesService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.CodigoEnfermedadesDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.ConsultaSpringService" id="ConsultaService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.ConsultaDAO"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.ConvenioSpringService" id="ConvenioService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.ConvenioDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.DependenciaSpringService" id="DependenciaService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.DependenciaDAO"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.DiagnosticoSpringService" id="DiagnosticoService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.DiagnosticoDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.DireccionSpringService" id="DireccionService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.DireccionDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.EnfermedadSpringService" id="EnfermedadService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.EnfermedadDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.EnfermedadSufridaSpringService" id="EnfermedadSufridaService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.EnfermedadSufridaDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.EspecificaExamenSpringService" id="EspecificaExamenService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.EspecificaExamenDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.EspecificacionFormulaSpringService" id="EspecificacionFormulaService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.EspecificacionFormulaDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.EspecificacionParteCuerpoSpringService" id="EspecificacionParteCuerpoService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.EspecificacionParteCuerpoDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.EstadoCivilSpringService" id="EstadoCivilService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.EstadoCivilDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.EstadoMedicamentoSpringService" id="EstadoMedicamentoService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.EstadoMedicamentoDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.ExamenSpringService" id="ExamenService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.ExamenDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.ExamenParteCuerpoSpringService" id="ExamenParteCuerpoService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.ExamenParteCuerpoDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.FinalidadSpringService" id="FinalidadService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.FinalidadDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.FormulacionSpringService" id="FormulacionService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.FormulacionDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.FrecuenciaSpringService" id="FrecuenciaService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.FrecuenciaDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.ListaExamenConsultaSpringService" id="ListaExamenConsultaService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.ListaExamenConsultaDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.MotivoSpringService" id="MotivoService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.MotivoDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.PacienteSpringService" id="PacienteService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.PacienteDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.ParentescoSpringService" id="ParentescoService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.ParentescoDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.PartesCuerpoSpringService" id="PartesCuerpoService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.PartesCuerpoDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.PersonaPerteneceSpringService" id="PersonaPerteneceService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.PersonaPerteneceDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.PosicionSpringService" id="PosicionService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.PosicionDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.RegistroExamenSpringService" id="RegistroExamenService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.RegistroExamenDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.RegistroFormulacionSpringService" id="RegistroFormulacionService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.RegistroFormulacionDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.RemisionSpringService" id="RemisionService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.RemisionDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.SeguridadSocialSpringService" id="SeguridadSocialService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.SeguridadSocialDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.ServicioSpringService" id="ServicioService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.ServicioDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.SintomaComunSpringService" id="SintomaComunService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.SintomaComunDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.SintomaSpringService" id="SintomaService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.SintomaDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.TelefonoSpringService" id="TelefonoService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.TelefonoDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.TipoDatoSpringService" id="TipoDatoService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.TipoDatoDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.TipoDiagnosticoSpringService" id="TipoDiagnosticoService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.TipoDiagnosticoDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.TipoDocumentoInstitucionSpringService" id="TipoDocumentoInstitucionService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.TipoDocumentoInstitucionDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.TipoEspecialidadSpringService" id="TipoEspecialidadService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.TipoEspecialidadDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.TipoServicioSpringService" id="TipoServicioService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.TipoServicioDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.TipoUbicacionSpringService" id="TipoUbicacionService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.TipoUbicacionDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.TipoVirtualLinkSpringService" id="TipoVirtualLinkService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.TipoVirtualLinkDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.TomaDrogaSpringService" id="TomaDrogaService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.TomaDrogaDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.UbicacionDireccionSpringService" id="UbicacionDireccionService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.UbicacionDireccionDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.UbicacionTelefonoSpringService" id="UbicacionTelefonoService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.UbicacionTelefonoDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.UbicacionVirtualSpringService" id="UbicacionVirtualService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.UbicacionVirtualDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.UnidadesSpringService" id="UnidadesService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.UnidadesDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.VariableExamenSpringService" id="VariableExamenService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.VariableExamenDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.VariableFormulacionSpringService" id="VariableFormulacionService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.VariableFormulacionDAOImpl"/>
+        </property>
+    </bean>
+
+    <bean class="com.software2g.historia_clinica.facade.impl.VirtualLinkSpringService" id="VirtualLinkService">
+        <property name="dao">
+            <bean class="com.software2g.historia_clinica.dao.impl.VirtualLinkDAOImpl"/>
+        </property>
+    </bean>
 </beans>

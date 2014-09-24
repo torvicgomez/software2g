@@ -2,6 +2,7 @@ package com.software2g.vo;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -10,6 +11,7 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(schema="PUBLIC", name="ACUDIENTE")
 public class Acudiente implements Serializable {
 	private static final long serialVersionUID = 1L;
 

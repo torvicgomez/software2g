@@ -9,12 +9,16 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="consulta", schema="public")
 public class Consulta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="id_anamnesis")
 	private long idAnamnesis;
 
+	@Id
+	@SequenceGenerator(name="CONSULTA_IDCONSULTA_GENERATOR", sequenceName="PUBLIC.consulta_id_consulta_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CONSULTA_IDCONSULTA_GENERATOR")
 	@Column(name="id_consulta")
 	private long idConsulta;
 

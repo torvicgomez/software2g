@@ -9,6 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(schema="PUBLIC", name="DIRECCION")
 public class Direccion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -16,6 +17,9 @@ public class Direccion implements Serializable {
 
 	private String direccion;
 
+	@Id
+	@SequenceGenerator(name="DIRECCION_IDDIRECCION_GENERATOR", sequenceName="PUBLIC.direccion_id_direccion_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DIRECCION_IDDIRECCION_GENERATOR")
 	@Column(name="id_direccion")
 	private long idDireccion;
 

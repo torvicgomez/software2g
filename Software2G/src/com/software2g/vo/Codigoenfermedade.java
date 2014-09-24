@@ -9,7 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="codigoenfermedades")
+@Table(name="codigoenfermedades", schema="public")
 public class Codigoenfermedade implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -19,6 +19,9 @@ public class Codigoenfermedade implements Serializable {
 
 	private String desccodenfermedad;
 
+	@Id
+	@SequenceGenerator(name="CODIGOENFERMEDADE_IDCODIGOENFERMEDADE_GENERATOR", sequenceName="PUBLIC.codigoenfermedades_id_codenfermedad_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CODIGOENFERMEDADE_IDCODIGOENFERMEDADE_GENERATOR")
 	@Column(name="id_codenfermedad")
 	private long idCodenfermedad;
 

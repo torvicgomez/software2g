@@ -9,6 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(schema="public", name="especificacionformula")
 public class Especificacionformula implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -18,6 +19,9 @@ public class Especificacionformula implements Serializable {
 
 	private boolean formulacionactivo;
 
+	@Id
+	@SequenceGenerator(name="ESPECIFICACIONFORMULA_IDESPECIFICACIONFORMULA_GENERATOR", sequenceName="PUBLIC.especificacionformula_id_especificaformula_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ESPECIFICACIONFORMULA_IDESPECIFICACIONFORMULA_GENERATOR")
 	@Column(name="id_especificaformula")
 	private long idEspecificaformula;
 

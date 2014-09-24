@@ -9,12 +9,15 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="anamnesis")
+@Table(name="anamnesis", schema="public")
 public class Anamnesi implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String anamnesis;
 
+	@Id
+	@SequenceGenerator(name="ANAMNESIS_IDANAMNESIS_GENERATOR", sequenceName="PUBLIC.anamnesis_id_anamnesis_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ANAMNESIS_IDANAMNESIS_GENERATOR")
 	@Column(name="id_anamnesis")
 	private long idAnamnesis;
 

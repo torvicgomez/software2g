@@ -9,6 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(schema="public", name="formulacion")
 public class Formulacion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -20,6 +21,9 @@ public class Formulacion implements Serializable {
 	@Column(name="id_especificaformula")
 	private long idEspecificaformula;
 
+	@Id
+	@SequenceGenerator(name="FORMULACION_IDFORMULACION_GENERATOR", sequenceName="PUBLIC.formulacion_id_formulacion_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="FORMULACION_IDFORMULACION_GENERATOR")
 	@Column(name="id_formulacion")
 	private long idFormulacion;
 

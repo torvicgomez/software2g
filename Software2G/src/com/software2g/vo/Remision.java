@@ -2,6 +2,7 @@ package com.software2g.vo;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.sql.Time;
 import java.util.Date;
 
@@ -11,6 +12,7 @@ import java.util.Date;
  * 
  */
 @Entity
+@Table(schema="public", name="remision")
 public class Remision implements Serializable {
 	private static final long serialVersionUID = 1L;
 

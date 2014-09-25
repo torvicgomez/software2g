@@ -10,7 +10,7 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="unidades")
+@Table(name="unidades", schema="public")
 public class Unidade implements Serializable {
 	private static final long serialVersionUID = 1L;
 

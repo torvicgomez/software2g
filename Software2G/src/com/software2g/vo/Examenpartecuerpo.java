@@ -9,12 +9,15 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="examenpartecuerpo", schema="public")
 public class Examenpartecuerpo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
 	@Column(name="id_especiexam")
 	private long idEspeciexam;
 
+	@Id
 	@Column(name="id_partescuerpo")
 	private long idPartescuerpo;
 

@@ -2,6 +2,7 @@ package com.software2g.vo;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -39,6 +40,11 @@ public class Institucion implements Serializable {
 	@OneToMany(mappedBy="institucion")
 	private List<Personainstitucion> personainstitucions;
 
+	//bi-directional many-to-one association to Tipopagare
+	@ManyToOne
+	@JoinColumn(name="id_tipoinst")
+	private Tipodocumentoinst tipodocumentoinst;
+	
 	public Institucion() {
 	}
 
@@ -104,6 +110,14 @@ public class Institucion implements Serializable {
 
 	public void setPersonainstitucions(List<Personainstitucion> personainstitucions) {
 		this.personainstitucions = personainstitucions;
+	}
+
+	public Tipodocumentoinst getTipodocumentoinst() {
+		return tipodocumentoinst;
+	}
+
+	public void setTipodocumentoinst(Tipodocumentoinst tipodocumentoinst) {
+		this.tipodocumentoinst = tipodocumentoinst;
 	}
 
 }

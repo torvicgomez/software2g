@@ -18,7 +18,7 @@ public class Convenio implements Serializable {
 
 	//bi-directional many-to-one association to Seguridadsocial
 	@ManyToOne
-	@JoinColumn(name="id_seguridad")
+	@JoinColumn(name="id_seguridad", insertable=false, updatable=false)
 	private Seguridadsocial seguridadsocial;
 
 	public Convenio() {

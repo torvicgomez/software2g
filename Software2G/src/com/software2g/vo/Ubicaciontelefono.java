@@ -9,6 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="ubicaciontelefono", schema="public")
 public class Ubicaciontelefono implements Serializable {
 	private static final long serialVersionUID = 1L;
 

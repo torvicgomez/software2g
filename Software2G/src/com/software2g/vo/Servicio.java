@@ -2,6 +2,7 @@ package com.software2g.vo;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.sql.Time;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(schema="public", name="servicio")
 public class Servicio implements Serializable {
 	private static final long serialVersionUID = 1L;
 

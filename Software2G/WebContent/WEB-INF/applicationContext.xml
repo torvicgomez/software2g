@@ -17,6 +17,17 @@
         </property>
     </bean>
     
+    <bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactoryPostgresOptica">
+    	<property name="dataSource" ref="dataSourcePostgresOptica"/>
+        <property name="jpaVendorAdapter"> 
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="database" value="POSTGRESQL"/>
+                <property name="showSql" value="true"/> 
+                <property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect"/>                
+            </bean>
+        </property>
+    </bean>
+    
     <!-- Configuracion Recursos B.D. -->
     <bean class="org.springframework.jndi.JndiObjectFactoryBean" id="dataSourcePostgres">
 		<property name="resourceRef">

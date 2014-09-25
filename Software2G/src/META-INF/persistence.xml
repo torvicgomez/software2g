@@ -73,7 +73,6 @@
 		<class>com.software2g.vo.Listaexamenconsulta</class>
 		<class>com.software2g.vo.Motivo</class>
 		<class>com.software2g.vo.Paciente</class>
-		<class>com.software2g.vo.Pai</class>
 		<class>com.software2g.vo.Parentesco</class>
 		<class>com.software2g.vo.Partescuerpo</class>
 		<class>com.software2g.vo.Personapertenece</class>

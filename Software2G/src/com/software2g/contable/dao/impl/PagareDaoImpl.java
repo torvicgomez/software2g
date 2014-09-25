@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class PagareDaoImpl implements IPagareDao {
-    @PersistenceContext
+	@PersistenceContext(unitName="entityManagerFactoryPostgres")
     private EntityManager em;
 
 	public PagareDaoImpl() {

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class PresupuestoSucursalDaoImpl implements IPresupuestoSucursalDao {
-    @PersistenceContext
+	@PersistenceContext(unitName="entityManagerFactoryPostgres")
     private EntityManager em;
 
 	public PresupuestoSucursalDaoImpl() {

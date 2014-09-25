@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class PresupuestoDonacionDaoImpl implements IPresupuestoDonacionDao {
-    @PersistenceContext
+	@PersistenceContext(unitName="entityManagerFactoryPostgres")
     private EntityManager em;
 
 	public PresupuestoDonacionDaoImpl() {

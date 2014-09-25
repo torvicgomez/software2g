@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class DonacionDaoImpl implements IDonacionDao {
-    @PersistenceContext
+	@PersistenceContext(unitName="entityManagerFactoryPostgres")
     private EntityManager em;
 
 	public DonacionDaoImpl() {

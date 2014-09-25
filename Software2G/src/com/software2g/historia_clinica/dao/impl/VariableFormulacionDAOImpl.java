@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class VariableFormulacionDAOImpl implements IVariableFormulacionDao {
-    @PersistenceContext
+	@PersistenceContext(unitName="entityManagerFactoryPostgresOptica")
     private EntityManager em;
 
 	public VariableFormulacionDAOImpl() {

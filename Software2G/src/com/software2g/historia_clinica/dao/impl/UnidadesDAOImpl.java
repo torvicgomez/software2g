@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class UnidadesDAOImpl implements IUnidadesDao {
-    @PersistenceContext
+	@PersistenceContext(unitName="entityManagerFactoryPostgresOptica")
     private EntityManager em;
 
 	public UnidadesDAOImpl() {

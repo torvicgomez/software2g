@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class EspecificacionParteCuerpoDAOImpl implements IEspecificacionParteCuerpoDao {
-    @PersistenceContext
+	@PersistenceContext(unitName="entityManagerFactoryPostgresOptica")
     private EntityManager em;
 
 	public EspecificacionParteCuerpoDAOImpl() {

@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class SintomaComunDAOImpl implements ISintomaComunDao {
-    @PersistenceContext
+	@PersistenceContext(unitName="entityManagerFactoryPostgresOptica")
     private EntityManager em;
 
 	public SintomaComunDAOImpl() {

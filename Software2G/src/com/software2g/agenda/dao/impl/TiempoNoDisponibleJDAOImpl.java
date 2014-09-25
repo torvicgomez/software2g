@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class TiempoNoDisponibleJDAOImpl implements ITiempoNoDisponibleDao {
-    @PersistenceContext
+	@PersistenceContext(unitName="entityManagerFactoryPostgres")
     private EntityManager em;
 
 	public TiempoNoDisponibleJDAOImpl() {

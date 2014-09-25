@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class EstadoCivilDAOImpl implements IEstadoCivilDao {
-    @PersistenceContext
+	@PersistenceContext(unitName="entityManagerFactoryPostgresOptica")
     private EntityManager em;
 
 	public EstadoCivilDAOImpl() {

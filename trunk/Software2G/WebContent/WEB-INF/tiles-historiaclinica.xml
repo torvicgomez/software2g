@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ 
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="baseLayoutPortal" template="/tilesPagsPortal/baseLayout.jsp"> 
+		<put-attribute name="title" value="SIAC" />
+		<put-attribute name="functionPrinc" value="/tilesPagsPortal/functionPrinc.jsp" />
+		<put-attribute name="body" value="/tilesPagsPortal/body.jsp" />
+		<put-attribute name="footer" value="/tilesPagsPortal/footer.jsp" />
+	</definition>
+	
+	<!-- HISTORIA CLINICA ACTION -->
+	<definition name="historiaClinica.servicio" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/historiaClinica/servicio.jsp" />
+	</definition>
+	 
+</tiles-definitions>

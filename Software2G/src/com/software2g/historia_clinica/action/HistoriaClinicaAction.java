@@ -8,9 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 
+import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import com.software2g.historia_clinica.facade.IGestionFacadeHistoriaClinica;
+import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Usuario;
 
@@ -23,7 +26,47 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 	private String funcPosicionado;
 	private String id;
 	
+	private void getFuncionPosicionado(){
+		if(request.getSession().getAttribute("funcPosicionado")==null){
+			request.getSession().setAttribute("funcPosicionado",funcPosicionado);
+		}else{
+			String funcCambio = (String) request.getSession().getAttribute("funcPosicionado");
+			if(!funcPosicionado.equals(funcCambio))
+				request.getSession().setAttribute("funcPosicionado",funcPosicionado);
+		}
+		System.out.println("######>>>>>>>funcPosicionado>>>>"+funcPosicionado);
+	}
 	
+	@SkipValidation
+	public String servicioMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>HistoriaClinicaAction>>>>servicioMethod>>>>estado entrada-->>"+estado);
+    		/*if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listParametroCalendrio = gestionFacadeAgenda.findAllParametroscalendarios();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			if(ValidaString.isNullOrEmptyString(parametroCalendario.getPacaVariable()))
+    				addActionError(getText("validacion.requerido","pacaVariable","Variable"));
+    			if(ValidaString.isNullOrEmptyString(parametroCalendario.getPacaValor()))
+    				addActionError(getText("validacion.requerido","pacaValor","Valor"));
+    			if(!hasActionErrors()){
+    				parametroCalendario.setDatosAud(this.getDatosAud());
+    				ValidaString.imprimirObject(parametroCalendario);
+    				gestionFacadeAgenda.persistParametroscalendario(parametroCalendario);
+    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				addActionMessage(getText("accion.satisfactoria"));
+    			}
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			parametroCalendario = gestionFacadeAgenda.findParametroscalendarioById(getIdLong());
+    		}*/
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>HistoriaClinicaAction>>>>servicioMethod>>>>estado salida-->>"+estado);
+    	return Action.SUCCESS;
+	}
 	
 	
 	

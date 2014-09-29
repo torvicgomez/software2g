@@ -34,4 +34,6 @@ public final class ConstantesAplicativo {
 	
 	public static final String constanteEstadoActivo = "ACTIVO";
 	public static final String constanteEstadoInactivo = "INACTIVO";
+	
+	public static final String constanteSplit = "&&&&";
 }

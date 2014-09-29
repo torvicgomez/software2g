@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class MotivoDAOImpl implements IMotivoDao {
-	@PersistenceContext(unitName="entityManagerFactoryPostgresOptica")
+	@PersistenceContext(unitName="entityManagerFactoryPostgres")
     private EntityManager em;
 
 	public MotivoDAOImpl() {
@@ -66,7 +66,8 @@ public class MotivoDAOImpl implements IMotivoDao {
 	@SuppressWarnings("unchecked")
 	public List<Motivo> findAllMotivos() {
         try {
-    		String jpqlString = "select motivo from " + Motivo.class.getSimpleName() + " motivo";
+    		String jpqlString = "select motivo from " + Motivo.class.getSimpleName() + " motivo " +
+    				" order by motivo.codmotivo asc";
             Query query = em.createQuery( jpqlString );
             return query.getResultList();
         }

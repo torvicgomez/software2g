@@ -1,0 +1,102 @@
+select * from public.persona ;
+select * from portal.persona ;
+select * from public.estadocivil ;
+select * from public.tipodocumento order by id_tipodoc asc ;
+select * from portal.tipodocumento;
+select * from public.estadocivil;
+
+1;"Cedula de Ciudadania          ";"C.C.      "***
+2;"Tarjeta de Identidad          ";"T.I.      "***
+3;"Registro Civil                ";"R.C.      "***
+4;"Cedula de Extranjería         ";"C.E.      "
+5;"Pasaporte                     ";"PS        "
+6;"Adulto Sin Identificacion     ";"A.S.I     "
+7;"Menor Sin Identificacion      ";"M.S.I     "
+
+insert into portal.tipodocumento values (4,'CEDULA EXTRANJERIA','CE','ACTIVO','',to_char(current_date,'YYYY-mm-DD'),to_char(current_timestamp, 'HH12:MI:SS'),'admin');
+insert into portal.tipodocumento values (5,'PASAPORTE','PS','ACTIVO','',to_char(current_date,'YYYY-mm-DD'),to_char(current_timestamp, 'HH12:MI:SS'),'admin');
+insert into portal.tipodocumento values (6,'ADULTO SIN IDENTIFICACION','ASI','ACTIVO','',to_char(current_date,'YYYY-mm-DD'),to_char(current_timestamp, 'HH12:MI:SS'),'admin');
+insert into portal.tipodocumento values (7,'MENOR SIN IDENTIFICACION','MSI','ACTIVO','',to_char(current_date,'YYYY-mm-DD'),to_char(current_timestamp, 'HH12:MI:SS'),'admin');
+SELECT to_char(current_date,'YYYY-mm-DD') as fecha 
+SELECT to_char(current_timestamp, 'HH12:MI:SS') as hora 
+
+
+1;"Soltero(a)               "***
+2;"Casado(a)                "***
+3;"Viudo(a)                 "***
+4;"Unión Libre              "***
+5;"Separado(a)              "
+6;"Divorciado(a)            "***
+select * from public.persona ;
+
+ALTER TABLE PORTAL.PERSONA DROP CONSTRAINT estadocivilpers_chk;
+ALTER TABLE PORTAL.PERSONA ADD CONSTRAINT estadocivilpers_chk CHECK (estadocivil_pers::text = 'CASADO(A)'::character varying::text 
+	OR estadocivil_pers::text = 'DIVORCIADO(A)'::character varying::text 
+	OR estadocivil_pers::text = 'SOLTERO(A)'::character varying::text 
+	OR estadocivil_pers::text = 'UNIÓN LIBRE'::character varying::text 
+	OR estadocivil_pers::text = 'VIUDO(A)'::character varying::text
+	OR estadocivil_pers::text = 'SEPARADO(A)'::character varying::text);
+
+insert into portal.persona (id_pers, id_tidoc, documento_pers, fechaexpdoc_pers, pnombre_pers, snombre_pers, papellido_pers, sapellido_pers, sexo_pers, fechanacimiento_pers,
+estadocivil_pers, fechacambio, horacambio, registradopor, email_pers, direccion_pers, telefono_pers, id_mcpo) 
+select id_persona, id_tipodoc, doc_identificacion,'-',nompersona,'',apellido1, apellido2,
+case when sexo='Femenino' then 'F'
+     when sexo='Masculino' then 'M' else '' end,
+fechanaci,     
+case 
+	when id_estadocivil=1 then 'SOLTERO(A)'
+	WHEN id_estadocivil=2 THEN 'CASADO(A)'
+	WHEN id_estadocivil=3 THEN 'VIUDO(A)'
+	WHEN id_estadocivil=4 THEN 'UNIÓN LIBRE'
+	WHEN id_estadocivil=5 THEN 'SEPARADO(A)'
+	WHEN id_estadocivil=6 THEN 'DIVORCIADO(A)'
+	ELSE '' end,
+to_char(current_date,'YYYY-mm-DD'),to_char(current_timestamp, 'HH12:MI:SS'), 'Migracion','','','',null
+from public.persona where id_persona not in (1,2,307,304,550,600);
+
+select * from portal.persona ;
+select * from portal.municipio;
+select * from public.virtuallink;
+select * from public.direccion;
+select * from public.telefono;
+AAAA-MM-DD
+M-F
+insert into portal.persona (id_pers, id_tidoc, documento_pers, fechaexpdoc_pers, pnombre_pers, snombre_pers, papellido_pers, sapellido_pers, sexo_pers, fechanacimiento_pers,
+estadocivil_pers, fechacambio, horacambio, registradopor, email_pers, direccion_pers, telefono_pers, id_mcpo)
+id_pers numeric NOT NULL,
+  id_tidoc integer NOT NULL,
+  documento_pers character varying(15) NOT NULL,
+  fechaexpdoc_pers character varying(10) NOT NULL,
+  pnombre_pers character varying(30) NOT NULL,
+  snombre_pers character varying(30),
+  papellido_pers character varying(30) NOT NULL,
+  sapellido_pers character varying(30),
+  sexo_pers character varying(1) NOT NULL,
+  fechanacimiento_pers character varying(10) NOT NULL,
+  estadocivil_pers character varying(15) NOT NULL,
+  fechacambio character varying(10) NOT NULL,
+  horacambio character varying(8) NOT NULL,
+  registradopor character varying(30) NOT NULL,
+  email_pers character varying(80) NOT NULL,
+  direccion_pers character varying(100),
+  telefono_pers character varying(30),
+  id_mcpo
+
+
+select persona0_.id_pers as id1_4_, persona0_.direccion_pers as direccion2_4_, persona0_.documento_pers as documento3_4_, persona0_.email_pers as email4_4_, 
+persona0_.estadocivil_pers as estadoci5_4_, persona0_.fechacambio as fechacam6_4_, persona0_.fechaexpdoc_pers as fechaexp7_4_, 
+persona0_.fechanacimiento_pers as fechanac8_4_, persona0_.horacambio as horacambio4_, persona0_.id_mcpo as id17_4_, persona0_.papellido_pers as papellido10_4_, 
+persona0_.pnombre_pers as pnombre11_4_, persona0_.registradopor as registr12_4_, persona0_.sapellido_pers as sapellido13_4_, persona0_.sexo_pers as sexo14_4_, 
+persona0_.snombre_pers as snombre15_4_, persona0_.telefono_pers as telefono16_4_, persona0_.id_tidoc as id18_4_ 
+from portal.persona persona0_ 
+order by persona0_.pnombre_pers, persona0_.snombre_pers, persona0_.papellido_pers, persona0_.sapellido_pers asc
+
+
+select * from portal.persona where id_pers in (1186,728,4977,1411,720);
+update portal.persona set pnombre_pers = 'TANIA ISABELA' where id_pers = 720;
+update portal.persona set pnombre_pers = 'ANDRES FELIPE' where id_pers in (728,1186);
+update portal.persona set pnombre_pers = 'NOHELY' where id_pers = 1411;
+update portal.persona set pnombre_pers = 'FANNY' where id_pers = 4977;
+
+select * from public.seguridadsocial
+alter table public.seguridadsocial alter column nivelsegu type character varying(5);

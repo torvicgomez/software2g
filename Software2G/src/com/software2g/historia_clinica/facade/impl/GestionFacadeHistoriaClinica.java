@@ -2,6 +2,8 @@ package com.software2g.historia_clinica.facade.impl;
 
 import java.util.List;
 
+import javax.persistence.Query;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,6 +61,8 @@ import com.software2g.historia_clinica.dao.IVariableExamenDao;
 import com.software2g.historia_clinica.dao.IVariableFormulacionDao;
 import com.software2g.historia_clinica.dao.IVirtualLinkDao;
 import com.software2g.historia_clinica.facade.IGestionFacadeHistoriaClinica;
+import com.software2g.portal.dao.IPersonaDao;
+import com.software2g.util.ValidaString;
 import com.software2g.vo.Acudiente;
 import com.software2g.vo.Anamnesi;
 import com.software2g.vo.Antecesentesflia;
@@ -86,6 +90,7 @@ import com.software2g.vo.Motivo;
 import com.software2g.vo.Paciente;
 import com.software2g.vo.Parentesco;
 import com.software2g.vo.Partescuerpo;
+import com.software2g.vo.Persona;
 import com.software2g.vo.Personapertenece;
 import com.software2g.vo.Posicion;
 import com.software2g.vo.Registroexamen;
@@ -217,6 +222,8 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	IVariableFormulacionDao variableFormulacionDao;
 	@Autowired
 	IVirtualLinkDao virtualLinkDao;
+	@Autowired
+	IPersonaDao personaDao;
 	
 	public IAcudienteDao getAcudienteDao() {return acudienteDao;}
 	public void setAcudienteDao(IAcudienteDao acudienteDao) {this.acudienteDao = acudienteDao;}
@@ -322,6 +329,8 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	public void setVariableFormulacionDao(IVariableFormulacionDao variableFormulacionDao) {this.variableFormulacionDao = variableFormulacionDao;}
 	public IVirtualLinkDao getVirtualLinkDao() {return virtualLinkDao;}
 	public void setVirtualLinkDao(IVirtualLinkDao virtualLinkDao) {this.virtualLinkDao = virtualLinkDao;}
+	public IPersonaDao getPersonaDao() {return personaDao;}
+	public void setPersonaDao(IPersonaDao personaDao) {this.personaDao = personaDao;}
 	
 	//******************************************************************
 	// Acudiente
@@ -2973,5 +2982,57 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	}
 	//******************************************************************
 	// Fin Virtual Link
+	//******************************************************************
+
+	//******************************************************************
+	// Persona
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Persona findPersonaById(java.lang.Long id) throws Exception {
+		try {
+			return getPersonaDao().findPersonaById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findPersonaById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Persona</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Persona> findAllPersonas() throws Exception {
+		try {
+			return getPersonaDao().findAllPersonas();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllPersonas failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistPersona(Persona persona) throws Exception {
+		try {
+			getPersonaDao().persistPersona(persona);
+		} catch (RuntimeException e) {
+			throw new Exception("persistPersona failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removePersona(Persona persona) throws Exception {
+		try {
+			getPersonaDao().removePersona(persona);
+		} catch (RuntimeException e) {
+			throw new Exception("removePersona failed: " + e.getMessage());
+		}
+	}
+	//******************************************************************
+	// Fin Persona
 	//******************************************************************	
+
 }

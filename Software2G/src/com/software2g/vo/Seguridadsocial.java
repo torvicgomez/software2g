@@ -21,12 +21,16 @@ public class Seguridadsocial implements Serializable {
 	@Column(name="id_seguridad")
 	private long idSeguridad;
 
+	@Column(name="descsegu")
 	private String descsegu;
 
-	private int nivelsegu;
+	@Column(name="nivelsegu")
+	private String nivelsegu;
 
+	@Column(name="nomsegur")
 	private String nomsegur;
 
+	@Column(name="siglasegu")
 	private String siglasegu;
 
 	//bi-directional many-to-one association to Convenio
@@ -60,11 +64,11 @@ public class Seguridadsocial implements Serializable {
 		this.descsegu = descsegu;
 	}
 
-	public int getNivelsegu() {
+	public String getNivelsegu() {
 		return this.nivelsegu;
 	}
 
-	public void setNivelsegu(int nivelsegu) {
+	public void setNivelsegu(String nivelsegu) {
 		this.nivelsegu = nivelsegu;
 	}
 

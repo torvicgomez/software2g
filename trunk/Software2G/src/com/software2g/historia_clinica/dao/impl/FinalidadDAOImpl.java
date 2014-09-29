@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class FinalidadDAOImpl implements IFinalidadDao {
-	@PersistenceContext(unitName="entityManagerFactoryPostgresOptica")
+	@PersistenceContext(unitName="entityManagerFactoryPostgres")
     private EntityManager em;
 
 	public FinalidadDAOImpl() {
@@ -66,7 +66,8 @@ public class FinalidadDAOImpl implements IFinalidadDao {
 	@SuppressWarnings("unchecked")
 	public List<Finalidad> findAllFinalidads() {
         try {
-    		String jpqlString = "select finalidad from " + Finalidad.class.getSimpleName() + " finalidad";
+    		String jpqlString = "select finalidad from " + Finalidad.class.getSimpleName() + " finalidad " +
+    				" order by finalidad.codfinalidad asc ";
             Query query = em.createQuery( jpqlString );
             return query.getResultList();
         }

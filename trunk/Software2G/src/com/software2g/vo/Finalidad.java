@@ -3,6 +3,8 @@ package com.software2g.vo;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.software2g.util.ConstantesAplicativo;
+
 
 /**
  * The persistent class for the finalidad database table.
@@ -13,8 +15,10 @@ import javax.persistence.*;
 public class Finalidad implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Column(name="codfinalidad")
 	private String codfinalidad;
 
+	@Column(name="descfinalidad")
 	private String descfinalidad;
 
 	@Id
@@ -23,8 +27,12 @@ public class Finalidad implements Serializable {
 	@Column(name="id_finalidad")
 	private long idFinalidad;
 
+	@Column(name="nomfinalidad")
 	private String nomfinalidad;
 
+	@Transient
+	private String helpView;
+	
 	public Finalidad() {
 	}
 
@@ -60,4 +68,17 @@ public class Finalidad implements Serializable {
 		this.nomfinalidad = nomfinalidad;
 	}
 
+	public String getListKey(){
+		return this.idFinalidad+ConstantesAplicativo.constanteSplit+this.codfinalidad+ConstantesAplicativo.constanteSplit+this.nomfinalidad;
+	}
+
+	public String getHelpView() {
+		return helpView;
+	}
+
+	public void setHelpView(String helpView) {
+		this.helpView = helpView;
+	}
+
+	
 }

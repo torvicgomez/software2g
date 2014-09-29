@@ -69,7 +69,8 @@ public class PersonaDaoImpl implements IPersonaDao {
 	@SuppressWarnings("unchecked")
 	public List<Persona> findAllPersonas() {
         try {
-    		String jpqlString = "select persona from " + Persona.class.getSimpleName() + " persona";
+    		String jpqlString = "select persona from " + Persona.class.getSimpleName() + " persona" +
+    				" order by persona.pnombrePers, persona.snombrePers, persona.papellidoPers, persona.sapellidoPers asc";
             Query query = em.createQuery( jpqlString );
             return query.getResultList();
         }

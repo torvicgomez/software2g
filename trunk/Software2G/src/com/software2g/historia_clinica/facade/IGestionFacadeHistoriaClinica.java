@@ -29,6 +29,7 @@ import com.software2g.vo.Motivo;
 import com.software2g.vo.Paciente;
 import com.software2g.vo.Parentesco;
 import com.software2g.vo.Partescuerpo;
+import com.software2g.vo.Persona;
 import com.software2g.vo.Personapertenece;
 import com.software2g.vo.Posicion;
 import com.software2g.vo.Registroexamen;
@@ -1303,6 +1304,33 @@ public interface IGestionFacadeHistoriaClinica {
 	public void removeVirtuallink(Virtuallink virtuallink) throws Exception;
 	//******************************************************************
 	// Fin Virtual Link
+	//******************************************************************
+
+	//******************************************************************
+	// Persona
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Persona findPersonaById(java.lang.Long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Persona</code> entity.
+	 */
+	public List<Persona> findAllPersonas() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistPersona(Persona persona) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removePersona(Persona persona) throws Exception;
+	
+//	public List<Persona> findAllPersonas(String datoFind, String tipoFind) throws Exception;
+//	public List<Persona> findAllPersonasProfesionales(String datoFind) throws Exception;
+	//******************************************************************
+	// FIN Persona
 	//******************************************************************
 		
 }

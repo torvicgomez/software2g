@@ -13,6 +13,7 @@ import javax.persistence.*;
 public class Anamnesi implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Column(name="anamnesis")
 	private String anamnesis;
 
 	@Id

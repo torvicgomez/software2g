@@ -15,6 +15,11 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.software2g.historia_clinica.facade.IGestionFacadeHistoriaClinica;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
+import com.software2g.vo.Anamnesi;
+import com.software2g.vo.Finalidad;
+import com.software2g.vo.Motivo;
+import com.software2g.vo.Persona;
+import com.software2g.vo.Seguridadsocial;
 import com.software2g.vo.Usuario;
 
 public class HistoriaClinicaAction extends ActionSupport implements ServletRequestAware,ServletResponseAware{
@@ -25,6 +30,36 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 	private String estado;
 	private String funcPosicionado;
 	private String id;
+	
+	
+	private List<Persona> listPersona;
+	private Persona persona;
+	private List<Finalidad> listFinalidad;
+	private List<Motivo> listMotivo;
+	private List<Seguridadsocial> listSeguridadSocial;
+	private Finalidad finalidad;
+	private Motivo motivo;
+	private Seguridadsocial seguridadSocial;
+	private Anamnesi anamnesis;
+	
+	public List<Persona> getListPersona() {return listPersona;}
+	public void setListPersona(List<Persona> listPersona) {this.listPersona = listPersona;}
+	public Persona getPersona() {return persona;}
+	public void setPersona(Persona persona) {this.persona = persona;}
+	public List<Finalidad> getListFinalidad() {return listFinalidad;}
+	public void setListFinalidad(List<Finalidad> listFinalidad) {this.listFinalidad = listFinalidad;}
+	public List<Motivo> getListMotivo() {return listMotivo;}
+	public void setListMotivo(List<Motivo> listMotivo) {this.listMotivo = listMotivo;}
+	public List<Seguridadsocial> getListSeguridadSocial() {return listSeguridadSocial;}
+	public void setListSeguridadSocial(List<Seguridadsocial> listSeguridadSocial) {this.listSeguridadSocial = listSeguridadSocial;}
+	public Finalidad getFinalidad() {return finalidad;}
+	public void setFinalidad(Finalidad finalidad) {this.finalidad = finalidad;}
+	public Motivo getMotivo() {return motivo;}
+	public void setMotivo(Motivo motivo) {this.motivo = motivo;}
+	public Seguridadsocial getSeguridadSocial() {return seguridadSocial;}
+	public void setSeguridadSocial(Seguridadsocial seguridadSocial) {this.seguridadSocial = seguridadSocial;}
+	public Anamnesi getAnamnesis() {return anamnesis;}
+	public void setAnamnesis(Anamnesi anamnesis) {this.anamnesis = anamnesis;}
 	
 	private void getFuncionPosicionado(){
 		if(request.getSession().getAttribute("funcPosicionado")==null){
@@ -43,9 +78,20 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     	try { 
     		getFuncionPosicionado();
     		System.out.println("######>>>>>>>HistoriaClinicaAction>>>>servicioMethod>>>>estado entrada-->>"+estado);
-    		/*if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
-    			listParametroCalendrio = gestionFacadeAgenda.findAllParametroscalendarios();
-    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listPersona = gestionFacadeHistoriaClinica.findAllPersonas();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAdd)){
+    			System.out.println("entra esta parte!!!!!");
+    			System.out.println("ID:["+this.getIdLong()+"]");
+    			persona = gestionFacadeHistoriaClinica.findPersonaById(this.getIdLong());
+    			listFinalidad = gestionFacadeHistoriaClinica.findAllFinalidads();
+    			listMotivo = gestionFacadeHistoriaClinica.findAllMotivos();
+    			listSeguridadSocial = gestionFacadeHistoriaClinica.findAllSeguridadsocials();
+    			System.out.println("listFinalidad:["+listFinalidad+"]");
+    			for(Finalidad elem: listFinalidad){
+    				System.out.println("Finalidad:["+elem.getCodfinalidad()+"]-["+elem.getNomfinalidad()+"]");
+    			}
+    		}/*else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			if(ValidaString.isNullOrEmptyString(parametroCalendario.getPacaVariable()))
     				addActionError(getText("validacion.requerido","pacaVariable","Variable"));
     			if(ValidaString.isNullOrEmptyString(parametroCalendario.getPacaValor()))

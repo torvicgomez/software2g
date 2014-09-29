@@ -275,5 +275,8 @@ public class Persona implements Serializable {
 	public void setProfesional(List<Profesional> profesional) {
 		this.profesional = profesional;
 	}
-	
+
+	public String getNroHistoriaClinica(){
+		return this.idPers+"-"+this.documentoPers;
+	}
 }

@@ -3,6 +3,8 @@ package com.software2g.vo;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.software2g.util.ConstantesAplicativo;
+
 
 /**
  * The persistent class for the motivo database table.
@@ -13,8 +15,10 @@ import javax.persistence.*;
 public class Motivo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Column(name="codmotivo")
 	private String codmotivo;
 
+	@Column(name="descmov")
 	private String descmov;
 
 	@Id
@@ -23,8 +27,12 @@ public class Motivo implements Serializable {
 	@Column(name="id_motivo")
 	private long idMotivo;
 
+	@Column(name="nommotivo")
 	private String nommotivo;
 
+	@Transient
+	private String helpView;
+	
 	public Motivo() {
 	}
 
@@ -60,4 +68,16 @@ public class Motivo implements Serializable {
 		this.nommotivo = nommotivo;
 	}
 
+	public String getListKey(){
+		return this.idMotivo+ConstantesAplicativo.constanteSplit+this.codmotivo+ConstantesAplicativo.constanteSplit+this.nommotivo;
+	}
+
+	public String getHelpView() {
+		return helpView;
+	}
+
+	public void setHelpView(String helpView) {
+		this.helpView = helpView;
+	}
+	
 }

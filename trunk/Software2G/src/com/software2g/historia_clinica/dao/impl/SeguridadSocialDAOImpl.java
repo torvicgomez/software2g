@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class SeguridadSocialDAOImpl implements ISeguridadSocialDao {
-	@PersistenceContext(unitName="entityManagerFactoryPostgresOptica")
+	@PersistenceContext(unitName="entityManagerFactoryPostgres")
     private EntityManager em;
 
 	public SeguridadSocialDAOImpl() {
@@ -66,7 +66,8 @@ public class SeguridadSocialDAOImpl implements ISeguridadSocialDao {
 	@SuppressWarnings("unchecked")
 	public List<Seguridadsocial> findAllSeguridadsocials() {
         try {
-    		String jpqlString = "select seguridadsocial from " + Seguridadsocial.class.getSimpleName() + " seguridadsocial";
+    		String jpqlString = "select seguridadsocial from " + Seguridadsocial.class.getSimpleName() + " seguridadsocial " +
+    				" order by seguridadsocial.nomsegur asc ";
             Query query = em.createQuery( jpqlString );
             return query.getResultList();
         }

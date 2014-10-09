@@ -66,7 +66,7 @@ public class FinalidadDAOImpl implements IFinalidadDao {
 	@SuppressWarnings("unchecked")
 	public List<Finalidad> findAllFinalidads() {
         try {
-    		String jpqlString = "select finalidad from " + Finalidad.class.getSimpleName() + " finalidad " +
+    		String jpqlString = "select distinct finalidad from " + Finalidad.class.getSimpleName() + " finalidad " +
     				" order by finalidad.codfinalidad asc ";
             Query query = em.createQuery( jpqlString );
             return query.getResultList();

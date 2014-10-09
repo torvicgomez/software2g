@@ -1,6 +1,8 @@
 package com.software2g.historia_clinica.action;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,7 @@ import com.software2g.vo.Finalidad;
 import com.software2g.vo.Motivo;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Seguridadsocial;
+import com.software2g.vo.Servicio;
 import com.software2g.vo.Usuario;
 
 public class HistoriaClinicaAction extends ActionSupport implements ServletRequestAware,ServletResponseAware{
@@ -31,7 +34,6 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 	private String funcPosicionado;
 	private String id;
 	
-	
 	private List<Persona> listPersona;
 	private Persona persona;
 	private List<Finalidad> listFinalidad;
@@ -41,6 +43,7 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 	private Motivo motivo;
 	private Seguridadsocial seguridadSocial;
 	private Anamnesi anamnesis;
+	private Servicio servicio;
 	
 	public List<Persona> getListPersona() {return listPersona;}
 	public void setListPersona(List<Persona> listPersona) {this.listPersona = listPersona;}
@@ -60,6 +63,8 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 	public void setSeguridadSocial(Seguridadsocial seguridadSocial) {this.seguridadSocial = seguridadSocial;}
 	public Anamnesi getAnamnesis() {return anamnesis;}
 	public void setAnamnesis(Anamnesi anamnesis) {this.anamnesis = anamnesis;}
+	public Servicio getServicio() {return servicio;}
+	public void setServicio(Servicio servicio) {this.servicio = servicio;}
 	
 	private void getFuncionPosicionado(){
 		if(request.getSession().getAttribute("funcPosicionado")==null){
@@ -137,5 +142,10 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 		return Arrays.asList(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua(),
 				ValidaString.fechaSystem(),
 				ValidaString.horaSystem());
+	}
+	public String getFechaHoraServicioSystem(){
+		SimpleDateFormat sdf = new SimpleDateFormat(ConstantesAplicativo.constanteFormatoFechaHora1);
+		System.out.println("Fecha y Hora Servicio: ["+sdf.format(new Date())+"]");
+		return sdf.format(new Date());
 	}
 }

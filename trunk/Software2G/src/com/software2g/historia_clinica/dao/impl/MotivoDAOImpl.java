@@ -66,7 +66,7 @@ public class MotivoDAOImpl implements IMotivoDao {
 	@SuppressWarnings("unchecked")
 	public List<Motivo> findAllMotivos() {
         try {
-    		String jpqlString = "select motivo from " + Motivo.class.getSimpleName() + " motivo " +
+    		String jpqlString = "select distinct motivo from " + Motivo.class.getSimpleName() + " motivo " +
     				" order by motivo.codmotivo asc";
             Query query = em.createQuery( jpqlString );
             return query.getResultList();

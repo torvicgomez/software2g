@@ -100,3 +100,96 @@ update portal.persona set pnombre_pers = 'FANNY' where id_pers = 4977;
 
 select * from public.seguridadsocial
 alter table public.seguridadsocial alter column nivelsegu type character varying(5);
+
+
+-- id_tiposervicio = 1 //servicio consulta
+-- id_indtitucion = 1 // institucion super optica
+select ser.* 
+from public.servicio ser
+inner join public.dependencia dep on (dep.id_dependencia = ser.id_dependencia and dep.id_institucion = 1)
+where id_tiposervicio = 1 ;
+
+select * from public.tiposervicio ;
+select * from public.dependencia ;
+select * from public.institucion ;
+
+update public.institucion set nivelinst = 1 ;
+--delete from public.institucion ;
+--delete from public.dependencia ;
+select * from public.tipodocumentoinst ;
+(id_tipodocinst)
+
+insert into public.institucion values(1,1,'123456-2','Super Optica',5,'Gustavo Albeiro Muñoz','Super Optica',null)
+insert into public.dependencia values(1,1,'Consultorio','C-OPT-1')
+
+
+select * from public.examen ;
+select distinct espe.* from public.especificaexamen espe
+update public.especificaexamen set esex_orden=1, id_institucion=1 where id_especiexam = 1;
+
+select distinct 
+espe.id_especiexam, espe.nomespeciexam, espe.abreviatura, esex_orden
+,tida.nombretdato, tida.codigo 
+,vaex.nomvarexam, vaex.abrevaexamen, vaex.vaex_orden
+,vale.valorexamen, vale.valx_orden
+--,pacu.nombreparcuerpo
+from public.especificaexamen espe
+inner join public.variableexamen vaex on (vaex.id_especiexam = espe.id_especiexam and vaex.estadovarexam = true)
+inner join public.tipodato tida on (tida.id_tipodato = vaex.id_tipodato)
+left outer join public.valorexamen vale on (vale.id_varexamen = vaex.id_varexamen)
+--inner join public.examenpartecuerpo expc on (expc.id_especiexam = espe.id_especiexam)
+--inner join public.partescuerpo pacu on (pacu.id_partescuerpo = expc.id_partescuerpo)
+where espe.id_tipoconsulta = 2 
+and espe.examenactivo = true
+--and espe.id_especiexam = 1
+and id_institucion = 1
+order by esex_orden, vaex.vaex_orden, vale.valx_orden asc ;
+
+-- id_tipoconsulta = 2 // Optometria
+select * from public.tipoespecialidad ;
+select * from public.variableexamen;
+select * from public.tipodato ;
+select distinct * from public.especificaexamen;
+
+update public.variableexamen set vaex_orden= 6 where id_especiexam = 1 and id_varexamen = 6;
+select * from public.variableexamen where id_especiexam = 1;
+
+select distinct * from public.especificacionpartecuerpo;
+select distinct * from public.partescuerpo ;
+select distinct * from public.posicion ;
+
+select distinct * from public.examenpartecuerpo;
+select * from public.institucion ;
+
+ALTER TABLE public.especificaexamen add COLUMN esex_orden  integer;
+ALTER TABLE public.especificaexamen add COLUMN id_institucion integer;
+ALTER TABLE public.variableexamen add COLUMN vaex_orden  integer;
+select * from public.valorexamen ;
+delete from public.valorexamen ;
+CREATE TABLE valorexamen
+(
+  vaex_id numeric(10)	not null,
+  id_varexamen bigint NOT NULL,
+  valorexamen text NOT NULL,
+  valx_orden integer not null,
+  CONSTRAINT fk_registro_registroe_variable FOREIGN KEY (id_varexamen)
+      REFERENCES variableexamen (id_varexamen) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+)
+ALTER TABLE public.valorexamen add column valx_orden integer not null;
+insert into public.valorexamen values (1,5,'0.5 M', 1);
+insert into public.valorexamen values (2,5,'0.75 M', 2);
+insert into public.valorexamen values (3,5,'1 M', 3);
+insert into public.valorexamen values (4,5,'1.25 M', 4);
+insert into public.valorexamen values (5,5,'1.5 M', 5);
+insert into public.valorexamen values (6,5,'1.75 M', 6);
+insert into public.valorexamen values (7,5,'2 M', 7);
+insert into public.valorexamen values (8,5,'CD 2 M', 8);
+insert into public.valorexamen values (9,5,'CD 1 M', 9);
+insert into public.valorexamen values (10,5,'CD 5 M', 10);
+insert into public.valorexamen values (11,5,'PL', 11);
+insert into public.valorexamen values (12,5,'NPL', 12);
+insert into public.valorexamen values (13,5,'Ninguno', 13);
+
+
+

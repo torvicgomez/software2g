@@ -60,7 +60,7 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
 	private Funcionalidad funcionalidad; 
 	private List<Funcionalidad> listFuncionalidad;
 	private List<Aplicacion> listAplicacion;
-	private InputStream strFunctionRol;
+	private InputStream strFunctionRol; 
 	private List<Object> listFuncRol;
 	
 	public PortalAction(IGestionFacadePortal gestionFacadePortal) {

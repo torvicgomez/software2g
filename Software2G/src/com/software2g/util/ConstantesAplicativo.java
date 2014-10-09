@@ -36,4 +36,5 @@ public final class ConstantesAplicativo {
 	public static final String constanteEstadoInactivo = "INACTIVO";
 	
 	public static final String constanteSplit = "&&&&";
+	public static final String constanteFormatoFechaHora1 = "dd/MM/yyyy HH:mm:ss.SSS"; 
 }

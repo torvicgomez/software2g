@@ -227,6 +227,10 @@
 						</tr>
 						</s:if>
 						<tr>
+							<td class="leftLabel"><s:text name="servicioclinico.fechahoraservicio"></s:text></td>
+							<td><s:property value="fechaHoraServicioSystem"/></td>
+						</tr>
+						<tr>
 							<td class="leftLabel"><s:text name="servicioclinico.finalidad"></s:text></td>
 							<td><s:select list="listFinalidad" name="finalidad.helpView" listKey="listKey" listValue="codfinalidad" headerKey="0" headerValue=".::Seleccione::." cssClass="inputs"></s:select> </td>
 						</tr>
@@ -240,7 +244,7 @@
 						</tr>
 						<tr>
 							<td class="leftLabel"><s:text name="servicioclinico.anamnesis"></s:text></td>
-							<td><s:textarea name="anamnesis.anamnesis"></s:textarea></td>
+							<td><s:textarea name="anamnesis.anamnesis" rows="5" cols="70"></s:textarea></td>
 						</tr>
 						
 					</table>

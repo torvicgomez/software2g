@@ -9,7 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="examenpartecuerpo", schema="public")
+@Table(name="examenpartecuerpo", schema="public") 
 public class Examenpartecuerpo implements Serializable {
 	private static final long serialVersionUID = 1L;
 

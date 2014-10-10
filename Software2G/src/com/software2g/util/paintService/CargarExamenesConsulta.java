@@ -15,7 +15,7 @@ import com.software2g.vo.Variableexamen;
 public class CargarExamenesConsulta {
 	public CargarExamenesConsulta(){}
 	
-	public List<Object[]> obtenerExamenesConsulta(long idInstitucion, long idEspecialidad) throws Exception{
+	public List<Especificaexamen> obtenerExamenesConsulta(long idInstitucion, long idEspecialidad) throws Exception{
 		System.out.println("******************************************************************************");
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {ApplicationContext.CLASSPATH_ALL_URL_PREFIX+"cargarExamenesConsulta.xml"});
 		IGestionFacadeExamenesConsulta gestionFacadeExamenesConsulta = GestionFacadeExamenesConsulta.getInstance(context);
@@ -36,6 +36,7 @@ public class CargarExamenesConsulta {
 						listEspecificacionExamen.add(especificaExa);
 					especificaExa = new Especificaexamen();
 					especificaExa.setListVariableExamen(new ArrayList<Variableexamen>());
+					especificaExa.setIdEspeciexam(Long.parseLong(elem[0].toString()));
 					especificaExa.setAbreviatura(elem[1].toString());
 					idEspecificaExamen = elem[0].toString();
 				}
@@ -46,7 +47,7 @@ public class CargarExamenesConsulta {
 					variableExamen.setNomvarexam(elem[3].toString());
 					variableExamen.setAbrevaexamen(elem[4].toString());
 					especificaExa.getListVariableExamen().add(variableExamen);
-					System.out.println("se adiciona exmaen");
+//					System.out.println("se adiciona exmaen");
 					examen = elem[3].toString();
 				}
 //				else if(examen!=null&&examen.equals(elem[3])){
@@ -64,7 +65,7 @@ public class CargarExamenesConsulta {
 						valorExamen.setValorexamen(elem[6].toString());
 						variableExamen.getListValorExamen().add(valorExamen);
 						valoresExamen = elem[6].toString();
-						System.out.println("se adiciona valores examens");
+//						System.out.println("se adiciona valores examens");
 					}
 //					else if(valoresExamen!=null&&valoresExamen.equals(elem[6].toString())){
 //						valorExamen = new Valorexamen();
@@ -87,27 +88,27 @@ public class CargarExamenesConsulta {
 			System.out.println("Lista es Nula!!!!!!");
 		}
 		
-		for(Especificaexamen elem:listEspecificacionExamen){
-			System.out.println("* Especificacion Examen: ["+elem.getAbreviatura()+"]");
-			if(elem.getListVariableExamen()!=null&&elem.getListVariableExamen().size()>0){
-				for(Variableexamen elem1:elem.getListVariableExamen()){
-					System.out.println("* -----> Examen: ["+elem1.getNomvarexam()+"]-["+elem1.getAbrevaexamen()+"]");
-					if(elem1.getListValorExamen()!=null&&elem1.getListValorExamen().size()>0){
-						for(Valorexamen elem2:elem1.getListValorExamen()){
-							System.out.println("* ----------> Valor Examen: ["+elem2.getValorexamen()+"]");
-						}
-					}else{
-						System.out.println("* -----> Lista Valores Examenes es Nula!!");
-					}
-				}
-			}else{
-				System.out.println("* Lista Examenes es Nula!!");
-			}
-			System.out.println("***************************************************************************");
-			System.out.println("---------------------------------------------------------------------------");
-		}
+//		for(Especificaexamen elem:listEspecificacionExamen){
+//			System.out.println("* Especificacion Examen: ["+elem.getAbreviatura()+"]");
+//			if(elem.getListVariableExamen()!=null&&elem.getListVariableExamen().size()>0){
+//				for(Variableexamen elem1:elem.getListVariableExamen()){
+//					System.out.println("* -----> Examen: ["+elem1.getNomvarexam()+"]-["+elem1.getAbrevaexamen()+"]");
+//					if(elem1.getListValorExamen()!=null&&elem1.getListValorExamen().size()>0){
+//						for(Valorexamen elem2:elem1.getListValorExamen()){
+//							System.out.println("* ----------> Valor Examen: ["+elem2.getValorexamen()+"]");
+//						}
+//					}else{
+//						System.out.println("* -----> Lista Valores Examenes es Nula!!");
+//					}
+//				}
+//			}else{
+//				System.out.println("* Lista Examenes es Nula!!");
+//			}
+//			System.out.println("***************************************************************************");
+//			System.out.println("---------------------------------------------------------------------------");
+//		}
 		
 		System.out.println("******************************************************************************");
-		return listExamenesConsulta;
+		return listEspecificacionExamen;
 	}
 }

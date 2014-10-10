@@ -1,6 +1,8 @@
 package com.software2g.vo;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -13,12 +15,16 @@ import javax.persistence.*;
 public class Especificaexamen implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Column(name="abreviatura")
 	private String abreviatura;
 
+	@Column(name="codespeciexam")
 	private String codespeciexam;
 
+	@Column(name="descespeciexam")
 	private String descespeciexam;
 
+	@Column(name="examenactivo")
 	private boolean examenactivo;
 
 	@Id
@@ -27,6 +33,7 @@ public class Especificaexamen implements Serializable {
 	@Column(name="id_especiexam")
 	private long idEspeciexam;
 
+	@Column(name="nomespeciexam")
 	private String nomespeciexam;
 
 	//bi-directional many-to-one association to Tipoespecialidad
@@ -34,6 +41,15 @@ public class Especificaexamen implements Serializable {
 	@JoinColumn(name="id_tipoconsulta")
 	private Tipoespecialidad tipoespecialidad;
 
+	@Column(name="esex_orden")
+	private int esexorden;
+	
+	@Column(name="id_institucion")
+	private int idinstitucion;
+	
+	@Transient 
+	private List<Variableexamen> listVariableExamen;
+	
 	public Especificaexamen() {
 	}
 
@@ -91,6 +107,30 @@ public class Especificaexamen implements Serializable {
 
 	public void setTipoespecialidad(Tipoespecialidad tipoespecialidad) {
 		this.tipoespecialidad = tipoespecialidad;
+	}
+
+	public int getEsexorden() {
+		return esexorden;
+	}
+
+	public void setEsexorden(int esexorden) {
+		this.esexorden = esexorden;
+	}
+
+	public int getIdinstitucion() {
+		return idinstitucion;
+	}
+
+	public void setIdinstitucion(int idinstitucion) {
+		this.idinstitucion = idinstitucion;
+	}
+
+	public List<Variableexamen> getListVariableExamen() {
+		return listVariableExamen;
+	}
+
+	public void setListVariableExamen(List<Variableexamen> listVariableExamen) {
+		this.listVariableExamen = listVariableExamen;
 	}
 
 }

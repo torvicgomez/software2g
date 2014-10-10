@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class EspecificaExamenDAOImpl implements IEspecificaExamenDao {
-	@PersistenceContext(unitName="entityManagerFactoryPostgresOptica")
+	@PersistenceContext(unitName="entityManagerFactoryPostgres")
     private EntityManager em;
 
 	public EspecificaExamenDAOImpl() {
@@ -90,4 +90,31 @@ public class EspecificaExamenDAOImpl implements IEspecificaExamenDao {
 		 The merge method returns a managed copy of the given detached entity.*/
 		em.remove(em.merge(especificaexamen));
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Object[]> findExamenesConsultaEspecialidad(long idInstitucion, long idEspecialidad) {
+        try {
+    		String sqlString = " select distinct " +
+    				" espe.id_especiexam, espe.abreviatura, esex_orden " +
+    				" ,vaex.nomvarexam, vaex.abrevaexamen, vaex.vaex_orden " +
+    				" ,vale.valorexamen, vale.valx_orden " +
+    				" from public.especificaexamen espe " +
+    				" inner join public.variableexamen vaex on (vaex.id_especiexam = espe.id_especiexam and vaex.estadovarexam = true ) " +
+    				" left outer join public.valorexamen vale on (vale.id_varexamen = vaex.id_varexamen) " +
+    				" where espe.id_tipoconsulta =:idEspecialidad " +
+    				" and espe.examenactivo = true " +
+    				" and id_institucion =:idInstitucion " +
+    				" order by esex_orden, vaex.vaex_orden, vale.valx_orden asc ";
+            Query query = em.createNativeQuery( sqlString );
+            query.setParameter("idInstitucion", idInstitucion);
+            query.setParameter("idEspecialidad", idEspecialidad);
+            return query.getResultList();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
 }

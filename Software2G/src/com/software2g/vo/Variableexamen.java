@@ -21,15 +21,19 @@ public class Variableexamen implements Serializable {
 	@Column(name="id_varexamen")
 	private long idVarexamen;
 
+	@Column(name="abrevaexamen")
 	private String abrevaexamen;
 
+	@Column(name="descvarexam")
 	private String descvarexam;
 
+	@Column(name="estadovarexam")
 	private boolean estadovarexam;
 
 	@Column(name="id_especiexam")
 	private long idEspeciexam;
 
+	@Column(name="nomvarexam")
 	private String nomvarexam;
 
 	//bi-directional many-to-one association to Registroexamen
@@ -54,6 +58,12 @@ public class Variableexamen implements Serializable {
 		)
 	private List<Unidade> unidades;
 
+	@Column(name="vaex_orden")
+	private int vaexorden;
+	
+	@Transient
+	private List<Valorexamen> listValorExamen;
+	
 	public Variableexamen() {
 	}
 
@@ -127,6 +137,22 @@ public class Variableexamen implements Serializable {
 
 	public void setUnidades(List<Unidade> unidades) {
 		this.unidades = unidades;
+	}
+
+	public int getVaexorden() {
+		return vaexorden;
+	}
+
+	public void setVaexorden(int vaexorden) {
+		this.vaexorden = vaexorden;
+	}
+
+	public List<Valorexamen> getListValorExamen() {
+		return listValorExamen;
+	}
+
+	public void setListValorExamen(List<Valorexamen> listValorExamen) {
+		this.listValorExamen = listValorExamen;
 	}
 
 }

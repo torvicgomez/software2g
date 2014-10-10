@@ -21,10 +21,13 @@ public class Tipoespecialidad implements Serializable {
 	@Column(name="id_tipoconsulta")
 	private long idTipoconsulta;
 
+	@Column(name="abreviatipocons")
 	private String abreviatipocons;
 
+	@Column(name="desctipocons")
 	private String desctipocons;
 
+	@Column(name="nomtipocons")
 	private String nomtipocons;
 
 	//bi-directional many-to-one association to Codigoenfermedade

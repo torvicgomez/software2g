@@ -30,6 +30,7 @@ public class Tipodocumentoinst implements Serializable {
 	//bi-directional many-to-one association to Institucion
 	@OneToMany(mappedBy="tipodocumentoinst")
 	private List<Institucion> institucions;
+	
 
 	public Tipodocumentoinst() {
 	}

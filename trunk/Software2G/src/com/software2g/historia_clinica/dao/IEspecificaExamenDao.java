@@ -35,4 +35,6 @@ public interface IEspecificaExamenDao {
 	 * Remove the given persistent instance.
 	 */
 	public void removeEspecificaexamen(Especificaexamen especificaexamen);
+	
+	public List<Object[]> findExamenesConsultaEspecialidad(long idInstitucion, long idEspecialidad);
 }

@@ -89,6 +89,7 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     			System.out.println("entra esta parte!!!!!");
     			System.out.println("ID:["+this.getIdLong()+"]");
     			persona = gestionFacadeHistoriaClinica.findPersonaById(this.getIdLong());
+    			System.out.println("Edad: ["+persona.getEdad()+"]");
     			listFinalidad = gestionFacadeHistoriaClinica.findAllFinalidads();
     			listMotivo = gestionFacadeHistoriaClinica.findAllMotivos();
     			listSeguridadSocial = gestionFacadeHistoriaClinica.findAllSeguridadsocials();

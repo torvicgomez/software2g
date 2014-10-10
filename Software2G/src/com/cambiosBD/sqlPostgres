@@ -193,3 +193,36 @@ insert into public.valorexamen values (13,5,'Ninguno', 13);
 
 
 
+
+select distinct 
+espe.id_especiexam, espe.abreviatura, esex_orden
+,vaex.nomvarexam, vaex.abrevaexamen, vaex.vaex_orden
+,vale.valorexamen, vale.valx_orden
+from public.especificaexamen espe
+inner join public.variableexamen vaex on (vaex.id_especiexam = espe.id_especiexam and vaex.estadovarexam = true)
+left outer join public.valorexamen vale on (vale.id_varexamen = vaex.id_varexamen)
+where espe.id_tipoconsulta = 2 
+and espe.examenactivo = true
+and id_institucion = 1
+order by esex_orden, vaex.vaex_orden, vale.valx_orden asc ;
+
+
+
+ALTER TABLE public.variableexamen add CONSTRAINT fk_vaex_esex FOREIGN KEY (id_especiexam) REFERENCES public.especificaexamen (id_especiexam) MATCH SIMPLE ON UPDATE RESTRICT ON DELETE RESTRICT ;
+select * from public.variableexamen order by id_varexamen asc ;
+select * from public.especificaexamen order by id_especiexam asc ;
+delete from public.especificaexamen order by id_especiexam asc ;
+
+update public.especificaexamen set esex_orden = 2, id_institucion=1 where id_especiexam = 2 ;
+
+alter table public.especificaexamen alter column codespeciexam type character varying(10);
+alter table public.especificaexamen alter column abreviatura type character varying(15);
+
+insert  into public.especificaexamen values (1,2,'Usa Gafas',true,null,'Rx En USO','Usa en el momento de la consulta Gafas',1,1);
+insert  into public.especificaexamen values (2,2,'No Usa Gafas',true,null,'AVSC','NO Usa en el momento de la consulta Gafas',null,null);
+insert  into public.especificaexamen values (3,2,'Cover Test',true,null,'Cover Test','Cover Test',null,null);
+insert  into public.especificaexamen values (4,2,'Examen Externo',true,null,'Examen Externo','Examen Externo',null,null);
+insert  into public.especificaexamen values (5,2,'Oftalmoscopia',true,null,'Oftalmoscopia','Oftalmoscopia',null,null);
+insert  into public.especificaexamen values (6,2,'Keratometría',true,null,'Keratometría','Keratometría',null,null);
+insert  into public.especificaexamen values (7,2,'Ketinoscopia',true,null,'Retinoscopia','Retinoscopia',null,null);
+

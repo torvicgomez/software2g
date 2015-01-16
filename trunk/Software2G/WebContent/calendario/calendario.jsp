@@ -77,7 +77,7 @@
 				center: 'title',
 				right: 'month,agendaWeek,agendaDay'
 			},
-			defaultDate: '2014-06-12',
+			defaultDate: new Date(), 
 			selectable: true,
 			selectHelper: true,
 			select: function(start, end) {

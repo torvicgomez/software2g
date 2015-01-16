@@ -17,7 +17,7 @@
 
 var defaults = {
 
-	lang: 'en',
+	lang: 'es',
 
 	defaultTimedEventDuration: '01:00:00',
 	defaultAllDayEventDuration: { days: 1 },
@@ -25,7 +25,7 @@ var defaults = {
 	nextDayThreshold: '09:00:00', // 9am
 
 	// display
-	defaultView: 'month',
+	defaultView: 'agendaWeek', 
 	aspectRatio: 1.35,
 	header: {
 		left: 'title',
@@ -72,10 +72,10 @@ var defaults = {
 		next: "next",
 		prevYear: "prev year",
 		nextYear: "next year",
-		today: 'today',
-		month: 'month',
-		week: 'week',
-		day: 'day'
+		today: 'hoy',
+		month: 'mes',
+		week: 'semana',
+		day: 'dia'
 	},
 
 	buttonIcons: {
@@ -685,7 +685,7 @@ function Calendar(element, instanceOptions) {
 			currentView.element.remove();
 			header.deactivateButton(currentView.name);
 		}
-
+		
 		header.activateButton(newViewName);
 
 		currentView = new fcViews[newViewName](
@@ -2592,11 +2592,10 @@ function formatDate(date, formatStr) {
 function formatDateWithChunks(date, chunks) {
 	var s = '';
 	var i;
-
 	for (i=0; i<chunks.length; i++) {
 		s += formatDateWithChunk(date, chunks[i]);
 	}
-
+	s = formatDate_es(s);//funcion incluida por Ing Victor archivo constantes.js
 	return s;
 }
 

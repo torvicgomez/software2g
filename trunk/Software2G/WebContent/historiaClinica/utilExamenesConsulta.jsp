@@ -35,7 +35,7 @@
 					System.out.println("* -----> Examen: ["+elem1.getNomvarexam()+"]-["+elem1.getAbrevaexamen()+"]");
 					if(elem1.getListValorExamen()!=null&&elem1.getListValorExamen().size()>0){
 	%>
-						<select id="<%=elem1.getNomvarexam()%>">			
+						<%=elem1.getNomvarexam()%><select id="<%=elem1.getNomvarexam()%>">			
 	<%
 						for(Valorexamen elem2:elem1.getListValorExamen()){
 							System.out.println("* ----------> Valor Examen: ["+elem2.getValorexamen()+"]");

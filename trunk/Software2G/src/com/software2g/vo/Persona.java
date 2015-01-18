@@ -286,55 +286,20 @@ public class Persona implements Serializable {
 	
 	public String getEdad()
     {
-		SimpleDateFormat sdf = new SimpleDateFormat(ConstantesAplicativo.constanteFormatoFecha1); 
-		String Fechanaci = this.fechanacimientoPers;
-		System.out.println("Fechanaci: ["+Fechanaci+"]");		
-		//sdf.format(new Date(this.fechanacimientoPers)); 
-        String dia = null;
-        String mes = null;
-        String ano = null;
-        int aux1 = 0;
-        int aux2 = 0;
+		SimpleDateFormat sdf = new SimpleDateFormat(ConstantesAplicativo.constanteFormatoFecha1);
+		Date date = new Date();
+        String fechaSystem = sdf.format(date);
         int edad_ano = 0;
         int edad_mes = 0;
-        dia = Fechanaci.substring(8, Fechanaci.length());
-        mes = Fechanaci.substring(5, 7);
-        ano = Fechanaci.substring(0, 4);
-        
-        System.out.println("dia:["+dia+"]");
-        System.out.println("mes:["+mes+"]");
-        System.out.println("ano:["+ano+"]");
-        
-        Date date = new Date();
-        String fechaSystem = sdf.format(date);
-        dia = fechaSystem.substring(0, 2);
-        mes = fechaSystem.substring(3, 5);
-        ano = fechaSystem.substring(6, 10);
-        
-        System.out.println("******************************");
-        System.out.println("this.ano :["+ano+"]");
-        System.out.println("this.mes :["+mes+"]");
-        System.out.println("******************************");
-        
-        aux1 = Integer.parseInt(ano);
-        aux2 = Integer.parseInt(ano);
-        edad_ano = aux1 - aux2;
-        aux1 = Integer.parseInt(mes);
-        aux2 = Integer.parseInt(mes);
-        edad_mes = aux1 - aux2;
-        
-        System.out.println("edad_ano: ["+edad_ano+"]");
-        System.out.println("edad_mes: ["+edad_mes+"]");
-        if(edad_mes < 0)
-        {
+        edad_ano = Integer.parseInt(fechaSystem.substring(6, 10)) - Integer.parseInt(this.fechanacimientoPers.substring(0, 4));
+        edad_mes = Integer.parseInt(fechaSystem.substring(3, 5)) - Integer.parseInt(this.fechanacimientoPers.substring(5, 7));
+        if(edad_mes < 0){
             edad_mes += 12;
             if(--edad_ano < 0)
                 return "Fecha de Nacimiento Incorrecta";
             else
-                return Integer.toString(edad_ano) + " A\321OS " + Integer.toString(edad_mes) + " MESES";
-        } else
-        {
-            return Integer.toString(edad_ano) + " A\321OS " + Integer.toString(edad_mes) + " MESES";
-        }
+                return edad_ano+" A\321OS "+edad_mes+" MESES";
+        }else
+            return edad_ano+" A\321OS "+edad_mes+" MESES";
     }
 }

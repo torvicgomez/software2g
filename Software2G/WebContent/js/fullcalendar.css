@@ -269,7 +269,15 @@ html .fc,
 .fc-event-container > .ui-resizable-resizing {
 	z-index: 9;
 	}
-	 
+
+.fc-event-pediatria {
+	border: 1px solid #ff0000; /* default BORDER color */
+	background-color: #ff0000; /* default BACKGROUND color */
+	color: #fff;               /* default TEXT color */
+	font-size: .85em;
+	cursor: default;
+	}
+
 .fc-event {
 	border: 1px solid #3a87ad; /* default BORDER color */
 	background-color: #3a87ad; /* default BACKGROUND color */

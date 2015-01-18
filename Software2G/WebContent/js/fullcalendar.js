@@ -1192,7 +1192,8 @@ function Header(calendar, options) {
 	}
 	
 	
-	function updateTitle(html) {
+	function updateTitle(html) { 
+		html = formatDateTitle_es(html); //Adicion Ing Victor para formato fecha en español funcion en archivo constantes.js
 		element.find('h2')
 			.html(html);
 	}

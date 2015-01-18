@@ -25,7 +25,12 @@
 
 
 <script>
-	var txt1 = 'Please enter your name:<input type="text" id="alertName" name="alertName" value="name here"/><br/>'+
+	var txt1 = 'Tipo Documento:<select id="tipodoc" name="tipodoc"><option value="CC">Cedula Ciudadania</option><option value="TI">Tarjeta Identidad</option></select><br/>'+
+		  'Nro Documento:<input type="text" id="nrodocumento" name="nrodocumento"/><br/>'+
+		  'Primer Nombre:<input type="text" id="pnombre" name="pnombre"/><br/>'+
+		  'Segundo Nombre:<input type="text" id="snombre" name="snombre"/><br/>'+
+		  'Primer Apellido:<input type="text" id="papellido" name="papellido"/><br/>'+
+		  'Segundo Apellido:<input type="text" id="sapellido" name="sapellido"/><br/>'+
 		  'Sexo:<select id="sexo" name="sexo"><option value="M">Masculino</option><option value="F">Femenino</option></select>';
 	
 	var title_evento = '';
@@ -54,15 +59,17 @@
 				{
 					title: 'Meeting',
 					start: '2014-06-12T10:30:00',
-					end: '2014-06-12T12:30:00'
+					end: '2014-06-12T12:30:00',
+					className: 'fc-event-pediatria'
 				},
 				{
 					title: 'Lunch',
-					start: '2014-06-12T12:00:00'
+					start: '2014-06-12T12:00:00',
+					backgroundColor: '#ff0000'
 				},
 				{
 					title: 'Birthday Party',
-					start: '2014-06-13T07:00:00',
+					start: '2014-06-13T07:00:00'
 				},
 				{
 					title: 'Click for Google',
@@ -115,14 +122,15 @@
 		if(v==0||v==undefined)
 			return false;
 		else if(v==1){
-			title_evento = f.alertName;
+			
 			//$('#calendar').fullCalendar('select', start, end);
 			var dateStart = new Date(parseInt ( f.start , 10 ));
 			start_evento = dateStart.toISOString();
 			var dateEnd = new Date(parseInt ( f.end , 10 ));
 			end_evento = dateEnd.toISOString();
-
-			
+			nameCompleto= f.pnombre+' '+f.snombre+' '+f.papellido+' '+f.sapellido;
+			title_evento = f.nrodocumento+' '+f.tipodoc+' '+nameCompleto;
+			fondo_evento = document.getElementById("fondo").value;
 			//alert('dateStart: ['+dateStrat+']');
 			//alert('formato fecha ISO: ['++']');
 			//start_evento = '2014-06-12T10:20:00';
@@ -138,7 +146,9 @@
 					eventData = {
 						title: title_evento,
 						start: start_evento,
-						end: end_evento
+						end: end_evento,
+						url: 'rol.action?estado=all&funcPosicionado=Administracion Portal::>Roles',
+						backgroundColor: fondo_evento 
 					};
 					//alert('eventData:['+eventData+']');
 					//alert('eventData:['+eventData.title+']');
@@ -177,6 +187,13 @@
 </head>
 <body>
 	<table align="center" width="99%" height="100%">
+		<tr><td>
+			<select id="fondo" name="fondo">
+				<option value="#ff0000">Pediatria</option>
+				<option value="#ff34d5">Odontologia</option>
+				<option value="#aa34d5">Ortodoncia</option>
+			</select>
+		</td></tr>
 		<tr><td><div id='calendar'></div></td></tr>
 	</table>
 </body>

@@ -246,15 +246,15 @@
 							<td class="leftLabel"><s:text name="servicioclinico.anamnesis"></s:text></td>
 							<td><s:textarea name="anamnesis.anamnesis" rows="5" cols="70"></s:textarea></td>
 						</tr>
-<!-- 						<tr> -->
-<%-- 							<td class="leftLabel"><s:text name="servicioclinico.fechahoraservicio"></s:text></td> --%>
-<!-- 							<td> -->
-<%-- 								<jsp:include page="utilExamenesConsulta.jsp" flush="true">  --%>
-<%-- 									<jsp:param value="1" name="idInstitucion"/> --%>
-<%-- 									<jsp:param value="2" name="idEspecialidad"/> --%>
-<%-- 								</jsp:include> --%>
-<!-- 							</td> -->
-<!-- 						</tr> -->
+						<tr>
+							<td class="leftLabel"><s:text name="servicioclinico.fechahoraservicio"></s:text></td>
+							<td>
+								<jsp:include page="utilExamenesConsulta.jsp" flush="true"> 
+									<jsp:param value="1" name="idInstitucion"/>
+									<jsp:param value="2" name="idEspecialidad"/>
+								</jsp:include>
+							</td>
+						</tr> 
 					</table>
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<tr>

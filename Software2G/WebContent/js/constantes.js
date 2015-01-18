@@ -10,6 +10,7 @@ var paca_diasSemana_es = new Array("Domingo","Lunes","Martes","Miércoles","Jueve
 var paca_diasSemanaAbre_es = new Array("Dom","Lun","Mar","Mie","Jue","Vie","Sab");
 
 
+
 function formatDate_es(s){
 	var fecha_es = s;
 	if(s.indexOf("Sun")>-1)
@@ -68,3 +69,33 @@ function formatDate_es(s){
 		fecha_es = s.replace("December", "Diciembre");
 	return fecha_es;
 }
+
+function formatDateTitle_es(s){
+	var fecha_es = s;
+	if(s.indexOf("Jan")>-1)
+		fecha_es = s.replace("Jan", "Ene");
+	else if(s.indexOf("Feb")>-1)
+		fecha_es = s.replace("Feb", "Feb");
+	else if(s.indexOf("Mar")>-1)
+		fecha_es = s.replace("Mar", "Mar");
+	else if(s.indexOf("Apr")>-1)
+		fecha_es = s.replace("Apr", "Abr");
+	else if(s.indexOf("May")>-1)
+		fecha_es = s.replace("May", "May");
+	else if(s.indexOf("Jun")>-1)
+		fecha_es = s.replace("Jun", "Jun");
+	else if(s.indexOf("Jul")>-1)
+		fecha_es = s.replace("Jul", "Jul");
+	else if(s.indexOf("Aug")>-1)
+		fecha_es = s.replace("Aug", "Ago");
+	else if(s.indexOf("Sep")>-1)
+		fecha_es = s.replace("Sep", "Sep");
+	else if(s.indexOf("Oct")>-1)
+		fecha_es = s.replace("Oct", "Oct");
+	else if(s.indexOf("Nov")>-1)
+		fecha_es = s.replace("Nov", "Nov");
+	else if(s.indexOf("Dec")>-1)
+		fecha_es = s.replace("Dec", "Dic");
+	return fecha_es;
+}
+

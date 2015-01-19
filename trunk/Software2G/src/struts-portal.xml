@@ -67,7 +67,7 @@
 			<result name="success" type="tiles">portal.crearpersona</result>
         </action>
         <action name="savePersona" method="savePersona" class="PortalAction">
-			<result name="success" type="tiles">portal.listpersonal</result>
+			<result name="success" type="tiles">portal.crearpersona</result>
 			<result name="input" type="tiles">portal.crearpersona</result>
         </action>
         <action name="editarPersonal" method="editarPersonal" class="PortalAction">

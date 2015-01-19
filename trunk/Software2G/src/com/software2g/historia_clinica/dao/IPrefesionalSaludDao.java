@@ -1,13 +1,13 @@
-package com.software2g.portal.dao;
+package com.software2g.historia_clinica.dao;
 
 import java.util.List;
 
-import com.software2g.vo.Persona;
+import com.software2g.vo.Profesionalsalud;
 
 /**
- * The DAO interface for the Persona entity.
+ * The DAO interface for the Profesionalsalud entity.
  */
-public interface IPersonaDao {
+public interface IPrefesionalSaludDao {
 	/**
 	 * Return the persistent entities returned from a named query.
 	 */
@@ -22,21 +22,17 @@ public interface IPersonaDao {
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
-	public Persona findPersonaById(java.lang.Long id);
+	public Profesionalsalud findProfesionalsaludById(long id);
 	/**
-	 * Return all persistent instances of the <code>Persona</code> entity.
+	 * Return all persistent instances of the <code>Profesionalsalud</code> entity.
 	 */
-	public List<Persona> findAllPersonas();
+	public List<Profesionalsalud> findAllProfesionalsaluds();
 	/**
 	 * Make the given instance managed and persistent.
 	 */
-	public void persistPersona(Persona persona);
-	public long persistPersonaId(Persona persona);
+	public void persistProfesionalsalud(Profesionalsalud profesionalsalud);
 	/**
 	 * Remove the given persistent instance.
 	 */
-	public void removePersona(Persona persona);
-	
-	public List<Persona> findAllPersonas(String datoFind, String tipoFind);
-	public List<Persona> findAllPersonasProfesionales(String datoFind);
+	public void removeProfesionalsalud(Profesionalsalud profesionalsalud);
 }

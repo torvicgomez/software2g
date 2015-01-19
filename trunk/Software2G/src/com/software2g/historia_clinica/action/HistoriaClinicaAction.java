@@ -21,6 +21,7 @@ import com.software2g.vo.Anamnesi;
 import com.software2g.vo.Finalidad;
 import com.software2g.vo.Motivo;
 import com.software2g.vo.Persona;
+import com.software2g.vo.Profesionalsalud;
 import com.software2g.vo.Seguridadsocial;
 import com.software2g.vo.Servicio;
 import com.software2g.vo.Usuario;
@@ -33,6 +34,16 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 	private String estado;
 	private String funcPosicionado;
 	private String id;
+	
+	
+	private List<Profesionalsalud> listProfesionalSalud;
+	private Profesionalsalud profesionalSalud;
+	
+	public List<Profesionalsalud> getListProfesionalSalud() {return listProfesionalSalud;}
+	public void setListProfesionalSalud(List<Profesionalsalud> listProfesionalSalud) {this.listProfesionalSalud = listProfesionalSalud;}
+	public Profesionalsalud getProfesionalSalud() {return profesionalSalud;}
+	public void setProfesionalSalud(Profesionalsalud profesionalSalud) {this.profesionalSalud = profesionalSalud;}
+	
 	
 	private List<Persona> listPersona;
 	private Persona persona;
@@ -76,6 +87,50 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 		}
 		System.out.println("######>>>>>>>funcPosicionado>>>>"+funcPosicionado);
 	}
+	
+	@SkipValidation
+	public String profesionalSaludMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>HistoriaClinicaAction>>>>profesionalSaludMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listProfesionalSalud = gestionFacadeHistoriaClinica.findAllProfesionalsaluds();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAdd)){
+    			System.out.println("entra esta parte!!!!!");
+    			System.out.println("ID:["+this.getIdLong()+"]");
+    			persona = gestionFacadeHistoriaClinica.findPersonaById(this.getIdLong());
+    			System.out.println("Edad: ["+persona.getEdad()+"]");
+    			listFinalidad = gestionFacadeHistoriaClinica.findAllFinalidads();
+    			listMotivo = gestionFacadeHistoriaClinica.findAllMotivos();
+    			listSeguridadSocial = gestionFacadeHistoriaClinica.findAllSeguridadsocials();
+    			System.out.println("listFinalidad:["+listFinalidad+"]");
+    			for(Finalidad elem: listFinalidad){
+    				System.out.println("Finalidad:["+elem.getCodfinalidad()+"]-["+elem.getNomfinalidad()+"]");
+    			}
+    		}/*else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			if(ValidaString.isNullOrEmptyString(parametroCalendario.getPacaVariable()))
+    				addActionError(getText("validacion.requerido","pacaVariable","Variable"));
+    			if(ValidaString.isNullOrEmptyString(parametroCalendario.getPacaValor()))
+    				addActionError(getText("validacion.requerido","pacaValor","Valor"));
+    			if(!hasActionErrors()){
+    				parametroCalendario.setDatosAud(this.getDatosAud());
+    				ValidaString.imprimirObject(parametroCalendario);
+    				gestionFacadeAgenda.persistParametroscalendario(parametroCalendario);
+    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				addActionMessage(getText("accion.satisfactoria"));
+    			}
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			parametroCalendario = gestionFacadeAgenda.findParametroscalendarioById(getIdLong());
+    		}*/
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>HistoriaClinicaAction>>>>profesionalSaludMethod>>>>estado salida-->>"+estado);
+    	return Action.SUCCESS;
+	}
+	
 	
 	@SkipValidation
 	public String servicioMethod(){

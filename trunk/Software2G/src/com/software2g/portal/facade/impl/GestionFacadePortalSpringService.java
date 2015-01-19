@@ -391,6 +391,15 @@ public class GestionFacadePortalSpringService implements IGestionFacadePortal{
 			throw new Exception("persistPersona failed: " + e.getMessage());
 		}
 	}
+	
+	public long persistPersonaId(Persona persona) throws Exception {
+		try {
+			return getPersonaDao().persistPersonaId(persona);
+		} catch (RuntimeException e) {
+			throw new Exception("persistPersona failed: " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Remove the given persistent instance.
 	 */

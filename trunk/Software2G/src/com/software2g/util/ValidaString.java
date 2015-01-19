@@ -95,14 +95,16 @@ public class ValidaString {
 	    	for(Method elem:obj.getClass().getMethods()){
 	    		if(elem.getName().substring(0, 3).equals("get")){
 	    			Expression expr = new Expression(obj, elem.getName(), new Object[0]);
-	    			expr.execute();
-	    			Object o = expr.getValue();
-	    			if (o == null) {
-	    	            System.out.println(elem.getName() + " : valor nulo");
-	    	        } else {
-	    	        	System.out.println(elem.getName());
-	    	            System.out.println(elem.getName() + " : ["+o.toString()+"]");
-	    	        }
+	    			if(expr!=null){
+		    			expr.execute();
+		    			Object o = expr.getValue();
+		    			if (o == null) {
+		    	            System.out.println(elem.getName() + " : valor nulo");
+		    	        } else {
+		    	        	System.out.println(elem.getName());
+		    	            System.out.println(elem.getName() + " : ["+o.toString()+"]");
+		    	        }
+	    			}
 	    		}
 	    	}
     	}catch(Exception e){

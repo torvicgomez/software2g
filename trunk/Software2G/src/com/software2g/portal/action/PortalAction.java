@@ -302,17 +302,30 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
     			if(personaVO.getDireccionPers()==null||personaVO.getDireccionPers().equals(""))
     				addActionMessage(getText("validacion.requerido","direccionPer","Dirección"));
     			
-    			ValidaString.imprimirObject(personaVO);
+    			//ValidaString.imprimirObject(personaVO);
     			
     			if(!hasActionMessages()){
     				
     				System.out.println("personaVO.getTipodocumento().getIdTidoc():["+personaVO.getTipodocumento().getIdTidoc()+"]");
     				System.out.println("personaVO.getEstadocivilPers():["+personaVO.getEstadocivilPers()+"]");
     				System.out.println("personaVO.getSexoPers():["+personaVO.getSexoPers()+"]");
-    				
+    				//System.out.println("personaVO.getUbicacionPersona(): ["+personaVO.getUbicacionPersona()+"]");
+    				System.out.println("personaVO.getMunicipio().getMcpoId():["+personaVO.getMunicipio().getMcpoId()+"]");
     				personaVO.setRegistradopor(((Usuario)request.getSession().getAttribute("usuarioVO")).getLoginUsua());
-    				gestionFacadePortal.persistPersona(personaVO);
-    				setListPersona(gestionFacadePortal.findAllPersonas());
+    				long idPersona = gestionFacadePortal.persistPersonaId(personaVO);
+    				if(idPersona>0){
+	    				setPersonaVO(gestionFacadePortal.findPersonaById(idPersona));
+	    	    		listTipoDoc=gestionFacadePortal.findAllTipodocumentos();
+	    	    		listSexo = cargarListSexo();
+	    	    		listEstadoCivil = cargarListEstadoCivil();
+	    	    		
+	    	    		listPais = gestionFacadePortal.findAllPaiss();
+	    	    		listDepartamento = gestionFacadePortal.findAllDepartamentos();
+	    	    		if(getPersonaVO().getMunicipio()!=null&&getPersonaVO().getMunicipio().getDepartamento().getDptoId()>0)
+	    	    			listMunicipio = gestionFacadePortal.findAllMunicipios(getPersonaVO().getMunicipio().getDepartamento().getDptoId());
+    				}
+    				this.estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				//setListPersona(gestionFacadePortal.findAllPersonas());
     			}else{
     				result = Action.INPUT;
     				listTipoDoc=gestionFacadePortal.findAllTipodocumentos();
@@ -416,7 +429,7 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
     			if(usuarioVO.getNewPassword()!=null&&usuarioVO.getConfirmNewPassword()!=null
     					&&!usuarioVO.getNewPassword().equals(usuarioVO.getConfirmNewPassword()))
     				addActionMessage(getText("validacion.text","nocoincideNewConfPass","El campo \"Nueva Contraseña\" no coincide con el campo \"Confirmar Contraseña\""));
-    			ValidaString.imprimirObject(usuarioVO);
+    			//ValidaString.imprimirObject(usuarioVO);
     			if(!hasActionMessages()){
     				Usuario usuario = (Usuario)request.getSession().getAttribute("usuarioVO");
     				usuario.setFechacambio(ValidaString.fechaSystem());
@@ -457,7 +470,7 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
     				addActionError(getText("validacion.requerido","descripcion","Descripción"));
     			if(!hasActionErrors()){
     				rol.setDatosAud(this.getDatosAud());
-    				ValidaString.imprimirObject(rol);
+    				//ValidaString.imprimirObject(rol);
     				gestionFacadePortal.persistRol(rol);
     				estado = ConstantesAplicativo.constanteEstadoAbstract;
     				addActionMessage(getText("accion.satisfactoria"));
@@ -518,7 +531,7 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
     				if(funcionalidad.getFuncionalidad().getIdFunc()<=0)
     					funcionalidad.setFuncionalidad(null);
     				funcionalidad.setDatosAud(this.getDatosAud());
-    				ValidaString.imprimirObject(funcionalidad);
+    				//ValidaString.imprimirObject(funcionalidad);
     				gestionFacadePortal.persistFuncionalidad(funcionalidad);
     				estado = ConstantesAplicativo.constanteEstadoAbstract;
     				addActionMessage(getText("accion.satisfactoria"));

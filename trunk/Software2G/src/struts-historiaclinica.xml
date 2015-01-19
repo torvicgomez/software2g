@@ -49,7 +49,11 @@
 		  	<result name="login">/index.jsp</result>
 		</global-results>
         
-        <!-- CONTABLE ACTION -->
+        <!-- HISTORIA CLINICA ACTION -->
+        <action name="profesionalsalud" method="profesionalSaludMethod" class="HistoriaClinicaAction">
+        	<result name="success" type="tiles">historiaClinica.profesionalsalud</result>
+        </action>
+        
         <action name="servicio" method="servicioMethod" class="HistoriaClinicaAction">
         	<result name="success" type="tiles">historiaClinica.servicio</result>
         </action>

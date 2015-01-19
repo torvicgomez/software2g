@@ -92,9 +92,26 @@ public class PersonaDaoImpl implements IPersonaDao {
 		persona.setSapellidoPers(ValidaString.toUpperCase(persona.getSapellidoPers()));
 		//persona.setFechaexpdocPers(ValidaString.formatoFecha(persona.getFechaexpdocPers()));
 		//persona.setFechanacimientoPers(ValidaString.formatoFecha(persona.getFechanacimientoPers()));
-		ValidaString.imprimirObject(persona);
+		//ValidaString.imprimirObject(persona);
 		em.persist(em.merge(persona));
 	}
+	
+	public long persistPersonaId(Persona persona) {
+		persona.setFechacambio(ValidaString.fechaSystem());
+		persona.setHoracambio(ValidaString.horaSystem());
+		persona.setPnombrePers(ValidaString.toUpperCase(persona.getPnombrePers()));
+		persona.setSnombrePers(ValidaString.toUpperCase(persona.getSnombrePers()));
+		persona.setPapellidoPers(ValidaString.toUpperCase(persona.getPapellidoPers()));
+		persona.setSapellidoPers(ValidaString.toUpperCase(persona.getSapellidoPers()));
+		//persona.setFechaexpdocPers(ValidaString.formatoFecha(persona.getFechaexpdocPers()));
+		//persona.setFechanacimientoPers(ValidaString.formatoFecha(persona.getFechanacimientoPers()));
+		//ValidaString.imprimirObject(persona);
+		//em.persist(em.merge(persona));
+		Persona obj = em.merge(persona); 
+		em.persist(obj); 
+		return obj.getIdPers();
+	}
+	
 	/**
 	 * Remove the given persistent instance.
 	 */

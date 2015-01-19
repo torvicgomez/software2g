@@ -1,0 +1,14 @@
+Tareas
+1- Crear persona esquema portal
+2- Crear Profesional de la Salud
+3- Asociar Persona-Profesional Salud a Institucion
+4- Armar Archivo .js Menu historia clinica
+
+
+Sugerencia
+* Tabla profesional salud 
+	adicionar Campo: - profesion
+					 - estado
+					 
+					 
+

@@ -32,6 +32,7 @@ import com.software2g.vo.Partescuerpo;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Personapertenece;
 import com.software2g.vo.Posicion;
+import com.software2g.vo.Profesionalsalud;
 import com.software2g.vo.Registroexamen;
 import com.software2g.vo.Registroformulacion;
 import com.software2g.vo.Remision;
@@ -1332,5 +1333,28 @@ public interface IGestionFacadeHistoriaClinica {
 	//******************************************************************
 	// FIN Persona
 	//******************************************************************
-		
+
+	//******************************************************************
+	// Profesional Salud
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Profesionalsalud findProfesionalsaludById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Profesionalsalud</code> entity.
+	 */
+	public List<Profesionalsalud> findAllProfesionalsaluds() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistProfesionalsalud(Profesionalsalud profesionalsalud) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeProfesionalsalud(Profesionalsalud profesionalsalud) throws Exception;
+	//******************************************************************
+	// FIN Profesional Salud
+	//******************************************************************	
 }

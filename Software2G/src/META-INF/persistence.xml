@@ -101,6 +101,7 @@
 		<class>com.software2g.vo.Variableexamen</class>
 		<class>com.software2g.vo.Variableformulacion</class>
 		<class>com.software2g.vo.Virtuallink</class>
-		<class>com.software2g.vo.Valorexamen</class> 
+		<class>com.software2g.vo.Valorexamen</class>
+		<class>com.software2g.vo.Profesionalsalud</class> 
 	</persistence-unit>
 </persistence>

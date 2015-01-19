@@ -201,5 +201,6 @@
         <property name="variableFormulacionDao"><bean class="com.software2g.historia_clinica.dao.impl.VariableFormulacionDAOImpl"/></property>
         <property name="virtualLinkDao"><bean class="com.software2g.historia_clinica.dao.impl.VirtualLinkDAOImpl"/></property>
         <property name="personaDao"><bean class="com.software2g.portal.dao.impl.PersonaDaoImpl"/></property>
+        <property name="profesionalSaludDao"><bean class="com.software2g.historia_clinica.dao.impl.PrefesionalSaludDAOImpl"/></property>
      </bean>
 </beans>

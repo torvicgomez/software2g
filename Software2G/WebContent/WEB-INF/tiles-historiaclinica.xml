@@ -16,4 +16,8 @@
 		<put-attribute name="body" value="/historiaClinica/servicio.jsp" />
 	</definition>
 	 
+	<definition name="historiaClinica.profesionalsalud" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/historiaClinica/profesionalSalud.jsp" />
+	</definition>
+	
 </tiles-definitions>

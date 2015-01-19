@@ -47,12 +47,8 @@
 		<s:form id="form">
 		<div id="demo">
 			<table border="0" width="100%" align="center">
-				<tr>
-					<td>
-						<h1><strong><s:text name="titulo.personal"></s:text></strong></h1>
-						<s:submit value="Crear Persona" cssClass="button" action="crearPersona"></s:submit>
-					</td>
-				</tr>
+				<tr><td><h1><strong><s:text name="titulo.personal"></s:text></strong></h1></td></tr>
+				<tr><td align="right"><s:submit value="Crear Persona" cssClass="button" action="crearPersona"></s:submit></td></tr>
 				<tr>
 					<td valign="top">
 						<table cellpadding="0" cellspacing="0" border="0" class="display" id="personalTable">

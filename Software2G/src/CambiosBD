@@ -366,5 +366,38 @@ CREATE TABLE contable.otrosrecargos
 
 
 
+////////////////////////////////////////////////////////////////////
+Cambios BD New Project
+CREATE SCHEMA historiaclinica
+  AUTHORIZATION postgres;
+  
+CREATE TABLE historiaclinica.profesionalsalud
+(
+  prfs_id numeric NOT NULL,
+  id_pers numeric NOT NULL,
+  prfs_nrotarjetaprof character varying(20),
+  prfs_fechacambio character varying(10) NOT NULL,
+  prfs_horacambio character varying(8) NOT NULL,
+  prfs_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_prfs_id PRIMARY KEY (prfs_id )
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE historiaclinica.profesionalsalud
+  OWNER TO postgres;  
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

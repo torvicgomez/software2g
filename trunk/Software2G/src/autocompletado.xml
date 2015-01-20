@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:context="http://www.springframework.org/schema/context" 
+       xmlns:tx="http://www.springframework.org/schema/tx" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans                
+       					   http://www.springframework.org/schema/beans/spring-beans-2.5.xsd                   
+       					   http://www.springframework.org/schema/tx                
+       					   http://www.springframework.org/schema/tx/spring-tx-2.5.xsd                
+       					   http://www.springframework.org/schema/context                
+       					   http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+	
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"></bean>
+    
+    <!--Transaction manager for a single JPA EntityManager (alternative to JTA)-->
+    <!-- Configuracion B.D. Gestion -->
+    <bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactoryPostgres">
+    	<property name="dataSource" ref="dataSourcePostgres"/>
+        <property name="jpaVendorAdapter"> 
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="database" value="POSTGRESQL"/>
+                <property name="showSql" value="true"/> 
+                <property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect"/>                
+            </bean>
+        </property>
+    </bean>
+    
+    <!-- Configuracion Recursos B.D. -->
+    <bean class="org.springframework.jndi.JndiObjectFactoryBean" id="dataSourcePostgres">
+		<property name="resourceRef">
+	       <value>false</value>
+	    </property> 
+    	<property name="jndiName">
+			<value>java:comp/env/jdbc/SISTEMAS2G</value>		
+		</property>
+    </bean>
+    
+    <bean class="org.springframework.orm.jpa.JpaTransactionManager" id="transactionManagerPostgres">
+        <property name="entityManagerFactory" ref="entityManagerFactoryPostgres"/> 
+    </bean>
+    
+    <!--  enable the configuration of transactional behavior based on annotations  -->
+    <tx:annotation-driven transaction-manager="transactionManagerPostgres"/>
+    
+    <bean id="gestionFacadeAutoCompletado" class="com.software2g.service.facade.impl.GestionFacadeAutoCompletado" scope="prototype">
+        <property name="personaDao"><bean class="com.software2g.portal.dao.impl.PersonaDaoImpl"/></property>
+    </bean>
+    
+</beans>

@@ -34,10 +34,11 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 	private String estado;
 	private String funcPosicionado;
 	private String id;
-	
+	private String dataAutoCompletado;
 	
 	private List<Profesionalsalud> listProfesionalSalud;
 	private Profesionalsalud profesionalSalud;
+	
 	
 	public List<Profesionalsalud> getListProfesionalSalud() {return listProfesionalSalud;}
 	public void setListProfesionalSalud(List<Profesionalsalud> listProfesionalSalud) {this.listProfesionalSalud = listProfesionalSalud;}
@@ -98,16 +99,7 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     			listProfesionalSalud = gestionFacadeHistoriaClinica.findAllProfesionalsaluds();
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAdd)){
     			System.out.println("entra esta parte!!!!!");
-    			System.out.println("ID:["+this.getIdLong()+"]");
-    			persona = gestionFacadeHistoriaClinica.findPersonaById(this.getIdLong());
-    			System.out.println("Edad: ["+persona.getEdad()+"]");
-    			listFinalidad = gestionFacadeHistoriaClinica.findAllFinalidads();
-    			listMotivo = gestionFacadeHistoriaClinica.findAllMotivos();
-    			listSeguridadSocial = gestionFacadeHistoriaClinica.findAllSeguridadsocials();
-    			System.out.println("listFinalidad:["+listFinalidad+"]");
-    			for(Finalidad elem: listFinalidad){
-    				System.out.println("Finalidad:["+elem.getCodfinalidad()+"]-["+elem.getNomfinalidad()+"]");
-    			}
+    			
     		}/*else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			if(ValidaString.isNullOrEmptyString(parametroCalendario.getPacaVariable()))
     				addActionError(getText("validacion.requerido","pacaVariable","Variable"));
@@ -204,4 +196,6 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 		System.out.println("Fecha y Hora Servicio: ["+sdf.format(new Date())+"]");
 		return sdf.format(new Date());
 	}
+	public String getDataAutoCompletado() {return dataAutoCompletado;}
+	public void setDataAutoCompletado(String dataAutoCompletado) {this.dataAutoCompletado = dataAutoCompletado;}
 }

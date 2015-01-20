@@ -37,6 +37,16 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>index.zul</welcome-file>
   </welcome-file-list>
+  
+  <servlet>
+  	<servlet-name>SearchController</servlet-name>
+	<servlet-class>com.software2g.service.Autocompletado</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>SearchController</servlet-name>
+  	<url-pattern>/SearchController</url-pattern>
+  </servlet-mapping>
+  
   <env-entry>
   	<description>Path Files Funcionalidades Roles</description>
   	<env-entry-name>urlFuncionalidadesRol</env-entry-name>

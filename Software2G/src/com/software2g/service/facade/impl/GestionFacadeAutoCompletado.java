@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.software2g.historia_clinica.dao.IEspecificaExamenDao;
 import com.software2g.portal.dao.IPersonaDao;
 import com.software2g.service.facade.IGestionFacadeAutoCompletado;
+import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.paintService.facade.IGestionFacadeExamenesConsulta;
 import com.software2g.vo.Persona;
 
@@ -47,7 +48,7 @@ public class GestionFacadeAutoCompletado implements IGestionFacadeAutoCompletado
 			List<String> list = new ArrayList<String>();
 			if(listPersonas!=null&&listPersonas.size()>0){
 				for(Persona elem:listPersonas){
-					list.add(elem.getNombreCompleto());
+					list.add(elem.getNombreCompleto()+ConstantesAplicativo.constanteSplit+"onClick=\"javascript:cargarDatosPersona(\'"+elem.getIdPers()+"\')\"");
 				}
 			}
 			return list;

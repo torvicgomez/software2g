@@ -7124,8 +7124,16 @@ $.widget( "ui.autocomplete", {
 	},
 
 	_renderItem: function( ul, item ) {
+		//adecuacion para autocompletado con visualizacion de datos en otra grilla
+		//Mod Ing Victor Gomez
+		var res = item.label.split('&&&&');
+		var evento = '';
+		if(res.length>1){
+			evento = res[1]; 
+			item.label = res[0];
+		}
 		return $( "<li>" )
-			.append( $( "<a>" ).text( item.label ) )
+			.append( $( "<a " + evento + " >" ).text( item.label ) )
 			.appendTo( ul );
 	},
 

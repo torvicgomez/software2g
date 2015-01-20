@@ -1,5 +1,7 @@
 package com.software2g.historia_clinica.action;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -38,7 +40,7 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 	
 	private List<Profesionalsalud> listProfesionalSalud;
 	private Profesionalsalud profesionalSalud;
-	
+	private InputStream strDatosPersona;
 	
 	public List<Profesionalsalud> getListProfesionalSalud() {return listProfesionalSalud;}
 	public void setListProfesionalSalud(List<Profesionalsalud> listProfesionalSalud) {this.listProfesionalSalud = listProfesionalSalud;}
@@ -100,8 +102,11 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAdd)){
     			System.out.println("entra esta parte!!!!!");
     			
-    		}/*else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
-    			if(ValidaString.isNullOrEmptyString(parametroCalendario.getPacaVariable()))
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			System.out.println("*************************************************************");
+    			System.out.println("getDataAutoCompletado:["+this.getDataAutoCompletado()+"]");
+    			System.out.println("*************************************************************");
+    			/*if(ValidaString.isNullOrEmptyString(parametroCalendario.getPacaVariable()))
     				addActionError(getText("validacion.requerido","pacaVariable","Variable"));
     			if(ValidaString.isNullOrEmptyString(parametroCalendario.getPacaValor()))
     				addActionError(getText("validacion.requerido","pacaValor","Valor"));
@@ -111,8 +116,8 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     				gestionFacadeAgenda.persistParametroscalendario(parametroCalendario);
     				estado = ConstantesAplicativo.constanteEstadoAbstract;
     				addActionMessage(getText("accion.satisfactoria"));
-    			}
-    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			}*/
+    		}/*else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			parametroCalendario = gestionFacadeAgenda.findParametroscalendarioById(getIdLong());
     		}*/
     	} catch(Exception e){
@@ -167,7 +172,28 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     	return Action.SUCCESS;
 	}
 	
-	
+	public InputStream getStrDatosPersona() {
+		try{
+			long idPersona = Long.parseLong(request.getParameter("idPersona"));
+			String lugaresParada = "";
+			String lugares = "";
+			System.out.println("idPrograma: ["+idPersona+"]");
+					lugaresParada = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"1\" class=\"display\" id=\"paradasProgramadasAbs\"> "+ 
+									"		<thead> " +
+									"			<tr> " +
+									"				<th>Orden Parada</th> " +
+									"				<th>Parada</th> " +
+									"				<th>Tipo de Parada</th> " +
+									"			</tr> " +
+									"		</thead> " +
+									"		<tbody>";
+					lugaresParada +=lugares+"</tbody></table>";
+			strDatosPersona = new ByteArrayInputStream(lugaresParada.getBytes());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return strDatosPersona;
+	}
 	
 	public HistoriaClinicaAction(IGestionFacadeHistoriaClinica gestionFacadeHistoriaClinica) {this.gestionFacadeHistoriaClinica = gestionFacadeHistoriaClinica;}
 	public HttpServletRequest getRequest() {return request;}

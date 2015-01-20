@@ -29,7 +29,7 @@
 				} );
 				
 				$(function() {
-                	$("#search").autocomplete({     
+                	$("#search").autocomplete({
                 		source : function(request, response) {
 	                		$.ajax({
 	                        	url : "SearchController",
@@ -45,9 +45,13 @@
         				}
 					});
 				});
-				
-				
 			} );
+
+			function cargarDatosPersona(id){
+				$("#divDatosPersona").load('cargarDatosPersona.action?idPersona='+id);
+				//alert('construccion!!!!');
+			}				
+			
 			
 			function agregar(){
 				document.form.action="profesionalsalud.action?estado=<%=ConstantesAplicativo.constanteEstadoAdd%>";
@@ -139,8 +143,10 @@
 						<tr>
 							<td class="leftLabel"><s:text name="profesionalsalud.findpersona"></s:text></td>
 							<td>
-								<s:textfield name="dataAutoCompletado" id="search" size="30" maxlength="30" cssClass="inputs"></s:textfield>
+								<s:textfield name="dataAutoCompletado" id="search" size="60" maxlength="30" cssClass="inputs"></s:textfield>
+								<div id="divDatosPersona"></div>
 							</td>
+							
 						</tr>
 					</table>
 					<table cellpadding="0" cellspacing="0" border="0" class="display">

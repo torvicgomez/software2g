@@ -27,25 +27,45 @@
 						}
 				   }
 				} );
+				
+				$(function() {
+                	$("#search").autocomplete({     
+                		source : function(request, response) {
+	                		$.ajax({
+	                        	url : "SearchController",
+	                        	type : "GET",
+	                        	data : {
+	                                term : request.term
+	                        	},
+	                        	dataType : "json",
+	                        	success : function(data) {
+	                                	response(data);
+	                        	}
+	                		});
+        				}
+					});
+				});
+				
+				
 			} );
 			
 			function agregar(){
-				document.form.action="tipoSolicitudViaje.action?estado=<%=ConstantesAplicativo.constanteEstadoAdd%>";
+				document.form.action="profesionalsalud.action?estado=<%=ConstantesAplicativo.constanteEstadoAdd%>";
 				document.form.submit();
 			}
 			
 			function registrar(){
-				document.form.action="tipoSolicitudViaje.action?estado=<%=ConstantesAplicativo.constanteEstadoSave%>";
+				document.form.action="profesionalsalud.action?estado=<%=ConstantesAplicativo.constanteEstadoSave%>";
 				document.form.submit();
 			}
 			
 			function volver(){
-				document.form.action="tipoSolicitudViaje.action?estado=<%=ConstantesAplicativo.constanteEstadoAll%>";
+				document.form.action="profesionalsalud.action?estado=<%=ConstantesAplicativo.constanteEstadoAll%>";
 				document.form.submit();
 			}
 			
 			function detalle(param){
-				document.form.action="tipoSolicitudViaje.action?estado=<%=ConstantesAplicativo.constanteEstadoEdit%>&id="+param;
+				document.form.action="profesionalsalud.action?estado=<%=ConstantesAplicativo.constanteEstadoEdit%>&id="+param;
 				document.form.submit();
 			}
 		</script>
@@ -119,14 +139,7 @@
 						<tr>
 							<td class="leftLabel"><s:text name="profesionalsalud.findpersona"></s:text></td>
 							<td>
-								<s:hidden name="tipoSolicitudViaje.tpsvId" id="tpsvId"></s:hidden>
-								<s:textfield name="tipoSolicitudViaje.tpsvDescripcion" id="descripcion" size="30" maxlength="30" cssClass="inputs"></s:textfield>
-							</td>
-						</tr>
-						<tr>
-							<td class="leftLabel"><s:text name="tipoSolViaje.Estado"></s:text></td>
-							<td>
-								<s:select list="#{'1':'ACTIVO','0':'INACTIVO'}" name="tipoSolicitudViaje.tpsvEstado" headerKey="" headerValue=".::Seleccion::." cssClass="inputs"/>
+								<s:textfield name="dataAutoCompletado" id="search" size="30" maxlength="30" cssClass="inputs"></s:textfield>
 							</td>
 						</tr>
 					</table>

@@ -174,21 +174,41 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 	
 	public InputStream getStrDatosPersona() {
 		try{
+			String html = "";
 			long idPersona = Long.parseLong(request.getParameter("idPersona"));
-			String lugaresParada = "";
-			String lugares = "";
 			System.out.println("idPrograma: ["+idPersona+"]");
-					lugaresParada = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"1\" class=\"display\" id=\"paradasProgramadasAbs\"> "+ 
-									"		<thead> " +
-									"			<tr> " +
-									"				<th>Orden Parada</th> " +
-									"				<th>Parada</th> " +
-									"				<th>Tipo de Parada</th> " +
-									"			</tr> " +
-									"		</thead> " +
-									"		<tbody>";
-					lugaresParada +=lugares+"</tbody></table>";
-			strDatosPersona = new ByteArrayInputStream(lugaresParada.getBytes());
+			Persona persona = gestionFacadeHistoriaClinica.findPersonaById(idPersona);
+			html = "<s:textfield name=\"dataAutoCompletado\" id=\"search\" size=\"60\" maxlength=\"30\" cssClass=\"inputs\"></s:textfield><br>";
+			html += "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">"+ 
+					"	<tr> " +
+					"		<td>" + persona.getNombreCompleto() + "</td> " +
+					"	</tr> " +
+					"	<tr> " +
+					"		<td>" + persona.getDocumentoPers() + " " + persona.getTipodocumento().getAbreviaturaTidoc() + "</td> " +
+					"	</tr> " +
+					"	<tr> " +
+					"		<td>" + persona.getFechanacimientoPers() + " " + persona.getEdad() + "</td> " +
+					"	</tr> " +
+					"	<tr> " +
+					"		<td>" + persona.getSexoPers() + "</td> " +
+					"	</tr> " +
+					"	<tr> " +
+					"		<td>" + persona.getEstadocivilPers() + "</td> " +
+					"	</tr> " +
+					"	<tr> " +
+					"		<td>" + persona.getEmailPers() + "</td> " +
+					"	</tr> " +
+					"	<tr> " +
+					"		<td>" + persona.getTelefonoPers() + "</td> " +
+					"	</tr> " +
+					"	<tr> " +
+					"		<td>" + persona.getUbicacionPersona() + "</td> " +
+					"	</tr> " +
+					"	<tr> " +
+					"		<td>" + persona.getDireccionPers() + "</td> " +
+					"	</tr> " +
+					"</table>";
+			strDatosPersona = new ByteArrayInputStream(html.getBytes());
 		}catch(Exception e){
 			e.printStackTrace();
 		}

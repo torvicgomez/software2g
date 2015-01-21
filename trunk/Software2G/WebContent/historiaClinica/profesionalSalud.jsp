@@ -49,9 +49,20 @@
 
 			function cargarDatosPersona(id){
 				$("#divDatosPersona").load('cargarDatosPersona.action?idPersona='+id);
-				//alert('construccion!!!!');
+				var campoFind = document.getElementById('campoFind');
+				var repetirFind = document.getElementById('repetirFind');
+				campoFind.style.display = 'none';
+				repetirFind.style.display = 'block';
 			}				
 			
+			function repetirBusqueda(){
+				var campoFind = document.getElementById('campoFind');
+				var repetirFind = document.getElementById('repetirFind');
+				campoFind.style.display = 'block';
+				repetirFind.style.display = 'none';
+				var search = document.getElementById('search');
+				search.value = '';
+			}
 			
 			function agregar(){
 				document.form.action="profesionalsalud.action?estado=<%=ConstantesAplicativo.constanteEstadoAdd%>";
@@ -143,10 +154,16 @@
 						<tr>
 							<td class="leftLabel"><s:text name="profesionalsalud.findpersona"></s:text></td>
 							<td>
-								<s:textfield name="dataAutoCompletado" id="search" size="60" maxlength="30" cssClass="inputs"></s:textfield>
-								<div id="divDatosPersona"></div>
+								<div id="campoFind" style="overflow:auto;width:auto;height:auto;display:block">
+									<s:textfield name="dataAutoCompletado" id="search" size="60" maxlength="30" cssClass="inputs"></s:textfield>
+								</div>
+								<div id="repetirFind" style="overflow:auto;width:auto;height:auto;display:none">
+									<input type="button" value="<s:text name="labelbutton.repetirfind"></s:text>" onclick="repetirBusqueda();" class="buttonSV"/>
+								</div>
 							</td>
-							
+						</tr>
+						<tr>
+							<td colspan="2"><div id="divDatosPersona"></div></td>
 						</tr>
 					</table>
 					<table cellpadding="0" cellspacing="0" border="0" class="display">

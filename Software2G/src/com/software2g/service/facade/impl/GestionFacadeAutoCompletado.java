@@ -44,11 +44,12 @@ public class GestionFacadeAutoCompletado implements IGestionFacadeAutoCompletado
 	 */
 	public List<String> findPersonaPortal(String datoFind)  throws Exception {
 		try {
-			List<Persona> listPersonas = getPersonaDao().findAllPersonas(datoFind, "0");
+			List<Persona> listPersonas = getPersonaDao().findAllPersonas(datoFind);
 			List<String> list = new ArrayList<String>();
 			if(listPersonas!=null&&listPersonas.size()>0){
 				for(Persona elem:listPersonas){
-					list.add(elem.getNombreCompleto()+ConstantesAplicativo.constanteSplit+"onClick=\"javascript:cargarDatosPersona(\'"+elem.getIdPers()+"\')\"");
+					list.add("["+elem.getDocumentoPers()+" "+elem.getTipodocumento().getAbreviaturaTidoc()+"] "+elem.getNombreCompleto()+" "+elem.getEmailPers() 
+							+ConstantesAplicativo.constanteSplit+"onClick=\"javascript:cargarDatosPersona(\'"+elem.getIdPers()+"\')\"");
 				}
 			}
 			return list;

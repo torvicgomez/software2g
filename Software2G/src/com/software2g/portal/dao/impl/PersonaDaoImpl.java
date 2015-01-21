@@ -144,6 +144,24 @@ public class PersonaDaoImpl implements IPersonaDao {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<Persona> findAllPersonas(String datoFind) {
+        try {
+    		String jpqlString = "select persona from " + Persona.class.getSimpleName() + " persona ";
+    			jpqlString += " where upper(persona.pnombrePers)||' '||upper(persona.snombrePers)||' '||upper(persona.papellidoPers)||' '||upper(persona.sapellidoPers) like :datoFind " +
+    						  " or upper(persona.emailPers) like :datoFind " +
+    						  " or persona.documentoPers like :datoFind " +
+    						  " order by persona.pnombrePers, persona.snombrePers, persona.papellidoPers, persona.sapellidoPers asc ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("datoFind", "%"+datoFind.toUpperCase().trim()+"%");
+            return query.getResultList();
+        }finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<Persona> findAllPersonasProfesionales(String datoFind) {
         try {
     		String sqlString = " select distinct persona from " + Persona.class.getSimpleName() + " persona " +

@@ -101,7 +101,6 @@ public class ValidaString {
 		    			if (o == null) {
 		    	            System.out.println(elem.getName() + " : valor nulo");
 		    	        } else {
-		    	        	System.out.println(elem.getName());
 		    	            System.out.println(elem.getName() + " : ["+o.toString()+"]");
 		    	        }
 	    			}

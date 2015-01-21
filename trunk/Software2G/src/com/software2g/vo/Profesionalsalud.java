@@ -1,6 +1,8 @@
 package com.software2g.vo;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -34,6 +36,12 @@ public class Profesionalsalud implements Serializable {
 	@Column(name="prfs_registradopor")
 	private String prfsRegistradopor;
 
+	@Column(name="prfs_profesion")
+	private String prfsProfesion;
+	
+	@Column(name="prfs_estado")
+	private String prfsEstado;
+	
 	@Transient
 	private Persona persona; 
 	
@@ -95,5 +103,28 @@ public class Profesionalsalud implements Serializable {
 	public void setPersona(Persona persona) {
 		this.persona = persona;
 	}
-	
+
+	public String getPrfsProfesion() {
+		return prfsProfesion;
+	}
+
+	public void setPrfsProfesion(String prfsProfesion) {
+		this.prfsProfesion = prfsProfesion;
+	}
+
+	public String getPrfsEstado() {
+		return prfsEstado;
+	}
+
+	public void setPrfsEstado(String prfsEstado) {
+		this.prfsEstado = prfsEstado;
+	}
+
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.prfsRegistradopor=data.get(0);
+			this.prfsFechacambio=data.get(1);
+			this.prfsHoracambio=data.get(2);
+		}
+	}
 }

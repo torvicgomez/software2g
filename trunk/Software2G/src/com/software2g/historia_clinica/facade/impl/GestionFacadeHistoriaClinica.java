@@ -3075,7 +3075,8 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 		try {
 			getProfesionalSaludDao().persistProfesionalsalud(profesionalsalud);
 		} catch (RuntimeException e) {
-			throw new Exception("persistProfesionalsalud failed: " + e.getMessage());
+			//throw new Exception("persistProfesionalsalud failed: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	/**

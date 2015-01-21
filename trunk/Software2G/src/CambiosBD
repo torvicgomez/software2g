@@ -379,6 +379,8 @@ CREATE TABLE historiaclinica.profesionalsalud
   prfs_fechacambio character varying(10) NOT NULL,
   prfs_horacambio character varying(8) NOT NULL,
   prfs_registradopor character varying(30) NOT NULL,
+  prfs_profesion character varying(100),
+  prfs_estado character varying(1) NOT NULL,
   CONSTRAINT pk_prfs_id PRIMARY KEY (prfs_id )
 )
 WITH (

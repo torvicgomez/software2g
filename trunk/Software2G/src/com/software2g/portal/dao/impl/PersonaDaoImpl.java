@@ -148,6 +148,7 @@ public class PersonaDaoImpl implements IPersonaDao {
         try {
     		String jpqlString = "select persona from " + Persona.class.getSimpleName() + " persona ";
     			jpqlString += " where upper(persona.pnombrePers)||' '||upper(persona.snombrePers)||' '||upper(persona.papellidoPers)||' '||upper(persona.sapellidoPers) like :datoFind " +
+    						  " or upper(persona.pnombrePers)||' '||upper(persona.papellidoPers) like :datoFind " +
     						  " or upper(persona.emailPers) like :datoFind " +
     						  " or persona.documentoPers like :datoFind " +
     						  " order by persona.pnombrePers, persona.snombrePers, persona.papellidoPers, persona.sapellidoPers asc ";

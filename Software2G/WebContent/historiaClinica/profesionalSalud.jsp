@@ -159,7 +159,7 @@
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<tr>
 							<td class="leftLabel"><s:text name="profesionalsalud.findpersona"></s:text></td>
-							<td>
+							<td colspan="3">
 								<s:hidden name="profesionalSalud.idPers" id="idPers"></s:hidden>
 								<div id="campoFind" style="overflow:auto;width:auto;height:auto;display:block">
 									<s:textfield name="dataAutoCompletado" id="search" size="60" maxlength="30" cssClass="inputs"></s:textfield>
@@ -170,7 +170,26 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2"><div id="divDatosPersona"></div></td>
+							<td colspan="4"><div id="divDatosPersona"></div></td>
+						</tr>
+						<tr>
+							<td class="leftLabel" colspan="4"><s:text name="profesionalsalud.datosprofesional"></s:text></td>
+						</tr>
+						<tr>
+							<td class="leftLabel"><s:text name="profesionalsalud.profesion"></s:text></td>
+							<td colspan="3">
+								<s:textfield name="profesionalSalud.prfsProfesion" id="prfsProfesion" size="60" maxlength="30" cssClass="inputs"></s:textfield>
+							</td>
+						</tr>
+						<tr>
+							<td class="leftLabel"><s:text name="profesionalsalud.nrotarjetaprof"></s:text></td>
+							<td>
+								<s:textfield name="profesionalSalud.prfsNrotarjetaprof" id="prfsNrotarjetaprof" size="30" maxlength="30" cssClass="inputs"></s:textfield>
+							</td>
+							<td class="leftLabel"><s:text name="profesionalsalud.estado"></s:text></td>
+							<td>
+								<s:select list="#{'1':'ACTIVO','0':'INACTIVO'}" name="profesionalSalud.prfsEstado" headerKey="" headerValue=".::Seleccion::." cssClass="inputs"/>
+							</td>
 						</tr>
 					</table>
 					<table cellpadding="0" cellspacing="0" border="0" class="display">

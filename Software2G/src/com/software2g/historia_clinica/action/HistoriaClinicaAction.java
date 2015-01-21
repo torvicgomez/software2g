@@ -100,24 +100,22 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     		System.out.println("######>>>>>>>HistoriaClinicaAction>>>>profesionalSaludMethod>>>>estado entrada-->>"+estado);
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
     			listProfesionalSalud = gestionFacadeHistoriaClinica.findAllProfesionalsaluds();
-    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAdd)){
-    			System.out.println("entra esta parte!!!!!");
-    			
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
-    			System.out.println("*************************************************************");
-    			System.out.println("getDataAutoCompletado:["+this.getDataAutoCompletado()+"]");
-    			System.out.println("*************************************************************");
-    			/*if(ValidaString.isNullOrEmptyString(parametroCalendario.getPacaVariable()))
-    				addActionError(getText("validacion.requerido","pacaVariable","Variable"));
-    			if(ValidaString.isNullOrEmptyString(parametroCalendario.getPacaValor()))
-    				addActionError(getText("validacion.requerido","pacaValor","Valor"));
+    			if(profesionalSalud.getIdPers()<=0)
+    				addActionError(getText("validacion.requerido","prfsIdPers","Seleccione al Profesional de la Salud"));
+    			if(ValidaString.isNullOrEmptyString(profesionalSalud.getPrfsProfesion()))
+    				addActionError(getText("validacion.requerido","prfsProfesion","Profesión"));
+    			if(ValidaString.isNullOrEmptyString(profesionalSalud.getPrfsNrotarjetaprof()))
+    				addActionError(getText("validacion.requerido","prfsNroTarjetaProf","Nro Tarjeta Profesional"));
+    			if(ValidaString.isNullOrEmptyString(profesionalSalud.getPrfsEstado()))
+    				addActionError(getText("validacion.requerido","prfsEstado","Estado"));
     			if(!hasActionErrors()){
-    				parametroCalendario.setDatosAud(this.getDatosAud());
-    				ValidaString.imprimirObject(parametroCalendario);
-    				gestionFacadeAgenda.persistParametroscalendario(parametroCalendario);
+    				profesionalSalud.setDatosAud(this.getDatosAud());
+    				ValidaString.imprimirObject(profesionalSalud);
+    				gestionFacadeHistoriaClinica.persistProfesionalsalud(profesionalSalud);
     				estado = ConstantesAplicativo.constanteEstadoAbstract;
     				addActionMessage(getText("accion.satisfactoria"));
-    			}*/
+    			}
     		}/*else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			parametroCalendario = gestionFacadeAgenda.findParametroscalendarioById(getIdLong());
     		}*/

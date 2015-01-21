@@ -2,6 +2,7 @@ package com.software2g.historia_clinica.action;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -179,36 +180,41 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 			System.out.println("idPrograma: ["+idPersona+"]");
 			Persona persona = gestionFacadeHistoriaClinica.findPersonaById(idPersona);
 			html = "<s:textfield name=\"dataAutoCompletado\" id=\"search\" size=\"60\" maxlength=\"30\" cssClass=\"inputs\"></s:textfield><br>";
-			html += "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">"+ 
+			html += "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">"+
 					"	<tr> " +
+					"		<td class=\"leftLabel\">Nombre</td> " +
 					"		<td>" + persona.getNombreCompleto() + "</td> " +
 					"	</tr> " +
 					"	<tr> " +
+					"		<td class=\"leftLabel\">Documento Identificación</td> " +
 					"		<td>" + persona.getDocumentoPers() + " " + persona.getTipodocumento().getAbreviaturaTidoc() + "</td> " +
 					"	</tr> " +
 					"	<tr> " +
-					"		<td>" + persona.getFechanacimientoPers() + " " + persona.getEdad() + "</td> " +
+					"		<td class=\"leftLabel\">Fecha Nacimiento y Edad</td> " +
+					"		<td>" + persona.getFechanacimientoPers() + "  /  " + persona.getEdad() + "</td> " +
 					"	</tr> " +
 					"	<tr> " +
+					"		<td class=\"leftLabel\">Sexo</td> " +
 					"		<td>" + persona.getSexoPers() + "</td> " +
 					"	</tr> " +
 					"	<tr> " +
+					"		<td class=\"leftLabel\">Estado Civil</td> " +
 					"		<td>" + persona.getEstadocivilPers() + "</td> " +
 					"	</tr> " +
 					"	<tr> " +
+					"		<td class=\"leftLabel\">Correo Electrónico</td> " +
 					"		<td>" + persona.getEmailPers() + "</td> " +
 					"	</tr> " +
 					"	<tr> " +
+					"		<td class=\"leftLabel\">Teléfonos</td> " +
 					"		<td>" + persona.getTelefonoPers() + "</td> " +
 					"	</tr> " +
 					"	<tr> " +
-					"		<td>" + persona.getUbicacionPersona() + "</td> " +
-					"	</tr> " +
-					"	<tr> " +
-					"		<td>" + persona.getDireccionPers() + "</td> " +
+					"		<td class=\"leftLabel\">Ubicación</td> " +
+					"		<td>" + persona.getUbicacionPersona() + " " + persona.getDireccionPers() + "</td> " +
 					"	</tr> " +
 					"</table>";
-			strDatosPersona = new ByteArrayInputStream(html.getBytes());
+			strDatosPersona = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
 		}catch(Exception e){
 			e.printStackTrace();
 		}

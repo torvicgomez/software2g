@@ -49,6 +49,8 @@
 
 			function cargarDatosPersona(id){
 				$("#divDatosPersona").load('cargarDatosPersona.action?idPersona='+id);
+				var idPers = document.getElementById('idPers');
+				idPers.value = id;
 				var campoFind = document.getElementById('campoFind');
 				var repetirFind = document.getElementById('repetirFind');
 				campoFind.style.display = 'none';
@@ -56,6 +58,10 @@
 			}				
 			
 			function repetirBusqueda(){
+				var divDatosPersona = document.getElementById('divDatosPersona');
+				divDatosPersona.innerHTML = '';
+				var idPers = document.getElementById('idPers');
+				idPers.value = 0;
 				var campoFind = document.getElementById('campoFind');
 				var repetirFind = document.getElementById('repetirFind');
 				campoFind.style.display = 'block';
@@ -154,6 +160,7 @@
 						<tr>
 							<td class="leftLabel"><s:text name="profesionalsalud.findpersona"></s:text></td>
 							<td>
+								<s:hidden name="profesionalSalud.idPers" id="idPers"></s:hidden>
 								<div id="campoFind" style="overflow:auto;width:auto;height:auto;display:block">
 									<s:textfield name="dataAutoCompletado" id="search" size="60" maxlength="30" cssClass="inputs"></s:textfield>
 								</div>

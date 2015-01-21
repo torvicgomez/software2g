@@ -300,9 +300,9 @@ public class Persona implements Serializable {
             edad_mes += 12;
             if(--edad_ano < 0)
                 return "Fecha de Nacimiento Incorrecta";
-            else
-                return edad_ano+" A\321OS "+edad_mes+" MESES";
+            else//\321
+                return edad_ano+" AÑOS "+edad_mes+" MESES";
         }else
-            return edad_ano+" A\321OS "+edad_mes+" MESES";
+            return edad_ano+" AÑOS "+edad_mes+" MESES";
     }
 }

@@ -31,6 +31,7 @@ public interface IPrefesionalSaludDao {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistProfesionalsalud(Profesionalsalud profesionalsalud);
+	public long persistProfesionalsaludId(Profesionalsalud profesionalsalud);
 	/**
 	 * Remove the given persistent instance.
 	 */

@@ -92,7 +92,11 @@ public class Persona implements Serializable {
 	//bi-directional many-to-one association to Profesional
 	@OneToMany(mappedBy="persona")
 	private List<Profesional> profesional;
-		
+	
+	//bi-directional many-to-one association to Profesional Salud
+	@OneToMany(mappedBy="persona")
+	private List<Profesionalsalud> profesionalSalud;
+	
 	public Persona() {
 	}
 
@@ -305,4 +309,13 @@ public class Persona implements Serializable {
         }else
             return edad_ano+" AÑOS "+edad_mes+" MESES";
     }
+
+	public List<Profesionalsalud> getProfesionalSalud() {
+		return profesionalSalud;
+	}
+
+	public void setProfesionalSalud(List<Profesionalsalud> profesionalSalud) {
+		this.profesionalSalud = profesionalSalud;
+	}
+	
 }

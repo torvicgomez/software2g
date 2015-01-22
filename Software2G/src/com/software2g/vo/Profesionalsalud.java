@@ -1,9 +1,9 @@
 package com.software2g.vo;
 
 import java.io.Serializable;
-import java.util.List;
-
 import javax.persistence.*;
+
+import java.util.List;
 
 
 /**
@@ -11,7 +11,7 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(schema="historiaclinica",name="profesionalsalud")
+@Table(schema="HISTORIACLINICA", name="PROFESIONALSALUD")
 public class Profesionalsalud implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -21,8 +21,11 @@ public class Profesionalsalud implements Serializable {
 	@Column(name="prfs_id")
 	private long prfsId;
 
-	@Column(name="id_pers")
-	private long idPers;
+//	@Column(name="id_pers")
+//	private long idPers;
+
+	@Column(name="prfs_estado")
+	private String prfsEstado;
 
 	@Column(name="prfs_fechacambio")
 	private String prfsFechacambio;
@@ -33,17 +36,19 @@ public class Profesionalsalud implements Serializable {
 	@Column(name="prfs_nrotarjetaprof")
 	private String prfsNrotarjetaprof;
 
+	@Column(name="prfs_profesion")
+	private String prfsProfesion;
+
 	@Column(name="prfs_registradopor")
 	private String prfsRegistradopor;
 
-	@Column(name="prfs_profesion")
-	private String prfsProfesion;
-	
-	@Column(name="prfs_estado")
-	private String prfsEstado;
-	
-	@Transient
-	private Persona persona; 
+	//bi-directional many-to-one association to Agendamedica
+	@OneToMany(mappedBy="profesionalsalud")
+	private List<Agendamedica> agendamedicas;
+
+	@ManyToOne
+	@JoinColumn(name="id_pers")
+	private Persona persona;
 	
 	public Profesionalsalud() {
 	}
@@ -56,12 +61,20 @@ public class Profesionalsalud implements Serializable {
 		this.prfsId = prfsId;
 	}
 
-	public long getIdPers() {
-		return this.idPers;
+//	public long getIdPers() {
+//		return this.idPers;
+//	}
+//
+//	public void setIdPers(long idPers) {
+//		this.idPers = idPers;
+//	}
+
+	public String getPrfsEstado() {
+		return this.prfsEstado;
 	}
 
-	public void setIdPers(long idPers) {
-		this.idPers = idPers;
+	public void setPrfsEstado(String prfsEstado) {
+		this.prfsEstado = prfsEstado;
 	}
 
 	public String getPrfsFechacambio() {
@@ -88,6 +101,14 @@ public class Profesionalsalud implements Serializable {
 		this.prfsNrotarjetaprof = prfsNrotarjetaprof;
 	}
 
+	public String getPrfsProfesion() {
+		return this.prfsProfesion;
+	}
+
+	public void setPrfsProfesion(String prfsProfesion) {
+		this.prfsProfesion = prfsProfesion;
+	}
+
 	public String getPrfsRegistradopor() {
 		return this.prfsRegistradopor;
 	}
@@ -96,28 +117,20 @@ public class Profesionalsalud implements Serializable {
 		this.prfsRegistradopor = prfsRegistradopor;
 	}
 
+	public List<Agendamedica> getAgendamedicas() {
+		return this.agendamedicas;
+	}
+
+	public void setAgendamedicas(List<Agendamedica> agendamedicas) {
+		this.agendamedicas = agendamedicas;
+	}
+
 	public Persona getPersona() {
 		return persona;
 	}
 
 	public void setPersona(Persona persona) {
 		this.persona = persona;
-	}
-
-	public String getPrfsProfesion() {
-		return prfsProfesion;
-	}
-
-	public void setPrfsProfesion(String prfsProfesion) {
-		this.prfsProfesion = prfsProfesion;
-	}
-
-	public String getPrfsEstado() {
-		return prfsEstado;
-	}
-
-	public void setPrfsEstado(String prfsEstado) {
-		this.prfsEstado = prfsEstado;
 	}
 
 	public void setDatosAud(List<String> data){

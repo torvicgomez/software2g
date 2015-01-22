@@ -160,7 +160,8 @@
 						<tr>
 							<td class="leftLabel"><s:text name="profesionalsalud.findpersona"></s:text></td>
 							<td colspan="3">
-								<s:hidden name="profesionalSalud.idPers" id="idPers"></s:hidden>
+								<s:hidden name="profesionalSalud.prfsId" id="prfsId"></s:hidden>
+								<s:hidden name="profesionalSalud.persona.idPers" id="idPers"></s:hidden>
 								<div id="campoFind" style="overflow:auto;width:auto;height:auto;display:block">
 									<s:textfield name="dataAutoCompletado" id="search" size="60" maxlength="30" cssClass="inputs"></s:textfield>
 								</div>

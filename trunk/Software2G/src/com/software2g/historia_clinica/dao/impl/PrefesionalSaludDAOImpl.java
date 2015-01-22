@@ -82,6 +82,20 @@ public class PrefesionalSaludDAOImpl implements IPrefesionalSaludDao {
 	public void persistProfesionalsalud(Profesionalsalud profesionalsalud) {
 		em.persist(em.merge(profesionalsalud));
 	}
+	
+	public long persistProfesionalsaludId(Profesionalsalud profesionalsalud) {
+		Profesionalsalud obj = em.merge(profesionalsalud);
+		System.out.println("0. Id:["+obj.getPrfsId()+"]");
+		try{
+			em.persist(obj);
+		}catch(Exception e){
+			System.out.println("Entra a esta excepcion del persist!!!!!!!");
+			e.printStackTrace();
+		}
+		System.out.println("1. Id:["+obj.getPrfsId()+"]");
+		return obj.getPrfsId();
+		//em.persist(em.merge(profesionalsalud));
+	}
 	/**
 	 * Remove the given persistent instance.
 	 */

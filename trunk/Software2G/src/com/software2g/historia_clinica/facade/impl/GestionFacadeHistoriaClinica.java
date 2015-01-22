@@ -3076,9 +3076,24 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 			getProfesionalSaludDao().persistProfesionalsalud(profesionalsalud);
 		} catch (RuntimeException e) {
 			//throw new Exception("persistProfesionalsalud failed: " + e.getMessage());
+			System.out.println("Entra esta parte!!!!!!!!!!!");
 			e.printStackTrace();
 		}
 	}
+	
+	public long persistProfesionalsaludId(Profesionalsalud profesionalsalud) throws Exception {
+		try {
+			long id = getProfesionalSaludDao().persistProfesionalsaludId(profesionalsalud);
+			System.out.println("ID:["+id+"]");
+			return id;
+		} catch (RuntimeException e) {
+			//throw new Exception("persistProfesionalsaludId failed: " + e.getMessage());
+			System.out.println("Entra esta parte!!!!!!!!!!!");
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
 	/**
 	 * Remove the given persistent instance.
 	 */

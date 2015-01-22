@@ -381,16 +381,126 @@ CREATE TABLE historiaclinica.profesionalsalud
   prfs_registradopor character varying(30) NOT NULL,
   prfs_profesion character varying(100),
   prfs_estado character varying(1) NOT NULL,
-  CONSTRAINT pk_prfs_id PRIMARY KEY (prfs_id )
+  CONSTRAINT pk_prfs_id PRIMARY KEY (prfs_id ),
+  CONSTRAINT fk_prfs_pres FOREIGN KEY (id_pers)
+      REFERENCES portal.persona (id_pers) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
   OIDS=FALSE
 );
 ALTER TABLE historiaclinica.profesionalsalud
-  OWNER TO postgres;  
+  OWNER TO postgres;
+
+-- Trigger: tr_auto_prfs_id on historiaclinica.profesionalsalud
+
+-- DROP TRIGGER tr_auto_prfs_id ON historiaclinica.profesionalsalud;
+
+CREATE TRIGGER tr_auto_prfs_id
+  BEFORE INSERT OR UPDATE
+  ON historiaclinica.profesionalsalud
+  FOR EACH ROW
+  EXECUTE PROCEDURE autoinc('prfs_id', 'historiaclinica.seq_prfs_id');
 
 
+CREATE TABLE historiaclinica.agendamedica
+(
+  agme_id numeric NOT NULL,
+  prfs_id numeric NOT NULL,
+  agme_fechacambio character varying(10) NOT NULL,
+  agme_horacambio character varying(8) NOT NULL,
+  agme_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_agme_id PRIMARY KEY (agme_id ),
+  CONSTRAINT fk_agme_prfs FOREIGN KEY (prfs_id)
+      REFERENCES historiaclinica.profesionalsalud (prfs_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE historiaclinica.agendamedica
+  OWNER TO postgres;
+  
 
+CREATE TABLE historiaclinica.eventosagenda
+(
+  even_id numeric NOT NULL,
+  agme_id numeric NOT NULL,
+  even_fechacambio character varying(10) NOT NULL,
+  even_horacambio character varying(8) NOT NULL,
+  even_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_even_id PRIMARY KEY (even_id ),
+  CONSTRAINT fk_even_agme FOREIGN KEY (agme_id)
+      REFERENCES historiaclinica.agendamedica (agme_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE historiaclinica.eventosagenda
+  OWNER TO postgres;
+
+
+CREATE TABLE historiaclinica.participanteagenda
+(
+  part_id numeric NOT NULL,
+  even_id numeric NOT NULL,
+  part_fechacambio character varying(10) NOT NULL,
+  part_horacambio character varying(8) NOT NULL,
+  part_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_part_id PRIMARY KEY (part_id ),
+  CONSTRAINT fk_part_even FOREIGN KEY (even_id)
+      REFERENCES historiaclinica.eventosagenda (even_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE historiaclinica.participanteagenda
+  OWNER TO postgres;
+  
+  
+CREATE SEQUENCE historiaclinica.seq_part_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE historiaclinica.seq_part_id
+  OWNER TO postgres;
+  
+
+CREATE SEQUENCE historiaclinica.seq_agme_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE historiaclinica.seq_agme_id
+  OWNER TO postgres;
+  
+      
+CREATE SEQUENCE historiaclinica.seq_even_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE historiaclinica.seq_even_id
+  OWNER TO postgres;
+  
+  
+CREATE SEQUENCE historiaclinica.seq_prfs_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 29
+  CACHE 1;
+ALTER TABLE historiaclinica.seq_prfs_id
+  OWNER TO postgres;        
+      
+  
+  
 
 
 

@@ -101,7 +101,7 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
     			listProfesionalSalud = gestionFacadeHistoriaClinica.findAllProfesionalsaluds();
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
-    			if(profesionalSalud.getIdPers()<=0)
+    			if(profesionalSalud.getPersona().getIdPers()<=0)
     				addActionError(getText("validacion.requerido","prfsIdPers","Seleccione al Profesional de la Salud"));
     			if(ValidaString.isNullOrEmptyString(profesionalSalud.getPrfsProfesion()))
     				addActionError(getText("validacion.requerido","prfsProfesion","Profesión"));
@@ -110,9 +110,12 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     			if(ValidaString.isNullOrEmptyString(profesionalSalud.getPrfsEstado()))
     				addActionError(getText("validacion.requerido","prfsEstado","Estado"));
     			if(!hasActionErrors()){
+    				//profesionalSalud.setPrfsId(29);
     				profesionalSalud.setDatosAud(this.getDatosAud());
     				ValidaString.imprimirObject(profesionalSalud);
     				gestionFacadeHistoriaClinica.persistProfesionalsalud(profesionalSalud);
+//    				long idProfesional = gestionFacadeHistoriaClinica.persistProfesionalsaludId(profesionalSalud);
+//    				System.out.println("idProfesional:["+idProfesional+"]");
     				estado = ConstantesAplicativo.constanteEstadoAbstract;
     				addActionMessage(getText("accion.satisfactoria"));
     			}

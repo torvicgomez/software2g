@@ -38,6 +38,24 @@ public class Agenda implements Serializable {
 	@Column(name="agen_registradopor")
 	private String agenRegistradopor;
 
+	@Column(name="agen_duracionevento")
+	private String agenDuracionevento;
+	
+	@Column(name="agen_scrolltime")
+	private String agenScrolltime;
+	
+	@Column(name="agen_mintime")
+	private String agenMintime;
+	
+	@Column(name="agen_maxtime")
+	private String agenMaxtime;
+	
+	@Column(name="agen_alldayslot")
+	private String agenAlldayslot;
+	
+	@Column(name="agen_alldaytext")
+	private String agenAlldaytext;
+	
 	//bi-directional many-to-one association to Profesional
 	@ManyToOne
 	@JoinColumn(name="id_profesional")
@@ -126,4 +144,59 @@ public class Agenda implements Serializable {
 		this.tiemponodisponibles = tiemponodisponibles;
 	}
 
+	public String getAgenDuracionevento() {
+		return agenDuracionevento;
+	}
+
+	public void setAgenDuracionevento(String agenDuracionevento) {
+		this.agenDuracionevento = agenDuracionevento;
+	}
+
+	public String getAgenScrolltime() {
+		return agenScrolltime;
+	}
+
+	public void setAgenScrolltime(String agenScrolltime) {
+		this.agenScrolltime = agenScrolltime;
+	}
+
+	public String getAgenMintime() {
+		return agenMintime;
+	}
+
+	public void setAgenMintime(String agenMintime) {
+		this.agenMintime = agenMintime;
+	}
+
+	public String getAgenMaxtime() {
+		return agenMaxtime;
+	}
+
+	public void setAgenMaxtime(String agenMaxtime) {
+		this.agenMaxtime = agenMaxtime;
+	}
+
+	public String getAgenAlldayslot() {
+		return agenAlldayslot;
+	}
+
+	public void setAgenAlldayslot(String agenAlldayslot) {
+		this.agenAlldayslot = agenAlldayslot;
+	}
+
+	public String getAgenAlldaytext() {
+		return agenAlldaytext;
+	}
+
+	public void setAgenAlldaytext(String agenAlldaytext) {
+		this.agenAlldaytext = agenAlldaytext;
+	}
+
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.agenRegistradopor=data.get(0);
+			this.agenFechacambio=data.get(1);
+			this.agenHoracambio=data.get(2);
+		}
+	}
 }

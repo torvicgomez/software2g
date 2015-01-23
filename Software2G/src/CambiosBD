@@ -508,8 +508,13 @@ Tabla Profesional
   prof_estado character varying(1),
   prof_nrotarjetaprof character varying(30),
 
-
-
+Tabla Agenda
+  agen_duracionevento character varying(8) NOT NULL,
+  agen_scrolltime character varying(8) NOT NULL,
+  agen_mintime character varying(8) NOT NULL,
+  agen_maxtime character varying(8) NOT NULL,
+  agen_alldayslot character varying(1) NOT NULL,
+  agen_alldaytext character varying(30) NOT NULL,
 
 
 

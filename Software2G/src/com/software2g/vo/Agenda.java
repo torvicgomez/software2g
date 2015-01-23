@@ -11,12 +11,12 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="AGENDA", schema="HISCLINICA") 
+@Table(name="\"AGENDA\"", schema="\"HISCLINICA\"") 
 public class Agenda implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="AGENDA_AGENID_GENERATOR", sequenceName="HISCLINICA.SEQ_AGEN_ID")
+	@SequenceGenerator(name="AGENDA_AGENID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_AGEN_ID\"")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="AGENDA_AGENID_GENERATOR")
 	@Column(name="agen_id")
 	private long agenId;

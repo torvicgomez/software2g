@@ -71,6 +71,9 @@
     			<param name="charSet">iso-8859-1</param>
 			</result>
 		</action>
-        
+
+        <action name="agendamedica" method="agendaMedicaMethod" class="AgendaAction">
+        	<result name="success" type="tiles">calendario.agendamedica</result>
+        </action>
     </package>
 </struts>

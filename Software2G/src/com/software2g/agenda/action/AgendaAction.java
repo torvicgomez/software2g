@@ -18,6 +18,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.software2g.agenda.facade.IGestionFacadeAgenda;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
+import com.software2g.vo.Agenda;
 import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Parametroscalendario;
 import com.software2g.vo.Persona;
@@ -43,6 +44,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private InputStream strProfesional;
 	private Persona persona;
 	private InputStream strDatosPersona;
+	private List<Agenda> listAgendaMedica;
+	private Agenda agendaMedica;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -60,6 +63,11 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setPersona(Persona persona) {this.persona = persona;}
 	public List<Persona> getListPersona() {return listPersona;}
 	public void setListPersona(List<Persona> listPersona) {this.listPersona = listPersona;}
+	public List<Agenda> getListAgendaMedica() {return listAgendaMedica;}
+	public void setListAgendaMedica(List<Agenda> listAgendaMedica) {this.listAgendaMedica = listAgendaMedica;}
+	public Agenda getAgendaMedica() {return agendaMedica;}
+	public void setAgendaMedica(Agenda agendaMedica) {this.agendaMedica = agendaMedica;}
+	
 	
 	@SkipValidation
 	public String calendarioMethod(){
@@ -196,6 +204,37 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     		addActionError(getText("error.aplicacion"));
     	}
     	System.out.println("######>>>>>>>HistoriaClinicaAction>>>>profesionalSaludMethod>>>>estado salida-->>"+estado);
+    	return Action.SUCCESS;
+	}
+	
+	@SkipValidation
+	public String agendaMedicaMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>HistoriaClinicaAction>>>>agendaMedicaMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listAgendaMedica  = gestionFacadeAgenda.findAllAgendas();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			if(agendaMedica.getProfesional().getPersona().getIdPers()<=0)
+    				addActionError(getText("validacion.requerido","prfsIdPers","Seleccione al Profesional de la Salud"));
+    			
+    			if(!hasActionErrors()){
+    				agendaMedica.getProfesional().setPersona(gestionFacadeAgenda.findPersonaById(agendaMedica.getProfesional().getPersona().getIdPers()));
+    				agendaMedica.setDatosAud(this.getDatosAud());
+    				ValidaString.imprimirObject(agendaMedica);
+    				gestionFacadeAgenda.persistAgenda(agendaMedica);
+    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				addActionMessage(getText("accion.satisfactoria"));
+    			}
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			agendaMedica= gestionFacadeAgenda.findAgendaById(getIdLong());
+    		}
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>HistoriaClinicaAction>>>>agendaMedicaMethod>>>>estado salida-->>"+estado);
     	return Action.SUCCESS;
 	}
 	

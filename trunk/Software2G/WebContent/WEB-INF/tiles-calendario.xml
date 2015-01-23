@@ -28,4 +28,8 @@
 		<put-attribute name="body" value="/historiaClinica/profesionalSalud.jsp" />
 	</definition>
 	
+	<definition name="calendario.agendamedica" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/historiaClinica/agendaMedica.jsp" />
+	</definition>
+	
 </tiles-definitions>

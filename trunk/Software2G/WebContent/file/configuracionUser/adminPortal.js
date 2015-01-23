@@ -9,6 +9,7 @@ var zNodes = [
 	{id:3000, pId:0, name:"Historia Clinica", open:true},
 	{id:3001, pId:3000, name:"Servicio", file:"servicio.action?estado=all&funcPosicionado=Historia Clinica/Servicio"},
 	{id:3002, pId:3000, name:"Profesional Salud", file:"profesionalsalud.action?estado=all&funcPosicionado=Historia Clinica/Profesional Salud"},
+	{id:3003, pId:3000, name:"Agenda Medica", file:"agendamedica.action?estado=all&funcPosicionado=Historia Clinica/Agenda Medica Profesional"},
 	{id:4000, pId:0, name:"Personal", open:true},
 	{id:4001, pId:4000, name:"Administración Personal", file:"listPersonal.action?url=Personal::>Administración Personal"},
 	{id:4002, pId:4000, name:"Cambiar Contraseña", file:"cambiarPassword.action?url=Personal::>Cambiar Contraseña"},

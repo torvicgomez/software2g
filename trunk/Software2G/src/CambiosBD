@@ -499,8 +499,14 @@ CREATE SEQUENCE historiaclinica.seq_prfs_id
 ALTER TABLE historiaclinica.seq_prfs_id
   OWNER TO postgres;        
       
-  
-  
+---------------------------------------------------------------------
+---------------------------------------------------------------------  
+Creacion campos esquema HISCLINICA  
+---------------------------------------------------------------------
+---------------------------------------------------------------------
+Tabla Profesional
+  prof_estado character varying(1),
+  prof_nrotarjetaprof character varying(30),
 
 
 

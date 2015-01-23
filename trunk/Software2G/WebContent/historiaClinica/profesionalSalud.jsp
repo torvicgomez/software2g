@@ -137,18 +137,24 @@
 							</tr>
 						</thead>
 						<tbody>
-							<s:iterator value="listProfesionalSalud" id="data">
+							<s:iterator value="listProfesional" id="data">
 								<tr>
 									<s:if test="estado=='all'">
 										<td align="center">
-											<a onclick="detalle('${data.tpsvId}');">
+											<a onclick="detalle('${data.profId}');">
+												<img align="middle" src="<s:url value="/imagenes/icon_edit.png"/>" alt="Editar" width="18" height="18">
+											</a>
+										</td>
+										<td align="center">
+											<a onclick="detalle('${data.profId}');">
 												<img align="middle" src="<s:url value="/imagenes/icon_edit.png"/>" alt="Editar" width="18" height="18">
 											</a>
 										</td>
 									</s:if>
-									<td><s:property value="tpsvDescripcion"/></td>
-									<td><s:property value="tpsvEstadoView"/></td>
-									<td><s:property value="tpsvFechacambio"/></td>
+									<td><s:property value="persona.nombreCompleto"/></td>
+									<td><s:property value="persona.documentoPers"/>&nbsp;<s:property value="persona.tipodocumento.abreviaturaTidoc"/></td>
+									<td><s:property value="profNrotarjetaprof"/></td>
+									<td><s:property value="profFechacambio"/>&nbsp;<s:property value="profHoracambio"/></td>
 								</tr>
 							</s:iterator>
 						</tbody>
@@ -160,8 +166,8 @@
 						<tr>
 							<td class="leftLabel"><s:text name="profesionalsalud.findpersona"></s:text></td>
 							<td colspan="3">
-								<s:hidden name="profesionalSalud.prfsId" id="prfsId"></s:hidden>
-								<s:hidden name="profesionalSalud.persona.idPers" id="idPers"></s:hidden>
+								<s:hidden name="profesional.profId" id="profId"></s:hidden>
+								<s:hidden name="profesional.persona.idPers" id="idPers"></s:hidden>
 								<div id="campoFind" style="overflow:auto;width:auto;height:auto;display:block">
 									<s:textfield name="dataAutoCompletado" id="search" size="60" maxlength="30" cssClass="inputs"></s:textfield>
 								</div>
@@ -179,17 +185,17 @@
 						<tr>
 							<td class="leftLabel"><s:text name="profesionalsalud.profesion"></s:text></td>
 							<td colspan="3">
-								<s:textfield name="profesionalSalud.prfsProfesion" id="prfsProfesion" size="60" maxlength="30" cssClass="inputs"></s:textfield>
+								<s:textfield name="profesional.profEspecialidad" id="profEspecialidad" size="60" maxlength="30" cssClass="inputs"></s:textfield>
 							</td>
 						</tr>
 						<tr>
 							<td class="leftLabel"><s:text name="profesionalsalud.nrotarjetaprof"></s:text></td>
 							<td>
-								<s:textfield name="profesionalSalud.prfsNrotarjetaprof" id="prfsNrotarjetaprof" size="30" maxlength="30" cssClass="inputs"></s:textfield>
+								<s:textfield name="profesional.profNrotarjetaprof" id="profNrotarjetaprof" size="30" maxlength="30" cssClass="inputs"></s:textfield>
 							</td>
 							<td class="leftLabel"><s:text name="profesionalsalud.estado"></s:text></td>
 							<td>
-								<s:select list="#{'1':'ACTIVO','0':'INACTIVO'}" name="profesionalSalud.prfsEstado" headerKey="" headerValue=".::Seleccion::." cssClass="inputs"/>
+								<s:select list="#{'1':'ACTIVO','0':'INACTIVO'}" name="profesional.profEstado" headerKey="" headerValue=".::Seleccion::." cssClass="inputs"/>
 							</td>
 						</tr>
 					</table>
@@ -205,12 +211,24 @@
 				<s:elseif test="estado=='abstract'">
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<tr>
-							<td class="leftLabel" width="130"><s:text name="tipoSolViaje.Nombre"></s:text></td>
-							<td class="text"><s:property value="tipoSolicitudViaje.tpsvDescripcion"/></td>
+							<td class="leftLabel" width="130"><s:text name="personal.nombre"></s:text></td>
+							<td class="text"><s:property value="profesional.persona.nombreCompleto"/></td>
 						</tr>
 						<tr>
-							<td class="leftLabel" width="130"><s:text name="tipoSolViaje.Estado"></s:text></td>
-							<td class="text"><s:property value="tipoSolicitudViaje.tpsvEstadoView"/></td>
+							<td class="leftLabel" width="130"><s:text name="personal.documento"></s:text></td>
+							<td class="text"><s:property value="profesional.persona.documentoPers"/>&nbsp;<s:property value="persona.tipodocumento.abreviaturaTidoc"/></td>
+						</tr>
+						<tr>
+							<td class="leftLabel" width="130"><s:text name="profesionalsalud.profesion"></s:text></td>
+							<td class="text"><s:property value="profesional.profEspecialidad"/></td>
+						</tr>
+						<tr>
+							<td class="leftLabel" width="130"><s:text name="profesionalsalud.nrotarjetaprof"></s:text></td>
+							<td class="text"><s:property value="profesional.profNrotarjetaprof"/></td>
+						</tr>
+						<tr>
+							<td class="leftLabel" width="130"><s:text name="profesionalsalud.estado"></s:text></td>
+							<td class="text"><s:if test="profesional.profEstado==\"1\"">ACTIVO</s:if><s:else>INACTIVO</s:else></td>
 						</tr>
 					</table>
 					<table cellpadding="0" cellspacing="0" border="0" class="display">

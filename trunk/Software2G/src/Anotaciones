@@ -1,6 +1,6 @@
 Tareas
 1- Crear persona esquema portal .::[O.K]::.
-2- Crear Profesional de la Salud
+2- Crear Profesional de la Salud .::[O.K]::.
 	2.1- Crear Utilidad AutoCompletado .::[O.K]::. 
 3- Asociar Persona-Profesional Salud a Institucion
 4- Armar Archivo .js Menu historia clinica
@@ -10,6 +10,6 @@ Sugerencia
 * Tabla profesional salud  .::[O.K]::.
 	adicionar Campo: - profesion   .::[O.K]::.
 					 - estado   .::[O.K]::.
-* Mejorar metodo de impresion de ayuda de objetos "ValidaString.imprimirObject(Object)"					 
+* Mejorar metodo de impresion de ayuda de objetos "ValidaString.imprimirObject(Object)"  .::[O.K]::.					 
 					 
 

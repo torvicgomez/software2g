@@ -2,6 +2,7 @@ package com.software2g.agenda.action;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private List<Persona> listPersona;
 	private InputStream strProfesional;
 	private Persona persona;
+	private InputStream strDatosPersona;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -161,6 +163,41 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     	return Action.SUCCESS;
 	}
 	
+	@SkipValidation
+	public String profesionalSaludMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>HistoriaClinicaAction>>>>profesionalSaludMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listProfesional = gestionFacadeAgenda.findAllProfesionals();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			if(profesional.getPersona().getIdPers()<=0)
+    				addActionError(getText("validacion.requerido","prfsIdPers","Seleccione al Profesional de la Salud"));
+    			if(ValidaString.isNullOrEmptyString(profesional.getProfEspecialidad()))
+    				addActionError(getText("validacion.requerido","prfsProfesion","Profesión"));
+    			if(ValidaString.isNullOrEmptyString(profesional.getProfNrotarjetaprof()))
+    				addActionError(getText("validacion.requerido","prfsNroTarjetaProf","Nro Tarjeta Profesional"));
+    			if(ValidaString.isNullOrEmptyString(profesional.getProfEstado()))
+    				addActionError(getText("validacion.requerido","prfsEstado","Estado"));
+    			if(!hasActionErrors()){
+    				profesional.setPersona(gestionFacadeAgenda.findPersonaById(profesional.getPersona().getIdPers()));
+    				profesional.setDatosAud(this.getDatosAud());
+    				ValidaString.imprimirObject(profesional);
+    				gestionFacadeAgenda.persistProfesional(profesional);
+    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				addActionMessage(getText("accion.satisfactoria"));
+    			}
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			profesional = gestionFacadeAgenda.findProfesionalById(getIdLong());
+    		}
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>HistoriaClinicaAction>>>>profesionalSaludMethod>>>>estado salida-->>"+estado);
+    	return Action.SUCCESS;
+	}
 	
 	public AgendaAction(IGestionFacadeAgenda gestionFacadeAgenda) {this.gestionFacadeAgenda = gestionFacadeAgenda;}
 	public HttpServletRequest getRequest() {return request;}
@@ -204,5 +241,51 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 		return strProfesional;
 	}
 	
-	
+	public InputStream getStrDatosPersona() {
+		try{
+			String html = "";
+			long idPersona = Long.parseLong(request.getParameter("idPersona"));
+			System.out.println("idPrograma: ["+idPersona+"]");
+			Persona persona = gestionFacadeAgenda.findPersonaById(idPersona);
+			html = "<s:textfield name=\"dataAutoCompletado\" id=\"search\" size=\"60\" maxlength=\"30\" cssClass=\"inputs\"></s:textfield><br>";
+			html += "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">"+
+					"	<tr> " +
+					"		<td class=\"leftLabel\">Nombre</td> " +
+					"		<td>" + persona.getNombreCompleto() + "</td> " +
+					"	</tr> " +
+					"	<tr> " +
+					"		<td class=\"leftLabel\">Documento Identificación</td> " +
+					"		<td>" + persona.getDocumentoPers() + " " + persona.getTipodocumento().getAbreviaturaTidoc() + "</td> " +
+					"	</tr> " +
+					"	<tr> " +
+					"		<td class=\"leftLabel\">Fecha Nacimiento y Edad</td> " +
+					"		<td>" + persona.getFechanacimientoPers() + "  /  " + persona.getEdad() + "</td> " +
+					"	</tr> " +
+					"	<tr> " +
+					"		<td class=\"leftLabel\">Sexo</td> " +
+					"		<td>" + persona.getSexoPers() + "</td> " +
+					"	</tr> " +
+					"	<tr> " +
+					"		<td class=\"leftLabel\">Estado Civil</td> " +
+					"		<td>" + persona.getEstadocivilPers() + "</td> " +
+					"	</tr> " +
+					"	<tr> " +
+					"		<td class=\"leftLabel\">Correo Electrónico</td> " +
+					"		<td>" + persona.getEmailPers() + "</td> " +
+					"	</tr> " +
+					"	<tr> " +
+					"		<td class=\"leftLabel\">Teléfonos</td> " +
+					"		<td>" + persona.getTelefonoPers() + "</td> " +
+					"	</tr> " +
+					"	<tr> " +
+					"		<td class=\"leftLabel\">Ubicación</td> " +
+					"		<td>" + persona.getUbicacionPersona() + " " + persona.getDireccionPers() + "</td> " +
+					"	</tr> " +
+					"</table>";
+			strDatosPersona = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return strDatosPersona;
+	}
 }

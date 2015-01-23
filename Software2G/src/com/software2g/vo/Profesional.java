@@ -43,6 +43,12 @@ public class Profesional implements Serializable {
 	@Column(name="prof_especialidad")
 	private String profEspecialidad;
 	
+	@Column(name="prof_estado")
+	private String profEstado;
+	
+	@Column(name="prof_nrotarjetaprof")
+	private String profNrotarjetaprof;
+	
 	//bi-directional many-to-one association to Agenda
 	@OneToMany(mappedBy="profesional")
 	private List<Agenda> agendas;
@@ -147,5 +153,28 @@ public class Profesional implements Serializable {
 	public void setSelectProfesion(String selectProfesion) {
 		this.selectProfesion = selectProfesion;
 	}
-	
+
+	public String getProfEstado() {
+		return profEstado;
+	}
+
+	public void setProfEstado(String profEstado) {
+		this.profEstado = profEstado;
+	}
+
+	public String getProfNrotarjetaprof() {
+		return profNrotarjetaprof;
+	}
+
+	public void setProfNrotarjetaprof(String profNrotarjetaprof) {
+		this.profNrotarjetaprof = profNrotarjetaprof;
+	}
+
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.profRegistradopor=data.get(0);
+			this.profFechacambio=data.get(1);
+			this.profHoracambio=data.get(2);
+		}
+	}
 }

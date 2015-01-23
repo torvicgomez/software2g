@@ -20,6 +20,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.software2g.historia_clinica.facade.IGestionFacadeHistoriaClinica;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
+import com.software2g.vo.Acudiente;
 import com.software2g.vo.Anamnesi;
 import com.software2g.vo.Finalidad;
 import com.software2g.vo.Motivo;
@@ -93,45 +94,6 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 	}
 	
 	@SkipValidation
-	public String profesionalSaludMethod(){
-		String  result = Action.SUCCESS; 
-    	try { 
-    		getFuncionPosicionado();
-    		System.out.println("######>>>>>>>HistoriaClinicaAction>>>>profesionalSaludMethod>>>>estado entrada-->>"+estado);
-    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
-    			listProfesionalSalud = gestionFacadeHistoriaClinica.findAllProfesionalsaluds();
-    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
-    			if(profesionalSalud.getPersona().getIdPers()<=0)
-    				addActionError(getText("validacion.requerido","prfsIdPers","Seleccione al Profesional de la Salud"));
-    			if(ValidaString.isNullOrEmptyString(profesionalSalud.getPrfsProfesion()))
-    				addActionError(getText("validacion.requerido","prfsProfesion","Profesión"));
-    			if(ValidaString.isNullOrEmptyString(profesionalSalud.getPrfsNrotarjetaprof()))
-    				addActionError(getText("validacion.requerido","prfsNroTarjetaProf","Nro Tarjeta Profesional"));
-    			if(ValidaString.isNullOrEmptyString(profesionalSalud.getPrfsEstado()))
-    				addActionError(getText("validacion.requerido","prfsEstado","Estado"));
-    			if(!hasActionErrors()){
-    				//profesionalSalud.setPrfsId(29);
-    				profesionalSalud.setDatosAud(this.getDatosAud());
-    				ValidaString.imprimirObject(profesionalSalud);
-    				gestionFacadeHistoriaClinica.persistProfesionalsalud(profesionalSalud);
-//    				long idProfesional = gestionFacadeHistoriaClinica.persistProfesionalsaludId(profesionalSalud);
-//    				System.out.println("idProfesional:["+idProfesional+"]");
-    				estado = ConstantesAplicativo.constanteEstadoAbstract;
-    				addActionMessage(getText("accion.satisfactoria"));
-    			}
-    		}/*else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
-    			parametroCalendario = gestionFacadeAgenda.findParametroscalendarioById(getIdLong());
-    		}*/
-    	} catch(Exception e){
-    		e.printStackTrace();
-    		addActionError(getText("error.aplicacion"));
-    	}
-    	System.out.println("######>>>>>>>HistoriaClinicaAction>>>>profesionalSaludMethod>>>>estado salida-->>"+estado);
-    	return Action.SUCCESS;
-	}
-	
-	
-	@SkipValidation
 	public String servicioMethod(){
 		String  result = Action.SUCCESS; 
     	try { 
@@ -172,54 +134,6 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     	}
     	System.out.println("######>>>>>>>HistoriaClinicaAction>>>>servicioMethod>>>>estado salida-->>"+estado);
     	return Action.SUCCESS;
-	}
-	
-	public InputStream getStrDatosPersona() {
-		try{
-			String html = "";
-			long idPersona = Long.parseLong(request.getParameter("idPersona"));
-			System.out.println("idPrograma: ["+idPersona+"]");
-			Persona persona = gestionFacadeHistoriaClinica.findPersonaById(idPersona);
-			html = "<s:textfield name=\"dataAutoCompletado\" id=\"search\" size=\"60\" maxlength=\"30\" cssClass=\"inputs\"></s:textfield><br>";
-			html += "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">"+
-					"	<tr> " +
-					"		<td class=\"leftLabel\">Nombre</td> " +
-					"		<td>" + persona.getNombreCompleto() + "</td> " +
-					"	</tr> " +
-					"	<tr> " +
-					"		<td class=\"leftLabel\">Documento Identificación</td> " +
-					"		<td>" + persona.getDocumentoPers() + " " + persona.getTipodocumento().getAbreviaturaTidoc() + "</td> " +
-					"	</tr> " +
-					"	<tr> " +
-					"		<td class=\"leftLabel\">Fecha Nacimiento y Edad</td> " +
-					"		<td>" + persona.getFechanacimientoPers() + "  /  " + persona.getEdad() + "</td> " +
-					"	</tr> " +
-					"	<tr> " +
-					"		<td class=\"leftLabel\">Sexo</td> " +
-					"		<td>" + persona.getSexoPers() + "</td> " +
-					"	</tr> " +
-					"	<tr> " +
-					"		<td class=\"leftLabel\">Estado Civil</td> " +
-					"		<td>" + persona.getEstadocivilPers() + "</td> " +
-					"	</tr> " +
-					"	<tr> " +
-					"		<td class=\"leftLabel\">Correo Electrónico</td> " +
-					"		<td>" + persona.getEmailPers() + "</td> " +
-					"	</tr> " +
-					"	<tr> " +
-					"		<td class=\"leftLabel\">Teléfonos</td> " +
-					"		<td>" + persona.getTelefonoPers() + "</td> " +
-					"	</tr> " +
-					"	<tr> " +
-					"		<td class=\"leftLabel\">Ubicación</td> " +
-					"		<td>" + persona.getUbicacionPersona() + " " + persona.getDireccionPers() + "</td> " +
-					"	</tr> " +
-					"</table>";
-			strDatosPersona = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return strDatosPersona;
 	}
 	
 	public HistoriaClinicaAction(IGestionFacadeHistoriaClinica gestionFacadeHistoriaClinica) {this.gestionFacadeHistoriaClinica = gestionFacadeHistoriaClinica;}

@@ -24,4 +24,8 @@
 		<put-attribute name="body" value="/calendario/jornadaLaboral.jsp" />
 	</definition>
 	
+	<definition name="calendario.profesionalsalud" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/historiaClinica/profesionalSalud.jsp" />
+	</definition>
+	
 </tiles-definitions>

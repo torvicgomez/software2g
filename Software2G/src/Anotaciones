@@ -4,6 +4,13 @@ Tareas
 	2.1- Crear Utilidad AutoCompletado .::[O.K]::. 
 3- Asociar Persona-Profesional Salud a Institucion
 4- Armar Archivo .js Menu historia clinica
+5- Crear Agenda.::[O.K]::.
+	5.1- Asociar Profesional.::[O.K]::.
+	5.2- Crear Archivo constantes_profagenda.js.::[O.K]::.
+	5.3- Desplegar agenda de profesional con el color especifico.::[O.K]::.
+6- Crear eventos y participantes del evento
+7- crear archivo eventos asociados a la agenda del profesional
+8- insertar campo backgroun profesional.::[O.K]::.
 
 
 Sugerencia

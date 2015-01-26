@@ -16,7 +16,7 @@ public class Profesional implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="PROFESIONAL_PROFID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_PROF_ID\"")
+	@SequenceGenerator(name="PROFESIONAL_PROFID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_PROF_ID\"", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PROFESIONAL_PROFID_GENERATOR")
 	@Column(name="prof_id")
 	private long profId;
@@ -48,6 +48,9 @@ public class Profesional implements Serializable {
 	
 	@Column(name="prof_nrotarjetaprof")
 	private String profNrotarjetaprof;
+
+	@Column(name="prof_backgroundcoloragen")
+	private String profBackgroundcoloragen;
 	
 	//bi-directional many-to-one association to Agenda
 	@OneToMany(mappedBy="profesional")
@@ -176,5 +179,17 @@ public class Profesional implements Serializable {
 			this.profFechacambio=data.get(1);
 			this.profHoracambio=data.get(2);
 		}
+	}
+
+	public String getProfBackgroundcoloragen() {
+		return profBackgroundcoloragen;
+	}
+
+	public void setProfBackgroundcoloragen(String profBackgroundcoloragen) {
+		this.profBackgroundcoloragen = profBackgroundcoloragen;
+	}
+
+	public String getViewProfesional(){
+		return this.getPersona().getNombreCompleto()+" - "+this.getProfEspecialidad();
 	}
 }

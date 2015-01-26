@@ -505,17 +505,21 @@ Creacion campos esquema HISCLINICA
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
 Tabla Profesional
-  prof_estado character varying(1),
-  prof_nrotarjetaprof character varying(30),
+alter table "HISCLINICA"."PROFESIONAL" ADD prof_estado character varying(1);
+alter table "HISCLINICA"."PROFESIONAL" ADD prof_nrotarjetaprof character varying(30);
+alter table "HISCLINICA"."PROFESIONAL" ADD prof_especialidad  character varying(50);
+alter table "HISCLINICA"."PROFESIONAL" ADD prof_backgroundColorAgen character varying(7);
 
 Tabla Agenda
-  agen_duracionevento character varying(8) NOT NULL,
-  agen_scrolltime character varying(8) NOT NULL,
-  agen_mintime character varying(8) NOT NULL,
-  agen_maxtime character varying(8) NOT NULL,
-  agen_alldayslot character varying(1) NOT NULL,
-  agen_alldaytext character varying(30) NOT NULL,
-
+alter table "HISCLINICA"."AGENDA" ADD agen_duracionevento character varying(8) NOT NULL;
+alter table "HISCLINICA"."AGENDA" ADD agen_scrolltime character varying(8) NOT NULL;
+alter table "HISCLINICA"."AGENDA" ADD agen_mintime character varying(8) NOT NULL;
+alter table "HISCLINICA"."AGENDA" ADD agen_maxtime character varying(8) NOT NULL;
+alter table "HISCLINICA"."AGENDA" ADD agen_alldayslot character varying(1) NOT NULL;
+alter table "HISCLINICA"."AGENDA" ADD agen_alldaytext character varying(30) NOT NULL;
+ALTER TABLE "HISCLINICA"."AGENDA" ALTER COLUMN agen_fechaini TYPE character varying(10);
+ALTER TABLE "HISCLINICA"."AGENDA" ALTER COLUMN agen_fechafin TYPE character varying(10);
+alter table "HISCLINICA"."AGENDA" ADD agen_pathconstantes character varying(30);
 
 
 

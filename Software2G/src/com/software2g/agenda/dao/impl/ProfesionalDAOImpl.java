@@ -76,6 +76,22 @@ public class ProfesionalDAOImpl implements IProfesionalDao {
             }
         }
 	}
+	
+	public Profesional findProfesionalIdPersona(long idPersona) {
+        try {
+    		String jpqlString = "select profesional from " + Profesional.class.getSimpleName() + " profesional" +
+    				" where profesional.persona.idPers =:idPersona ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("idPersona", idPersona);
+            return (Profesional) query.getSingleResult();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

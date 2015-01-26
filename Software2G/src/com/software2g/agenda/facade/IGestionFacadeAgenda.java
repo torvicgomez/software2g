@@ -31,6 +31,7 @@ public interface IGestionFacadeAgenda {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistAgenda(Agenda agenda) throws Exception;
+	public long persistAgendaId(Agenda agenda) throws Exception;
 	/**
 	 * Remove the given persistent instance.
 	 */
@@ -115,6 +116,7 @@ public interface IGestionFacadeAgenda {
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
 	public Profesional findProfesionalById(long id) throws Exception;
+	public Profesional findProfesionalIdPersona(long idPersona) throws Exception;
 	/**
 	 * Return all persistent instances of the <code>Profesional</code> entity.
 	 */
@@ -165,5 +167,6 @@ public interface IGestionFacadeAgenda {
 	//-----------------------------------------------------------------------
 	// FIN Persona
 	//-----------------------------------------------------------------------
-	
+
+	public boolean crearFile(String path, String nameFile, String ext, String tipoFile, String infoFind) throws Exception;
 }

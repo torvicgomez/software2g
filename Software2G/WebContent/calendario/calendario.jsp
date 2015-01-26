@@ -188,11 +188,7 @@
 <body>
 	<table align="center" width="99%" height="100%">
 		<tr><td>
-			<select id="fondo" name="fondo">
-				<option value="#ff0000">Pediatria</option>
-				<option value="#ff34d5">Odontologia</option>
-				<option value="#aa34d5">Ortodoncia</option>
-			</select>
+			<s:select list="listProfesional" name="agendaMedica.agenAlldayslot" id="fondo" listKey="profBackgroundcoloragen" listValue="viewProfesional" headerKey="" headerValue=".::Seleccion::." cssClass="inputs"/>
 		</td></tr>
 		<tr><td><div id='calendar'></div></td></tr>
 	</table>

@@ -16,7 +16,7 @@ public class Agenda implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="AGENDA_AGENID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_AGEN_ID\"")
+	@SequenceGenerator(name="AGENDA_AGENID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_AGEN_ID\"", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="AGENDA_AGENID_GENERATOR")
 	@Column(name="agen_id")
 	private long agenId;
@@ -24,13 +24,11 @@ public class Agenda implements Serializable {
 	@Column(name="agen_fechacambio")
 	private String agenFechacambio;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name="agen_fechafin")
-	private Date agenFechafin;
+	private String agenFechafin;
 
-	@Temporal(TemporalType.DATE)
 	@Column(name="agen_fechaini")
-	private Date agenFechaini;
+	private String agenFechaini;
 
 	@Column(name="agen_horacambio")
 	private String agenHoracambio;
@@ -55,6 +53,9 @@ public class Agenda implements Serializable {
 	
 	@Column(name="agen_alldaytext")
 	private String agenAlldaytext;
+	
+	@Column(name="agen_pathconstantes")
+	private String agenPathconstantes;
 	
 	//bi-directional many-to-one association to Profesional
 	@ManyToOne
@@ -88,19 +89,19 @@ public class Agenda implements Serializable {
 		this.agenFechacambio = agenFechacambio;
 	}
 
-	public Date getAgenFechafin() {
+	public String getAgenFechafin() {
 		return this.agenFechafin;
 	}
 
-	public void setAgenFechafin(Date agenFechafin) {
+	public void setAgenFechafin(String agenFechafin) {
 		this.agenFechafin = agenFechafin;
 	}
 
-	public Date getAgenFechaini() {
+	public String getAgenFechaini() {
 		return this.agenFechaini;
 	}
 
-	public void setAgenFechaini(Date agenFechaini) {
+	public void setAgenFechaini(String agenFechaini) {
 		this.agenFechaini = agenFechaini;
 	}
 
@@ -192,11 +193,31 @@ public class Agenda implements Serializable {
 		this.agenAlldaytext = agenAlldaytext;
 	}
 
+	public String getAgenPathconstantes() {
+		return agenPathconstantes;
+	}
+
+	public void setAgenPathconstantes(String agenPathconstantes) {
+		this.agenPathconstantes = agenPathconstantes;
+	}
+
 	public void setDatosAud(List<String> data){
 		if(data!=null&&data.size()==3){
 			this.agenRegistradopor=data.get(0);
 			this.agenFechacambio=data.get(1);
 			this.agenHoracambio=data.get(2);
 		}
+	}
+	
+	public void setAddSegundos(){
+		System.out.println("entra esta parte completar hora segundos");
+		this.agenDuracionevento+=":00";
+		System.out.println("this.agenDuracionevento:["+this.agenDuracionevento+"]");
+		this.agenMaxtime+=":00";
+		System.out.println("this.agenMaxtime:["+this.agenMaxtime+"]");
+		this.agenMintime+=":00";
+		System.out.println("this.agenMintime:["+this.agenMintime+"]");
+		this.agenScrolltime+=":00";
+		System.out.println("this.agenScrolltime:["+this.agenScrolltime+"]");
 	}
 }

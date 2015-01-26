@@ -25,13 +25,46 @@
 
 
 <script>
-	var txt1 = 'Tipo Documento:<select id="tipodoc" name="tipodoc"><option value="CC">Cedula Ciudadania</option><option value="TI">Tarjeta Identidad</option></select><br/>'+
-		  'Nro Documento:<input type="text" id="nrodocumento" name="nrodocumento"/><br/>'+
-		  'Primer Nombre:<input type="text" id="pnombre" name="pnombre"/><br/>'+
-		  'Segundo Nombre:<input type="text" id="snombre" name="snombre"/><br/>'+
-		  'Primer Apellido:<input type="text" id="papellido" name="papellido"/><br/>'+
-		  'Segundo Apellido:<input type="text" id="sapellido" name="sapellido"/><br/>'+
-		  'Sexo:<select id="sexo" name="sexo"><option value="M">Masculino</option><option value="F">Femenino</option></select>';
+	var txt1 = '<table> '+
+				'  <tr> '+
+				'	<td>Tipo Documento:</td> '+
+				'	<td> '+
+				'	  <select id="tipodoc" name="tipodoc"> '+
+				'		<option value="CC">CEDULA DE CIUDADANIA</option> '+
+				'		<option value="TI">TARJETA DE IDENTIDAD</option> '+
+				'		<option value="RC">REGISTRO CIVIL</option> '+
+				'		<option value="CE">CEDULA EXTRANJERIA</option> '+
+				'		<option value="PS">PASAPORTE</option> '+
+				'		<option value="ASI">ADULTO SIN IDENTIFICACION</option> '+
+				'		<option value="MSI">MENOR SIN IDENTIFICACION</option> '+
+				'	  </select> '+
+				'	</td> '+
+				'  </tr> '+
+				'  <tr> '+
+				'	<td>Nro Documento:</td> '+
+				'	<td><input type="text" id="nrodocumento" name="nrodocumento"/></td> '+
+				' </tr> '+
+				'  <tr> '+
+				'	<td>Primer Nombre:</td> '+
+				'	<td><input type="text" id="pnombre" name="pnombre"/></td> '+
+				'  </tr> '+
+				'  <tr> '+
+				'	<td>Segundo Nombre:</td> '+
+				'	<td><input type="text" id="snombre" name="snombre"/></td> '+
+				'  </tr> '+
+				'  <tr> '+
+				'	<td>Primer Apellido:</td> '+
+				'	<td><input type="text" id="papellido" name="papellido"/></td> '+
+				'  </tr> '+
+				'  <tr> '+
+				'	<td>Segundo Apellido:</td> '+
+				'	<td><input type="text" id="sapellido" name="sapellido"/></td> '+
+				'  </tr> '+
+				'  <tr> '+
+				'	<td>Sexo:</td> '+
+				'	<td><select id="sexo" name="sexo"><option value="M">Masculino</option><option value="F">Femenino</option></select></td> '+
+				'  </tr> '+
+				'</table>';
 	
 	var title_evento = '';
 	var start_evento = '';
@@ -131,6 +164,25 @@
 			nameCompleto= f.pnombre+' '+f.snombre+' '+f.papellido+' '+f.sapellido;
 			title_evento = f.nrodocumento+' '+f.tipodoc+' '+nameCompleto;
 			fondo_evento = document.getElementById("fondo").value;
+			url = 'rol.action?estado=all&funcPosicionado=Administracion Portal::>Roles';
+			url_param = 'rol.action?estado=all';
+			
+// 			alert('start_evento:['+start_evento+']'); 
+// 			alert('end_evento:['+end_evento+']');
+// 			alert('title_evento:['+title_evento+']');
+// 			alert('fondo_evento:['+fondo_evento+']');
+// 			alert('url:['+url+']');
+			title_evento_param = title_evento.replace(" ", "%20");
+			fondo_evento_param = fondo_evento.replace("#", "%23");
+// 			url_param = url.replace("&", "%26");
+// 			url_param = url.replace(":", "%3A");
+// 			url_param = url.replace("=", "%3D");
+			alert('title_evento_param:['+title_evento_param+']');
+			alert('fondo_evento_param:['+fondo_evento_param+']');
+			alert('url_param:['+url_param+']');
+			
+			$("#divEventos").load('crearEventoCalendario.action?start='+start_evento+'&end='+end_evento+'&url='+url_param+'&backgroundColor='+fondo_evento_param+'&title='+title_evento_param);
+			
 			//alert('dateStart: ['+dateStrat+']');
 			//alert('formato fecha ISO: ['++']');
 			//start_evento = '2014-06-12T10:20:00';
@@ -147,7 +199,7 @@
 						title: title_evento,
 						start: start_evento,
 						end: end_evento,
-						url: 'rol.action?estado=all&funcPosicionado=Administracion Portal::>Roles',
+						url: url,
 						backgroundColor: fondo_evento 
 					};
 					//alert('eventData:['+eventData+']');
@@ -190,6 +242,7 @@
 		<tr><td>
 			<s:select list="listProfesional" name="agendaMedica.agenAlldayslot" id="fondo" listKey="profBackgroundcoloragen" listValue="viewProfesional" headerKey="" headerValue=".::Seleccion::." cssClass="inputs"/>
 		</td></tr>
+		<tr><td><div id='divEventos'></div></td></tr>
 		<tr><td><div id='calendar'></div></td></tr>
 	</table>
 </body>

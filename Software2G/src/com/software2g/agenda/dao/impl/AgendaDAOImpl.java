@@ -8,7 +8,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.software2g.vo.Agenda;
-import com.software2g.vo.Persona;
 import com.software2g.agenda.dao.IAgendaDao;
 
 import org.springframework.stereotype.Repository;
@@ -77,6 +76,24 @@ public class AgendaDAOImpl implements IAgendaDao {
             }
         }
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Agenda findIdAgenda(String background) {
+        try {
+        	String jpqlString = " select agenda from " + Agenda.class.getSimpleName() + " agenda " +
+        						" where agenda.profesional.profBackgroundcoloragen =:background  ";
+            Query query = em.createQuery( jpqlString );
+            System.out.println("background: ["+background+"]");
+            query.setParameter("background", background);
+            return (Agenda) query.getSingleResult();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

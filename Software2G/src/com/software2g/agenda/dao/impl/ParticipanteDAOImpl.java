@@ -7,20 +7,20 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.software2g.vo.Evento;
-import com.software2g.agenda.dao.IEventoDao;
+import com.software2g.vo.Participante;
+import com.software2g.agenda.dao.IParticipanteDao;
 
 import org.springframework.stereotype.Repository;
 
 /**
- * The DAO class for the Evento entity.
+ * The DAO class for the Participante entity.
  */
 @Repository
-public class EventoDAOImpl implements IEventoDao {
-	@PersistenceContext(unitName="entityManagerFactoryPostgres")
+public class ParticipanteDAOImpl implements IParticipanteDao {
+    @PersistenceContext(unitName="entityManagerFactoryPostgres")
     private EntityManager em;
 
-	public EventoDAOImpl() {
+	public ParticipanteDAOImpl() {
 		super();
 	}
 	/**
@@ -57,16 +57,16 @@ public class EventoDAOImpl implements IEventoDao {
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
-	public Evento findEventoById(long id) {
-		return (Evento)em.find(Evento.class, new Long(id));
+	public Participante findParticipanteById(long id) {
+		return (Participante)em.find(Participante.class, new Long(id));
 	}
 	/**
-	 * Return all persistent instances of the <code>Evento</code> entity.
+	 * Return all persistent instances of the <code>Participante</code> entity.
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Evento> findAllEventos() {
+	public List<Participante> findAllParticipantes() {
         try {
-    		String jpqlString = "select evento from " + Evento.class.getSimpleName() + " evento";
+    		String jpqlString = "select participante from " + Participante.class.getSimpleName() + " participante";
             Query query = em.createQuery( jpqlString );
             return query.getResultList();
         }
@@ -79,21 +79,15 @@ public class EventoDAOImpl implements IEventoDao {
 	/**
 	 * Make the given instance managed and persistent.
 	 */
-	public void persistEvento(Evento evento) {
-		em.persist(em.merge(evento));
-	}
-	
-	public long persistEventoId(Evento evento) {
-		Evento obj = em.merge(evento);
-		em.persist(obj);
-		return obj.getEvenId();
+	public void persistParticipante(Participante participante) {
+		em.persist(em.merge(participante));
 	}
 	/**
 	 * Remove the given persistent instance.
 	 */
-	public void removeEvento(Evento evento) {
+	public void removeParticipante(Participante participante) {
 		/*In JPA, objects detach automatically when they are serialized or when a persistence context ends.
 		 The merge method returns a managed copy of the given detached entity.*/
-		em.remove(em.merge(evento));
+		em.remove(em.merge(participante));
 	}
 }

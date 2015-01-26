@@ -61,7 +61,8 @@
     
 	<!--	DECLARACION DE LOS ACTION-->
     <bean class="com.software2g.portal.action.PortalAction" id="PortalAction" scope="prototype">
-    	<constructor-arg ref="gestionFacadePortal"/> 
+    	<constructor-arg ref="gestionFacadePortal"/>
+    	<constructor-arg ref="gestionFacadeAgenda"/>  
     </bean> 
     <bean class="com.software2g.contable.action.ContableAction" id="ContableAction" scope="prototype">
     	<constructor-arg ref="gestionFacadeContable"/> 
@@ -145,6 +146,7 @@
         <property name="profesionalDao"><bean class="com.software2g.agenda.dao.impl.ProfesionalDAOImpl"/></property>
         <property name="tiempoNoDisponibleDao"><bean class="com.software2g.agenda.dao.impl.TiempoNoDisponibleJDAOImpl"/></property>
         <property name="personaDao"><bean class="com.software2g.portal.dao.impl.PersonaDaoImpl"/></property>
+        <property name="participanteDao"><bean class="com.software2g.agenda.dao.impl.ParticipanteDAOImpl"/></property>
 	</bean>    
 	
 	<bean class="com.software2g.historia_clinica.facade.impl.GestionFacadeHistoriaClinica" id="gestionFacadeHistoriaClinica">
@@ -203,4 +205,5 @@
         <property name="personaDao"><bean class="com.software2g.portal.dao.impl.PersonaDaoImpl"/></property>
         <property name="profesionalSaludDao"><bean class="com.software2g.historia_clinica.dao.impl.PrefesionalSaludDAOImpl"/></property>
      </bean>
+
 </beans>

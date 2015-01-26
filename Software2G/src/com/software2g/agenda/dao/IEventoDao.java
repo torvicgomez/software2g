@@ -31,6 +31,7 @@ public interface IEventoDao {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistEvento(Evento evento);
+	public long persistEventoId(Evento evento);
 	/**
 	 * Remove the given persistent instance.
 	 */

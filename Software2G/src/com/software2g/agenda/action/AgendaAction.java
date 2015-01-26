@@ -23,6 +23,7 @@ import com.software2g.vo.Evento;
 import com.software2g.vo.Funcionalidad;
 import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Parametroscalendario;
+import com.software2g.vo.Participante;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Profesional;
 import com.software2g.vo.Usuario;
@@ -77,15 +78,16 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 		String  result = Action.SUCCESS; 
     	try { 
     		getFuncionPosicionado();
-    		System.out.println("######>>>>>>>AgendaAction>>>>paramCalendarioMethod>>>>estado entrada-->>"+estado);
+    		System.out.println("######>>>>>>>AgendaAction>>>>calendarioMethod>>>>estado entrada-->>"+estado);
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
-    			listProfesional = gestionFacadeAgenda.findAllProfesionals();
+//    			listProfesional = gestionFacadeAgenda.findAllProfesionals();
+    			listProfesional = gestionFacadeAgenda.findAllProfesionalAgenda();
     		}
     	} catch (Exception e) {
 			addActionMessage(getText("error.aplicacion"));
 			e.printStackTrace();
 		}
-    	System.out.println("######>>>>>>>AgendaAction>>>>paramCalendarioMethod>>>>estado salida-->>"+estado);
+    	System.out.println("######>>>>>>>AgendaAction>>>>calendarioMethod>>>>estado salida-->>"+estado);
     	return result;
 	}
 	private void getFuncionPosicionado(){
@@ -357,6 +359,20 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 			System.out.println("url:["+url+"]");
 			String backgroundColor = String.valueOf(request.getParameter("backgroundColor"));
 			System.out.println("backgroundColor:["+backgroundColor+"]");
+			
+			String pnombre = String.valueOf(request.getParameter("pnombre"));
+			System.out.println("pnombre:["+pnombre+"]");
+			String snombre = String.valueOf(request.getParameter("snombre"));
+			System.out.println("snombre:["+snombre+"]");
+			String papellido = String.valueOf(request.getParameter("papellido"));
+			System.out.println("papellido:["+papellido+"]");
+			String sapellido = String.valueOf(request.getParameter("sapellido"));
+			System.out.println("sapellido:["+sapellido+"]");
+			String telefono = String.valueOf(request.getParameter("telefono"));
+			System.out.println("telefono:["+telefono+"]");
+			String email = String.valueOf(request.getParameter("email"));
+			System.out.println("email:["+email+"]");
+			
 			System.out.println("****************************************************");
 			Evento evento = new Evento();
 			evento.setAgenda(gestionFacadeAgenda.findIdAgenda(backgroundColor));
@@ -368,7 +384,28 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 			evento.setEvenEstado(ConstantesAplicativo.constanteEstadoEventoCreado);
 			evento.setDatosAud(getDatosAud());
 			ValidaString.imprimirObject(evento);
-			gestionFacadeAgenda.persistEvento(evento);
+			long idEvento = gestionFacadeAgenda.persistEventoId(evento);
+			if(idEvento>0){
+				evento.setEvenId(idEvento);
+				Participante participante = new Participante();
+				participante.setEvento(evento);
+				participante.setPartPnombre(String.valueOf(request.getParameter("pnombre")));
+				participante.setPartSnombre(String.valueOf(request.getParameter("snombre")));
+				participante.setPartPapellido(String.valueOf(request.getParameter("papellido")));
+				participante.setPartSapellido(String.valueOf(request.getParameter("sapellido")));
+				participante.setPartTelefono(String.valueOf(request.getParameter("telefono")));
+				participante.setPartEmail(String.valueOf(request.getParameter("email")));
+				participante.setDatosAud(getDatosAud());
+				ValidaString.imprimirObject(participante);
+				gestionFacadeAgenda.persistParticipante(participante);
+			}	
+			String nameFile = "eventos";
+			String path = request.getServletContext().getRealPath("/")+"js\\constantesCalendario\\"; 
+			boolean resultFile = gestionFacadeAgenda.crearFile(path, nameFile,   
+						ConstantesAplicativo.constanteExtensionFileJS, 
+						ConstantesAplicativo.constanteTipoFileJSConstantesEventos,
+						ConstantesAplicativo.constanteCrearFileJSEventosAll);
+			
 			html = "Se creo satisfactoriamente el evento";
 			strCrearEvento = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
 		}catch(Exception e){

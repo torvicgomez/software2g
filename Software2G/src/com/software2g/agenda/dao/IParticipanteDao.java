@@ -2,12 +2,12 @@ package com.software2g.agenda.dao;
 
 import java.util.List;
 
-import com.software2g.vo.Profesional;
+import com.software2g.vo.Participante;
 
 /**
- * The DAO interface for the Profesional entity.
+ * The DAO interface for the Participante entity.
  */
-public interface IProfesionalDao {
+public interface IParticipanteDao {
 	/**
 	 * Return the persistent entities returned from a named query.
 	 */
@@ -22,20 +22,17 @@ public interface IProfesionalDao {
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
-	public Profesional findProfesionalById(long id);
-	public Profesional findProfesionalIdPersona(long idPersona);
+	public Participante findParticipanteById(long id);
 	/**
-	 * Return all persistent instances of the <code>Profesional</code> entity.
+	 * Return all persistent instances of the <code>Participante</code> entity.
 	 */
-	public List<Profesional> findAllProfesionals();
-	public List<Profesional> findAllProfesionalAgenda();
+	public List<Participante> findAllParticipantes();
 	/**
 	 * Make the given instance managed and persistent.
 	 */
-	public void persistProfesional(Profesional profesional);
+	public void persistParticipante(Participante participante);
 	/**
 	 * Remove the given persistent instance.
 	 */
-	public void removeProfesional(Profesional profesional);
-	public List<Profesional> findAllProfesionalXIdPersona(long idPersona);
+	public void removeParticipante(Participante participante);
 }

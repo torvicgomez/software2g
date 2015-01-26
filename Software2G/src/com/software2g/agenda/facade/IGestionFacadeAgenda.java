@@ -9,6 +9,7 @@ import com.software2g.vo.Agenda;
 import com.software2g.vo.Evento;
 import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Parametroscalendario;
+import com.software2g.vo.Participante;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Profesional;
 import com.software2g.vo.Tiemponodisponible;
@@ -56,6 +57,7 @@ public interface IGestionFacadeAgenda {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistEvento(Evento evento) throws Exception;
+	public long persistEventoId(Evento evento) throws Exception;
 	/**
 	 * Remove the given persistent instance.
 	 */
@@ -122,6 +124,7 @@ public interface IGestionFacadeAgenda {
 	 * Return all persistent instances of the <code>Profesional</code> entity.
 	 */
 	public List<Profesional> findAllProfesionals() throws Exception;
+	public List<Profesional> findAllProfesionalAgenda() throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */
@@ -169,5 +172,29 @@ public interface IGestionFacadeAgenda {
 	// FIN Persona
 	//-----------------------------------------------------------------------
 
+	//-----------------------------------------------------------------------
+	// Participante
+	//-----------------------------------------------------------------------
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Participante findParticipanteById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Participante</code> entity.
+	 */
+	public List<Participante> findAllParticipantes() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistParticipante(Participante participante) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeParticipante(Participante participante) throws Exception;
+	//-----------------------------------------------------------------------
+	// FIN Participante
+	//-----------------------------------------------------------------------
+	
 	public boolean crearFile(String path, String nameFile, String ext, String tipoFile, String infoFind) throws Exception;
 }

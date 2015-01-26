@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.software2g.vo.Agenda;
 import com.software2g.vo.Profesional;
 import com.software2g.agenda.dao.IProfesionalDao;
 
@@ -67,6 +68,20 @@ public class ProfesionalDAOImpl implements IProfesionalDao {
 	public List<Profesional> findAllProfesionals() {
         try {
     		String jpqlString = "select profesional from " + Profesional.class.getSimpleName() + " profesional";
+            Query query = em.createQuery( jpqlString );
+            return query.getResultList();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Profesional> findAllProfesionalAgenda() {
+        try {
+    		String jpqlString = " select agenda.profesional from " + Agenda.class.getSimpleName() + " agenda ";
             Query query = em.createQuery( jpqlString );
             return query.getResultList();
         }

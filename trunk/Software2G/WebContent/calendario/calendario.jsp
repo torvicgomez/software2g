@@ -22,7 +22,7 @@
 <script type="text/javascript" src="<s:url value='/js/Impromptu._files/jquery-impromptu.js'/>"></script>
 <script type="text/javascript" src="<s:url value='/js/Impromptu._files/common.js'/>"></script>
 
-
+<script type="text/javascript" src="<s:url value='/js/constantesCalendario/eventos.js'/>"></script>
 
 <script>
 	var txt1 = '<table> '+
@@ -61,55 +61,68 @@
 				'	<td><input type="text" id="sapellido" name="sapellido"/></td> '+
 				'  </tr> '+
 				'  <tr> '+
-				'	<td>Sexo:</td> '+
-				'	<td><select id="sexo" name="sexo"><option value="M">Masculino</option><option value="F">Femenino</option></select></td> '+
+				'	<td>Teléfono:</td> '+
+				'	<td><input type="text" id="telefono" name="telefono"/></td> '+
+				'  </tr> '+
+				'  <tr> '+
+				'	<td>Correo Electrónico:</td> '+
+				'	<td><input type="text" id="email" name="email"/></td> '+
 				'  </tr> '+
 				'</table>';
 	
 	var title_evento = '';
 	var start_evento = '';
 	var end_evento = '';
-	var eventos = [
-				{
-					title: 'All Day Event',
-					start: '2014-06-01'
-				},
-				{
-					title: 'Long Event',
-					start: '2014-06-07',
-					end: '2014-06-10'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: '2014-06-09T16:00:00'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: '2014-06-16T16:00:00'
-				},
-				{
-					title: 'Meeting',
-					start: '2014-06-12T10:30:00',
-					end: '2014-06-12T12:30:00',
-					className: 'fc-event-pediatria'
-				},
-				{
-					title: 'Lunch',
-					start: '2014-06-12T12:00:00',
-					backgroundColor: '#ff0000'
-				},
-				{
-					title: 'Birthday Party',
-					start: '2014-06-13T07:00:00'
-				},
-				{
-					title: 'Click for Google',
-					url: 'http://google.com/',
-					start: '2014-06-28'
-				}
-			]; 
+// 	var eventos = [
+// 	{
+// 	  id: 12,
+// 	  title: '75106199 CC',
+// 	  start: '2015-01-26T08:00:00.000Z',
+// 	  end: '2015-01-26T08:30:00.000Z',
+// 	  url: 'rol.action?estado=all',
+// 	  backgroundColor: '#DB7F7F'
+// 	}];
+// 	var eventos = [
+// 				{
+// 					title: 'All Day Event',
+// 					start: '2014-06-01'
+// 				},
+// 				{
+// 					title: 'Long Event',
+// 					start: '2014-06-07',
+// 					end: '2014-06-10'
+// 				},
+// 				{
+// 					id: 999,
+// 					title: 'Repeating Event',
+// 					start: '2014-06-09T16:00:00'
+// 				},
+// 				{
+// 					id: 999,
+// 					title: 'Repeating Event',
+// 					start: '2014-06-16T16:00:00'
+// 				},
+// 				{
+// 					title: 'Meeting',
+// 					start: '2014-06-12T10:30:00',
+// 					end: '2014-06-12T12:30:00',
+// 					className: 'fc-event-pediatria'
+// 				},
+// 				{
+// 					title: 'Lunch',
+// 					start: '2014-06-12T12:00:00',
+// 					backgroundColor: '#ff0000'
+// 				},
+// 				{
+// 					title: 'Birthday Party',
+// 					start: '2014-06-13T07:00:00'
+// 				},
+// 				{
+// 					title: 'Click for Google',
+// 					url: 'http://google.com/',
+// 					start: '2014-06-28'
+// 				}
+// 			]; 
 	$(document).ready(function(){
 		$('#calendar').fullCalendar({
 			header: {
@@ -165,23 +178,20 @@
 			title_evento = f.nrodocumento+' '+f.tipodoc+' '+nameCompleto;
 			fondo_evento = document.getElementById("fondo").value;
 			url = 'rol.action?estado=all&funcPosicionado=Administracion Portal::>Roles';
-			url_param = 'rol.action?estado=all';
 			
-// 			alert('start_evento:['+start_evento+']'); 
-// 			alert('end_evento:['+end_evento+']');
-// 			alert('title_evento:['+title_evento+']');
-// 			alert('fondo_evento:['+fondo_evento+']');
-// 			alert('url:['+url+']');
-			title_evento_param = title_evento.replace(" ", "%20");
+			url_param = 'rol.action?estado%3Dall%26funcPosicionado%3DAdministracion%20Portal%3A%3A>Roles';
+			title_evento_param = f.nrodocumento.trim()+'%20'+f.tipodoc+'%20'+f.pnombre.trim()+'%20'+f.snombre.trim()+'%20'+f.papellido.trim()+'%20'+f.sapellido.trim();
 			fondo_evento_param = fondo_evento.replace("#", "%23");
-// 			url_param = url.replace("&", "%26");
-// 			url_param = url.replace(":", "%3A");
-// 			url_param = url.replace("=", "%3D");
-			alert('title_evento_param:['+title_evento_param+']');
-			alert('fondo_evento_param:['+fondo_evento_param+']');
-			alert('url_param:['+url_param+']');
 			
-			$("#divEventos").load('crearEventoCalendario.action?start='+start_evento+'&end='+end_evento+'&url='+url_param+'&backgroundColor='+fondo_evento_param+'&title='+title_evento_param);
+			pnombre = f.pnombre.trim();
+			snombre = f.snombre.trim();
+			papellido = f.papellido.trim(); 
+			sapellido = f.sapellido.trim();
+			telefono = f.telefono.trim();
+			email = f.email.replace('@', '%40');
+			
+			
+			$("#divEventos").load('crearEventoCalendario.action?start='+start_evento+'&end='+end_evento+'&url='+url_param+'&backgroundColor='+fondo_evento_param+'&title='+title_evento_param+'&pnombre='+pnombre+'&snombre='+snombre+'&papellido='+papellido+'&sapellido='+sapellido+'&telefono='+telefono+'&email='+email);
 			
 			//alert('dateStart: ['+dateStrat+']');
 			//alert('formato fecha ISO: ['++']');

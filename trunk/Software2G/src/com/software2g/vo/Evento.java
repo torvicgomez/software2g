@@ -80,6 +80,10 @@ public class Evento implements Serializable {
 	@JoinColumn(name="agen_id")
 	private Agenda agenda;
 
+	//bi-directional many-to-one association to Participante
+	@OneToMany(mappedBy="evento")
+	private List<Participante> participantes;
+	
 	public Evento() {
 	}
 
@@ -250,4 +254,13 @@ public class Evento implements Serializable {
 			this.evenHoracambio=data.get(2);
 		}
 	}
+
+	public List<Participante> getParticipantes() {
+		return participantes;
+	}
+
+	public void setParticipantes(List<Participante> participantes) {
+		this.participantes = participantes;
+	}
+	
 }

@@ -3,8 +3,10 @@ package com.software2g.agenda.facade.impl;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.hssf.record.formula.functions.Even;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +15,7 @@ import com.software2g.agenda.dao.IAgendaDao;
 import com.software2g.agenda.dao.IEventoDao;
 import com.software2g.agenda.dao.IJornadaLaboralDao;
 import com.software2g.agenda.dao.IParametroCalendarioDao;
+import com.software2g.agenda.dao.IParticipanteDao;
 import com.software2g.agenda.dao.IProfesionalDao;
 import com.software2g.agenda.dao.ITiempoNoDisponibleDao;
 import com.software2g.agenda.facade.IGestionFacadeAgenda;
@@ -23,6 +26,7 @@ import com.software2g.vo.Evento;
 import com.software2g.vo.Funcionalidad;
 import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Parametroscalendario;
+import com.software2g.vo.Participante;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Profesional;
 import com.software2g.vo.Tiemponodisponible;
@@ -43,6 +47,8 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 	ITiempoNoDisponibleDao tiempoNoDisponibleDao;
 	@Autowired
 	IPersonaDao personaDao;
+	@Autowired
+	IParticipanteDao participanteDao;
 	
 	public IAgendaDao getAgendaDao() {return agendaDao;}
 	public void setAgendaDao(IAgendaDao agendaDao) {this.agendaDao = agendaDao;}
@@ -58,6 +64,8 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 	public void setTiempoNoDisponibleDao(ITiempoNoDisponibleDao tiempoNoDisponibleDao) {this.tiempoNoDisponibleDao = tiempoNoDisponibleDao;}
 	public IPersonaDao getPersonaDao() {return personaDao;}
 	public void setPersonaDao(IPersonaDao personaDao) {this.personaDao = personaDao;}
+	public IParticipanteDao getParticipanteDao() {return participanteDao;}
+	public void setParticipanteDao(IParticipanteDao participanteDao) {this.participanteDao = participanteDao;}
 	
 	//-----------------------------------------------------------------------
 	// Agenda
@@ -171,6 +179,17 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 			throw new Exception("persistEvento failed: " + e.getMessage());
 		}
 	}
+	
+	public long persistEventoId(Evento evento) throws Exception {
+		try {
+			return getEventoDao().persistEventoId(evento);
+		} catch (RuntimeException e) {
+			//throw new Exception("persistEventoId failed: " + e.getMessage());
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
 	/**
 	 * Remove the given persistent instance.
 	 */
@@ -321,6 +340,16 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 		}
 	}
 
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Profesional> findAllProfesionalAgenda() throws Exception {
+		try {
+			return getProfesionalDao().findAllProfesionalAgenda();
+		} catch (RuntimeException e) {
+			//throw new Exception("findAllProfesionalAgenda failed: " + e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
 	public List<Profesional> findAllProfesionalXIdPersona(long idPersona) throws Exception {
@@ -465,6 +494,57 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 	// FIN Persona
 	//-----------------------------------------------------------------------
 
+	//-----------------------------------------------------------------------
+	// Participante
+	//-----------------------------------------------------------------------
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Participante findParticipanteById(long id) throws Exception {
+		try {
+			return getParticipanteDao().findParticipanteById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findParticipanteById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Participante</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Participante> findAllParticipantes() throws Exception {
+		try {
+			return getParticipanteDao().findAllParticipantes();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllParticipantes failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistParticipante(Participante participante) throws Exception {
+		try {
+			getParticipanteDao().persistParticipante(participante);
+		} catch (RuntimeException e) {
+			throw new Exception("persistParticipante failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeParticipante(Participante participante) throws Exception {
+		try {
+			getParticipanteDao().removeParticipante(participante);
+		} catch (RuntimeException e) {
+			throw new Exception("removeParticipante failed: " + e.getMessage());
+		}
+	}
+	//-----------------------------------------------------------------------
+	// FIN Participante
+	//-----------------------------------------------------------------------
+
 	
 	public boolean crearFile(String path, String nameFile, String ext, String tipoFile, String infoFind) throws Exception{
 		boolean result = true;
@@ -478,6 +558,9 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 			System.out.println("tipo file: ["+tipoFile+"]");
 			if(tipoFile.equals(ConstantesAplicativo.constanteTipoFileJSConstantesAgenda)){
 				this.crearJSConstantesAgenda(createFile, infoFind);
+			}else if(tipoFile.equals(ConstantesAplicativo.constanteTipoFileJSConstantesEventos)){
+				System.out.println("Entra esta Parte!!!!!!");
+				this.crearJSAllEventos(createFile, ConstantesAplicativo.constanteCrearFileJSEventosAll);
 			}
 			createFile.close();
 		} catch (IOException e) {
@@ -500,6 +583,38 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 				constantes += "var paca_sloteventover = false;\n";
 				constantes += "var paca_alldayslot = "+(agenda.getAgenAlldayslot().equals("1")?"true":"false")+";\n";
 				constantes += "var paca_alldaytext = \'"+agenda.getAgenAlldaytext()+"\';\n";
+				file.write(constantes);
+			}
+			System.out.println("+++++++++++++++++++++++++++++++++++++++++");
+			System.out.println("constantes: ["+constantes+"]");
+			System.out.println("+++++++++++++++++++++++++++++++++++++++++");
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			result = false;
+		} 
+		return result;
+	}
+	
+	private boolean crearJSAllEventos(FileWriter file, String infoFind) throws Exception{
+		boolean result = true;
+		try {
+			List<Evento> listEventos = new ArrayList<Evento>();
+			if(infoFind!=null&&infoFind.equals(ConstantesAplicativo.constanteCrearFileJSEventosAll))
+				listEventos = this.findAllEventos();
+			System.out.println("listEventos: ["+listEventos.size()+"]");
+			String constantes = "var eventos = [\n";
+			if(listEventos!=null&&listEventos.size()>0){
+				for(Evento elem:listEventos){
+					constantes += "{\n";
+					constantes += "  id: "+elem.getEvenId()+",\n";
+					constantes += "  title: '"+elem.getEvenTitle()+"',\n";
+					constantes += "  start: '"+elem.getEvenStart()+"',\n";
+					constantes += "  end: '"+elem.getEvenEnd()+"',\n";
+					constantes += "  url: '"+elem.getEvenUrl()+"',\n";
+					constantes += "  backgroundColor: '"+elem.getEvenBackgroundcolor()+"'\n";
+					constantes += "},";
+				}
+				constantes = constantes.substring(0,constantes.length()-1)+"];";
 				file.write(constantes);
 			}
 			System.out.println("+++++++++++++++++++++++++++++++++++++++++");

@@ -522,6 +522,41 @@ ALTER TABLE "HISCLINICA"."AGENDA" ALTER COLUMN agen_fechafin TYPE character vary
 alter table "HISCLINICA"."AGENDA" ADD agen_pathconstantes character varying(30);
 
 
+CREATE TABLE "HISCLINICA"."PARTICIPANTE"
+(
+  part_id numeric NOT NULL,
+  even_id numeric NOT NULL,
+  part_documento character varying(30),
+  part_tipodocumento character varying(5),
+  part_pnombre character varying(30),
+  part_snombre character varying(30),
+  part_papellido character varying(30),
+  part_sapellido character varying(30),
+  part_telefono character varying(30),
+  part_email character varying(50),
+  part_fechacambio character varying(10) NOT NULL,
+  part_horacambio character varying(8) NOT NULL,
+  part_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_part_id PRIMARY KEY (part_id ),
+  CONSTRAINT fk_part_even FOREIGN KEY (even_id)
+      REFERENCES "HISCLINICA"."EVENTOS" (even_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "HISCLINICA"."PARTICIPANTE"
+  OWNER TO "HISCLINICA";
+
+
+CREATE SEQUENCE "HISCLINICA"."SEQ_PART_ID"
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE "HISCLINICA"."SEQ_PART_ID"
+  OWNER TO "HISCLINICA";
 
 
 

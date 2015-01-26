@@ -18,6 +18,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
+import com.software2g.agenda.facade.IGestionFacadeAgenda;
 import com.software2g.portal.facade.IGestionFacadePortal;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
@@ -40,6 +41,7 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private IGestionFacadePortal gestionFacadePortal;
+	private IGestionFacadeAgenda gestionFacadeAgenda;
 	private String estado;
 	private String url;
 	private String funcPosicionado;
@@ -63,8 +65,9 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
 	private InputStream strFunctionRol; 
 	private List<Object> listFuncRol;
 	
-	public PortalAction(IGestionFacadePortal gestionFacadePortal) {
+	public PortalAction(IGestionFacadePortal gestionFacadePortal, IGestionFacadeAgenda gestionFacadeAgenda) {
         this.gestionFacadePortal = gestionFacadePortal;
+        this.gestionFacadeAgenda= gestionFacadeAgenda; 
     }
 	
 	@SkipValidation
@@ -213,6 +216,18 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
     			System.out.println("FIN Roles:::>>>");
     			System.out.println("----------------------------------------------------------");
     			System.out.println("----------------------------------------------------------");
+    			
+    			System.out.println("----------------------------------------------------------");
+    			System.out.println("----------------------------------------------------------");
+    			String nameFile = "eventos";
+    			String path = request.getServletContext().getRealPath("/")+"js\\constantesCalendario\\"; 
+    			boolean resultFile = gestionFacadeAgenda.crearFile(path, nameFile,   
+    						ConstantesAplicativo.constanteExtensionFileJS, 
+    						ConstantesAplicativo.constanteTipoFileJSConstantesEventos,
+    						ConstantesAplicativo.constanteCrearFileJSEventosAll);
+    			System.out.println("----------------------------------------------------------");
+    			System.out.println("----------------------------------------------------------");
+    			
     			request.getSession().setAttribute("usuarioVO", usuarioVO);
     		}else{
     			System.out.println("Error de Validacion");

@@ -41,4 +41,6 @@ public final class ConstantesAplicativo {
 	public static final String constanteFormatoFecha1 = "dd/MM/yyyy";
 
 	public static final String constanteTipoSearchAutoComplProf = "profesional";
+	
+	public static final String constanteEstadoEventoCreado = "CREADO";
 }

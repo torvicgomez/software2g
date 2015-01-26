@@ -36,5 +36,5 @@ public interface IAgendaDao {
 	 * Remove the given persistent instance.
 	 */
 	public void removeAgenda(Agenda agenda);
-	
+	public Agenda findIdAgenda(String background);
 }

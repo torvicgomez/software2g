@@ -27,6 +27,7 @@ public interface IGestionFacadeAgenda {
 	 * Return all persistent instances of the <code>Agenda</code> entity.
 	 */
 	public List<Agenda> findAllAgendas() throws Exception;
+	public Agenda findIdAgenda(String background) throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */

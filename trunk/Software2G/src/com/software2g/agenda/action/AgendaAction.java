@@ -19,6 +19,7 @@ import com.software2g.agenda.facade.IGestionFacadeAgenda;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Agenda;
+import com.software2g.vo.Evento;
 import com.software2g.vo.Funcionalidad;
 import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Parametroscalendario;
@@ -47,6 +48,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private InputStream strDatosPersona;
 	private List<Agenda> listAgendaMedica;
 	private Agenda agendaMedica;
+	private InputStream strCrearEvento;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -298,7 +300,6 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 		try{
 			String html = "";
 			long idPersona = Long.parseLong(request.getParameter("idPersona"));
-			System.out.println("idPrograma: ["+idPersona+"]");
 			Persona persona = gestionFacadeAgenda.findPersonaById(idPersona);
 			html = "<s:textfield name=\"dataAutoCompletado\" id=\"search\" size=\"60\" maxlength=\"30\" cssClass=\"inputs\"></s:textfield><br>";
 			html += "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">"+
@@ -340,5 +341,39 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 			e.printStackTrace();
 		}
 		return strDatosPersona;
+	}
+	
+	public InputStream getStrCrearEvento() {
+		try{
+			String html = "";
+			System.out.println("****************************************************");
+			String title = String.valueOf(request.getParameter("title"));
+			System.out.println("title:["+title+"]");
+			String start = String.valueOf(request.getParameter("start"));
+			System.out.println("start:["+start+"]");
+			String end = String.valueOf(request.getParameter("end"));
+			System.out.println("end:["+end+"]");
+			String url = String.valueOf(request.getParameter("url"));
+			System.out.println("url:["+url+"]");
+			String backgroundColor = String.valueOf(request.getParameter("backgroundColor"));
+			System.out.println("backgroundColor:["+backgroundColor+"]");
+			System.out.println("****************************************************");
+			Evento evento = new Evento();
+			evento.setAgenda(gestionFacadeAgenda.findIdAgenda(backgroundColor));
+			evento.setEvenTitle(title);
+			evento.setEvenStart(start);
+			evento.setEvenEnd(end);
+			evento.setEvenUrl(url);
+			evento.setEvenBackgroundcolor(backgroundColor);
+			evento.setEvenEstado(ConstantesAplicativo.constanteEstadoEventoCreado);
+			evento.setDatosAud(getDatosAud());
+			ValidaString.imprimirObject(evento);
+			gestionFacadeAgenda.persistEvento(evento);
+			html = "Se creo satisfactoriamente el evento";
+			strCrearEvento = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return strCrearEvento;
 	}
 }

@@ -86,6 +86,18 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 		}
 	}
 
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Agenda findIdAgenda(String background) throws Exception {
+		try {
+			System.out.println("background:["+background+"]");
+			return getAgendaDao().findIdAgenda(background);
+		} catch (RuntimeException e) {
+			//throw new Exception("findIdAgenda failed: " + e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

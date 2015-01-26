@@ -1,6 +1,8 @@
 package com.software2g.vo;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -9,12 +11,12 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="EVENTOS", schema="HISCLINICA")
+@Table(name="\"EVENTOS\"", schema="\"HISCLINICA\"")
 public class Evento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="EVENTOS_EVENID_GENERATOR", sequenceName="HISCLINICA.SEQ_EVEN_ID")
+	@SequenceGenerator(name="EVENTOS_EVENID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_EVEN_ID\"", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="EVENTOS_EVENID_GENERATOR")
 	@Column(name="even_id")
 	private long evenId;
@@ -241,4 +243,11 @@ public class Evento implements Serializable {
 		this.agenda = agenda;
 	}
 
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.evenRegistradopor=data.get(0);
+			this.evenFechacambio=data.get(1);
+			this.evenHoracambio=data.get(2);
+		}
+	}
 }

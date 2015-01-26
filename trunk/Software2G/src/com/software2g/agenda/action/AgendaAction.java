@@ -19,6 +19,7 @@ import com.software2g.agenda.facade.IGestionFacadeAgenda;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Agenda;
+import com.software2g.vo.Funcionalidad;
 import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Parametroscalendario;
 import com.software2g.vo.Persona;
@@ -73,12 +74,16 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public String calendarioMethod(){
 		String  result = Action.SUCCESS; 
     	try { 
-    		System.out.println("En Construcción Agenda!!!!!");
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>AgendaAction>>>>paramCalendarioMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listProfesional = gestionFacadeAgenda.findAllProfesionals();
+    		}
     	} catch (Exception e) {
 			addActionMessage(getText("error.aplicacion"));
 			e.printStackTrace();
 		}
-		System.out.println("result Agenda: ["+result+"]");
+    	System.out.println("######>>>>>>>AgendaAction>>>>paramCalendarioMethod>>>>estado salida-->>"+estado);
     	return result;
 	}
 	private void getFuncionPosicionado(){
@@ -218,12 +223,21 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			if(agendaMedica.getProfesional().getPersona().getIdPers()<=0)
     				addActionError(getText("validacion.requerido","prfsIdPers","Seleccione al Profesional de la Salud"));
-    			
     			if(!hasActionErrors()){
-    				agendaMedica.getProfesional().setPersona(gestionFacadeAgenda.findPersonaById(agendaMedica.getProfesional().getPersona().getIdPers()));
+    				agendaMedica.setProfesional(gestionFacadeAgenda.findProfesionalIdPersona(agendaMedica.getProfesional().getPersona().getIdPers()));
+    				String nameFile = "constanteAgendaProf_"+agendaMedica.getProfesional().getProfId();
+    				agendaMedica.setAgenPathconstantes(nameFile);
+    				agendaMedica.setAddSegundos();
     				agendaMedica.setDatosAud(this.getDatosAud());
     				ValidaString.imprimirObject(agendaMedica);
-    				gestionFacadeAgenda.persistAgenda(agendaMedica);
+    				long idAgenda = gestionFacadeAgenda.persistAgendaId(agendaMedica);
+    				if(idAgenda>0){
+	    				String path = request.getServletContext().getRealPath("/")+"js\\constantesCalendario\\agenda\\"; 
+	    				boolean resultFile = gestionFacadeAgenda.crearFile(path, nameFile,   
+	    						ConstantesAplicativo.constanteExtensionFileJS, 
+	    						ConstantesAplicativo.constanteTipoFileJSConstantesAgenda,
+	    						idAgenda+"");
+    				}
     				estado = ConstantesAplicativo.constanteEstadoAbstract;
     				addActionMessage(getText("accion.satisfactoria"));
     			}

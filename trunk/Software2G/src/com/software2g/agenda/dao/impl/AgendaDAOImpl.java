@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.software2g.vo.Agenda;
+import com.software2g.vo.Persona;
 import com.software2g.agenda.dao.IAgendaDao;
 
 import org.springframework.stereotype.Repository;
@@ -81,6 +82,12 @@ public class AgendaDAOImpl implements IAgendaDao {
 	 */
 	public void persistAgenda(Agenda agenda) {
 		em.persist(em.merge(agenda));
+	}
+	
+	public long persistAgendaId(Agenda agenda) {
+		Agenda obj = em.merge(agenda); 
+		em.persist(obj); 
+		return obj.getAgenId();
 	}
 	/**
 	 * Remove the given persistent instance.

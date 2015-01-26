@@ -1,6 +1,7 @@
 package com.software2g.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.google.gson.Gson;
 import com.software2g.service.facade.IGestionFacadeAutoCompletado;
 import com.software2g.service.facade.impl.GestionFacadeAutoCompletado;
+import com.software2g.util.ConstantesAplicativo;
 
 
 public class Autocompletado extends HttpServlet {
@@ -24,11 +26,15 @@ public class Autocompletado extends HttpServlet {
             response.setContentType("application/json");
             try {
                     String term = request.getParameter("term");
-                    System.out.println("Data from ajax call " + term);
-                    //DataDao dataDao = new DataDao();
+                    String tipo = request.getParameter("tipo");
                     ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {ApplicationContext.CLASSPATH_ALL_URL_PREFIX+"autocompletado.xml"});
             		IGestionFacadeAutoCompletado gestionFacadeAutoCompletado = GestionFacadeAutoCompletado.getInstance(context);
-                    List<String> list = gestionFacadeAutoCompletado.findPersonaPortal(term);
+            		List<String> list = new ArrayList<String>();
+            		
+            		if(tipo!=null&&tipo.equals(ConstantesAplicativo.constanteTipoSearchAutoComplProf))
+            			list = gestionFacadeAutoCompletado.findAllPersonasProfesional(term);
+            		else 
+            			list = gestionFacadeAutoCompletado.findPersonaPortal(term);
                     
                     String searchList = new Gson().toJson(list);
                     response.getWriter().write(searchList);

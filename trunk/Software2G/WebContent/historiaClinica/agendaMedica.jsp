@@ -56,7 +56,8 @@
 	                        	url : "SearchController",
 	                        	type : "GET",
 	                        	data : {
-	                                term : request.term
+	                                term : request.term,
+	                                tipo : 'profesional'
 	                        	},
 	                        	dataType : "json",
 	                        	success : function(data) {
@@ -67,28 +68,32 @@
 					});
 				});
 				
-				$("#agenFechaini").datepicker({numberOfMonths: 1,showButtonPanel: false});
-				$("#agenFechafin").datepicker({numberOfMonths: 1,showButtonPanel: false});
+				$("#agenFechaini").datepicker({numberOfMonths: 1,showButtonPanel: false, dateFormat: 'yy-mm-dd'});
+				$("#agenFechafin").datepicker({numberOfMonths: 1,showButtonPanel: false, dateFormat: 'yy-mm-dd'});
 				  
 				$('#agenMintime').timepicker({
+				    timeFormat: 'HH:mm:ss',
 				    showNowButton: true,
 				    showDeselectButton: true,
 				    defaultTime: '',  // removes the highlighted time for when the input is empty.
 				    showCloseButton: true
 				});
 				$('#agenMaxtime').timepicker({ 
+				    timeFormat: 'HH:mm:ss',
 				    showNowButton: true,
 				    showDeselectButton: true,
 				    defaultTime: '',  // removes the highlighted time for when the input is empty.
 				    showCloseButton: true
 				});
 				$('#agenDuracionevento').timepicker({
+				    timeFormat: 'HH:mm:ss',
 				    showNowButton: true,
 				    showDeselectButton: true,
 				    defaultTime: '',  // removes the highlighted time for when the input is empty.
 				    showCloseButton: true
 				});
 				$('#agenScrolltime').timepicker({ 
+				    timeFormat: 'HH:mm:ss',
 				    showNowButton: true,
 				    showDeselectButton: true,
 				    defaultTime: '',  // removes the highlighted time for when the input is empty.
@@ -217,8 +222,8 @@
 						<tr>
 							<td class="leftLabel"><s:text name="profesionalsalud.findpersona"></s:text></td>
 							<td colspan="3">
-								<s:hidden name="profesional.profId" id="profId"></s:hidden>
-								<s:hidden name="profesional.persona.idPers" id="idPers"></s:hidden>
+<%-- 								<s:hidden name="agendaMedica.profesional.profId" id="profId"></s:hidden> --%>
+								<s:hidden name="agendaMedica.profesional.persona.idPers" id="idPers"></s:hidden>
 								<div id="campoFind" style="overflow:auto;width:auto;height:auto;display:block">
 									<s:textfield name="dataAutoCompletado" id="search" size="60" maxlength="30" cssClass="inputs"></s:textfield>
 								</div>

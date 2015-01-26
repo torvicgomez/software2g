@@ -1,5 +1,8 @@
 package com.software2g.agenda.facade.impl;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +17,10 @@ import com.software2g.agenda.dao.IProfesionalDao;
 import com.software2g.agenda.dao.ITiempoNoDisponibleDao;
 import com.software2g.agenda.facade.IGestionFacadeAgenda;
 import com.software2g.portal.dao.IPersonaDao;
+import com.software2g.util.ConstantesAplicativo;
 import com.software2g.vo.Agenda;
 import com.software2g.vo.Evento;
+import com.software2g.vo.Funcionalidad;
 import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Parametroscalendario;
 import com.software2g.vo.Persona;
@@ -88,9 +93,21 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 		try {
 			getAgendaDao().persistAgenda(agenda);
 		} catch (RuntimeException e) {
-			throw new Exception("persistAgenda failed: " + e.getMessage());
+			//throw new Exception("persistAgenda failed: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
+	
+	public long persistAgendaId(Agenda agenda) throws Exception {
+		try {
+			return getAgendaDao().persistAgendaId(agenda);
+		} catch (RuntimeException e) {
+			//throw new Exception("persistAgenda failed: " + e.getMessage());
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
 	/**
 	 * Remove the given persistent instance.
 	 */
@@ -270,6 +287,16 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 			throw new Exception("findProfesionalById failed with the id " + id + ": " + e.getMessage());
 		}
 	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Profesional findProfesionalIdPersona(long idPersona) throws Exception {
+		try {
+			return getProfesionalDao().findProfesionalIdPersona(idPersona);
+		} catch (RuntimeException e) {
+			throw new Exception("findProfesionalIdPersona failed with the idPersona " + idPersona + ": " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Return all persistent instances of the <code>Profesional</code> entity.
 	 */
@@ -425,5 +452,52 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 	//-----------------------------------------------------------------------
 	// FIN Persona
 	//-----------------------------------------------------------------------
+
 	
+	public boolean crearFile(String path, String nameFile, String ext, String tipoFile, String infoFind) throws Exception{
+		boolean result = true;
+		try {
+			System.out.println("archivo: ["+path+nameFile+ext+"]");
+			File file = new File(path+nameFile+ext);
+			if(file.exists())
+				file.delete();
+			System.out.println("Continua!!!!!!!");
+			FileWriter createFile = new FileWriter(path+nameFile+ext);
+			System.out.println("tipo file: ["+tipoFile+"]");
+			if(tipoFile.equals(ConstantesAplicativo.constanteTipoFileJSConstantesAgenda)){
+				this.crearJSConstantesAgenda(createFile, infoFind);
+			}
+			createFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			result = false;
+		} 
+		return result;
+	} 
+	
+	private boolean crearJSConstantesAgenda(FileWriter file, String infoFind) throws Exception{
+		boolean result = true;
+		try {
+			Agenda agenda = findAgendaById(Long.parseLong(infoFind));
+			String constantes = "";
+			if(agenda!=null){
+				constantes += "var paca_slotduration = \'"+agenda.getAgenDuracionevento()+"\';\n";
+				constantes += "var paca_scrolltime = \'"+agenda.getAgenScrolltime()+"\';\n";
+				constantes += "var paca_mitime = \'"+agenda.getAgenMintime()+"\';\n";
+				constantes += "var paca_maxtime = \'"+agenda.getAgenMaxtime()+"\';\n";
+				constantes += "var paca_sloteventover = false;\n";
+				constantes += "var paca_alldayslot = "+(agenda.getAgenAlldayslot().equals("1")?"true":"false")+";\n";
+				constantes += "var paca_alldaytext = \'"+agenda.getAgenAlldaytext()+"\';\n";
+				file.write(constantes);
+			}
+			System.out.println("+++++++++++++++++++++++++++++++++++++++++");
+			System.out.println("constantes: ["+constantes+"]");
+			System.out.println("+++++++++++++++++++++++++++++++++++++++++");
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			result = false;
+		} 
+		return result;
+	}
 }
+

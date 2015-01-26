@@ -45,6 +45,8 @@
         				}
 					});
 				});
+				
+				
 			} );
 
 			function cargarDatosPersona(id){
@@ -196,6 +198,12 @@
 							<td class="leftLabel"><s:text name="profesionalsalud.estado"></s:text></td>
 							<td>
 								<s:select list="#{'1':'ACTIVO','0':'INACTIVO'}" name="profesional.profEstado" headerKey="" headerValue=".::Seleccion::." cssClass="inputs"/>
+							</td>
+						</tr>
+						<tr>
+							<td class="leftLabel"><s:text name="profesionalsalud..coloragenda"></s:text></td>
+							<td colspan="3">
+								<s:textfield name="profesional.profBackgroundcoloragen" id="profBackgroundcoloragen" size="30" maxlength="30" cssClass="inputs" onclick="startColorPicker(this)" onkeyup="maskedHex(this)"></s:textfield>
 							</td>
 						</tr>
 					</table>

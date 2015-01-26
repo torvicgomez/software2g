@@ -30,7 +30,8 @@ public final class ConstantesAplicativo {
 	
 	public static final String constanteTipoFileJSFuncRol = "functionrol";
 	public static final String constanteTipoFileJSTreeMenu = "treemenu";
-	public static final String constanteExtensionFileJS = ".js"; 
+	public static final String constanteExtensionFileJS = ".js";
+	public static final String constanteTipoFileJSConstantesAgenda = "constantesagenda";
 	
 	public static final String constanteEstadoActivo = "ACTIVO";
 	public static final String constanteEstadoInactivo = "INACTIVO";
@@ -38,5 +39,6 @@ public final class ConstantesAplicativo {
 	public static final String constanteSplit = "&&&&";
 	public static final String constanteFormatoFechaHora1 = "dd/MM/yyyy HH:mm:ss.SSS";
 	public static final String constanteFormatoFecha1 = "dd/MM/yyyy";
-	
+
+	public static final String constanteTipoSearchAutoComplProf = "profesional";
 }

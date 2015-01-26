@@ -31,8 +31,10 @@ public interface IAgendaDao {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistAgenda(Agenda agenda);
+	public long persistAgendaId(Agenda agenda);
 	/**
 	 * Remove the given persistent instance.
 	 */
 	public void removeAgenda(Agenda agenda);
+	
 }

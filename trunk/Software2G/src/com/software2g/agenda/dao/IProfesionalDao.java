@@ -23,6 +23,7 @@ public interface IProfesionalDao {
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
 	public Profesional findProfesionalById(long id);
+	public Profesional findProfesionalIdPersona(long idPersona);
 	/**
 	 * Return all persistent instances of the <code>Profesional</code> entity.
 	 */

@@ -74,6 +74,7 @@
 
         <action name="agendamedica" method="agendaMedicaMethod" class="AgendaAction">
         	<result name="success" type="tiles">calendario.agendamedica</result>
+        	<result name="input" type="tiles">calendario.agendamedica</result>
         </action>
     </package>
 </struts>

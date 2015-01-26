@@ -59,6 +59,28 @@ public class GestionFacadeAutoCompletado implements IGestionFacadeAutoCompletado
 		}
 	}
 	
+	/**
+	 * Metodo que consulta los examenes aosiados a la institucion y especialidad corespondiente
+	 * @return List<Object[]>
+	 * @throws Exception
+	 */
+	public List<String> findAllPersonasProfesional(String datoFind)  throws Exception {
+		try {
+			List<Persona> listPersonas = getPersonaDao().findAllPersonasProfesional(datoFind);
+			List<String> list = new ArrayList<String>();
+			if(listPersonas!=null&&listPersonas.size()>0){
+				for(Persona elem:listPersonas){
+					list.add("["+elem.getDocumentoPers()+" "+elem.getTipodocumento().getAbreviaturaTidoc()+"] "+elem.getNombreCompleto()+" "+elem.getEmailPers() 
+							+ConstantesAplicativo.constanteSplit+"onClick=\"javascript:cargarDatosPersona(\'"+elem.getIdPers()+"\')\"");
+				}
+			}
+			return list;
+		} catch (Exception e) {
+			System.out.println("ERROR ::> GestionFacadeAutoCompletado ::> findPersonaPortal ::> " + e.getMessage());
+			return null;
+		}
+	}
+	
 	public HttpServletRequest getRequest() {return request;}
 	public void setRequest(HttpServletRequest request) {this.request = request;}
 	public void setServletRequest(HttpServletRequest request) {this.request = request;}

@@ -4,6 +4,7 @@ import java.beans.Expression;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -197,5 +198,107 @@ public class ValidaString {
     public static double doublePrecision(double valor){
     	DecimalFormat  df = new DecimalFormat("###########0.00");
 		return Double.parseDouble(df.format(valor).replace(',','.'));
+    }
+    
+    public static boolean esFechaMenor(Date f1,Date f2, String format) {
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        try {
+            Date fr1 = sdf.parse(sdf.format(f1));
+            Date fr2 = sdf.parse(sdf.format(f2));
+            return fr1.before(fr2);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    public static boolean esFechaMayor(Date f1, Date f2, String format) {
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        try {
+            Date fr1 = sdf.parse(sdf.format(f1));
+            Date fr2 = sdf.parse(sdf.format(f2));
+            return fr1.after(fr2);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    public static boolean esFechaIgual(Date f1, Date f2, String format) {
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        try {
+            Date fr1 = sdf.parse(sdf.format(f1));
+            Date fr2 = sdf.parse(sdf.format(f2));
+            return !fr1.before(fr2) && !fr1.after(fr2);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    public static boolean esFechaMenorIgual(Date f1, Date f2, String format) {
+        return esFechaMenor(f1,f2, format) || esFechaIgual(f1,f2,format);
+    }
+    
+    public static boolean esFechaMayorIgual(Date f1, Date f2, String format) {
+        return esFechaMayor(f1,f2, format) || esFechaIgual(f1,f2, format);
+    }
+    
+    //Diferencias entre dos fechas
+    //@param fechaInicial La fecha de inicio
+    //@param fechaFinal  La fecha de fin
+    //@return Retorna el numero de dias entre dos fechas
+    public static synchronized int diferenciasDeFechas(Date fechaInicial, Date fechaFinal) {
+    	DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
+        String fechaInicioString = df.format(fechaInicial);
+        try {
+            fechaInicial = df.parse(fechaInicioString);
+        } catch (java.text.ParseException ex) {
+        	ex.printStackTrace();
+        	return 0;
+        }
+        String fechaFinalString = df.format(fechaFinal);
+        try {
+            fechaFinal = df.parse(fechaFinalString);
+        } catch (java.text.ParseException ex) {
+        	ex.printStackTrace();
+        	return 0;
+        }
+        long fechaInicialMs = fechaInicial.getTime();
+        long fechaFinalMs = fechaFinal.getTime();
+        long diferencia = fechaFinalMs - fechaInicialMs;
+        double dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+        return ((int) dias);
+    }
+    
+    //Sumarle dias a una fecha determinada
+    //@param fch La fecha para sumarle los dias
+    //@param dias Numero de dias a agregar
+    //@return La fecha agregando los dias
+//    public static java.sql.Date sumarFechasDias(java.sql.Date fch, int dias) {
+//        Calendar cal = new GregorianCalendar();
+//        cal.setTimeInMillis(fch.getTime());
+//        cal.add(Calendar.DATE, dias);
+//        return new java.sql.Date(cal.getTimeInMillis());
+//    }
+    
+    public static java.util.Date sumarFechasDias(java.util.Date fch, int dias) {
+        Calendar cal = new GregorianCalendar();
+        cal.setTimeInMillis(fch.getTime());
+        cal.add(Calendar.DATE, dias);
+        return new java.sql.Date(cal.getTimeInMillis());
+    }
+    
+    public static String imprimirFormatoFecha(Date fecha, String formato){
+    	DateFormat formatter = new SimpleDateFormat(formato);
+		String fechaFormat = formatter.format(fecha);
+    	return fechaFormat;
+    }
+    
+    public static boolean esHoraMayor(String hora1, String hora2){
+    	try {
+            long h1 = Long.parseLong(hora1.replace(":", ""));
+            long h2 = Long.parseLong(hora2.replace(":", ""));
+            return h1>h2;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

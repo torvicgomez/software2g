@@ -10,6 +10,7 @@ import javax.persistence.Query;
 
 import com.software2g.portal.dao.IPersonaDao;
 import com.software2g.util.ValidaString;
+import com.software2g.vo.Agenda;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Profesional;
 
@@ -147,10 +148,13 @@ public class PersonaDaoImpl implements IPersonaDao {
 	public List<Persona> findAllPersonas(String datoFind) {
         try {
     		String jpqlString = "select persona from " + Persona.class.getSimpleName() + " persona ";
-    			jpqlString += " where upper(persona.pnombrePers)||' '||upper(persona.snombrePers)||' '||upper(persona.papellidoPers)||' '||upper(persona.sapellidoPers) like :datoFind " +
+    			jpqlString += " where persona.idPers not in (select profesional.persona.idPers from " + Profesional.class.getSimpleName() + " profesional ) " +
+    						  " and (" +
+    						  " upper(persona.pnombrePers)||' '||upper(persona.snombrePers)||' '||upper(persona.papellidoPers)||' '||upper(persona.sapellidoPers) like :datoFind " +
     						  " or upper(persona.pnombrePers)||' '||upper(persona.papellidoPers) like :datoFind " +
     						  " or upper(persona.emailPers) like :datoFind " +
     						  " or persona.documentoPers like :datoFind " +
+    						  "	)" +
     						  " order by persona.pnombrePers, persona.snombrePers, persona.papellidoPers, persona.sapellidoPers asc ";
             Query query = em.createQuery( jpqlString );
             query.setParameter("datoFind", "%"+datoFind.toUpperCase().trim()+"%");
@@ -167,10 +171,13 @@ public class PersonaDaoImpl implements IPersonaDao {
         try {
     		String jpqlString = "select persona from " + Persona.class.getSimpleName() + " persona " +
     							" join persona.profesional ";
-    			jpqlString += " where upper(persona.pnombrePers)||' '||upper(persona.snombrePers)||' '||upper(persona.papellidoPers)||' '||upper(persona.sapellidoPers) like :datoFind " +
+    			jpqlString += " where persona.profesional.profId not in ( select agenda.profesional.profId from " + Agenda.class.getSimpleName() + " agenda  )  " +
+    						  " and ( " +
+    						  " upper(persona.pnombrePers)||' '||upper(persona.snombrePers)||' '||upper(persona.papellidoPers)||' '||upper(persona.sapellidoPers) like :datoFind " +
     						  " or upper(persona.pnombrePers)||' '||upper(persona.papellidoPers) like :datoFind " +
     						  " or upper(persona.emailPers) like :datoFind " +
     						  " or persona.documentoPers like :datoFind " +
+    						  " ) " +
     						  " order by persona.pnombrePers, persona.snombrePers, persona.papellidoPers, persona.sapellidoPers asc ";
             Query query = em.createQuery( jpqlString );
             query.setParameter("datoFind", "%"+datoFind.toUpperCase().trim()+"%");

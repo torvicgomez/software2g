@@ -120,6 +120,7 @@ public interface IGestionFacadeAgenda {
 	 */
 	public Profesional findProfesionalById(long id) throws Exception;
 	public Profesional findProfesionalIdPersona(long idPersona) throws Exception;
+	public boolean validoBackgroundProf(String background) throws Exception;
 	/**
 	 * Return all persistent instances of the <code>Profesional</code> entity.
 	 */

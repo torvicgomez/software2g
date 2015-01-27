@@ -3,7 +3,10 @@ package com.software2g.agenda.action;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +38,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private IGestionFacadeAgenda gestionFacadeAgenda;
 	private String estado;
 	private String funcPosicionado;
+	private String bandEstadoFunc;
 	private String id;
 
 	private List<Parametroscalendario> listParametroCalendrio;
@@ -99,6 +103,17 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 				request.getSession().setAttribute("funcPosicionado",funcPosicionado);
 		}
 		System.out.println("######>>>>>>>funcPosicionado>>>>"+funcPosicionado);
+	}
+	
+	private void getBandEstadoFuncion(){
+		if(request.getSession().getAttribute("bandEstadoFunc")==null){
+			request.getSession().setAttribute("bandEstadoFunc",bandEstadoFunc);
+		}else{
+			String funcCambio = (String) request.getSession().getAttribute("bandEstadoFunc");
+			if(bandEstadoFunc!=null&&!bandEstadoFunc.equals(funcCambio))
+				request.getSession().setAttribute("bandEstadoFunc",bandEstadoFunc);
+		}
+		System.out.println("######>>>>>>>bandEstadoFunc>>>>"+bandEstadoFunc);
 	}
 	
 	@SkipValidation
@@ -188,15 +203,22 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     		System.out.println("######>>>>>>>HistoriaClinicaAction>>>>profesionalSaludMethod>>>>estado entrada-->>"+estado);
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
     			listProfesional = gestionFacadeAgenda.findAllProfesionals();
+    			bandEstadoFunc = ConstantesAplicativo.constanteEstadoAddSave;
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			if(profesional.getPersona().getIdPers()<=0)
     				addActionError(getText("validacion.requerido","prfsIdPers","Seleccione al Profesional de la Salud"));
+    			else
+    				profesional.setPersona(gestionFacadeAgenda.findPersonaById(profesional.getPersona().getIdPers()));
     			if(ValidaString.isNullOrEmptyString(profesional.getProfEspecialidad()))
     				addActionError(getText("validacion.requerido","prfsProfesion","Profesión"));
     			if(ValidaString.isNullOrEmptyString(profesional.getProfNrotarjetaprof()))
     				addActionError(getText("validacion.requerido","prfsNroTarjetaProf","Nro Tarjeta Profesional"));
     			if(ValidaString.isNullOrEmptyString(profesional.getProfEstado()))
     				addActionError(getText("validacion.requerido","prfsEstado","Estado"));
+    			if(ValidaString.isNullOrEmptyString(profesional.getProfBackgroundcoloragen()))
+    				addActionError(getText("validacion.requerido","prfsBackgroundcoloragen","Color Representación Agenda"));
+    			else if(!gestionFacadeAgenda.validoBackgroundProf(profesional.getProfBackgroundcoloragen()))
+    				addActionError(getText("validacion.requerido","prfsBackgroundcoloragen","Color Representación Agenda ya esta asociado a otro profesional"));
     			if(!hasActionErrors()){
     				profesional.setPersona(gestionFacadeAgenda.findPersonaById(profesional.getPersona().getIdPers()));
     				profesional.setDatosAud(this.getDatosAud());
@@ -204,9 +226,16 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     				gestionFacadeAgenda.persistProfesional(profesional);
     				estado = ConstantesAplicativo.constanteEstadoAbstract;
     				addActionMessage(getText("accion.satisfactoria"));
+    				String nameFile = "eventos";
+    				String path = request.getServletContext().getRealPath("/")+"js\\constantesCalendario\\"; 
+    				boolean resultFile = gestionFacadeAgenda.crearFile(path, nameFile,   
+    							ConstantesAplicativo.constanteExtensionFileJS, 
+    							ConstantesAplicativo.constanteTipoFileJSConstantesEventos,
+    							ConstantesAplicativo.constanteCrearFileJSEventosAll);
     			}
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			profesional = gestionFacadeAgenda.findProfesionalById(getIdLong());
+    			bandEstadoFunc = ConstantesAplicativo.constanteEstadoEditSave;
     		}
     	} catch(Exception e){
     		e.printStackTrace();
@@ -224,9 +253,39 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     		System.out.println("######>>>>>>>HistoriaClinicaAction>>>>agendaMedicaMethod>>>>estado entrada-->>"+estado);
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
     			listAgendaMedica  = gestionFacadeAgenda.findAllAgendas();
+    			bandEstadoFunc = ConstantesAplicativo.constanteEstadoAddSave;
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			SimpleDateFormat sdf = new SimpleDateFormat(ConstantesAplicativo.constanteFormatoFecha4);
     			if(agendaMedica.getProfesional().getPersona().getIdPers()<=0)
     				addActionError(getText("validacion.requerido","prfsIdPers","Seleccione al Profesional de la Salud"));
+    			else
+    				agendaMedica.setProfesional(gestionFacadeAgenda.findProfesionalIdPersona(agendaMedica.getProfesional().getPersona().getIdPers()));
+    			
+    			if(ValidaString.isNullOrEmptyString(agendaMedica.getAgenFechaini()))
+    				addActionError(getText("validacion.requerido","agenfechaini","Fecha Apertura Agenda"));
+    			
+    			if(ValidaString.isNullOrEmptyString(agendaMedica.getAgenFechafin()))
+    				addActionError(getText("validacion.requerido","agenfechafin","Fecha Cierre Agenda"));
+    			else if(!ValidaString.esFechaMayor(sdf.parse(agendaMedica.getAgenFechafin()), sdf.parse(agendaMedica.getAgenFechaini()), ConstantesAplicativo.constanteFormatoFecha4))
+    				addActionError(getText("validacion.requerido","agenfechafin","Fecha Cierre Agenda debe ser mayor a Fecha Apertura Agenda"));
+    			
+    			if(ValidaString.isNullOrEmptyString(agendaMedica.getAgenMintime()))
+    				addActionError(getText("validacion.requerido","agenmintime","Hora Apertura Cita"));
+    			
+    			if(ValidaString.isNullOrEmptyString(agendaMedica.getAgenMaxtime()))
+    				addActionError(getText("validacion.requerido","agenmaxtime","Hora Cierre Cita"));
+    			else if(!ValidaString.esHoraMayor(agendaMedica.getAgenMaxtime(), agendaMedica.getAgenMintime()))
+    				addActionError(getText("validacion.requerido","agenmaxtime","Hora Cierre Cita debe ser mayor a Hora Apertura Cita"));
+    			
+    			if(ValidaString.isNullOrEmptyString(agendaMedica.getAgenDuracionevento()))
+    				addActionError(getText("validacion.requerido","agendiracionevento","Duración Cita"));
+    			if(ValidaString.isNullOrEmptyString(agendaMedica.getAgenScrolltime()))
+    				addActionError(getText("validacion.requerido","agenscrolltime","Scroll Time"));
+    			if(ValidaString.isNullOrEmptyString(agendaMedica.getAgenAlldayslot()))
+    				addActionError(getText("validacion.requerido","agenalldayslot","Evento Todo el Dia"));
+    			else if(agendaMedica.getAgenAlldayslot().equals("1") && ValidaString.isNullOrEmptyString(agendaMedica.getAgenAlldaytext()))
+    				addActionError(getText("validacion.requerido","agenalldaytext","Etiqueta Evento Todo el Dia"));
+    			
     			if(!hasActionErrors()){
     				agendaMedica.setProfesional(gestionFacadeAgenda.findProfesionalIdPersona(agendaMedica.getProfesional().getPersona().getIdPers()));
     				String nameFile = "constanteAgendaProf_"+agendaMedica.getProfesional().getProfId();
@@ -247,6 +306,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			}
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			agendaMedica= gestionFacadeAgenda.findAgendaById(getIdLong());
+    			bandEstadoFunc = ConstantesAplicativo.constanteEstadoEditSave;
     		}
     	} catch(Exception e){
     		e.printStackTrace();
@@ -278,6 +338,9 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 				ValidaString.fechaSystem(),
 				ValidaString.horaSystem());
 	}
+	public String getBandEstadoFunc() {return bandEstadoFunc;}
+	public void setBandEstadoFunc(String bandEstadoFunc) {this.bandEstadoFunc = bandEstadoFunc;}
+	
 	
 	public InputStream getStrProfesional() {
 		try{

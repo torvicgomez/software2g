@@ -24,6 +24,8 @@ public interface IProfesionalDao {
 	 */
 	public Profesional findProfesionalById(long id);
 	public Profesional findProfesionalIdPersona(long idPersona);
+	public boolean validoBackgroundProf(String background);
+	
 	/**
 	 * Return all persistent instances of the <code>Profesional</code> entity.
 	 */

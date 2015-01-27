@@ -111,6 +111,23 @@
 				repetirFind.style.display = 'block';
 			}				
 			
+			function validarView(){
+				var idAuxPersona = document.getElementById('idAuxPersona').value;
+				if(idAuxPersona>0){
+					var campoFind = document.getElementById('campoFind');
+					var repetirFind = document.getElementById('repetirFind');
+					campoFind.style.display = 'none';
+					repetirFind.style.display = 'block';
+				}else{
+					var campoFind = document.getElementById('campoFind');
+					var repetirFind = document.getElementById('repetirFind');
+					campoFind.style.display = 'block';
+					repetirFind.style.display = 'none';
+					var search = document.getElementById('search');
+					search.value = '';
+				}
+			}
+			
 			function repetirBusqueda(){
 				var divDatosPersona = document.getElementById('divDatosPersona');
 				divDatosPersona.innerHTML = '';
@@ -139,8 +156,13 @@
 				document.form.submit();
 			}
 			
-			function detalle(param){
+			function modificar(param){
 				document.form.action="agendamedica.action?estado=<%=ConstantesAplicativo.constanteEstadoEdit%>&id="+param;
+				document.form.submit();
+			}
+			
+			function detalle(param){
+				document.form.action="agendamedica.action?estado=<%=ConstantesAplicativo.constanteEstadoAbstract%>&id="+param;
 				document.form.submit();
 			}
 		</script>
@@ -148,6 +170,7 @@
 	<body id="dt_example">
 		<s:form id="form">
 			<s:hidden name="funcPosicionado"></s:hidden>
+			<s:hidden name="bandEstadoFunc"></s:hidden>
 			<div id="demo">
 				<table cellpadding="0" cellspacing="0" border="0" class="display">
 					<tr><td>
@@ -196,18 +219,18 @@
 								<tr>
 									<s:if test="estado=='all'">
 										<td align="center">
-											<a onclick="detalle('${data.agenId}');">
+											<a onclick="modificar('${data.agenId}');">
 												<img align="middle" src="<s:url value="/imagenes/icon_edit.png"/>" alt="Editar" width="18" height="18">
 											</a>
 										</td>
 										<td align="center">
 											<a onclick="detalle('${data.agenId}');">
-												<img align="middle" src="<s:url value="/imagenes/icon_edit.png"/>" alt="Editar" width="18" height="18">
+												<img align="middle" src="<s:url value="/imagenes/icon_detalle.png"/>" alt="Editar" width="18" height="18">
 											</a>
 										</td>
 									</s:if>
 									<td><s:property value="profesional.persona.nombreCompleto"/></td>
-									<td><s:property value="profesional.persona.documentoPers"/>&nbsp;<s:property value="persona.tipodocumento.abreviaturaTidoc"/></td>
+									<td><s:property value="profesional.persona.documentoPers"/>&nbsp;<s:property value="profesional.persona.tipodocumento.abreviaturaTidoc"/></td>
 									<td><s:property value="agenFechaini"/></td>
 									<td><s:property value="agenFechafin"/></td>
 									<td><s:property value="agenFechacambio"/>&nbsp;<s:property value="agenHoracambio"/></td>
@@ -219,21 +242,57 @@
 				</s:if>
 				<s:elseif test="estado=='add'||estado=='edit'||estado=='save'">
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
+						<s:hidden name="agendaMedica.agenId" id="agenId"></s:hidden>
+						<s:hidden name="agendaMedica.profesional.profId" id="profId"></s:hidden>
+						<s:hidden name="agendaMedica.profesional.persona.idPers" id="idPers"></s:hidden>
+						<s:if test="estado=='add'||bandEstadoFunc=='addsave'">
+							<tr>
+								<td class="leftLabel"><s:text name="profesionalsalud.findpersona"></s:text></td>
+								<td colspan="3">
+									<s:set name="idPersona" value="agendaMedica.profesional.persona.idPers"></s:set>
+									<input type="hidden" id="idAuxPersona" value="${idPersona}"/>
+									<div id="campoFind" style="overflow:auto;width:auto;height:auto;display:block">
+										<s:textfield name="dataAutoCompletado" id="search" size="60" maxlength="30" cssClass="inputs"></s:textfield>
+									</div>
+									<div id="repetirFind" style="overflow:auto;width:auto;height:auto;display:none">
+										<input type="button" value="<s:text name="labelbutton.repetirfind"></s:text>" onclick="repetirBusqueda();" class="buttonSV"/>
+									</div>
+								</td>
+							</tr>
+						</s:if>
 						<tr>
-							<td class="leftLabel"><s:text name="profesionalsalud.findpersona"></s:text></td>
-							<td colspan="3">
-<%-- 								<s:hidden name="agendaMedica.profesional.profId" id="profId"></s:hidden> --%>
-								<s:hidden name="agendaMedica.profesional.persona.idPers" id="idPers"></s:hidden>
-								<div id="campoFind" style="overflow:auto;width:auto;height:auto;display:block">
-									<s:textfield name="dataAutoCompletado" id="search" size="60" maxlength="30" cssClass="inputs"></s:textfield>
-								</div>
-								<div id="repetirFind" style="overflow:auto;width:auto;height:auto;display:none">
-									<input type="button" value="<s:text name="labelbutton.repetirfind"></s:text>" onclick="repetirBusqueda();" class="buttonSV"/>
+							<td colspan="4">
+								<div id="divDatosPersona">
+								<s:if test="agendaMedica.profesional.persona!=null&&agendaMedica.profesional.persona.idPers>0">
+									<table cellpadding="0" cellspacing="0" border="0" class="display">
+										<tr><td class="leftLabel"><s:text name="personal.nombre"></s:text></td>
+											<td><s:property value="agendaMedica.profesional.persona.nombreCompleto"/></td>
+										</tr>
+										<tr><td class="leftLabel"><s:text name="personal.documento"></s:text></td>
+											<td><s:property value="agendaMedica.profesional.persona.documentoPers"/>&nbsp;<s:property value="agendaMedica.profesional.persona.tipodocumento.abreviaturaTidoc"/></td>
+										</tr>
+										<tr><td class="leftLabel"><s:text name="personal.fechanacimientoedad"></s:text></td>
+											<td><s:property value="agendaMedica.profesional.persona.fechanacimientoPers"/>&nbsp;<s:property value="agendaMedica.profesional.persona.edad"/></td>
+										</tr>
+										<tr><td class="leftLabel"><s:text name="personal.sexo"></s:text></td>
+											<td><s:property value="agendaMedica.profesional.persona.sexoPers"/></td>
+										</tr>
+										<tr><td class="leftLabel"><s:text name="personal.estadocivil"></s:text></td>
+											<td><s:property value="agendaMedica.profesional.persona.estadocivilPers"/></td>
+										</tr>
+										<tr><td class="leftLabel"><s:text name="personal.email"></s:text></td>
+											<td><s:property value="agendaMedica.profesional.persona.emailPers"/></td>
+										</tr>
+										<tr><td class="leftLabel"><s:text name="personal.telefono"></s:text></td>
+											<td><s:property value="agendaMedica.profesional.persona.telefonoPers"/></td>
+										</tr>
+										<tr><td class="leftLabel"><s:text name="personal.direccion"></s:text></td>
+											<td><s:property value="agendaMedica.profesional.persona.ubicacionPersona"/>&nbsp;<s:property value="agendaMedica.profesional.persona.direccionPers"/></td>
+										</tr>
+									</table>
+								</s:if>
 								</div>
 							</td>
-						</tr>
-						<tr>
-							<td colspan="4"><div id="divDatosPersona"></div></td>
 						</tr>
 						<tr>
 							<td class="leftLabel"><s:text name="agendamedica.fechainicial"></s:text></td>
@@ -287,25 +346,53 @@
 				</s:elseif>
 				<s:elseif test="estado=='abstract'">
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
-						<tr>
-							<td class="leftLabel" width="130"><s:text name="personal.nombre"></s:text></td>
-							<td class="text"><s:property value="profesional.persona.nombreCompleto"/></td>
+						<tr><td class="leftLabel"><s:text name="personal.nombre"></s:text></td>
+							<td colspan="3"><s:property value="agendaMedica.profesional.persona.nombreCompleto"/></td>
+						</tr>
+						<tr><td class="leftLabel"><s:text name="personal.documento"></s:text></td>
+							<td colspan="3"><s:property value="agendaMedica.profesional.persona.documentoPers"/>&nbsp;<s:property value="agendaMedica.profesional.persona.tipodocumento.abreviaturaTidoc"/></td>
+						</tr>
+						<tr><td class="leftLabel"><s:text name="personal.fechanacimientoedad"></s:text></td>
+							<td colspan="3"><s:property value="agendaMedica.profesional.persona.fechanacimientoPers"/>&nbsp;<s:property value="agendaMedica.profesional.persona.edad"/></td>
+						</tr>
+						<tr><td class="leftLabel"><s:text name="personal.sexo"></s:text></td>
+							<td colspan="3"><s:property value="agendaMedica.profesional.persona.sexoPers"/></td>
+						</tr>
+						<tr><td class="leftLabel"><s:text name="personal.estadocivil"></s:text></td>
+							<td colspan="3"><s:property value="agendaMedica.profesional.persona.estadocivilPers"/></td>
+						</tr>
+						<tr><td class="leftLabel"><s:text name="personal.email"></s:text></td>
+							<td colspan="3"><s:property value="agendaMedica.profesional.persona.emailPers"/></td>
+						</tr>
+						<tr><td class="leftLabel"><s:text name="personal.telefono"></s:text></td>
+							<td colspan="3"><s:property value="agendaMedica.profesional.persona.telefonoPers"/></td>
+						</tr>
+						<tr><td class="leftLabel"><s:text name="personal.direccion"></s:text></td>
+							<td colspan="3"><s:property value="agendaMedica.profesional.persona.ubicacionPersona"/>&nbsp;<s:property value="agendaMedica.profesional.persona.direccionPers"/></td>
 						</tr>
 						<tr>
-							<td class="leftLabel" width="130"><s:text name="personal.documento"></s:text></td>
-							<td class="text"><s:property value="profesional.persona.documentoPers"/>&nbsp;<s:property value="persona.tipodocumento.abreviaturaTidoc"/></td>
+							<td class="leftLabel"><s:text name="agendamedica.fechainicial"></s:text></td>
+							<td><s:property value="agendaMedica.agenFechaini"/></td>
+							<td class="leftLabel"><s:text name="agendamedica.fechafinal"></s:text></td>
+							<td><s:property value="agendaMedica.agenFechafin"/></td>
 						</tr>
 						<tr>
-							<td class="leftLabel" width="130"><s:text name="profesionalsalud.profesion"></s:text></td>
-							<td class="text"><s:property value="profesional.profEspecialidad"/></td>
+							<td class="leftLabel"><s:text name="agendamedica.horainici"></s:text></td>
+							<td><s:property value="agendaMedica.agenMintime"/></td>
+							<td class="leftLabel"><s:text name="agendamedica.horafin"></s:text></td>
+							<td><s:property value="agendaMedica.agenMaxtime"/></td>
 						</tr>
 						<tr>
-							<td class="leftLabel" width="130"><s:text name="profesionalsalud.nrotarjetaprof"></s:text></td>
-							<td class="text"><s:property value="profesional.profNrotarjetaprof"/></td>
+							<td class="leftLabel"><s:text name="agendamedica.duracion"></s:text></td>
+							<td><s:property value="agendaMedica.agenDuracionevento"/></td>
+							<td class="leftLabel"><s:text name="agendamedica.scrolltime"></s:text></td>
+							<td><s:property value="agendaMedica.agenScrolltime"/></td>
 						</tr>
 						<tr>
-							<td class="leftLabel" width="130"><s:text name="profesionalsalud.estado"></s:text></td>
-							<td class="text"><s:if test="profesional.profEstado==\"1\"">ACTIVO</s:if><s:else>INACTIVO</s:else></td>
+							<td class="leftLabel"><s:text name="agendamedica.alldayslot"></s:text></td>
+							<td><s:if test="agendaMedica.agenAlldayslot==\"1\"">ACTIVO</s:if><s:else>INACTIVO</s:else></td>
+							<td class="leftLabel"><s:text name="agendamedica.alldaytext"></s:text></td>
+							<td><s:property value="agendaMedica.agenAlldaytext"/></td>
 						</tr>
 					</table>
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
@@ -321,3 +408,4 @@
 		</s:form>
 	</body>
 </html>
+<script type="text/javascript" charset="utf-8">validarView();</script>

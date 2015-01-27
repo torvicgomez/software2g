@@ -8,11 +8,18 @@ Tareas
 	5.1- Asociar Profesional ------------------------------------------------------------------- .::[O.K]::.
 	5.2- Crear Archivo constantes_profagenda.js ------------------------------------------------ .::[O.K]::.
 	5.3- Desplegar agenda de profesional con el color especifico ------------------------------- .::[O.K]::.
-6- Crear eventos y participantes del evento ----------------------------------------------------
+6- Crear eventos y participantes del evento ---------------------------------------------------- .::[O.K]::.
 7- crear archivo eventos asociados a la agenda del profesional --------------------------------- .::[O.K]::.
 8- insertar campo backgroun profesional -------------------------------------------------------- .::[O.K]::.
 9- controlar el cambio de hora de una cita o inhabilitar ese tipo de cambio --------------------
 10- Asociar las constantes de cada agenda al profesional seleccionado en el calendario ---------
+11- Permitir solo por unica vez que una persona se asocie como profesional ---------------------
+12- que un profesional solo tenga una unica agenda no mas de un registro asociado --------------
+13- editar datos del profesional y visualizar resumen ------------------------------------------
+14- editar datos de agenda y visualizar resumen ------------------------------------------------
+15- crear seccion del calendario que interactue con los profesionales y sus agendas ------------
+16- realizar formulario de link de atencion de cita --------------------------------------------
+
 
 Sugerencia
 * Tabla profesional salud ---------------------------------------------------------------------- .::[O.K]::.

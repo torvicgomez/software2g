@@ -107,6 +107,24 @@ public class ProfesionalDAOImpl implements IProfesionalDao {
         }
 	}
 	
+	public boolean validoBackgroundProf(String background) {
+        try {
+    		String jpqlString = "select profesional from " + Profesional.class.getSimpleName() + " profesional" +
+    				" where profesional.profBackgroundcoloragen =:background ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("background", background);
+            Profesional obj = (Profesional) query.getSingleResult();
+            return (obj!=null&&obj.getProfBackgroundcoloragen().equals(background))?false:true;
+        } catch(Exception e){
+        	return true;
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

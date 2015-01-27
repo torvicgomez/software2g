@@ -245,21 +245,24 @@
 		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
 		font-size: 14px;
 	}
-
-	#calendar {
-		width: 900px;
-		margin: 40px auto;
-	}
-
 </style>
+
+<!-- #calendar { -->
+<!-- 		width: 900px; -->
+<!-- 		margin: 40px auto; -->
+<!-- 	} -->
 </head>
 <body>
-	<table align="center" width="99%" height="100%">
-		<tr><td>
-			<s:select list="listProfesional" name="agendaMedica.agenAlldayslot" id="fondo" listKey="profBackgroundcoloragen" listValue="viewProfesional" headerKey="" headerValue=".::Seleccion::." cssClass="inputs"/>
-		</td></tr>
-		<tr><td><div id='divEventos'></div></td></tr>
-		<tr><td><div id='calendar'></div></td></tr>
-	</table>
+	<div id="demo">
+		<table cellpadding="0" cellspacing="0" border="0" class="display">
+			<tr>
+				<td align="left">
+					<s:select list="listProfesional" name="agendaMedica.agenAlldayslot" id="fondo" listKey="profBackgroundcoloragen" listValue="viewProfesional" headerKey="" headerValue=".::Todas las Citas::." cssClass="inputs"/>
+				</td>
+			</tr>
+			<tr><td align="left"><div id='divEventos'></div></td></tr>
+			<tr><td align="left"><div id='calendar'></div></td></tr> 
+		</table>
+	</div>
 </body>
 </html>

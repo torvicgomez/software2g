@@ -59,6 +59,23 @@
 				repetirFind.style.display = 'block';
 			}				
 			
+			function validarView(){
+				var idAuxPersona = document.getElementById('idAuxPersona').value;
+				if(idAuxPersona>0){
+					var campoFind = document.getElementById('campoFind');
+					var repetirFind = document.getElementById('repetirFind');
+					campoFind.style.display = 'none';
+					repetirFind.style.display = 'block';
+				}else{
+					var campoFind = document.getElementById('campoFind');
+					var repetirFind = document.getElementById('repetirFind');
+					campoFind.style.display = 'block';
+					repetirFind.style.display = 'none';
+					var search = document.getElementById('search');
+					search.value = '';
+				}
+			}
+			
 			function repetirBusqueda(){
 				var divDatosPersona = document.getElementById('divDatosPersona');
 				divDatosPersona.innerHTML = '';
@@ -87,15 +104,22 @@
 				document.form.submit();
 			}
 			
-			function detalle(param){
+			function modificar(param){
 				document.form.action="profesionalsalud.action?estado=<%=ConstantesAplicativo.constanteEstadoEdit%>&id="+param;
 				document.form.submit();
 			}
+			
+			function detalle(param){
+				document.form.action="profesionalsalud.action?estado=<%=ConstantesAplicativo.constanteEstadoAbstract%>&id="+param;
+				document.form.submit();
+			}
+			
 		</script>
 	</head>
 	<body id="dt_example">
 		<s:form id="form">
 			<s:hidden name="funcPosicionado"></s:hidden>
+			<s:hidden name="bandEstadoFunc"></s:hidden>
 			<div id="demo">
 				<table cellpadding="0" cellspacing="0" border="0" class="display">
 					<tr><td>
@@ -135,6 +159,7 @@
 								<th><s:text name="personal.nombre"></s:text></th>
 								<th><s:text name="personal.documento"></s:text></th>
 								<th><s:text name="profesionalsalud.nrotarjetaprof"></s:text></th>
+								<th><s:text name="profesional.coloragenda"></s:text></th>
 								<th><s:text name="global.fecharegistra"></s:text></th>
 							</tr>
 						</thead>
@@ -143,19 +168,20 @@
 								<tr>
 									<s:if test="estado=='all'">
 										<td align="center">
-											<a onclick="detalle('${data.profId}');">
+											<a onclick="modificar('${data.profId}');">
 												<img align="middle" src="<s:url value="/imagenes/icon_edit.png"/>" alt="Editar" width="18" height="18">
 											</a>
 										</td>
 										<td align="center">
 											<a onclick="detalle('${data.profId}');">
-												<img align="middle" src="<s:url value="/imagenes/icon_edit.png"/>" alt="Editar" width="18" height="18">
+												<img align="middle" src="<s:url value="/imagenes/icon_detalle.png"/>" alt="Detalle" width="18" height="18">
 											</a>
 										</td>
 									</s:if>
 									<td><s:property value="persona.nombreCompleto"/></td>
 									<td><s:property value="persona.documentoPers"/>&nbsp;<s:property value="persona.tipodocumento.abreviaturaTidoc"/></td>
 									<td><s:property value="profNrotarjetaprof"/></td>
+									<td bgcolor="<s:property value="profBackgroundcoloragen"/>"></td>
 									<td><s:property value="profFechacambio"/>&nbsp;<s:property value="profHoracambio"/></td>
 								</tr>
 							</s:iterator>
@@ -165,21 +191,56 @@
 				</s:if>
 				<s:elseif test="estado=='add'||estado=='edit'||estado=='save'">
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
+						<s:hidden name="profesional.profId" id="profId"></s:hidden>
+						<s:hidden name="profesional.persona.idPers" id="idPers"></s:hidden>
+						<s:if test="estado=='add'||bandEstadoFunc=='addsave'">
+							<tr>
+								<td class="leftLabel"><s:text name="profesionalsalud.findpersona"></s:text></td>
+								<td colspan="3">
+									<s:set name="idPersona" value="profesional.persona.idPers"></s:set>
+									<input type="hidden" id="idAuxPersona" value="${idPersona}"/>
+									<div id="repetirFind" style="overflow:auto;width:auto;height:auto;display:none">
+										<input type="button" value="<s:text name="labelbutton.repetirfind"></s:text>" onclick="repetirBusqueda();" class="buttonSV"/>
+									</div>
+									<div id="campoFind" style="overflow:auto;width:auto;height:auto;display:block">
+										<s:textfield name="dataAutoCompletado" id="search" size="60" maxlength="30" cssClass="inputs"></s:textfield>
+									</div>
+								</td>
+							</tr>
+						</s:if>
 						<tr>
-							<td class="leftLabel"><s:text name="profesionalsalud.findpersona"></s:text></td>
-							<td colspan="3">
-								<s:hidden name="profesional.profId" id="profId"></s:hidden>
-								<s:hidden name="profesional.persona.idPers" id="idPers"></s:hidden>
-								<div id="campoFind" style="overflow:auto;width:auto;height:auto;display:block">
-									<s:textfield name="dataAutoCompletado" id="search" size="60" maxlength="30" cssClass="inputs"></s:textfield>
-								</div>
-								<div id="repetirFind" style="overflow:auto;width:auto;height:auto;display:none">
-									<input type="button" value="<s:text name="labelbutton.repetirfind"></s:text>" onclick="repetirBusqueda();" class="buttonSV"/>
+							<td colspan="4">
+								<div id="divDatosPersona">
+									<s:if test="profesional.persona!=null&&profesional.persona.idPers>0">
+									<table cellpadding="0" cellspacing="0" border="0" class="display">
+										<tr><td class="leftLabel"><s:text name="personal.nombre"></s:text></td>
+											<td><s:property value="profesional.persona.nombreCompleto"/></td>
+										</tr>
+										<tr><td class="leftLabel"><s:text name="personal.documento"></s:text></td>
+											<td><s:property value="profesional.persona.documentoPers"/>&nbsp;<s:property value="profesional.persona.tipodocumento.abreviaturaTidoc"/></td>
+										</tr>
+										<tr><td class="leftLabel"><s:text name="personal.fechanacimientoedad"></s:text></td>
+											<td><s:property value="profesional.persona.fechanacimientoPers"/>&nbsp;<s:property value="profesional.persona.edad"/></td>
+										</tr>
+										<tr><td class="leftLabel"><s:text name="personal.sexo"></s:text></td>
+											<td><s:property value="profesional.persona.sexoPers"/></td>
+										</tr>
+										<tr><td class="leftLabel"><s:text name="personal.estadocivil"></s:text></td>
+											<td><s:property value="profesional.persona.estadocivilPers"/></td>
+										</tr>
+										<tr><td class="leftLabel"><s:text name="personal.email"></s:text></td>
+											<td><s:property value="profesional.persona.emailPers"/></td>
+										</tr>
+										<tr><td class="leftLabel"><s:text name="personal.telefono"></s:text></td>
+											<td><s:property value="profesional.persona.telefonoPers"/></td>
+										</tr>
+										<tr><td class="leftLabel"><s:text name="personal.direccion"></s:text></td>
+											<td><s:property value="profesional.persona.ubicacionPersona"/>&nbsp;<s:property value="profesional.persona.direccionPers"/></td>
+										</tr>
+									</table>
+									</s:if>
 								</div>
 							</td>
-						</tr>
-						<tr>
-							<td colspan="4"><div id="divDatosPersona"></div></td>
 						</tr>
 						<tr>
 							<td class="leftLabel" colspan="4"><s:text name="profesionalsalud.datosprofesional"></s:text></td>
@@ -201,7 +262,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="leftLabel"><s:text name="profesionalsalud..coloragenda"></s:text></td>
+							<td class="leftLabel"><s:text name="profesionalsalud.coloragenda"></s:text></td>
 							<td colspan="3">
 								<s:textfield name="profesional.profBackgroundcoloragen" id="profBackgroundcoloragen" size="30" maxlength="30" cssClass="inputs" onclick="startColorPicker(this)" onkeyup="maskedHex(this)"></s:textfield>
 							</td>
@@ -218,25 +279,48 @@
 				</s:elseif>
 				<s:elseif test="estado=='abstract'">
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
-						<tr>
-							<td class="leftLabel" width="130"><s:text name="personal.nombre"></s:text></td>
-							<td class="text"><s:property value="profesional.persona.nombreCompleto"/></td>
+						<tr><td class="leftLabel"><s:text name="personal.nombre"></s:text></td>
+							<td><s:property value="profesional.persona.nombreCompleto"/></td>
 						</tr>
-						<tr>
-							<td class="leftLabel" width="130"><s:text name="personal.documento"></s:text></td>
-							<td class="text"><s:property value="profesional.persona.documentoPers"/>&nbsp;<s:property value="persona.tipodocumento.abreviaturaTidoc"/></td>
+						<tr><td class="leftLabel"><s:text name="personal.documento"></s:text></td>
+							<td><s:property value="profesional.persona.documentoPers"/>&nbsp;<s:property value="profesional.persona.tipodocumento.abreviaturaTidoc"/></td>
+						</tr>
+						<tr><td class="leftLabel"><s:text name="personal.fechanacimientoedad"></s:text></td>
+							<td><s:property value="profesional.persona.fechanacimientoPers"/>&nbsp;<s:property value="profesional.persona.edad"/></td>
+						</tr>
+						<tr><td class="leftLabel"><s:text name="personal.sexo"></s:text></td>
+							<td><s:property value="profesional.persona.sexoPers"/></td>
+						</tr>
+						<tr><td class="leftLabel"><s:text name="personal.estadocivil"></s:text></td>
+							<td><s:property value="profesional.persona.estadocivilPers"/></td>
+						</tr>
+						<tr><td class="leftLabel"><s:text name="personal.email"></s:text></td>
+							<td><s:property value="profesional.persona.emailPers"/></td>
+						</tr>
+						<tr><td class="leftLabel"><s:text name="personal.telefono"></s:text></td>
+							<td><s:property value="profesional.persona.telefonoPers"/></td>
+						</tr>
+						<tr><td class="leftLabel"><s:text name="personal.direccion"></s:text></td>
+							<td><s:property value="profesional.persona.ubicacionPersona"/>&nbsp;<s:property value="profesional.persona.direccionPers"/></td>
 						</tr>
 						<tr>
 							<td class="leftLabel" width="130"><s:text name="profesionalsalud.profesion"></s:text></td>
-							<td class="text"><s:property value="profesional.profEspecialidad"/></td>
+							<td><s:property value="profesional.profEspecialidad"/></td>
 						</tr>
 						<tr>
 							<td class="leftLabel" width="130"><s:text name="profesionalsalud.nrotarjetaprof"></s:text></td>
-							<td class="text"><s:property value="profesional.profNrotarjetaprof"/></td>
+							<td><s:property value="profesional.profNrotarjetaprof"/></td>
 						</tr>
 						<tr>
 							<td class="leftLabel" width="130"><s:text name="profesionalsalud.estado"></s:text></td>
-							<td class="text"><s:if test="profesional.profEstado==\"1\"">ACTIVO</s:if><s:else>INACTIVO</s:else></td>
+							<td><s:if test="profesional.profEstado==\"1\"">ACTIVO</s:if><s:else>INACTIVO</s:else></td>
+						</tr>
+						<tr>
+							<td class="leftLabel" width="130"><s:text name="profesionalsalud.coloragenda"></s:text></td>
+							<td><table border="0" width="70%"><tr> 
+								<td bgcolor="<s:property value="profesional.profBackgroundcoloragen"/>" width="15%"><s:property value="profesional.profBackgroundcoloragen"/></td><td></td>
+							</tr></table></td>
+							
 						</tr>
 					</table>
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
@@ -252,3 +336,4 @@
 		</s:form>
 	</body>
 </html>
+<script type="text/javascript" charset="utf-8">validarView();</script>

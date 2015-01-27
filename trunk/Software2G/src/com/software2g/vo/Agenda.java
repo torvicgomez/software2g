@@ -211,13 +211,9 @@ public class Agenda implements Serializable {
 	
 	public void setAddSegundos(){
 		System.out.println("entra esta parte completar hora segundos");
-		this.agenDuracionevento+=":00";
-		System.out.println("this.agenDuracionevento:["+this.agenDuracionevento+"]");
-		this.agenMaxtime+=":00";
-		System.out.println("this.agenMaxtime:["+this.agenMaxtime+"]");
-		this.agenMintime+=":00";
-		System.out.println("this.agenMintime:["+this.agenMintime+"]");
-		this.agenScrolltime+=":00";
-		System.out.println("this.agenScrolltime:["+this.agenScrolltime+"]");
+		this.agenDuracionevento+= this.agenDuracionevento.length()==5?":00":"";
+		this.agenMaxtime+= this.agenMaxtime.length()==5?":00":"";
+		this.agenMintime+= this.agenMintime.length()==5?":00":"";
+		this.agenScrolltime+= this.agenScrolltime.length()==5?":00":"";
 	}
 }

@@ -17,8 +17,10 @@ public final class ConstantesAplicativo {
 	
 	public static final String constanteEstadoAll = "all";
 	public static final String constanteEstadoAdd = "add";
+	public static final String constanteEstadoAddSave = "addsave";
 	public static final String constanteEstadoQuery = "query";
 	public static final String constanteEstadoEdit = "edit";
+	public static final String constanteEstadoEditSave = "editsave";
 	public static final String constanteEstadoAbstract = "abstract";
 	public static final String constanteEstadoSave = "save";
 	public static final String constanteEstadoLink = "link";
@@ -40,7 +42,11 @@ public final class ConstantesAplicativo {
 	public static final String constanteSplit = "&&&&";
 	public static final String constanteFormatoFechaHora1 = "dd/MM/yyyy HH:mm:ss.SSS";
 	public static final String constanteFormatoFecha1 = "dd/MM/yyyy";
-
+    public static final String constanteFormatoFecha2 = "dd-MM-yyyy";
+    public static final String constanteFormatoFecha3 = "EEE, dd MMM yyyy";
+    public static final String constanteFormatoFecha4 = "yyyy-MM-dd";
+    public static final String constanteFormatoFecha5 = "yyyyMMdd";
+	
 	public static final String constanteTipoSearchAutoComplProf = "profesional";
 	
 	public static final String constanteCrearFileJSEventosAll = "allEventos";

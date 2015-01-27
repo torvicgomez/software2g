@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.poi.hssf.record.formula.functions.Even;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +22,6 @@ import com.software2g.portal.dao.IPersonaDao;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.vo.Agenda;
 import com.software2g.vo.Evento;
-import com.software2g.vo.Funcionalidad;
 import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Parametroscalendario;
 import com.software2g.vo.Participante;
@@ -328,6 +326,17 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 		}
 	}
 	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public boolean validoBackgroundProf(String background) throws Exception {
+		try {
+			return getProfesionalDao().validoBackgroundProf(background);
+		} catch (RuntimeException e) {
+			//throw new Exception("validoBackgroundProf failed with the background " + background + ": " + e.getMessage());
+			e.printStackTrace();
+			return false;	
+		}
+	}
+	
 	/**
 	 * Return all persistent instances of the <code>Profesional</code> entity.
 	 */
@@ -611,7 +620,8 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 					constantes += "  start: '"+elem.getEvenStart()+"',\n";
 					constantes += "  end: '"+elem.getEvenEnd()+"',\n";
 					constantes += "  url: '"+elem.getEvenUrl()+"',\n";
-					constantes += "  backgroundColor: '"+elem.getEvenBackgroundcolor()+"'\n";
+					//constantes += "  backgroundColor: '"+elem.getEvenBackgroundcolor()+"'\n";
+					constantes += "  backgroundColor: '"+elem.getAgenda().getProfesional().getProfBackgroundcoloragen()+"'\n";
 					constantes += "},";
 				}
 				constantes = constantes.substring(0,constantes.length()-1)+"];";

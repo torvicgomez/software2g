@@ -372,7 +372,10 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 			System.out.println("telefono:["+telefono+"]");
 			String email = String.valueOf(request.getParameter("email"));
 			System.out.println("email:["+email+"]");
-			
+			String nrodocumento = String.valueOf(request.getParameter("nrodocumento"));
+			System.out.println("email:["+email+"]");
+			String tipodoc = String.valueOf(request.getParameter("tipodoc"));
+			System.out.println("email:["+email+"]");
 			System.out.println("****************************************************");
 			Evento evento = new Evento();
 			evento.setAgenda(gestionFacadeAgenda.findIdAgenda(backgroundColor));
@@ -389,6 +392,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 				evento.setEvenId(idEvento);
 				Participante participante = new Participante();
 				participante.setEvento(evento);
+				participante.setPartDocumento(String.valueOf(request.getParameter("nrodocumento")));
+				participante.setPartTipodocumento(String.valueOf(request.getParameter("tipodoc")));
 				participante.setPartPnombre(String.valueOf(request.getParameter("pnombre")));
 				participante.setPartSnombre(String.valueOf(request.getParameter("snombre")));
 				participante.setPartPapellido(String.valueOf(request.getParameter("papellido")));

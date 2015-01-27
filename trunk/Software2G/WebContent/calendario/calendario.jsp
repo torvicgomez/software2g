@@ -73,6 +73,7 @@
 	var title_evento = '';
 	var start_evento = '';
 	var end_evento = '';
+// 	var eventos = [];
 // 	var eventos = [
 // 	{
 // 	  id: 12,
@@ -183,6 +184,8 @@
 			title_evento_param = f.nrodocumento.trim()+'%20'+f.tipodoc+'%20'+f.pnombre.trim()+'%20'+f.snombre.trim()+'%20'+f.papellido.trim()+'%20'+f.sapellido.trim();
 			fondo_evento_param = fondo_evento.replace("#", "%23");
 			
+			nrodocumento = f.nrodocumento.trim();
+			tipodoc = f.tipodoc.trim();
 			pnombre = f.pnombre.trim();
 			snombre = f.snombre.trim();
 			papellido = f.papellido.trim(); 
@@ -190,8 +193,11 @@
 			telefono = f.telefono.trim();
 			email = f.email.replace('@', '%40');
 			
+			alert('email:['+email+']');
+			alert('nrodocumento:['+nrodocumento+']');
+			alert('tipodoc:['+tipodoc+']');
 			
-			$("#divEventos").load('crearEventoCalendario.action?start='+start_evento+'&end='+end_evento+'&url='+url_param+'&backgroundColor='+fondo_evento_param+'&title='+title_evento_param+'&pnombre='+pnombre+'&snombre='+snombre+'&papellido='+papellido+'&sapellido='+sapellido+'&telefono='+telefono+'&email='+email);
+			$("#divEventos").load('crearEventoCalendario.action?start='+start_evento+'&end='+end_evento+'&url='+url_param+'&backgroundColor='+fondo_evento_param+'&title='+title_evento_param+'&pnombre='+pnombre+'&snombre='+snombre+'&papellido='+papellido+'&sapellido='+sapellido+'&telefono='+telefono+'&email='+email+'&nrodocumento='+nrodocumento+'&tipodoc='+tipodoc);
 			
 			//alert('dateStart: ['+dateStrat+']');
 			//alert('formato fecha ISO: ['++']');

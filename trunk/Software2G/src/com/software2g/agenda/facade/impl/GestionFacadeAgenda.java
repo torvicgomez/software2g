@@ -615,8 +615,9 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 					constantes += "},";
 				}
 				constantes = constantes.substring(0,constantes.length()-1)+"];";
-				file.write(constantes);
-			}
+			}else
+				constantes += "];";
+			file.write(constantes);
 			System.out.println("+++++++++++++++++++++++++++++++++++++++++");
 			System.out.println("constantes: ["+constantes+"]");
 			System.out.println("+++++++++++++++++++++++++++++++++++++++++");

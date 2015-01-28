@@ -27,6 +27,7 @@ public interface IEventoDao {
 	 * Return all persistent instances of the <code>Evento</code> entity.
 	 */
 	public List<Evento> findAllEventos();
+	public List<Evento> findAllEventosxAgenda(long idAgenda);
 	/**
 	 * Make the given instance managed and persistent.
 	 */

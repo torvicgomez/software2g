@@ -225,6 +225,8 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
     						ConstantesAplicativo.constanteExtensionFileJS, 
     						ConstantesAplicativo.constanteTipoFileJSConstantesEventos,
     						ConstantesAplicativo.constanteCrearFileJSEventosAll);
+    			
+    			
     			System.out.println("----------------------------------------------------------");
     			System.out.println("----------------------------------------------------------");
     			

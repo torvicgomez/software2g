@@ -66,7 +66,8 @@ public class EventoDAOImpl implements IEventoDao {
 	@SuppressWarnings("unchecked")
 	public List<Evento> findAllEventos() {
         try {
-    		String jpqlString = "select evento from " + Evento.class.getSimpleName() + " evento";
+    		String jpqlString = "select evento from " + Evento.class.getSimpleName() + " evento " +
+    				" order by evento.agenda.agenId asc ";
             Query query = em.createQuery( jpqlString );
             return query.getResultList();
         }
@@ -76,6 +77,24 @@ public class EventoDAOImpl implements IEventoDao {
             }
         }
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Evento> findAllEventosxAgenda(long idAgenda) {
+        try {
+    		String jpqlString = "select evento from " + Evento.class.getSimpleName() + " evento " +
+    				" where evento.agenda.agenId =:idAgenda " +
+    				" order by evento.agenda.agenId asc ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("idAgenda", idAgenda);
+            return query.getResultList();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

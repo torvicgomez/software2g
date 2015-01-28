@@ -12,12 +12,12 @@ Tareas
 7- crear archivo eventos asociados a la agenda del profesional --------------------------------- .::[O.K]::.
 8- insertar campo backgroun profesional -------------------------------------------------------- .::[O.K]::.
 9- controlar el cambio de hora de una cita o inhabilitar ese tipo de cambio --------------------
-10- Asociar las constantes de cada agenda al profesional seleccionado en el calendario ---------
+10- Asociar las constantes de cada agenda al profesional seleccionado en el calendario --------- .::[O.K]::.
 11- Permitir solo por unica vez que una persona se asocie como profesional --------------------- .::[O.K]::.
 12- que un profesional solo tenga una unica agenda no mas de un registro asociado -------------- .::[O.K]::.
 13- editar datos del profesional y visualizar resumen ------------------------------------------ .::[O.K]::.
 14- editar datos de agenda y visualizar resumen ------------------------------------------------ .::[O.K]::.
-15- crear seccion del calendario que interactue con los profesionales y sus agendas ------------
+15- crear seccion del calendario que interactue con los profesionales y sus agendas ------------ .::[O.K]::.
 16- realizar formulario de link de atencion de cita --------------------------------------------
 17- Al cambiar color profesional que se vea reflejado en el calendario de citas ---------------- .::[O.K]::.
 

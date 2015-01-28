@@ -3,10 +3,8 @@ package com.software2g.agenda.action;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +21,6 @@ import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Agenda;
 import com.software2g.vo.Evento;
-import com.software2g.vo.Funcionalidad;
 import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Parametroscalendario;
 import com.software2g.vo.Participante;
@@ -40,6 +37,9 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private String funcPosicionado;
 	private String bandEstadoFunc;
 	private String id;
+	private String constantesAgendaProfesional;
+	private String eventoAgendaProfesional;
+	private String background;
 
 	private List<Parametroscalendario> listParametroCalendrio;
 	private Parametroscalendario parametroCalendario;
@@ -75,7 +75,10 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setListAgendaMedica(List<Agenda> listAgendaMedica) {this.listAgendaMedica = listAgendaMedica;}
 	public Agenda getAgendaMedica() {return agendaMedica;}
 	public void setAgendaMedica(Agenda agendaMedica) {this.agendaMedica = agendaMedica;}
-	
+	public String getConstantesAgendaProfesional() {return constantesAgendaProfesional;}
+	public void setConstantesAgendaProfesional(String constantesAgendaProfesional) {this.constantesAgendaProfesional = constantesAgendaProfesional;}
+	public String getEventoAgendaProfesional() {return eventoAgendaProfesional;}
+	public void setEventoAgendaProfesional(String eventoAgendaProfesional) {this.eventoAgendaProfesional = eventoAgendaProfesional;}
 	
 	@SkipValidation
 	public String calendarioMethod(){
@@ -84,8 +87,20 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     		getFuncionPosicionado();
     		System.out.println("######>>>>>>>AgendaAction>>>>calendarioMethod>>>>estado entrada-->>"+estado);
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
-//    			listProfesional = gestionFacadeAgenda.findAllProfesionals();
     			listProfesional = gestionFacadeAgenda.findAllProfesionalAgenda();
+    			constantesAgendaProfesional = ConstantesAplicativo.constanteNameFileJSAllAgendaProf;
+    			eventoAgendaProfesional = ConstantesAplicativo.constanteNameFileJSAllEventoAgendaProf;
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)){
+    			listProfesional = gestionFacadeAgenda.findAllProfesionalAgenda();
+    			if(background==null||(background!=null&&background.equals(""))){
+    				constantesAgendaProfesional = ConstantesAplicativo.constanteNameFileJSAllAgendaProf;
+        			eventoAgendaProfesional = ConstantesAplicativo.constanteNameFileJSAllEventoAgendaProf;
+    			}else{
+	    			profesional = gestionFacadeAgenda.findProfesionalBackground(getBackground());
+	    			agendaMedica = gestionFacadeAgenda.findIdAgenda(getBackground());
+	    			constantesAgendaProfesional = "constantesCalendario/agenda/constanteAgendaProf_"+profesional.getProfId();
+	    			eventoAgendaProfesional = "eventosAgenda/eventosagenda_"+agendaMedica.getAgenId();
+    			}
     		}
     	} catch (Exception e) {
 			addActionMessage(getText("error.aplicacion"));
@@ -94,6 +109,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     	System.out.println("######>>>>>>>AgendaAction>>>>calendarioMethod>>>>estado salida-->>"+estado);
     	return result;
 	}
+	
 	private void getFuncionPosicionado(){
 		if(request.getSession().getAttribute("funcPosicionado")==null){
 			request.getSession().setAttribute("funcPosicionado",funcPosicionado);
@@ -340,7 +356,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	}
 	public String getBandEstadoFunc() {return bandEstadoFunc;}
 	public void setBandEstadoFunc(String bandEstadoFunc) {this.bandEstadoFunc = bandEstadoFunc;}
-	
+	public String getBackground() {return background;}
+	public void setBackground(String background) {this.background = background;}
 	
 	public InputStream getStrProfesional() {
 		try{
@@ -473,7 +490,12 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 						ConstantesAplicativo.constanteExtensionFileJS, 
 						ConstantesAplicativo.constanteTipoFileJSConstantesEventos,
 						ConstantesAplicativo.constanteCrearFileJSEventosAll);
-			
+			path = request.getServletContext().getRealPath("/")+"js\\constantesCalendario\\eventosAgenda\\";	
+			nameFile = "eventosagenda_"+evento.getAgenda().getAgenId();
+			gestionFacadeAgenda.crearFile(path, nameFile,   
+					ConstantesAplicativo.constanteExtensionFileJS, 
+					ConstantesAplicativo.constanteTipoFileJSConstantesEventosxAgenda,
+					evento.getAgenda().getAgenId()+"");
 			html = "Se creo satisfactoriamente el evento";
 			strCrearEvento = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
 		}catch(Exception e){

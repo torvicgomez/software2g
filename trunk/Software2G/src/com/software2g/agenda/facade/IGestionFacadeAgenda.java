@@ -54,6 +54,7 @@ public interface IGestionFacadeAgenda {
 	 */
 	public List<Evento> findAllEventos() throws Exception;
 	public List<Evento> findAllEventosxAgenda(long idAgenda) throws Exception;
+	public List<Agenda> findAllEventosAgendas() throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */
@@ -122,6 +123,7 @@ public interface IGestionFacadeAgenda {
 	public Profesional findProfesionalById(long id) throws Exception;
 	public Profesional findProfesionalIdPersona(long idPersona) throws Exception;
 	public boolean validoBackgroundProf(String background) throws Exception;
+	public Profesional findProfesionalBackground(String background) throws Exception;
 	/**
 	 * Return all persistent instances of the <code>Profesional</code> entity.
 	 */

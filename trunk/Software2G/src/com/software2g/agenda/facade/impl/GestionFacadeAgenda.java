@@ -167,6 +167,15 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 		}
 	}
 
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Evento> findAllEventosxAgenda(long idAgenda) throws Exception {
+		try {
+			return getEventoDao().findAllEventosxAgenda(idAgenda);
+		} catch (RuntimeException e) {
+			throw new Exception("findAllEventosxAgenda failed: " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */
@@ -568,8 +577,9 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 			if(tipoFile.equals(ConstantesAplicativo.constanteTipoFileJSConstantesAgenda)){
 				this.crearJSConstantesAgenda(createFile, infoFind);
 			}else if(tipoFile.equals(ConstantesAplicativo.constanteTipoFileJSConstantesEventos)){
-				System.out.println("Entra esta Parte!!!!!!");
 				this.crearJSAllEventos(createFile, ConstantesAplicativo.constanteCrearFileJSEventosAll);
+			}else if(tipoFile.equals(ConstantesAplicativo.constanteTipoFileJSConstantesEventosxAgenda)){ 
+				this.crearJSAllEventos(createFile, infoFind+ConstantesAplicativo.constanteSplit+ConstantesAplicativo.constanteCrearFileJSEventosxAgenda);
 			}
 			createFile.close();
 		} catch (IOException e) {
@@ -608,7 +618,11 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 		boolean result = true;
 		try {
 			List<Evento> listEventos = new ArrayList<Evento>();
-			if(infoFind!=null&&infoFind.equals(ConstantesAplicativo.constanteCrearFileJSEventosAll))
+			String[] datos = infoFind.split(ConstantesAplicativo.constanteSplit);
+			if(datos!=null&&datos.length>1){
+				if(datos[1].equals(ConstantesAplicativo.constanteCrearFileJSEventosxAgenda))
+					listEventos = this.findAllEventosxAgenda(Long.parseLong(datos[0].toString()));
+			}else if(infoFind!=null&&infoFind.equals(ConstantesAplicativo.constanteCrearFileJSEventosAll))
 				listEventos = this.findAllEventos();
 			System.out.println("listEventos: ["+listEventos.size()+"]");
 			String constantes = "var eventos = [\n";
@@ -620,7 +634,6 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 					constantes += "  start: '"+elem.getEvenStart()+"',\n";
 					constantes += "  end: '"+elem.getEvenEnd()+"',\n";
 					constantes += "  url: '"+elem.getEvenUrl()+"',\n";
-					//constantes += "  backgroundColor: '"+elem.getEvenBackgroundcolor()+"'\n";
 					constantes += "  backgroundColor: '"+elem.getAgenda().getProfesional().getProfBackgroundcoloragen()+"'\n";
 					constantes += "},";
 				}

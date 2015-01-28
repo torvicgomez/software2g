@@ -35,6 +35,7 @@ public final class ConstantesAplicativo {
 	public static final String constanteExtensionFileJS = ".js";
 	public static final String constanteTipoFileJSConstantesAgenda = "constantesagenda";
 	public static final String constanteTipoFileJSConstantesEventos = "constanteseventos";
+	public static final String constanteTipoFileJSConstantesEventosxAgenda = "constanteseventosxagenda";
 	
 	public static final String constanteEstadoActivo = "ACTIVO";
 	public static final String constanteEstadoInactivo = "INACTIVO";
@@ -50,5 +51,6 @@ public final class ConstantesAplicativo {
 	public static final String constanteTipoSearchAutoComplProf = "profesional";
 	
 	public static final String constanteCrearFileJSEventosAll = "allEventos";
+	public static final String constanteCrearFileJSEventosxAgenda = "allEventosxAgenda";
 	public static final String constanteEstadoEventoCreado = "CREADO";
 }

@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.software2g.vo.Agenda;
 import com.software2g.vo.Evento;
 import com.software2g.agenda.dao.IEventoDao;
 
@@ -86,6 +87,20 @@ public class EventoDAOImpl implements IEventoDao {
     				" order by evento.agenda.agenId asc ";
             Query query = em.createQuery( jpqlString );
             query.setParameter("idAgenda", idAgenda);
+            return query.getResultList();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Agenda> findAllEventosAgendas() {
+        try {
+    		String jpqlString = "select distinct evento.agenda from " + Evento.class.getSimpleName() + " evento ";
+            Query query = em.createQuery( jpqlString );
             return query.getResultList();
         }
         finally {

@@ -172,7 +172,20 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 		try {
 			return getEventoDao().findAllEventosxAgenda(idAgenda);
 		} catch (RuntimeException e) {
-			throw new Exception("findAllEventosxAgenda failed: " + e.getMessage());
+			//throw new Exception("findAllEventosxAgenda failed: " + e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Agenda> findAllEventosAgendas() throws Exception {
+		try {
+			return getEventoDao().findAllEventosAgendas();
+		} catch (RuntimeException e) {
+			//throw new Exception("findAllEventosxAgenda failed: " + e.getMessage());
+			e.printStackTrace();
+			return null;
 		}
 	}
 	
@@ -343,6 +356,15 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 			//throw new Exception("validoBackgroundProf failed with the background " + background + ": " + e.getMessage());
 			e.printStackTrace();
 			return false;	
+		}
+	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Profesional findProfesionalBackground(String background) throws Exception {
+		try {
+			return getProfesionalDao().findProfesionalBackground(background);
+		} catch (RuntimeException e) {
+			throw new Exception("findProfesionalBackground failed with the background " + background + ": " + e.getMessage());
 		}
 	}
 	

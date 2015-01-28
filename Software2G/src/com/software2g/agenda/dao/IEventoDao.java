@@ -2,6 +2,7 @@ package com.software2g.agenda.dao;
 
 import java.util.List;
 
+import com.software2g.vo.Agenda;
 import com.software2g.vo.Evento;
 
 /**
@@ -28,6 +29,7 @@ public interface IEventoDao {
 	 */
 	public List<Evento> findAllEventos();
 	public List<Evento> findAllEventosxAgenda(long idAgenda);
+	public List<Agenda> findAllEventosAgendas();
 	/**
 	 * Make the given instance managed and persistent.
 	 */

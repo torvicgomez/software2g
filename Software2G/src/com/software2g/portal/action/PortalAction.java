@@ -2,16 +2,13 @@ package com.software2g.portal.action;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionMessage;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
@@ -22,6 +19,7 @@ import com.software2g.agenda.facade.IGestionFacadeAgenda;
 import com.software2g.portal.facade.IGestionFacadePortal;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
+import com.software2g.vo.Agenda;
 import com.software2g.vo.Aplicacion;
 import com.software2g.vo.Departamento;
 import com.software2g.vo.Funcionalidad;
@@ -225,8 +223,19 @@ public class PortalAction extends ActionSupport implements ServletRequestAware,S
     						ConstantesAplicativo.constanteExtensionFileJS, 
     						ConstantesAplicativo.constanteTipoFileJSConstantesEventos,
     						ConstantesAplicativo.constanteCrearFileJSEventosAll);
-    			
-    			
+    			System.out.println("**************************************************************");
+    			List<Agenda> listAgenda = gestionFacadeAgenda.findAllEventosAgendas();
+    			if(listAgenda!=null&&listAgenda.size()>0){
+        			path = request.getServletContext().getRealPath("/")+"js\\constantesCalendario\\eventosAgenda\\";	
+    				for(Agenda elem:listAgenda){
+    					nameFile = "eventosagenda_"+elem.getAgenId();
+    					gestionFacadeAgenda.crearFile(path, nameFile,   
+        						ConstantesAplicativo.constanteExtensionFileJS, 
+        						ConstantesAplicativo.constanteTipoFileJSConstantesEventosxAgenda,
+        						elem.getAgenId()+"");
+    				}
+    			}
+    			System.out.println("**************************************************************");
     			System.out.println("----------------------------------------------------------");
     			System.out.println("----------------------------------------------------------");
     			

@@ -36,6 +36,8 @@ public final class ConstantesAplicativo {
 	public static final String constanteTipoFileJSConstantesAgenda = "constantesagenda";
 	public static final String constanteTipoFileJSConstantesEventos = "constanteseventos";
 	public static final String constanteTipoFileJSConstantesEventosxAgenda = "constanteseventosxagenda";
+	public static final String constanteNameFileJSAllAgendaProf = "constantes";
+	public static final String constanteNameFileJSAllEventoAgendaProf = "eventos";
 	
 	public static final String constanteEstadoActivo = "ACTIVO";
 	public static final String constanteEstadoInactivo = "INACTIVO";

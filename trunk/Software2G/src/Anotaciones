@@ -20,6 +20,10 @@ Tareas
 15- crear seccion del calendario que interactue con los profesionales y sus agendas ------------ .::[O.K]::.
 16- realizar formulario de link de atencion de cita --------------------------------------------
 17- Al cambiar color profesional que se vea reflejado en el calendario de citas ---------------- .::[O.K]::.
+18- Inhabilitar agenda de citas para todos solo se pueda para cada profesional ----------------- .::[O.K]::.
+19- convertir la variable eventData de calendario.jsp en un archivo dinamico -------------------
+20- que no se puedan editar la fecha de las citas tanto pa' todos como para cada profesional --- .::[O.K]::.
+
 
 Sugerencia
 * Tabla profesional salud ---------------------------------------------------------------------- .::[O.K]::.

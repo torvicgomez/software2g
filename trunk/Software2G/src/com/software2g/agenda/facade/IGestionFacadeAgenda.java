@@ -188,6 +188,7 @@ public interface IGestionFacadeAgenda {
 	 * Return all persistent instances of the <code>Participante</code> entity.
 	 */
 	public List<Participante> findAllParticipantes() throws Exception;
+	public List<Participante> findAllParticipantes(long idEvento) throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */

@@ -561,6 +561,18 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 		}
 	}
 
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Participante> findAllParticipantes(long idEvento) throws Exception {
+		try {
+			System.out.println("idEvento:["+idEvento+"]");
+			return getParticipanteDao().findAllParticipantes(idEvento);
+		} catch (RuntimeException e) {
+			//throw new Exception("findAllParticipantes failed: " + e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */
@@ -624,6 +636,8 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 				constantes += "var paca_sloteventover = false;\n";
 				constantes += "var paca_alldayslot = "+(agenda.getAgenAlldayslot().equals("1")?"true":"false")+";\n";
 				constantes += "var paca_alldaytext = \'"+agenda.getAgenAlldaytext()+"\';\n";
+				constantes += "var paca_editable = false;\n";
+				constantes += "var paca_selectable = true;\n";
 				file.write(constantes);
 			}
 			System.out.println("+++++++++++++++++++++++++++++++++++++++++");
@@ -655,7 +669,7 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 					constantes += "  title: '"+elem.getEvenTitle()+"',\n";
 					constantes += "  start: '"+elem.getEvenStart()+"',\n";
 					constantes += "  end: '"+elem.getEvenEnd()+"',\n";
-					constantes += "  url: '"+elem.getEvenUrl()+"',\n";
+					constantes += "  url: '"+elem.getEvenUrl()+elem.getEvenId()+"',\n";
 					constantes += "  backgroundColor: '"+elem.getAgenda().getProfesional().getProfBackgroundcoloragen()+"'\n";
 					constantes += "},";
 				}

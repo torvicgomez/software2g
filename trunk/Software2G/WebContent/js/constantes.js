@@ -5,3 +5,5 @@ var paca_maxtime = '14:00:00';
 var paca_sloteventover = false;
 var paca_alldayslot = true;
 var paca_alldaytext = 'Todo el Dia';
+var paca_editable = false;
+var paca_selectable = false;

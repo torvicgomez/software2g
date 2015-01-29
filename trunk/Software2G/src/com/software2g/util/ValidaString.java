@@ -75,6 +75,17 @@ public class ValidaString {
 		return format.format(new Date());
     }
     
+    public static String fechaSystem(String formato, String fecha){
+    	SimpleDateFormat format = new SimpleDateFormat(formato==null||formato.equals("")?formatoFecha:formato);
+		try {
+			return format.format(format.parse(fecha));
+		} catch (java.text.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return fecha;
+    }
+    
     public static String horaSystem(){
     	SimpleDateFormat format = new SimpleDateFormat(formatoHora);
 		return format.format(new Date());
@@ -84,6 +95,19 @@ public class ValidaString {
     	SimpleDateFormat format = new SimpleDateFormat(formato==null||formato.equals("")?formatoHora:formato);
 		return format.format(new Date());
     }
+    
+    public static String horaSystem(String formato, String hora){
+    	SimpleDateFormat format = new SimpleDateFormat(formatoHora);
+		try {
+			return format.format(format.parse(hora));
+		} catch (java.text.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return hora;
+    }
+    
+    
     
     public static String toUpperCase(String cadena){
     	return cadena.toUpperCase();

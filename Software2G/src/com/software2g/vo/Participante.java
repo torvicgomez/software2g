@@ -184,4 +184,8 @@ public class Participante implements Serializable {
 			this.partHoracambio=data.get(2);
 		}
 	}
+	
+	public String getNombreCompleto(){
+		return this.partPnombre+" "+this.partSnombre+" "+this.partSapellido+" "+this.partPapellido;
+	}
 }

@@ -76,6 +76,23 @@ public class ParticipanteDAOImpl implements IParticipanteDao {
             }
         }
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Participante> findAllParticipantes(long idEvento) {
+        try {
+    		String jpqlString = "select participante from " + Participante.class.getSimpleName() + " participante" +
+    				" where participante.evento.evenId =:idEvento ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("idEvento", idEvento);
+            return query.getResultList();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

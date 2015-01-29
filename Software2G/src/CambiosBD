@@ -560,6 +560,6 @@ ALTER TABLE "HISCLINICA"."SEQ_PART_ID"
 
 
 
-
+alter table "HISCLINICA"."EVENTOS" ALTER COLUMN even_url TYPE character varying(300); 
 
 

@@ -27,6 +27,7 @@ public interface IParticipanteDao {
 	 * Return all persistent instances of the <code>Participante</code> entity.
 	 */
 	public List<Participante> findAllParticipantes();
+	public List<Participante> findAllParticipantes(long idEvento);
 	/**
 	 * Make the given instance managed and persistent.
 	 */

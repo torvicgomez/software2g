@@ -1,9 +1,14 @@
 package com.software2g.vo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
+
+import com.software2g.util.ConstantesAplicativo;
+import com.software2g.util.ValidaString;
 
 
 /**
@@ -262,5 +267,16 @@ public class Evento implements Serializable {
 	public void setParticipantes(List<Participante> participantes) {
 		this.participantes = participantes;
 	}
+
+	public String getEvenStartViewFecha(){
+		Date date = new Date(this.evenStart);
+		SimpleDateFormat format = new SimpleDateFormat(ConstantesAplicativo.constanteFormatoFecha3);
+		return  format.format(date);
+	}
 	
+	public String getEvenStartViewHora(){
+		Date date = new Date(this.evenStart);
+		SimpleDateFormat format = new SimpleDateFormat(ConstantesAplicativo.constanteFormatoFechaHora2);
+		return  format.format(date);
+	}
 }

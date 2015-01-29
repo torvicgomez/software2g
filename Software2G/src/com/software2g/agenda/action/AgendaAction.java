@@ -54,6 +54,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private List<Agenda> listAgendaMedica;
 	private Agenda agendaMedica;
 	private InputStream strCrearEvento;
+	private Evento evento;
+	private Participante participante;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -79,6 +81,11 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setConstantesAgendaProfesional(String constantesAgendaProfesional) {this.constantesAgendaProfesional = constantesAgendaProfesional;}
 	public String getEventoAgendaProfesional() {return eventoAgendaProfesional;}
 	public void setEventoAgendaProfesional(String eventoAgendaProfesional) {this.eventoAgendaProfesional = eventoAgendaProfesional;}
+	public Evento getEvento() {return evento;}
+	public void setEvento(Evento evento) {this.evento = evento;}
+	public Participante getParticipante() {return participante;}
+	public void setParticipante(Participante participante) {this.participante = participante;}
+	
 	
 	@SkipValidation
 	public String calendarioMethod(){
@@ -101,6 +108,16 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	    			constantesAgendaProfesional = "constantesCalendario/agenda/constanteAgendaProf_"+profesional.getProfId();
 	    			eventoAgendaProfesional = "eventosAgenda/eventosagenda_"+agendaMedica.getAgenId();
     			}
+    			estado = ConstantesAplicativo.constanteEstadoAll;
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoOperacionCita)){
+    			long idProfesional = Long.parseLong(request.getParameter("idProfesional").toString());
+    			long idEvento = Long.parseLong(request.getParameter("idEvento").toString());
+    			profesional = gestionFacadeAgenda.findProfesionalById(idProfesional);
+    			evento = gestionFacadeAgenda.findEventoById(idEvento);
+    			evento.setParticipantes(gestionFacadeAgenda.findAllParticipantes(evento.getEvenId()));
+    			if(evento.getParticipantes()!=null&&evento.getParticipantes().size()>0)
+    				participante = (Participante) evento.getParticipantes().get(0);
+    			estado = ConstantesAplicativo.constanteEstadoOperacionCita;
     		}
     	} catch (Exception e) {
 			addActionMessage(getText("error.aplicacion"));
@@ -428,37 +445,13 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public InputStream getStrCrearEvento() {
 		try{
 			String html = "";
-			System.out.println("****************************************************");
-			String title = String.valueOf(request.getParameter("title"));
-			System.out.println("title:["+title+"]");
-			String start = String.valueOf(request.getParameter("start"));
-			System.out.println("start:["+start+"]");
-			String end = String.valueOf(request.getParameter("end"));
-			System.out.println("end:["+end+"]");
-			String url = String.valueOf(request.getParameter("url"));
-			System.out.println("url:["+url+"]");
 			String backgroundColor = String.valueOf(request.getParameter("backgroundColor"));
-			System.out.println("backgroundColor:["+backgroundColor+"]");
-			
-			String pnombre = String.valueOf(request.getParameter("pnombre"));
-			System.out.println("pnombre:["+pnombre+"]");
-			String snombre = String.valueOf(request.getParameter("snombre"));
-			System.out.println("snombre:["+snombre+"]");
-			String papellido = String.valueOf(request.getParameter("papellido"));
-			System.out.println("papellido:["+papellido+"]");
-			String sapellido = String.valueOf(request.getParameter("sapellido"));
-			System.out.println("sapellido:["+sapellido+"]");
-			String telefono = String.valueOf(request.getParameter("telefono"));
-			System.out.println("telefono:["+telefono+"]");
-			String email = String.valueOf(request.getParameter("email"));
-			System.out.println("email:["+email+"]");
-			String nrodocumento = String.valueOf(request.getParameter("nrodocumento"));
-			System.out.println("email:["+email+"]");
-			String tipodoc = String.valueOf(request.getParameter("tipodoc"));
-			System.out.println("email:["+email+"]");
-			System.out.println("****************************************************");
 			Evento evento = new Evento();
 			evento.setAgenda(gestionFacadeAgenda.findIdAgenda(backgroundColor));
+			String title = String.valueOf(request.getParameter("title"));
+			String start = String.valueOf(request.getParameter("start"));
+			String end = String.valueOf(request.getParameter("end"));
+			String url = "calendario.action?estado="+ConstantesAplicativo.constanteEstadoOperacionCita+"&funcPosicionado=Calendario/Informacion Ciata&idProfesional="+evento.getAgenda().getProfesional().getProfId()+"&idEvento=";
 			evento.setEvenTitle(title);
 			evento.setEvenStart(start);
 			evento.setEvenEnd(end);
@@ -486,7 +479,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 			}	
 			String nameFile = "eventos";
 			String path = request.getServletContext().getRealPath("/")+"js\\constantesCalendario\\"; 
-			boolean resultFile = gestionFacadeAgenda.crearFile(path, nameFile,   
+			gestionFacadeAgenda.crearFile(path, nameFile,   
 						ConstantesAplicativo.constanteExtensionFileJS, 
 						ConstantesAplicativo.constanteTipoFileJSConstantesEventos,
 						ConstantesAplicativo.constanteCrearFileJSEventosAll);

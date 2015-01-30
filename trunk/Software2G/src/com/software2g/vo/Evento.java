@@ -272,32 +272,28 @@ public class Evento implements Serializable {
 	}
 
 	public String getEvenStartViewFecha(){
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat format = new SimpleDateFormat(ConstantesAplicativo.constanteFormatoFecha4);
 		SimpleDateFormat sdf = new SimpleDateFormat(ConstantesAplicativo.constanteFormatoFecha3);
 		String fecha = "-";
 		try {
-			Date date = format.parse("2015-01-28");
+			Date date = format.parse((this.evenStart.split("T"))[0].toString());
 			fecha = sdf.format(date);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("fecha:["+fecha+"]");
 		return  fecha;
 	}
 	
 	public String getEvenStartViewHora(){
-		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-		SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
+		SimpleDateFormat format = new SimpleDateFormat(ConstantesAplicativo.constanteFormatoFechaHora2);
+		SimpleDateFormat sdf = new SimpleDateFormat(ConstantesAplicativo.constanteFormatoFechaHora3);
 		String hora = "-";
 		try {
-			Date date = format.parse("17:20");
+			Date date = format.parse((this.evenStart.split("T"))[1].toString().substring(0,5));
 			hora = sdf.format(date);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("hora:["+hora+"]");
 		return  hora;
 	}
 }

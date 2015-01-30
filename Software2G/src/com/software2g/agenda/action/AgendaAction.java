@@ -492,7 +492,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 					ConstantesAplicativo.constanteExtensionFileJS, 
 					ConstantesAplicativo.constanteTipoFileJSConstantesEventosxAgenda,
 					evento.getAgenda().getAgenId()+"");
-			html = "Se creo satisfactoriamente el evento";
+			html = "<input type=\"text\" id=\"idEventoCreado\" value=\""+idEvento+"\"/>";
 			strCrearEvento = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
 		}catch(Exception e){
 			e.printStackTrace();

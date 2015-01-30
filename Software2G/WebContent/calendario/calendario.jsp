@@ -72,6 +72,8 @@
 	var title_evento = '';
 	var start_evento = '';
 	var end_evento = '';
+	var url = '';
+	var fondo_evento = ''; 
 	$(document).ready(function(){
 		$('#calendar').fullCalendar({
 			header: {
@@ -101,9 +103,8 @@
 			end_evento = dateEnd.toISOString();
 			nameCompleto= f.pnombre+' '+f.snombre+' '+f.papellido+' '+f.sapellido;
 			title_evento = f.nrodocumento+' '+f.tipodoc+' '+nameCompleto;
-			var fondo_evento = document.getElementById("fondo").value;
+			fondo_evento = document.getElementById("fondo").value;
 			var profId = document.getElementById("profId").value;
-			url = 'calendario.action?estado=operacioncita&funcPosicionado=Calendario/Informacion%20Cita&idProfesional='+profId+'&idEvento=';
 			title_evento_param = f.nrodocumento.trim()+'%20'+f.tipodoc+'%20'+f.pnombre.trim()+'%20'+f.snombre.trim()+'%20'+f.papellido.trim()+'%20'+f.sapellido.trim();
 			fondo_evento_param = fondo_evento.replace("#", "%23");
 			nrodocumento = f.nrodocumento.trim();
@@ -116,7 +117,14 @@
 			email = f.email.replace('@', '%40');
 			//'&url='+url_param+
 			$("#divEventos").load('crearEventoCalendario.action?start='+start_evento+'&end='+end_evento+'&backgroundColor='+fondo_evento_param+'&title='+title_evento_param+'&pnombre='+pnombre+'&snombre='+snombre+'&papellido='+papellido+'&sapellido='+sapellido+'&telefono='+telefono+'&email='+email+'&nrodocumento='+nrodocumento+'&tipodoc='+tipodoc);
-			var eventData;
+			setTimeout(function () {geteventDataNew(profId);}, 1200);
+		}
+	}
+
+	function geteventDataNew(profId){
+		var idEventoCreado = document.getElementById('idEventoCreado').value;
+		url = 'calendario.action?estado=operacioncita&funcPosicionado=Calendario/Informacion%20Cita&idProfesional='+profId+'&idEvento='+idEventoCreado;
+		var eventData;
 			if (title_evento) {
 				eventData = {
 					title: title_evento,
@@ -128,9 +136,7 @@
 				$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
 			}
 			$('#calendar').fullCalendar('unselect');
-		}
 	}
-
 	function evento(){
 		$.prompt(txt,{callback: mycallbackform, buttons: { Cancelar:0, Registrar:1}});
 	}
@@ -149,15 +155,15 @@
 	
 </script>
 <style>
-	body {
-		margin: 0;
-		padding: 0;
-		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-		font-size: 14px;
-	}
+/* 	body { */
+/* 		margin: 0; */
+/* 		padding: 0; */
+/* 		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif; */
+/* 		font-size: 14px; */
+/* 	} */
 </style>
 </head>
-<body>
+<body id="dt_example">
 	<s:form id="form">
 		<s:hidden name="funcPosicionado"></s:hidden>
 		<div id="demo">
@@ -209,11 +215,11 @@
 			</s:if>
 			<s:elseif test="estado=='operacioncita'">
 				<table cellpadding="0" cellspacing="0" border="0" class="display">
-					<tr><td>
+					<tr><td align="left">
 						<h1><s:text name="titulo.informacioncita"></s:text></h1>
 					</td></tr>
 					<tr>
-						<td class="right">
+						<td  align="right">
 							<input type="button" value="<s:text name="labelbutton.volver"></s:text>" onclick="volver();" class="buttonSV"/>
 						</td>
 					</tr>
@@ -224,33 +230,33 @@
 					</tr>
 					<tr>
 						<td class="leftLabel"><s:text name="personal.nombre"></s:text></td>
-						<td><s:property value="profesional.persona.nombreCompleto"/></td>
+						<td align="left"><s:property value="profesional.persona.nombreCompleto"/></td>
 						<td class="leftLabel" width="130"><s:text name="profesionalsalud.profesion"></s:text></td>
-						<td><s:property value="profesional.profEspecialidad"/></td>
+						<td align="left"><s:property value="profesional.profEspecialidad"/></td>
 					</tr>
 					<tr>
 						<td class="leftLabel" colspan="4"><s:text name="titulo.paciente"></s:text></td>
 					</tr>
 					<tr>
 						<td class="leftLabel"><s:text name="informacioncita.nombrepaciente"></s:text></td>
-						<td colspan="3"><s:property value="participante.nombreCompleto"/></td>
+						<td colspan="3" align="left"><s:property value="participante.nombreCompleto"/></td>
 					</tr>
 					<tr>
 						<td class="leftLabel"><s:text name="informacioncita.telefonopaciente"></s:text></td>
-						<td><s:property value="participante.partTelefono"/></td>
+						<td align="left"><s:property value="participante.partTelefono"/></td>
 						<td class="leftLabel"><s:text name="informacioncita.correoelectronicopaciente"></s:text></td>
-						<td><s:property value="participante.partEmail"/></td>
+						<td align="left"><s:property value="participante.partEmail"/></td>
 					</tr>
 					<tr>
 						<td class="leftLabel"><s:text name="informacioncita.fechaatencion"></s:text></td>
-						<td><s:property value="evento.evenStartViewFecha"/></td>
+						<td align="left"><s:property value="evento.evenStartViewFecha"/></td>
 						<td class="leftLabel"><s:text name="informacioncita.horaatencion"></s:text></td>
-						<td><s:property value="evento.evenStartViewHora"/></td>
+						<td align="left"><s:property value="evento.evenStartViewHora"/></td>
 					</tr>
 				</table>
 				<table cellpadding="0" cellspacing="0" border="0" class="display">
 					<tr>
-						<td class="right">
+						<td class="right" align="right">
 							<input type="button" value="<s:text name="labelbutton.volver"></s:text>" onclick="volver();" class="buttonSV"/>
 						</td>
 					</tr>

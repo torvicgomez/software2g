@@ -1,5 +1,7 @@
 package com.software2g.util;
 
+import java.text.SimpleDateFormat;
+
 public final class ConstantesAplicativo {
 	public static final double MILLSECS_PER_DAY = 24 * 60 * 60 * 1000; //Milisegundos al día
 	public static final double DIAS_MES = 30;
@@ -46,6 +48,7 @@ public final class ConstantesAplicativo {
 	public static final String constanteSplit = "&&&&";
 	public static final String constanteFormatoFechaHora1 = "dd/MM/yyyy HH:mm:ss.SSS";
 	public static final String constanteFormatoFechaHora2 = "HH:mm";
+	public static final String constanteFormatoFechaHora3 = "h:mm a";
 	public static final String constanteFormatoFecha1 = "dd/MM/yyyy";
     public static final String constanteFormatoFecha2 = "dd-MM-yyyy";
     public static final String constanteFormatoFecha3 = "EEE, dd MMM yyyy";

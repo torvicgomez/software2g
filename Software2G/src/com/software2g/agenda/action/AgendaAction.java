@@ -118,6 +118,9 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			if(evento.getParticipantes()!=null&&evento.getParticipantes().size()>0)
     				participante = (Participante) evento.getParticipantes().get(0);
     			estado = ConstantesAplicativo.constanteEstadoOperacionCita;
+    			evento.getEvenStartViewFecha();
+    			evento.getEvenStartViewHora();
+    			
     		}
     	} catch (Exception e) {
 			addActionMessage(getText("error.aplicacion"));
@@ -451,7 +454,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 			String title = String.valueOf(request.getParameter("title"));
 			String start = String.valueOf(request.getParameter("start"));
 			String end = String.valueOf(request.getParameter("end"));
-			String url = "calendario.action?estado="+ConstantesAplicativo.constanteEstadoOperacionCita+"&funcPosicionado=Calendario/Informacion Ciata&idProfesional="+evento.getAgenda().getProfesional().getProfId()+"&idEvento=";
+			String url = "calendario.action?estado="+ConstantesAplicativo.constanteEstadoOperacionCita+"&funcPosicionado=Calendario/Informacion Cita&idProfesional="+evento.getAgenda().getProfesional().getProfId()+"&idEvento=";
 			evento.setEvenTitle(title);
 			evento.setEvenStart(start);
 			evento.setEvenEnd(end);

@@ -1,8 +1,11 @@
 package com.software2g.vo;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.*;
@@ -269,14 +272,32 @@ public class Evento implements Serializable {
 	}
 
 	public String getEvenStartViewFecha(){
-		Date date = new Date(this.evenStart);
-		SimpleDateFormat format = new SimpleDateFormat(ConstantesAplicativo.constanteFormatoFecha3);
-		return  format.format(date);
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat(ConstantesAplicativo.constanteFormatoFecha3);
+		String fecha = "-";
+		try {
+			Date date = format.parse("2015-01-28");
+			fecha = sdf.format(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("fecha:["+fecha+"]");
+		return  fecha;
 	}
 	
 	public String getEvenStartViewHora(){
-		Date date = new Date(this.evenStart);
-		SimpleDateFormat format = new SimpleDateFormat(ConstantesAplicativo.constanteFormatoFechaHora2);
-		return  format.format(date);
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("h:mm a");
+		String hora = "-";
+		try {
+			Date date = format.parse("17:20");
+			hora = sdf.format(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("hora:["+hora+"]");
+		return  hora;
 	}
 }

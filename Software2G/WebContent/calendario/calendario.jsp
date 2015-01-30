@@ -103,7 +103,7 @@
 			title_evento = f.nrodocumento+' '+f.tipodoc+' '+nameCompleto;
 			var fondo_evento = document.getElementById("fondo").value;
 			var profId = document.getElementById("profId").value;
-			url = 'calendario.action?estado=operacioncita&idProfesional='+profId+'&idEvento=';
+			url = 'calendario.action?estado=operacioncita&funcPosicionado=Calendario/Informacion%20Cita&idProfesional='+profId+'&idEvento=';
 			title_evento_param = f.nrodocumento.trim()+'%20'+f.tipodoc+'%20'+f.pnombre.trim()+'%20'+f.snombre.trim()+'%20'+f.papellido.trim()+'%20'+f.sapellido.trim();
 			fondo_evento_param = fondo_evento.replace("#", "%23");
 			nrodocumento = f.nrodocumento.trim();
@@ -143,7 +143,7 @@
 	} 
 	
 	function volver(){
-		document.form.action="calendario.action?estado=<%=ConstantesAplicativo.constanteEstadoAll%>";
+		document.form.action="calendario.action?estado=<%=ConstantesAplicativo.constanteEstadoAll%>&funcPosicionado=Calendario/Prueba Calendario";
 		document.form.submit();
 	}
 	

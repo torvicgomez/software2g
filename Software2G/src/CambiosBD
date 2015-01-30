@@ -565,3 +565,4 @@ alter table "HISCLINICA"."PARTICIPANTE" alter column part_telefono type characte
 alter table "HISCLINICA"."PARTICIPANTE" alter column part_email type character varying(100); 
 
 
+

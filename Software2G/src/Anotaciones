@@ -3,7 +3,7 @@ Tareas
 2- Crear Profesional de la Salud --------------------------------------------------------------- .::[O.K]::.
 	2.1- Crear Utilidad AutoCompletado --------------------------------------------------------- .::[O.K]::. 
 3- Asociar Persona-Profesional Salud a Institucion ---------------------------------------------
-4- Armar Archivo .js Menu historia clinica -----------------------------------------------------
+4- Armar Archivo .js Menu historia clinica ----------------------------------------------------- .::[O.K]::.
 5- Crear Agenda -------------------------------------------------------------------------------- .::[O.K]::.
 	5.1- Asociar Profesional ------------------------------------------------------------------- .::[O.K]::.
 	5.2- Crear Archivo constantes_profagenda.js ------------------------------------------------ .::[O.K]::.
@@ -23,7 +23,7 @@ Tareas
 18- Inhabilitar agenda de citas para todos solo se pueda para cada profesional ----------------- .::[O.K]::.
 19- convertir la variable eventData de calendario.jsp en un archivo dinamico ------------------- .::[O.K]::.
 20- que no se puedan editar la fecha de las citas tanto pa' todos como para cada profesional --- .::[O.K]::.
-
+21- Validar la caducidad de la session del usuario logeado ------------------------------------- 
 
 Sugerencia
 * Tabla profesional salud ---------------------------------------------------------------------- .::[O.K]::.

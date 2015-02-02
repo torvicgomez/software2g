@@ -23,7 +23,8 @@ Tareas
 18- Inhabilitar agenda de citas para todos solo se pueda para cada profesional ----------------- .::[O.K]::.
 19- convertir la variable eventData de calendario.jsp en un archivo dinamico ------------------- .::[O.K]::.
 20- que no se puedan editar la fecha de las citas tanto pa' todos como para cada profesional --- .::[O.K]::.
-21- Validar la caducidad de la session del usuario logeado ------------------------------------- 
+21- Validar la caducidad de la session del usuario logeado -------------------------------------
+22- Utilidad Odontograma ----------------------------------------------------------------------- 
 
 Sugerencia
 * Tabla profesional salud ---------------------------------------------------------------------- .::[O.K]::.
@@ -31,6 +32,8 @@ Sugerencia
 					 - estado  ----------------------------------------------------------------- .::[O.K]::.
 * Mejorar metodo de impresion de ayuda de objetos "ValidaString.imprimirObject(Object)" -------- .::[O.K]::.
 * Validar el color al momento de insertar y modificar el profesional. -------------------------- .::[O.K]::.					 
-					 
+
+Informacion
+** Link Odontograma ::> http://jsfiddle.net/yamidvo/quvp3/4/    					 
 -----ximena.7512
 

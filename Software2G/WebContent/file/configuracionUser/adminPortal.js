@@ -11,6 +11,7 @@ var zNodes = [
 	{id:3002, pId:3000, name:"Profesional Salud", file:"profesionalsalud.action?estado=all&funcPosicionado=Historia Clinica/Profesional Salud"},
 	{id:3003, pId:3000, name:"Parametros Agenda Medica", file:"agendamedica.action?estado=all&funcPosicionado=Historia Clinica/Parametros Agenda Medica Profesional"},
 	{id:3004, pId:3000, name:"Agenda Citas", file:"calendario.action?estado=all&funcPosicionado=Calendario/Agenda Citas"},
+	{id:3005, pId:3000, name:"Odontograma", file:"odontograma.action?estado=all&funcPosicionado=Calendario/Odontograma"},
 	{id:4000, pId:0, name:"Personal", open:true},
 	{id:4001, pId:4000, name:"Administración Personal", file:"listPersonal.action?url=Personal::>Administración Personal"},
 	{id:4002, pId:4000, name:"Cambiar Contraseña", file:"cambiarPassword.action?url=Personal::>Cambiar Contraseña"}

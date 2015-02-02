@@ -236,7 +236,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 		String  result = Action.SUCCESS; 
     	try { 
     		getFuncionPosicionado();
-    		System.out.println("######>>>>>>>HistoriaClinicaAction>>>>profesionalSaludMethod>>>>estado entrada-->>"+estado);
+    		System.out.println("######>>>>>>>AgendaAction>>>>profesionalSaludMethod>>>>estado entrada-->>"+estado);
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
     			listProfesional = gestionFacadeAgenda.findAllProfesionals();
     			bandEstadoFunc = ConstantesAplicativo.constanteEstadoAddSave;
@@ -277,7 +277,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     		e.printStackTrace();
     		addActionError(getText("error.aplicacion"));
     	}
-    	System.out.println("######>>>>>>>HistoriaClinicaAction>>>>profesionalSaludMethod>>>>estado salida-->>"+estado);
+    	System.out.println("######>>>>>>>AgendaAction>>>>profesionalSaludMethod>>>>estado salida-->>"+estado);
     	return Action.SUCCESS;
 	}
 	
@@ -286,7 +286,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 		String  result = Action.SUCCESS; 
     	try { 
     		getFuncionPosicionado();
-    		System.out.println("######>>>>>>>HistoriaClinicaAction>>>>agendaMedicaMethod>>>>estado entrada-->>"+estado);
+    		System.out.println("######>>>>>>>AgendaAction>>>>agendaMedicaMethod>>>>estado entrada-->>"+estado);
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
     			listAgendaMedica  = gestionFacadeAgenda.findAllAgendas();
     			bandEstadoFunc = ConstantesAplicativo.constanteEstadoAddSave;
@@ -348,7 +348,28 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     		e.printStackTrace();
     		addActionError(getText("error.aplicacion"));
     	}
-    	System.out.println("######>>>>>>>HistoriaClinicaAction>>>>agendaMedicaMethod>>>>estado salida-->>"+estado);
+    	System.out.println("######>>>>>>>AgendaAction>>>>agendaMedicaMethod>>>>estado salida-->>"+estado);
+    	return Action.SUCCESS;
+	}
+	
+	@SkipValidation
+	public String odontogramaMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>AgendaAction>>>>odontogramaMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			System.out.println("Construccion!!!!!!!!!!");
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			System.out.println("Construccion!!!!!!!!!!");
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			System.out.println("Construccion!!!!!!!!!!");
+    		}
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>AgendaAction>>>>odontogramaMethod>>>>estado salida-->>"+estado);
     	return Action.SUCCESS;
 	}
 	

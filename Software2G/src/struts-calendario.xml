@@ -87,6 +87,9 @@
         <action name="operacioncita" method="operacionCitaMethod" class="AgendaAction">
         	<result name="success" type="tiles">calendario.agendamedica</result>
         </action>
-        
+
+        <action name="odontograma" method="odontogramaMethod" class="AgendaAction">
+        	<result name="success" type="tiles">odontograma.odontograma</result>
+        </action>
     </package>
 </struts>

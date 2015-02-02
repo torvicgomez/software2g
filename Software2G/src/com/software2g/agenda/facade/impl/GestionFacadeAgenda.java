@@ -601,13 +601,13 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 	public boolean crearFile(String path, String nameFile, String ext, String tipoFile, String infoFind) throws Exception{
 		boolean result = true;
 		try {
-			System.out.println("archivo: ["+path+nameFile+ext+"]");
+//			System.out.println("archivo: ["+path+nameFile+ext+"]");
 			File file = new File(path+nameFile+ext);
 			if(file.exists())
 				file.delete();
-			System.out.println("Continua!!!!!!!");
+//			System.out.println("Continua!!!!!!!");
 			FileWriter createFile = new FileWriter(path+nameFile+ext);
-			System.out.println("tipo file: ["+tipoFile+"]");
+//			System.out.println("tipo file: ["+tipoFile+"]");
 			if(tipoFile.equals(ConstantesAplicativo.constanteTipoFileJSConstantesAgenda)){
 				this.crearJSConstantesAgenda(createFile, infoFind);
 			}else if(tipoFile.equals(ConstantesAplicativo.constanteTipoFileJSConstantesEventos)){
@@ -640,9 +640,9 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 				constantes += "var paca_selectable = true;\n";
 				file.write(constantes);
 			}
-			System.out.println("+++++++++++++++++++++++++++++++++++++++++");
-			System.out.println("constantes: ["+constantes+"]");
-			System.out.println("+++++++++++++++++++++++++++++++++++++++++");
+//			System.out.println("+++++++++++++++++++++++++++++++++++++++++");
+//			System.out.println("constantes: ["+constantes+"]");
+//			System.out.println("+++++++++++++++++++++++++++++++++++++++++");
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			result = false;
@@ -660,7 +660,7 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 					listEventos = this.findAllEventosxAgenda(Long.parseLong(datos[0].toString()));
 			}else if(infoFind!=null&&infoFind.equals(ConstantesAplicativo.constanteCrearFileJSEventosAll))
 				listEventos = this.findAllEventos();
-			System.out.println("listEventos: ["+listEventos.size()+"]");
+//			System.out.println("listEventos: ["+listEventos.size()+"]");
 			String constantes = "var eventos = [\n";
 			if(listEventos!=null&&listEventos.size()>0){
 				for(Evento elem:listEventos){
@@ -677,9 +677,9 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 			}else
 				constantes += "];";
 			file.write(constantes);
-			System.out.println("+++++++++++++++++++++++++++++++++++++++++");
-			System.out.println("constantes: ["+constantes+"]");
-			System.out.println("+++++++++++++++++++++++++++++++++++++++++");
+//			System.out.println("+++++++++++++++++++++++++++++++++++++++++");
+//			System.out.println("constantes: ["+constantes+"]");
+//			System.out.println("+++++++++++++++++++++++++++++++++++++++++");
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			result = false;

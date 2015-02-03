@@ -9,16 +9,20 @@
 					autoOpen: false,
 				});	 
 				$(".click").click(function(event) {
-					var cuadro = $(this).find("input[name=cuadro_1]:hidden").val();//obtenemos el valor del cuadro al que le dimos click
+					var cuadro = $(this).find("input[name=cuadro11]:hidden").val();//obtenemos el valor del cuadro al que le dimos click
 					alert('cuadro:['+cuadro+']');
 					$("#color").dialog("option","position", [event.pageX,event.pageY]);//posicionamos el elemento donde dimos click			
 					$('#color').dialog('open');
 					$(".select").click(function(event){
 						var color = $(this).css('background-color');
+						
+						$("input[name=cuadro11]:hidden").val(cuadro).parent(".cuadro").css('background-color', color);//establecemos el background a la clase cuadro
+						
 						//alert('color:['+color+']');
 						//alert($("input[name=cuadro]:hidden").val(cuadro));
-						//$("input[name=cuadro]:hidden").val(cuadro).parent(".cuadro").css('background-color', color);//establecemos el background a la clase cuadro
-						$("input[name~='cuadro_1']").css("background-color", "yellow");
+						//$("input[name=cuadro]:hidden").parent(".cuadro").css('background-color', color);//establecemos el background a la clase cuadro
+						//$("input[name~='cuadro_1']").css("background-color", "yellow");
+						//$("input[name=cuadro_"+cuadro+"]:hidden").css("background-color", "yellow");
 					});
 					return false;
 				});
@@ -128,7 +132,7 @@
 			width: 40px;
 			height: 40px;
 			margin: 2px;
-			background-color: #ccc;
+			background-color: #FF00dd;
 			display: inline-block;
 			cursor: pointer;
 		}
@@ -181,11 +185,11 @@
 							<td class="right">
 								<div class="diente"><!--diente 1-->
 									<input name="valor" type="hidden" value="1">
-									<div class="cuadro click"><input name="cuadro_1" type="hidden" value="1"></div>
-									<div class="cuadro izquierdo click"><input name="cuadro_2" type="hidden" value="2"></div>
-									<div class="cuadro debajo click"><input name="cuadro_3" type="hidden" value="3"></div>
-									<div class="cuadro derecha click"><input name="cuadro_4" type="hidden" value="4"></div>
-									<div class="centro click"><input name="cuadro_5" type="hidden" value="5"></div>
+									<div class="cuadro click"><input name="cuadro11" type="hidden" value="1_1"></div>
+									<div class="cuadro izquierdo click"><input name="cuadro12" type="hidden" value="1_2"></div>
+									<div class="cuadro debajo click"><input name="cuadro13" type="hidden" value="1_3"></div>
+									<div class="cuadro derecha click"><input name="cuadro14" type="hidden" value="1_4"></div>
+									<div class="centro click"><input name="cuadro15" type="hidden" value="1_5"></div>
 								</div>
 								<div id="color">
 									<div class="select">A</div>
@@ -219,4 +223,3 @@
 		</s:form>
 	</body>
 </html>
-<script type="text/javascript" charset="utf-8">validarView();</script>

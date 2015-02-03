@@ -9,15 +9,23 @@
 					autoOpen: false,
 				});	 
 				$(".click").click(function(event) {
-					var cuadro = $(this).find("input[name=cuadro11]:hidden").val();//obtenemos el valor del cuadro al que le dimos click
-					alert('cuadro:['+cuadro+']');
+					//input
+					var objInput = $(this).find("input[name=cuadro]:hidden");
+					//alert('objInput:['+objInput+']');
+					var cuadro = $(this).find("input[name=cuadro]:hidden").val();//obtenemos el valor del cuadro al que le dimos click
+					//alert('cuadro:['+cuadro+']--['+objInput.val()+']');
+					//$("input[name=cuadro]:hidden").parent("cuadro_1_1").css('background-color', 'red');
 					$("#color").dialog("option","position", [event.pageX,event.pageY]);//posicionamos el elemento donde dimos click			
 					$('#color').dialog('open');
 					$(".select").click(function(event){
+						//.select
 						var color = $(this).css('background-color');
-						
-						$("input[name=cuadro11]:hidden").val(cuadro).parent(".cuadro").css('background-color', color);//establecemos el background a la clase cuadro
-						
+						//objInput.css('background-color', color);
+						var objetocu = document.getElementById("cuadro_"+cuadro);
+						//alert('objetocu:['+objetocu+']');
+						objetocu.style.backgroundColor  = color;
+						//$("input[name=cuadro]:hidden").parent(".cuadro").css('background-color', color);
+						//$("input[name=cuadro]:hidden").val(cuadro).parent(".cuadro").css('background-color', color);//establecemos el background a la clase cuadro
 						//alert('color:['+color+']');
 						//alert($("input[name=cuadro]:hidden").val(cuadro));
 						//$("input[name=cuadro]:hidden").parent(".cuadro").css('background-color', color);//establecemos el background a la clase cuadro
@@ -89,6 +97,7 @@
 			-o-transform: rotate(270deg);
 			transform: rotate(270deg);
 		}
+		
 		.debajo{
 			top: 2px !important;
 			left: 45px !important;
@@ -185,21 +194,46 @@
 							<td class="right">
 								<div class="diente"><!--diente 1-->
 									<input name="valor" type="hidden" value="1">
-									<div class="cuadro click"><input name="cuadro11" type="hidden" value="1_1"></div>
-									<div class="cuadro izquierdo click"><input name="cuadro12" type="hidden" value="1_2"></div>
-									<div class="cuadro debajo click"><input name="cuadro13" type="hidden" value="1_3"></div>
-									<div class="cuadro derecha click"><input name="cuadro14" type="hidden" value="1_4"></div>
-									<div class="centro click"><input name="cuadro15" type="hidden" value="1_5"></div>
+									
+<!-- 									<div class="cuadro click"><input name="cuadro" type="hidden" value="1_1"></div> -->
+<!-- 									<div class="cuadro izquierdo click"><input name="cuadro" type="hidden" value="1_2"></div> -->
+<!-- 									<div class="cuadro debajo click"><input name="cuadro" type="hidden" value="1_3"></div> -->
+<!-- 									<div class="cuadro derecha click"><input name="cuadro" type="hidden" value="1_4"></div> -->
+<!-- 									<div class="centro click"><input name="cuadro" type="hidden" value="1_5"></div> -->
+
+									<div class="cuadro click" id="cuadro_1_1" ><input name="cuadro" type="hidden" value="1_1"></div>
+									<div class="cuadro izquierdo click" id="cuadro_1_2" ><input name="cuadro" type="hidden" value="1_2"></div>
+									<div class="cuadro debajo click" id="cuadro_1_3" ><input name="cuadro" type="hidden" value="1_3"></div>
+									<div class="cuadro derecha click" id="cuadro_1_4" ><input name="cuadro" type="hidden" value="1_4"></div>
+									<div class="centro click" id="cuadro_1_5" ><input name="cuadro" type="hidden" value="1_5"></div>									
 								</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="right">
+								<div class="diente"><!--diente 1-->
+									<input name="valor" type="hidden" value="1">
+									<div class="cuadro click" id="cuadro_2_1" ><input name="cuadro" type="hidden" value="2_1"></div>
+									<div class="cuadro izquierdo click" id="cuadro_2_2" ><input name="cuadro" type="hidden" value="2_2"></div>
+									<div class="cuadro debajo click" id="cuadro_2_3" ><input name="cuadro" type="hidden" value="2_3"></div>
+									<div class="cuadro derecha click" id="cuadro_2_4" ><input name="cuadro" type="hidden" value="2_4"></div>
+									<div class="centro click" id="cuadro_2_5"><input name="cuadro" type="hidden" value="2_5"></div>									
+								</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="right">
 								<div id="color">
-									<div class="select">A</div>
-									<div class="select">B</div>
-									<div class="select">C</div>
-									<div class="select">D</div>
-									<div class="select">F</div>
-									<div class="select">G</div>
-									<div class="select">H</div>
-									<div class="select">I</div>
+									<div class="select" style="background-color:#aa00dd;">A</div>
+									<div class="select" style="background-color:#2211dd;">B</div>
+									<div class="select" style="background-color:#bbccdd;">C</div>
+									<div class="select" style="background-color:#3355dd;">D</div>
+									<div class="select" style="background-color:#5859aa;">F</div>
+									<div class="select" style="background-color:#ff0011;">G</div>
+									<div class="select" style="background-color:#ee2255;">H</div>
+									<div class="select" style="background-color:#889285;">I</div>
 								</div>
 							</td>
 						</tr>

@@ -16,9 +16,17 @@
 				var cuadro = '';
 				$(".select").click(function(event){
 					var color = $(this).css('background-color');
+					var imagen = $(this).css('background-image');
+					//alert('color:['+color+']');
+					//alert('imagen:['+imagen+']');
 					var objetocu = null;
 					objetocu = document.getElementById("cuadro_"+cuadro);
-					objetocu.style.backgroundColor  = color;
+					if(imagen!='none'){
+						objetocu.style.backgroundImage  = imagen;
+					}else{
+						objetocu.style.backgroundColor  = color;
+					}	
+					//objetocu.style.border =  "1px solid #FF0000";	
 					//$("input[name=cuadro]:hidden").val(cuadro).parent(".cuadro").css('background-color', color);//establecemos el background a la clase cuadro
 				});
 				
@@ -66,8 +74,45 @@
 			width: 0px;
 			height: auto;
  			margin-left: 50px; 
- 			display: inline-block; 
-		} 
+ 			display: inline-block;
+		}
+		
+		.informacion{
+ 			position: relative; 
+			width: 0px;
+			height: auto;
+ 			left: 70px;  
+		}
+		
+		.informacionimg{
+ 			position: relative; 
+			width: 0px;
+			height: auto;
+ 			left: 55px; 
+ 			margin-left: 30px;  
+		}
+		
+		.informacionimghr{
+ 			position: relative; 
+			width: 0px;
+			height: auto;
+ 			left: 0px;  
+		}
+		
+		.informacionimghrizq{
+ 			position: relative; 
+			width: 0px;
+			height: auto;
+ 			left: 90px;  
+		}
+		
+		.informaciontexthrizq{
+ 			position: relative; 
+			width: 0px;
+			height: auto;
+ 			left: 155px;  
+		}
+		
 		.cuadronro{
 			background-color: #FFFFFF;
 			position: relative;
@@ -192,6 +237,13 @@
 <!-- 					<input name="valor" type="hidden" value="1"> -->
 					<table border="0" align="left">
 						<tr>
+							<td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td>
+							<td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td>
+							<td class="right"><div class="informacion">Vestibular</div></td>
+							<td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td>
+							<td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td>
+						</tr>
+						<tr>
 							<td class="right">
 								<div class="diente"><!--diente 1-->
 									<div class="cuadronro">18</div> 
@@ -272,7 +324,7 @@
 									<div class="centro click" id="cuadro_11_5" ><input name="cuadro" type="hidden" value="11_5"></div>									
 								</div>
 							</td>
-							<td class="right">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+							<td class="right" rowspan="2"><div class="informacionimg"><img align="middle" src="<s:url value="/imagenes/imgodonto.png"/>"></div></td>
 							<td class="right">
 								<div class="diente">
 									<div class="cuadronro">21</div>
@@ -408,7 +460,6 @@
 									<div class="centro click" id="cuadro_51_5"><input name="cuadro" type="hidden" value="51_5"></div>									
 								</div>
 							</td>
-							<td class="right">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 							<td class="right">
 								<div class="diente">
 									<div class="cuadronro">61</div>
@@ -460,7 +511,13 @@
 								</div>
 							</td>
 						</tr>
-						<tr><td colspan="17" align="right"><h1></h1></td></tr>
+						<tr>
+							<td>Derecha</td>
+							<td colspan="7"><div class="informacionimghr"><img align="middle" src="<s:url value="/imagenes/imgodontohr.png"/>"></div></td>
+							<td><div class="informacion">Lingual</div></td>  
+							<td colspan="7"><div class="informacionimghrizq"><img align="middle" src="<s:url value="/imagenes/imgodontohr.png"/>"></div></td>
+							<td><div class="informaciontexthrizq">Izquierda</div></td>
+						</tr>
 						<tr>
 							<td class="right"></td>
 							<td class="right"></td>
@@ -515,7 +572,7 @@
 									<div class="centro click" id="cuadro_81_5"><input name="cuadro" type="hidden" value="81_5"></div>									
 								</div>
 							</td>
-							<td class="right">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+							<td class="right" rowspan="2"><div class="informacionimg"><img align="middle" src="<s:url value="/imagenes/imgodonto.png"/>"></div></td>
 							<td class="right">
 								<div class="diente">
 									<div class="cuadronro">71</div>
@@ -648,7 +705,7 @@
 									<div class="centro click" id="cuadro_41_5" ><input name="cuadro" type="hidden" value="41_5"></div>									
 								</div>
 							</td>
-							<td class="right">&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<!-- 							<td class="right">&nbsp;&nbsp;&nbsp;&nbsp;</td> -->
 							<td class="right">
 								<div class="diente">
 									<div class="cuadronro">31</div>
@@ -719,7 +776,7 @@
 									<div class="centro click" id="cuadro_37_5" ><input name="cuadro" type="hidden" value="37_5"></div>									
 								</div>
 							</td>
-							<td class="right">
+							<td class="right" >
 								<div class="diente">
 									<div class="cuadronro">38</div>
 									<div class="cuadro click" id="cuadro_38_1" ><input name="cuadro" type="hidden" value="38_1"></div>
@@ -731,16 +788,24 @@
 							</td>
 						</tr>
 						<tr>
+							<td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td>
+							<td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td>
+							<td class="right"><div class="informacion">Vestibular</div></td>
+							<td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td>
+							<td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td><td class="right"><div class="diente"></div></td>
+						</tr>
+						<tr>
 							<td class="right" >
 								<div id="color">
-									<div class="select" style="background-color:#aa00dd;">A</div>
-									<div class="select" style="background-color:#2211dd;">B</div>
-									<div class="select" style="background-color:#bbccdd;">C</div>
-									<div class="select" style="background-color:#3355dd;">D</div>
-									<div class="select" style="background-color:#5859aa;">F</div>
-									<div class="select" style="background-color:#ff0011;">G</div>
-									<div class="select" style="background-color:#ee2255;">H</div>
-									<div class="select" style="background-color:#889285;">I</div>
+									<div class="select" style="background-color:#aa00dd;"></div>
+									<div class="select" style="background-color:#2211dd;"></div>
+									<div class="select" style="background-color:#bbccdd;"></div>
+									<div class="select" style="background-color:#3355dd;"></div>
+									<div class="select" style="background-color:#5859aa;"></div>
+									<div class="select" style="background-color:#ff0011;"></div>
+									<div class="select" style="background-color:#ee2255;"></div>
+									<div class="select" style="background-color:#889285;"></div>
+									<div class="select" style="background-image: url('/Software2G/imagenes/icon_edit.png');"></div>
 								</div>
 							</td>
 						</tr>

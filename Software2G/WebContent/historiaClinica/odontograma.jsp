@@ -189,9 +189,8 @@
 					</s:elseif>
 				</table>
 				<s:if test="estado=='all'||estado=='query'">
-					Construccion Odontograma!!
 <!-- 					<input name="valor" type="hidden" value="1"> -->
-					<table border="0" align="center">
+					<table border="0" align="left">
 						<tr>
 							<td class="right">
 								<div class="diente"><!--diente 1-->
@@ -461,6 +460,7 @@
 								</div>
 							</td>
 						</tr>
+						<tr><td colspan="17" align="right"><h1></h1></td></tr>
 						<tr>
 							<td class="right"></td>
 							<td class="right"></td>
@@ -721,12 +721,12 @@
 							</td>
 							<td class="right">
 								<div class="diente">
-									<div class="cuadronro">28</div>
-									<div class="cuadro click" id="cuadro_28_1" ><input name="cuadro" type="hidden" value="28_1"></div>
-									<div class="cuadro izquierdo click" id="cuadro_28_2" ><input name="cuadro" type="hidden" value="28_2"></div>
-									<div class="cuadro debajo click" id="cuadro_28_3" ><input name="cuadro" type="hidden" value="28_3"></div>
-									<div class="cuadro derecha click" id="cuadro_28_4" ><input name="cuadro" type="hidden" value="28_4"></div>
-									<div class="centro click" id="cuadro_28_5" ><input name="cuadro" type="hidden" value="38_5"></div>									
+									<div class="cuadronro">38</div>
+									<div class="cuadro click" id="cuadro_38_1" ><input name="cuadro" type="hidden" value="38_1"></div>
+									<div class="cuadro izquierdo click" id="cuadro_38_2" ><input name="cuadro" type="hidden" value="38_2"></div>
+									<div class="cuadro debajo click" id="cuadro_38_3" ><input name="cuadro" type="hidden" value="38_3"></div>
+									<div class="cuadro derecha click" id="cuadro_38_4" ><input name="cuadro" type="hidden" value="38_4"></div>
+									<div class="centro click" id="cuadro_38_5" ><input name="cuadro" type="hidden" value="38_5"></div>									
 								</div>
 							</td>
 						</tr>

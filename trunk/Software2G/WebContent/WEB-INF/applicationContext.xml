@@ -147,6 +147,8 @@
         <property name="tiempoNoDisponibleDao"><bean class="com.software2g.agenda.dao.impl.TiempoNoDisponibleJDAOImpl"/></property>
         <property name="personaDao"><bean class="com.software2g.portal.dao.impl.PersonaDaoImpl"/></property>
         <property name="participanteDao"><bean class="com.software2g.agenda.dao.impl.ParticipanteDAOImpl"/></property>
+        <property name="procedimientoDao"><bean class="com.software2g.agenda.dao.impl.ProcedimientoDAOImpl"/></property>
+        <property name="tipoProcedimientoDao"><bean class="com.software2g.agenda.dao.impl.TipoProcedimientoJPADao"/></property>
 	</bean>    
 	
 	<bean class="com.software2g.historia_clinica.facade.impl.GestionFacadeHistoriaClinica" id="gestionFacadeHistoriaClinica">
@@ -205,5 +207,4 @@
         <property name="personaDao"><bean class="com.software2g.portal.dao.impl.PersonaDaoImpl"/></property>
         <property name="profesionalSaludDao"><bean class="com.software2g.historia_clinica.dao.impl.PrefesionalSaludDAOImpl"/></property>
      </bean>
-
 </beans>

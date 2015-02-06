@@ -106,6 +106,8 @@
 		<class>com.software2g.vo.Agendamedica</class>
 		<class>com.software2g.vo.Eventosagenda</class>
 		<class>com.software2g.vo.Participanteagenda</class>
-		<class>com.software2g.vo.Participante</class> 
+		<class>com.software2g.vo.Participante</class>
+		<class>com.software2g.vo.Procedimiento</class>
+		<class>com.software2g.vo.Tipoprocedimiento</class> 
 	</persistence-unit>
 </persistence>

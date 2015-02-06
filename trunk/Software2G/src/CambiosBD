@@ -564,5 +564,66 @@ alter table "HISCLINICA"."EVENTOS" ALTER COLUMN even_url TYPE character varying(
 alter table "HISCLINICA"."PARTICIPANTE" alter column part_telefono type character varying(100);
 alter table "HISCLINICA"."PARTICIPANTE" alter column part_email type character varying(100); 
 
+----------------
+-- 06-02-2015 --
+----------------
+CREATE TABLE "HISCLINICA"."TIPOPROCEDIMIENTO"
+(
+  tipr_id numeric(30,0) NOT NULL,
+  tipr_nombre character varying(50) NOT NULL,
+  tipr_descripcion character varying(200),
+  tipr_fechacambio character varying(10) NOT NULL,
+  tipr_horacambio character varying(8) NOT NULL,
+  tipr_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_tipr_id PRIMARY KEY (tipr_id )
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "HISCLINICA"."TIPOPROCEDIMIENTO"
+  OWNER TO postgres;
 
 
+CREATE TABLE "HISCLINICA"."PROCEDIMIENTOS"
+(
+  prto_id numeric(30,0) NOT NULL,
+  tipr_id numeric(30,0) NOT NULL,
+  prto_codigo character varying(10) NOT NULL,
+  prto_nombre character varying(50) NOT NULL,
+  prto_descripcion character varying(200),
+  prto_color character varying(7),
+  prto_pathimagen character varying(150),
+  prto_fechacambio character varying(10) NOT NULL,
+  prto_horacambio character varying(8) NOT NULL,
+  prto_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_prto_id PRIMARY KEY (prto_id ),
+  CONSTRAINT fk_prto_tipr FOREIGN KEY (tipr_id)
+      REFERENCES "HISCLINICA"."TIPOPROCEDIMIENTO" (tipr_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "HISCLINICA"."PROCEDIMIENTOS"
+  OWNER TO postgres;
+  
+  
+CREATE SEQUENCE "HISCLINICA"."SEQ_PRTO_ID"
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE "HISCLINICA"."SEQ_PRTO_ID"
+  OWNER TO postgres;
+  
+  
+CREATE SEQUENCE "HISCLINICA"."SEQ_TIPR_ID"
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE "HISCLINICA"."SEQ_TIPR_ID"
+  OWNER TO postgres;  
+    

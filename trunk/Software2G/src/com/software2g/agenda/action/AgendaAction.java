@@ -25,7 +25,9 @@ import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Parametroscalendario;
 import com.software2g.vo.Participante;
 import com.software2g.vo.Persona;
+import com.software2g.vo.Procedimiento;
 import com.software2g.vo.Profesional;
+import com.software2g.vo.Tipoprocedimiento;
 import com.software2g.vo.Usuario;
 
 public class AgendaAction extends ActionSupport implements ServletRequestAware,ServletResponseAware {
@@ -56,6 +58,10 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private InputStream strCrearEvento;
 	private Evento evento;
 	private Participante participante;
+	private Tipoprocedimiento tipoProcedimiento;
+	private List<Tipoprocedimiento> listTipoProcedimiento;
+	private Procedimiento procedimiento;
+	private List<Procedimiento> litProcedimiento;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -85,6 +91,14 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setEvento(Evento evento) {this.evento = evento;}
 	public Participante getParticipante() {return participante;}
 	public void setParticipante(Participante participante) {this.participante = participante;}
+	public Tipoprocedimiento getTipoProcedimiento() {return tipoProcedimiento;}
+	public void setTipoProcedimiento(Tipoprocedimiento tipoProcedimiento) {this.tipoProcedimiento = tipoProcedimiento;}
+	public List<Tipoprocedimiento> getListTipoProcedimiento() {return listTipoProcedimiento;}
+	public void setListTipoProcedimiento(List<Tipoprocedimiento> listTipoProcedimiento) {this.listTipoProcedimiento = listTipoProcedimiento;}
+	public Procedimiento getProcedimiento() {return procedimiento;}
+	public void setProcedimiento(Procedimiento procedimiento) {this.procedimiento = procedimiento;}
+	public List<Procedimiento> getLitProcedimiento() {return litProcedimiento;}
+	public void setLitProcedimiento(List<Procedimiento> litProcedimiento) {this.litProcedimiento = litProcedimiento;}
 	
 	
 	@SkipValidation
@@ -370,6 +384,35 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     		addActionError(getText("error.aplicacion"));
     	}
     	System.out.println("######>>>>>>>AgendaAction>>>>odontogramaMethod>>>>estado salida-->>"+estado);
+    	return Action.SUCCESS;
+	}
+	
+	@SkipValidation
+	public String tipoProcedimientoMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>AgendaAction>>>>tipoProcedimientoMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listTipoProcedimiento = gestionFacadeAgenda.findAllTipoprocedimientos();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			if(ValidaString.isNullOrEmptyString(tipoProcedimiento.getTiprNombre()))
+    				addActionError(getText("validacion.requerido","tiprNombre","Especialidad Agrupar Procedimientos"));
+    			if(!hasActionErrors()){
+    				tipoProcedimiento.setDatosAud(this.getDatosAud());
+    				ValidaString.imprimirObject(tipoProcedimiento);
+    				gestionFacadeAgenda.persistTipoprocedimiento(tipoProcedimiento);
+    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				addActionMessage(getText("accion.satisfactoria"));
+    			}
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			tipoProcedimiento = gestionFacadeAgenda.findTipoprocedimientoById(getIdLong());
+    		}
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>AgendaAction>>>>tipoProcedimientoMethod>>>>estado salida-->>"+estado);
     	return Action.SUCCESS;
 	}
 	

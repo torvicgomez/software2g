@@ -15,8 +15,10 @@ import com.software2g.agenda.dao.IEventoDao;
 import com.software2g.agenda.dao.IJornadaLaboralDao;
 import com.software2g.agenda.dao.IParametroCalendarioDao;
 import com.software2g.agenda.dao.IParticipanteDao;
+import com.software2g.agenda.dao.IProcedimientoDao;
 import com.software2g.agenda.dao.IProfesionalDao;
 import com.software2g.agenda.dao.ITiempoNoDisponibleDao;
+import com.software2g.agenda.dao.ITipoProcedimientoDao;
 import com.software2g.agenda.facade.IGestionFacadeAgenda;
 import com.software2g.portal.dao.IPersonaDao;
 import com.software2g.util.ConstantesAplicativo;
@@ -26,8 +28,10 @@ import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Parametroscalendario;
 import com.software2g.vo.Participante;
 import com.software2g.vo.Persona;
+import com.software2g.vo.Procedimiento;
 import com.software2g.vo.Profesional;
 import com.software2g.vo.Tiemponodisponible;
+import com.software2g.vo.Tipoprocedimiento;
 
 @Transactional(propagation=Propagation.REQUIRED)
 public class GestionFacadeAgenda implements IGestionFacadeAgenda{
@@ -47,6 +51,10 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 	IPersonaDao personaDao;
 	@Autowired
 	IParticipanteDao participanteDao;
+	@Autowired
+	IProcedimientoDao procedimientoDao;
+	@Autowired
+	ITipoProcedimientoDao tipoProcedimientoDao;
 	
 	public IAgendaDao getAgendaDao() {return agendaDao;}
 	public void setAgendaDao(IAgendaDao agendaDao) {this.agendaDao = agendaDao;}
@@ -64,6 +72,10 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 	public void setPersonaDao(IPersonaDao personaDao) {this.personaDao = personaDao;}
 	public IParticipanteDao getParticipanteDao() {return participanteDao;}
 	public void setParticipanteDao(IParticipanteDao participanteDao) {this.participanteDao = participanteDao;}
+	public IProcedimientoDao getProcedimientoDao() {return procedimientoDao;}
+	public void setProcedimientoDao(IProcedimientoDao procedimientoDao) {this.procedimientoDao = procedimientoDao;}
+	public ITipoProcedimientoDao getTipoProcedimientoDao() {return tipoProcedimientoDao;}
+	public void setTipoProcedimientoDao(ITipoProcedimientoDao tipoProcedimientoDao) {this.tipoProcedimientoDao = tipoProcedimientoDao;}
 	
 	//-----------------------------------------------------------------------
 	// Agenda
@@ -597,6 +609,99 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 	// FIN Participante
 	//-----------------------------------------------------------------------
 
+	//-----------------------------------------------------------------------
+	// Procedimiento
+	//-----------------------------------------------------------------------
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Procedimiento findProcedimientoById(long id) throws Exception {
+		try {
+			return getProcedimientoDao().findProcedimientoById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findProcedimientoById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Procedimiento</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Procedimiento> findAllProcedimientos() throws Exception {
+		try {
+			return getProcedimientoDao().findAllProcedimientos();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllProcedimientos failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistProcedimiento(Procedimiento procedimiento) throws Exception {
+		try {
+			getProcedimientoDao().persistProcedimiento(procedimiento);
+		} catch (RuntimeException e) {
+			throw new Exception("persistProcedimiento failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeProcedimiento(Procedimiento procedimiento) throws Exception {
+		try {
+			getProcedimientoDao().removeProcedimiento(procedimiento);
+		} catch (RuntimeException e) {
+			throw new Exception("removeProcedimiento failed: " + e.getMessage());
+		}
+	}
+	//-----------------------------------------------------------------------
+	// FIN Procedimiento
+	//-----------------------------------------------------------------------
+	
+	//-----------------------------------------------------------------------
+	// FIN Tipo Procedimiento
+	//-----------------------------------------------------------------------
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Tipoprocedimiento findTipoprocedimientoById(long id) throws Exception {
+		try {
+			return getTipoProcedimientoDao().findTipoprocedimientoById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findTipoprocedimientoById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Tipoprocedimiento</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Tipoprocedimiento> findAllTipoprocedimientos() throws Exception {
+		try {
+			return getTipoProcedimientoDao().findAllTipoprocedimientos();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllTipoprocedimientos failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistTipoprocedimiento(Tipoprocedimiento tipoprocedimiento) throws Exception {
+		try {
+			getTipoProcedimientoDao().persistTipoprocedimiento(tipoprocedimiento);
+		} catch (RuntimeException e) {
+			throw new Exception("persistTipoprocedimiento failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeTipoprocedimiento(Tipoprocedimiento tipoprocedimiento) throws Exception {
+		try {
+			getTipoProcedimientoDao().removeTipoprocedimiento(tipoprocedimiento);
+		} catch (RuntimeException e) {
+			throw new Exception("removeTipoprocedimiento failed: " + e.getMessage());
+		}
+	}
+	//-----------------------------------------------------------------------
+	// Tipo Procedimiento
+	//-----------------------------------------------------------------------
 	
 	public boolean crearFile(String path, String nameFile, String ext, String tipoFile, String infoFind) throws Exception{
 		boolean result = true;

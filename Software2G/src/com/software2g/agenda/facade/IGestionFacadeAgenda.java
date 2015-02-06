@@ -11,8 +11,10 @@ import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Parametroscalendario;
 import com.software2g.vo.Participante;
 import com.software2g.vo.Persona;
+import com.software2g.vo.Procedimiento;
 import com.software2g.vo.Profesional;
 import com.software2g.vo.Tiemponodisponible;
+import com.software2g.vo.Tipoprocedimiento;
 
 public interface IGestionFacadeAgenda {
 
@@ -200,6 +202,45 @@ public interface IGestionFacadeAgenda {
 	//-----------------------------------------------------------------------
 	// FIN Participante
 	//-----------------------------------------------------------------------
+
+	//-----------------------------------------------------------------------
+	// Procedimiento
+	//-----------------------------------------------------------------------
+	public Procedimiento findProcedimientoById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Procedimiento</code> entity.
+	 */
+	public List<Procedimiento> findAllProcedimientos() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistProcedimiento(Procedimiento procedimiento) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeProcedimiento(Procedimiento procedimiento) throws Exception;
+	//-----------------------------------------------------------------------
+	// FIN Procedimiento
+	//-----------------------------------------------------------------------
 	
+	//-----------------------------------------------------------------------
+	// Tipo Procedimiento
+	//-----------------------------------------------------------------------
+	public Tipoprocedimiento findTipoprocedimientoById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Tipoprocedimiento</code> entity.
+	 */
+	public List<Tipoprocedimiento> findAllTipoprocedimientos() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistTipoprocedimiento(Tipoprocedimiento tipoprocedimiento) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeTipoprocedimiento(Tipoprocedimiento tipoprocedimiento) throws Exception;
+	//-----------------------------------------------------------------------
+	// FIN Tipo Procedimiento
+	//-----------------------------------------------------------------------	
 	public boolean crearFile(String path, String nameFile, String ext, String tipoFile, String infoFind) throws Exception;
 }

@@ -91,5 +91,9 @@
         <action name="odontograma" method="odontogramaMethod" class="AgendaAction">
         	<result name="success" type="tiles">odontograma.odontograma</result>
         </action>
+        
+        <action name="tipoProcedimiento" method="tipoProcedimientoMethod" class="AgendaAction">
+        	<result name="success" type="tiles">odontograma.tipoProcedimiento</result>
+        </action>
     </package>
 </struts>

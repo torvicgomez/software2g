@@ -35,4 +35,8 @@
 	<definition name="odontograma.odontograma" extends="baseLayoutPortal">
 		<put-attribute name="body" value="/historiaClinica/odontograma.jsp" />
 	</definition>
+	
+	<definition name="odontograma.tipoProcedimiento" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/historiaClinica/tipoProcedimiento.jsp" />
+	</definition>
 </tiles-definitions>

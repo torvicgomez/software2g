@@ -39,4 +39,8 @@
 	<definition name="odontograma.tipoProcedimiento" extends="baseLayoutPortal">
 		<put-attribute name="body" value="/historiaClinica/tipoProcedimiento.jsp" />
 	</definition>
+	
+	<definition name="odontograma.procedimiento" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/historiaClinica/procedimiento.jsp" />
+	</definition>
 </tiles-definitions>

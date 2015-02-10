@@ -61,7 +61,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private Tipoprocedimiento tipoProcedimiento;
 	private List<Tipoprocedimiento> listTipoProcedimiento;
 	private Procedimiento procedimiento;
-	private List<Procedimiento> litProcedimiento;
+	private List<Procedimiento> listProcedimiento;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -97,8 +97,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setListTipoProcedimiento(List<Tipoprocedimiento> listTipoProcedimiento) {this.listTipoProcedimiento = listTipoProcedimiento;}
 	public Procedimiento getProcedimiento() {return procedimiento;}
 	public void setProcedimiento(Procedimiento procedimiento) {this.procedimiento = procedimiento;}
-	public List<Procedimiento> getLitProcedimiento() {return litProcedimiento;}
-	public void setLitProcedimiento(List<Procedimiento> litProcedimiento) {this.litProcedimiento = litProcedimiento;}
+	public List<Procedimiento> getListProcedimiento() {return listProcedimiento;}
+	public void setListProcedimiento(List<Procedimiento> listProcedimiento) {this.listProcedimiento = listProcedimiento;}
 	
 	
 	@SkipValidation
@@ -415,6 +415,43 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     	System.out.println("######>>>>>>>AgendaAction>>>>tipoProcedimientoMethod>>>>estado salida-->>"+estado);
     	return Action.SUCCESS;
 	}
+	
+	@SkipValidation
+	public String procedimientoMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>AgendaAction>>>>procedimientoMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listProcedimiento = gestionFacadeAgenda.findAllProcedimientos();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAdd)){
+    			listTipoProcedimiento = gestionFacadeAgenda.findAllTipoprocedimientos();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			if(procedimiento.getTipoprocedimiento().getTiprId()<=0)
+    				addActionError(getText("validacion.requerido","tiprId","Tipo Procedimiento"));
+    			if(ValidaString.isNullOrEmptyString(procedimiento.getPrtoCodigo()))
+    				addActionError(getText("validacion.requerido","prtoCodigo","Código Procedimiento"));
+    			if(ValidaString.isNullOrEmptyString(procedimiento.getPrtoNombre()))
+    				addActionError(getText("validacion.requerido","prtoNombre","Nombre Procedimiento"));
+    			if(!hasActionErrors()){
+    				procedimiento.setDatosAud(this.getDatosAud());
+    				ValidaString.imprimirObject(tipoProcedimiento);
+    				gestionFacadeAgenda.persistProcedimiento(procedimiento);
+    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				addActionMessage(getText("accion.satisfactoria"));
+    			}
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			procedimiento = gestionFacadeAgenda.findProcedimientoById(getIdLong());
+    			listTipoProcedimiento = gestionFacadeAgenda.findAllTipoprocedimientos();
+    		}
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>AgendaAction>>>>procedimientoMethod>>>>estado salida-->>"+estado);
+    	return Action.SUCCESS;
+	}
+	
 	
 	public AgendaAction(IGestionFacadeAgenda gestionFacadeAgenda) {this.gestionFacadeAgenda = gestionFacadeAgenda;}
 	public HttpServletRequest getRequest() {return request;}

@@ -28,6 +28,20 @@
 					}	
 					//objetocu.style.border =  "1px solid #FF0000";	
 					//$("input[name=cuadro]:hidden").val(cuadro).parent(".cuadro").css('background-color', color);//establecemos el background a la clase cuadro
+					alert('color:['+color+']');
+					color = color.replace('rgb(','');
+					alert('color:['+color+']');
+					color = color.replace(')','');
+					alert('color:['+color+']');
+					color = color.split(',');
+					alert('color[0]:['+color[0].trim()+']');
+					alert('color[1]:['+color[1].trim()+']');
+					alert('color[2]:['+color[2].trim()+']');
+					colorHexa = rgbToHex(36,38,147);
+					alert('colorHexa:['+colorHexa+']');
+					colorHexa = rgbToHex(parseInt(color[0].trim()), parseInt(color[1].trim()), parseInt(color[2].trim()) );
+					alert('colorHexa:['+colorHexa+']');
+					document.getElementById("odontograma").value = document.getElementById("odontograma").value+"&&&&"+cuadro+"$$$"+colorHexa;
 				});
 				
 				$(".click").click(function(event) {
@@ -41,6 +55,16 @@
 				return false;
 			} );
 
+			function componentToHex(c) {
+			    var hex = c.toString(16);
+			    return hex.length == 1 ? "0" + hex : hex;
+			}
+			
+			function rgbToHex(r, g, b) {
+			    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+			}
+			
+			//alert( rgbToHex(0, 51, 255) );
 			
 			function agregar(){
 				document.form.action="profesionalsalud.action?estado=<%=ConstantesAplicativo.constanteEstadoAdd%>";
@@ -207,6 +231,7 @@
 		<s:form id="form">
 			<s:hidden name="funcPosicionado"></s:hidden>
 			<s:hidden name="bandEstadoFunc"></s:hidden>
+			<s:textfield name="odontograma" id="odontograma"></s:textfield>
 			<div id="demo">
 				<table cellpadding="0" cellspacing="0" border="0" class="display">
 					<tr><td>
@@ -797,15 +822,18 @@
 						<tr>
 							<td class="right" >
 								<div id="color">
-									<div class="select" style="background-color:#aa00dd;"></div>
-									<div class="select" style="background-color:#2211dd;"></div>
-									<div class="select" style="background-color:#bbccdd;"></div>
-									<div class="select" style="background-color:#3355dd;"></div>
-									<div class="select" style="background-color:#5859aa;"></div>
-									<div class="select" style="background-color:#ff0011;"></div>
-									<div class="select" style="background-color:#ee2255;"></div>
-									<div class="select" style="background-color:#889285;"></div>
-									<div class="select" style="background-image: url('/Software2G/imagenes/icon_edit.png');"></div>
+								<s:iterator value="listProcedimiento" id="data">
+									<div class="select" style="background-color:${data.prtoColor};"></div>
+								</s:iterator>
+<!-- 									<div class="select" style="background-color:#aa00dd;"></div> -->
+<!-- 									<div class="select" style="background-color:#2211dd;"></div> -->
+<!-- 									<div class="select" style="background-color:#bbccdd;"></div> -->
+<!-- 									<div class="select" style="background-color:#3355dd;"></div> -->
+<!-- 									<div class="select" style="background-color:#5859aa;"></div> -->
+<!-- 									<div class="select" style="background-color:#ff0011;"></div> -->
+<!-- 									<div class="select" style="background-color:#ee2255;"></div> -->
+<!-- 									<div class="select" style="background-color:#889285;"></div> -->
+<!-- 									<div class="select" style="background-image: url('/Software2G/imagenes/icon_edit.png');"></div> -->
 								</div>
 							</td>
 						</tr>

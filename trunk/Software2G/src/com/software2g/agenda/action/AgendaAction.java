@@ -42,6 +42,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private String constantesAgendaProfesional;
 	private String eventoAgendaProfesional;
 	private String background;
+	
+	private String odontograma;
 
 	private List<Parametroscalendario> listParametroCalendrio;
 	private Parametroscalendario parametroCalendario;
@@ -374,6 +376,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     		System.out.println("######>>>>>>>AgendaAction>>>>odontogramaMethod>>>>estado entrada-->>"+estado);
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
     			System.out.println("Construccion!!!!!!!!!!");
+    			listProcedimiento = gestionFacadeAgenda.findAllProcedimientos();
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			System.out.println("Construccion!!!!!!!!!!");
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
@@ -435,11 +438,13 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     				addActionError(getText("validacion.requerido","prtoNombre","Nombre Procedimiento"));
     			if(!hasActionErrors()){
     				procedimiento.setDatosAud(this.getDatosAud());
-    				ValidaString.imprimirObject(tipoProcedimiento);
+    				ValidaString.imprimirObject(procedimiento);
     				gestionFacadeAgenda.persistProcedimiento(procedimiento);
+    				procedimiento.setTipoprocedimiento(gestionFacadeAgenda.findTipoprocedimientoById(procedimiento.getTipoprocedimiento().getTiprId()));
     				estado = ConstantesAplicativo.constanteEstadoAbstract;
     				addActionMessage(getText("accion.satisfactoria"));
-    			}
+    			}else
+    				listTipoProcedimiento = gestionFacadeAgenda.findAllTipoprocedimientos();
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			procedimiento = gestionFacadeAgenda.findProcedimientoById(getIdLong());
     			listTipoProcedimiento = gestionFacadeAgenda.findAllTipoprocedimientos();
@@ -479,6 +484,9 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setBandEstadoFunc(String bandEstadoFunc) {this.bandEstadoFunc = bandEstadoFunc;}
 	public String getBackground() {return background;}
 	public void setBackground(String background) {this.background = background;}
+	
+	public String getOdontograma() {return odontograma;}
+	public void setOdontograma(String odontograma) {this.odontograma = odontograma;}
 	
 	public InputStream getStrProfesional() {
 		try{

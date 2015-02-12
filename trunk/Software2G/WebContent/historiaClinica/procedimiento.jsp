@@ -121,9 +121,9 @@
 									</s:if>
 									<td><s:property value="prtoCodigo"/></td>
 									<td><s:property value="prtoNombre"/></td>
-									<td><s:property value="profNrotarjetaprof"/></td>
-									<td bgcolor="<s:property value="profBackgroundcoloragen"/>"></td>
-									<td><s:property value="profFechacambio"/>&nbsp;<s:property value="profHoracambio"/></td>
+									<td bgcolor="<s:property value="prtoColor"/>"></td>
+									<td><s:property value="prtoPathimagen"/></td> 
+									<td><s:property value="prtoFechacambio"/>&nbsp;<s:property value="prtoHoracambio"/></td>
 								</tr>
 							</s:iterator>
 						</tbody>
@@ -132,80 +132,37 @@
 				</s:if>
 				<s:elseif test="estado=='add'||estado=='edit'||estado=='save'">
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
-						<s:hidden name="profesional.profId" id="profId"></s:hidden>
-						<s:hidden name="profesional.persona.idPers" id="idPers"></s:hidden>
-						<s:if test="estado=='add'||bandEstadoFunc=='addsave'">
-							<tr>
-								<td class="leftLabel"><s:text name="profesionalsalud.findpersona"></s:text></td>
-								<td colspan="3">
-									<s:set name="idPersona" value="profesional.persona.idPers"></s:set>
-									<input type="hidden" id="idAuxPersona" value="${idPersona}"/>
-									<div id="repetirFind" style="overflow:auto;width:auto;height:auto;display:none">
-										<input type="button" value="<s:text name="labelbutton.repetirfind"></s:text>" onclick="repetirBusqueda();" class="buttonSV"/>
-									</div>
-									<div id="campoFind" style="overflow:auto;width:auto;height:auto;display:block">
-										<s:textfield name="dataAutoCompletado" id="search" size="60" maxlength="30" cssClass="inputs"></s:textfield>
-									</div>
-								</td>
-							</tr>
-						</s:if>
+						<s:hidden name="procedimiento.prtoId" id="prtoId"></s:hidden>
 						<tr>
-							<td colspan="4">
-								<div id="divDatosPersona">
-									<s:if test="profesional.persona!=null&&profesional.persona.idPers>0">
-									<table cellpadding="0" cellspacing="0" border="0" class="display">
-										<tr><td class="leftLabel"><s:text name="personal.nombre"></s:text></td>
-											<td><s:property value="profesional.persona.nombreCompleto"/></td>
-										</tr>
-										<tr><td class="leftLabel"><s:text name="personal.documento"></s:text></td>
-											<td><s:property value="profesional.persona.documentoPers"/>&nbsp;<s:property value="profesional.persona.tipodocumento.abreviaturaTidoc"/></td>
-										</tr>
-										<tr><td class="leftLabel"><s:text name="personal.fechanacimientoedad"></s:text></td>
-											<td><s:property value="profesional.persona.fechanacimientoPers"/>&nbsp;<s:property value="profesional.persona.edad"/></td>
-										</tr>
-										<tr><td class="leftLabel"><s:text name="personal.sexo"></s:text></td>
-											<td><s:property value="profesional.persona.sexoPers"/></td>
-										</tr>
-										<tr><td class="leftLabel"><s:text name="personal.estadocivil"></s:text></td>
-											<td><s:property value="profesional.persona.estadocivilPers"/></td>
-										</tr>
-										<tr><td class="leftLabel"><s:text name="personal.email"></s:text></td>
-											<td><s:property value="profesional.persona.emailPers"/></td>
-										</tr>
-										<tr><td class="leftLabel"><s:text name="personal.telefono"></s:text></td>
-											<td><s:property value="profesional.persona.telefonoPers"/></td>
-										</tr>
-										<tr><td class="leftLabel"><s:text name="personal.direccion"></s:text></td>
-											<td><s:property value="profesional.persona.ubicacionPersona"/>&nbsp;<s:property value="profesional.persona.direccionPers"/></td>
-										</tr>
-									</table>
-									</s:if>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td class="leftLabel" colspan="4"><s:text name="profesionalsalud.datosprofesional"></s:text></td>
-						</tr>
-						<tr>
-							<td class="leftLabel"><s:text name="profesionalsalud.profesion"></s:text></td>
+							<td class="leftLabel"><s:text name="procedimiento.tipoprocedimiento"></s:text></td>
 							<td colspan="3">
-								<s:textfield name="profesional.profEspecialidad" id="profEspecialidad" size="60" maxlength="30" cssClass="inputs"></s:textfield>
+								<s:select list="listTipoProcedimiento" id="tipoProcedimiento" name="procedimiento.tipoprocedimiento.tiprId" listKey="tiprId" listValue="tiprNombre" headerKey="-1" headerValue=".::Seleccion::." cssClass="inputs"></s:select>
 							</td>
 						</tr>
 						<tr>
-							<td class="leftLabel"><s:text name="profesionalsalud.nrotarjetaprof"></s:text></td>
+							<td class="leftLabel"><s:text name="procedimiento.codigoprocedimiento"></s:text></td>
 							<td>
-								<s:textfield name="profesional.profNrotarjetaprof" id="profNrotarjetaprof" size="30" maxlength="30" cssClass="inputs"></s:textfield>
+								<s:textfield name="procedimiento.prtoCodigo" id="prtoCodigo" size="60" maxlength="30" cssClass="inputs"></s:textfield>
 							</td>
-							<td class="leftLabel"><s:text name="profesionalsalud.estado"></s:text></td>
+							<td class="leftLabel"><s:text name="procedimiento.nombre"></s:text></td>
 							<td>
-								<s:select list="#{'1':'ACTIVO','0':'INACTIVO'}" name="profesional.profEstado" headerKey="" headerValue=".::Seleccion::." cssClass="inputs"/>
+								<s:textfield name="procedimiento.prtoNombre" id="prtoNombre" size="60" maxlength="30" cssClass="inputs"></s:textfield>
 							</td>
 						</tr>
 						<tr>
-							<td class="leftLabel"><s:text name="profesionalsalud.coloragenda"></s:text></td>
+							<td class="leftLabel"><s:text name="procedimiento.descripcionpro"></s:text></td>
 							<td colspan="3">
-								<s:textfield name="profesional.profBackgroundcoloragen" id="profBackgroundcoloragen" size="30" maxlength="30" cssClass="inputs" onclick="startColorPicker(this)" onkeyup="maskedHex(this)"></s:textfield>
+								<s:textarea name="procedimiento.prtoDescripcion" id="prtoDescripcion" cols="100"  rows="3" cssClass="inputs"></s:textarea>
+							</td>
+						</tr>
+						<tr>
+							<td class="leftLabel"><s:text name="procedimiento.color"></s:text></td>
+							<td>
+								<s:textfield name="procedimiento.prtoColor" id="prtoColor" size="30" maxlength="30" cssClass="inputs" onclick="startColorPicker(this)" onkeyup="maskedHex(this)"></s:textfield>
+							</td>
+							<td class="leftLabel"><s:text name="procedimiento.imagen"></s:text></td>
+							<td>
+								Construccion!!!
 							</td>
 						</tr>
 					</table>
@@ -220,48 +177,33 @@
 				</s:elseif>
 				<s:elseif test="estado=='abstract'">
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
-						<tr><td class="leftLabel"><s:text name="personal.nombre"></s:text></td>
-							<td><s:property value="profesional.persona.nombreCompleto"/></td>
-						</tr>
-						<tr><td class="leftLabel"><s:text name="personal.documento"></s:text></td>
-							<td><s:property value="profesional.persona.documentoPers"/>&nbsp;<s:property value="profesional.persona.tipodocumento.abreviaturaTidoc"/></td>
-						</tr>
-						<tr><td class="leftLabel"><s:text name="personal.fechanacimientoedad"></s:text></td>
-							<td><s:property value="profesional.persona.fechanacimientoPers"/>&nbsp;<s:property value="profesional.persona.edad"/></td>
-						</tr>
-						<tr><td class="leftLabel"><s:text name="personal.sexo"></s:text></td>
-							<td><s:property value="profesional.persona.sexoPers"/></td>
-						</tr>
-						<tr><td class="leftLabel"><s:text name="personal.estadocivil"></s:text></td>
-							<td><s:property value="profesional.persona.estadocivilPers"/></td>
-						</tr>
-						<tr><td class="leftLabel"><s:text name="personal.email"></s:text></td>
-							<td><s:property value="profesional.persona.emailPers"/></td>
-						</tr>
-						<tr><td class="leftLabel"><s:text name="personal.telefono"></s:text></td>
-							<td><s:property value="profesional.persona.telefonoPers"/></td>
-						</tr>
-						<tr><td class="leftLabel"><s:text name="personal.direccion"></s:text></td>
-							<td><s:property value="profesional.persona.ubicacionPersona"/>&nbsp;<s:property value="profesional.persona.direccionPers"/></td>
+						<tr>
+							<td class="leftLabel" width="130"><s:text name="procedimiento.tipoprocedimiento"></s:text></td>
+							<td colspan="3"><s:property value="procedimiento.tipoprocedimiento.tiprNombre"/></td>
 						</tr>
 						<tr>
-							<td class="leftLabel" width="130"><s:text name="profesionalsalud.profesion"></s:text></td>
-							<td><s:property value="profesional.profEspecialidad"/></td>
+							<td class="leftLabel" width="130"><s:text name="procedimiento.codigoprocedimiento"></s:text></td>
+							<td><s:property value="procedimiento.prtoCodigo"/></td>
+							<td class="leftLabel" width="130"><s:text name="procedimiento.nombre"></s:text></td>
+							<td><s:property value="procedimiento.prtoNombre"/></td>
 						</tr>
 						<tr>
-							<td class="leftLabel" width="130"><s:text name="profesionalsalud.nrotarjetaprof"></s:text></td>
-							<td><s:property value="profesional.profNrotarjetaprof"/></td>
+							<td class="leftLabel" width="130"><s:text name="procedimiento.descripcionpro"></s:text></td>
+							<td colspan="3"><s:property value="procedimiento.prtoDescripcion"/></td>
 						</tr>
 						<tr>
-							<td class="leftLabel" width="130"><s:text name="profesionalsalud.estado"></s:text></td>
-							<td><s:if test="profesional.profEstado==\"1\"">ACTIVO</s:if><s:else>INACTIVO</s:else></td>
-						</tr>
-						<tr>
-							<td class="leftLabel" width="130"><s:text name="profesionalsalud.coloragenda"></s:text></td>
-							<td><table border="0" width="70%"><tr> 
-								<td bgcolor="<s:property value="profesional.profBackgroundcoloragen"/>" width="15%"><s:property value="profesional.profBackgroundcoloragen"/></td><td></td>
-							</tr></table></td>
-							
+							<td class="leftLabel" width="130"><s:text name="procedimiento.color"></s:text></td>
+							<td>
+								<table border="0" width="70%">
+									<tr><td bgcolor="<s:property value="procedimiento.prtoColor"/>" width="15%"><s:property value="procedimiento.prtoColor"/></td><td></td></tr>
+								</table>
+							</td>
+							<td class="leftLabel" width="130"><s:text name="procedimiento.imagen"></s:text></td>
+							<td>
+								<table border="0" width="70%">
+									<tr><td bgcolor="<s:property value="procedimiento.prtoColor"/>" width="15%"><s:property value="procedimiento.prtoColor"/></td><td></td></tr>
+								</table>
+							</td>
 						</tr>
 					</table>
 					<table cellpadding="0" cellspacing="0" border="0" class="display">

@@ -626,4 +626,36 @@ CREATE SEQUENCE "HISCLINICA"."SEQ_TIPR_ID"
   CACHE 1;
 ALTER TABLE "HISCLINICA"."SEQ_TIPR_ID"
   OWNER TO postgres;  
-    
+
+----------------
+-- 13-02-2015 --
+----------------
+CREATE TABLE "HISCLINICA"."ODONTOPROCEDIMIENTO"
+(
+  odpr_id numeric(30,0) NOT NULL,
+  prto_id numeric(30,0) NOT NULL,
+  odpr_diente character varying(10) NOT NULL,
+  odpr_cuadrante character varying(15) NOT NULL,
+  odpr_fechacambio character varying(10) NOT NULL,
+  odpr_horacambio character varying(8) NOT NULL,
+  odpr_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_odpr_id PRIMARY KEY (odpr_id ),
+  CONSTRAINT fk_odpr_prto FOREIGN KEY (prto_id)
+      REFERENCES "HISCLINICA"."PROCEDIMIENTOS" (prto_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "HISCLINICA"."ODONTOPROCEDIMIENTO"
+  OWNER TO postgres;
+
+
+CREATE SEQUENCE "HISCLINICA"."SEQ_ODPR_ID"
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE "HISCLINICA"."SEQ_ODPR_ID"
+  OWNER TO postgres;    

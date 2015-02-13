@@ -28,20 +28,11 @@
 					}	
 					//objetocu.style.border =  "1px solid #FF0000";	
 					//$("input[name=cuadro]:hidden").val(cuadro).parent(".cuadro").css('background-color', color);//establecemos el background a la clase cuadro
-					alert('color:['+color+']');
 					color = color.replace('rgb(','');
-					alert('color:['+color+']');
 					color = color.replace(')','');
-					alert('color:['+color+']');
 					color = color.split(',');
-					alert('color[0]:['+color[0].trim()+']');
-					alert('color[1]:['+color[1].trim()+']');
-					alert('color[2]:['+color[2].trim()+']');
-					colorHexa = rgbToHex(36,38,147);
-					alert('colorHexa:['+colorHexa+']');
 					colorHexa = rgbToHex(parseInt(color[0].trim()), parseInt(color[1].trim()), parseInt(color[2].trim()) );
-					alert('colorHexa:['+colorHexa+']');
-					document.getElementById("odontograma").value = document.getElementById("odontograma").value+"&&&&"+cuadro+"$$$"+colorHexa;
+					document.getElementById("odontograma").value += cuadro+"$$$"+colorHexa+"&&&&";
 				});
 				
 				$(".click").click(function(event) {

@@ -43,4 +43,8 @@
 	<definition name="odontograma.procedimiento" extends="baseLayoutPortal">
 		<put-attribute name="body" value="/historiaClinica/procedimiento.jsp" />
 	</definition>
+	
+	<definition name="servicioclinico.servicio" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/historiaClinica/servicioClinico.jsp" />
+	</definition>
 </tiles-definitions>

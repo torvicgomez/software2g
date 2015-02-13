@@ -391,6 +391,28 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	}
 	
 	@SkipValidation
+	public String servicioClinicoMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>AgendaAction>>>>servicioClinicoMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			System.out.println("Construccion!!!!!!!!!!");
+    			listProcedimiento = gestionFacadeAgenda.findAllProcedimientos(); 
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			System.out.println("Construccion!!!!!!!!!!");
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			System.out.println("Construccion!!!!!!!!!!");
+    		}
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>AgendaAction>>>>servicioClinicoMethod>>>>estado salida-->>"+estado);
+    	return Action.SUCCESS;
+	}
+	
+	@SkipValidation
 	public String tipoProcedimientoMethod(){
 		String  result = Action.SUCCESS; 
     	try { 

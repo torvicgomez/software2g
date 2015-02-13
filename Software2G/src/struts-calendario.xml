@@ -99,5 +99,9 @@
         <action name="procedimiento" method="procedimientoMethod" class="AgendaAction">
         	<result name="success" type="tiles">odontograma.procedimiento</result>
         </action>
+        
+        <action name="servicioclinico" method="servicioClinicoMethod" class="AgendaAction">
+        	<result name="success" type="tiles">servicioclinico.servicio</result>
+        </action>
     </package>
 </struts>

@@ -14,6 +14,7 @@ var zNodes = [
 	{id:3005, pId:3000, name:"Odontograma", file:"odontograma.action?estado=all&funcPosicionado=Calendario/Odontograma"},
 	{id:3006, pId:3000, name:"Tipo Procedimiento", file:"tipoProcedimiento.action?estado=all&funcPosicionado=Calendario/Tipo Procedimiento"},
 	{id:3007, pId:3000, name:"Procedimiento", file:"procedimiento.action?estado=all&funcPosicionado=Calendario/Procedimiento"},
+	{id:3008, pId:3000, name:"Servicio Clinico", file:"servicioclinico.action?estado=all&funcPosicionado=Calendario/Servicio Clinico"},
 	{id:4000, pId:0, name:"Personal", open:true},
 	{id:4001, pId:4000, name:"Administración Personal", file:"listPersonal.action?url=Personal::>Administración Personal"},
 	{id:4002, pId:4000, name:"Cambiar Contraseña", file:"cambiarPassword.action?url=Personal::>Cambiar Contraseña"}

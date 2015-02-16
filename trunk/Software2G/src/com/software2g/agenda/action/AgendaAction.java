@@ -126,17 +126,23 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			}
     			estado = ConstantesAplicativo.constanteEstadoAll;
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoOperacionCita)){
-    			long idProfesional = Long.parseLong(request.getParameter("idProfesional").toString());
-    			long idEvento = Long.parseLong(request.getParameter("idEvento").toString());
-    			profesional = gestionFacadeAgenda.findProfesionalById(idProfesional);
-    			evento = gestionFacadeAgenda.findEventoById(idEvento);
+    			if(evento!=null&&evento.getAccion()!=null&&evento.getAccion().equals(ConstantesAplicativo.constanteNoAplica))
+    				addActionError(getText("validacion.requerido","evenAccion","Accion a Realizar"));
+    			if(profesional!=null&&profesional.getProfId()>0&&evento!=null&&evento.getEvenId()>0){
+    				profesional = gestionFacadeAgenda.findProfesionalById(profesional.getProfId());
+    				evento = gestionFacadeAgenda.findEventoById(evento.getEvenId());
+    			}else{
+    				long idProfesional = Long.parseLong(request.getParameter("idProfesional").toString());
+	    			long idEvento = Long.parseLong(request.getParameter("idEvento").toString());
+	    			profesional = gestionFacadeAgenda.findProfesionalById(idProfesional);
+	    			evento = gestionFacadeAgenda.findEventoById(idEvento);
+    			}
     			evento.setParticipantes(gestionFacadeAgenda.findAllParticipantes(evento.getEvenId()));
     			if(evento.getParticipantes()!=null&&evento.getParticipantes().size()>0)
     				participante = (Participante) evento.getParticipantes().get(0);
     			estado = ConstantesAplicativo.constanteEstadoOperacionCita;
     			evento.getEvenStartViewFecha();
     			evento.getEvenStartViewHora();
-    			
     		}
     	} catch (Exception e) {
 			addActionMessage(getText("error.aplicacion"));

@@ -32,6 +32,7 @@ public final class ConstantesAplicativo {
 	public static final String constanteEstadoSearch = "search";
 	public static final String constanteEstadoAssociate = "associate";
 	public static final String constanteEstadoOperacionCita = "operacioncita";
+	public static final String constanteEstadoAccionRealizar = "accionrealizar";
 	
 	public static final String constanteTipoFileJSFuncRol = "functionrol";
 	public static final String constanteTipoFileJSTreeMenu = "treemenu";
@@ -60,4 +61,9 @@ public final class ConstantesAplicativo {
 	public static final String constanteCrearFileJSEventosAll = "allEventos";
 	public static final String constanteCrearFileJSEventosxAgenda = "allEventosxAgenda";
 	public static final String constanteEstadoEventoCreado = "CREADO";
+	
+	// Acciones a realizar con la cita
+	public static final String constanteNoAplica = "NA";
+	public static final String constanteAtenderServicio = "AS";
+	public static final String constanteCancelarCita = "CC";
 }

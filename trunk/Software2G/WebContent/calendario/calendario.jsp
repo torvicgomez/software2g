@@ -153,6 +153,19 @@
 		document.form.submit();
 	}
 	
+	function continuar(){
+		var accionRealizar = document.getElementById('accionRealizar').value;
+		alert('accionRealizar: ['+accionRealizar+']')
+		if(accionRealizar == 'AS'){
+			document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoAll%>&funcPosicionado=Calendario/Servicio Clinico";
+		}else if(accionRealizar == 'CC'){
+			document.form.action="calendario.action?estado=<%=ConstantesAplicativo.constanteEstadoOperacionCita%>";
+		}else if(accionRealizar == 'NA'){
+			document.form.action="calendario.action?estado=<%=ConstantesAplicativo.constanteEstadoOperacionCita%>";
+		}
+		document.form.submit();
+	}
+	
 </script>
 <style>
 /* 	body { */
@@ -221,11 +234,14 @@
 					<tr>
 						<td  align="right">
 							<input type="button" value="<s:text name="labelbutton.volver"></s:text>" onclick="volver();" class="buttonSV"/>
+							<input type="button" value="<s:text name="labelbutton.continuar"></s:text>" onclick="continuar();" class="buttonSV"/>
 						</td>
 					</tr>
 				</table>
 				<table cellpadding="0" cellspacing="0" border="0" class="display" align="left">
 					<tr>
+						<s:hidden name="profesional.profId" id="profId"></s:hidden>
+						<s:hidden name="evento.evenId" id="evenId"></s:hidden>
 						<td class="leftLabel" colspan="4"><s:text name="profesionalsalud.datosprofesional"></s:text></td>
 					</tr>
 					<tr>
@@ -253,11 +269,18 @@
 						<td class="leftLabel"><s:text name="informacioncita.horaatencion"></s:text></td>
 						<td align="left"><s:property value="evento.evenStartViewHora"/></td>
 					</tr>
+					<tr>
+						<td class="leftLabel"><s:text name="informacioncita.accionrealizar"></s:text></td>
+						<td colspan="3"  align="left">
+							<s:select list="#{'AS':'Atender Servicio','CC':'Cancelar Cita'}" name="evento.accion" id="accionRealizar" headerKey="NA" headerValue=".::Selecione::." cssClass="inputs"/>
+						</td>
+					</tr>
 				</table>
 				<table cellpadding="0" cellspacing="0" border="0" class="display">
 					<tr>
 						<td class="right" align="right">
 							<input type="button" value="<s:text name="labelbutton.volver"></s:text>" onclick="volver();" class="buttonSV"/>
+							<input type="button" value="<s:text name="labelbutton.continuar"></s:text>" onclick="continuar();" class="buttonSV"/>
 						</td>
 					</tr>
 				</table>

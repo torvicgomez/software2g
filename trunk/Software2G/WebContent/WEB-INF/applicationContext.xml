@@ -149,6 +149,7 @@
         <property name="participanteDao"><bean class="com.software2g.agenda.dao.impl.ParticipanteDAOImpl"/></property>
         <property name="procedimientoDao"><bean class="com.software2g.agenda.dao.impl.ProcedimientoDAOImpl"/></property>
         <property name="tipoProcedimientoDao"><bean class="com.software2g.agenda.dao.impl.TipoProcedimientoJPADao"/></property>
+        <property name="tipoDocumentoDao"><bean class="com.software2g.portal.dao.impl.TipoDocumentoDaoImpl"/></property>
 	</bean>    
 	
 	<bean class="com.software2g.historia_clinica.facade.impl.GestionFacadeHistoriaClinica" id="gestionFacadeHistoriaClinica">

@@ -21,6 +21,7 @@ import com.software2g.agenda.dao.ITiempoNoDisponibleDao;
 import com.software2g.agenda.dao.ITipoProcedimientoDao;
 import com.software2g.agenda.facade.IGestionFacadeAgenda;
 import com.software2g.portal.dao.IPersonaDao;
+import com.software2g.portal.dao.ITipoDocumentoDao;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.vo.Agenda;
 import com.software2g.vo.Evento;
@@ -31,6 +32,7 @@ import com.software2g.vo.Persona;
 import com.software2g.vo.Procedimiento;
 import com.software2g.vo.Profesional;
 import com.software2g.vo.Tiemponodisponible;
+import com.software2g.vo.Tipodocumento;
 import com.software2g.vo.Tipoprocedimiento;
 
 @Transactional(propagation=Propagation.REQUIRED)
@@ -55,6 +57,8 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 	IProcedimientoDao procedimientoDao;
 	@Autowired
 	ITipoProcedimientoDao tipoProcedimientoDao;
+	@Autowired
+	ITipoDocumentoDao tipoDocumentoDao;
 	
 	public IAgendaDao getAgendaDao() {return agendaDao;}
 	public void setAgendaDao(IAgendaDao agendaDao) {this.agendaDao = agendaDao;}
@@ -76,6 +80,8 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 	public void setProcedimientoDao(IProcedimientoDao procedimientoDao) {this.procedimientoDao = procedimientoDao;}
 	public ITipoProcedimientoDao getTipoProcedimientoDao() {return tipoProcedimientoDao;}
 	public void setTipoProcedimientoDao(ITipoProcedimientoDao tipoProcedimientoDao) {this.tipoProcedimientoDao = tipoProcedimientoDao;}
+	public ITipoDocumentoDao getTipoDocumentoDao() {return tipoDocumentoDao;}
+	public void setTipoDocumentoDao(ITipoDocumentoDao tipoDocumentoDao) {this.tipoDocumentoDao = tipoDocumentoDao;}
 	
 	//-----------------------------------------------------------------------
 	// Agenda
@@ -702,6 +708,62 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 	//-----------------------------------------------------------------------
 	// Tipo Procedimiento
 	//-----------------------------------------------------------------------
+	
+	//-------------------------------------------------------------------------------------
+	//Implementacion de Metodos de la Entidad TipoDocumento
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Tipodocumento findTipodocumentoById(java.lang.Integer id) throws Exception {
+		try {
+			return getTipoDocumentoDao().findTipodocumentoById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findTipodocumentoById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Tipodocumento</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Tipodocumento> findAllTipodocumentos() throws Exception {
+		try {
+			System.out.println("Entra esta parte de implementacion del mentodo: [List<Tipodocumento> findAllTipodocumentos()]!!!!!!!!!!!");
+			List<Tipodocumento> lista = getTipoDocumentoDao().findAllTipodocumentos();
+			return lista;
+		} catch (Exception ee){
+			System.out.println("metod de la GestionFacadePortalSpringService !!!!!!!!!!!!!");
+			ee.printStackTrace();
+		}/* catch (RuntimeException e) {
+			throw new Exception("findAllTipodocumentos failed: " + e.getMessage());
+		}*/
+		return null;
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistTipodocumento(Tipodocumento tipodocumento) throws Exception {
+		try {
+			getTipoDocumentoDao().persistTipodocumento(tipodocumento);
+		} catch (RuntimeException e) {
+			throw new Exception("persistTipodocumento failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeTipodocumento(Tipodocumento tipodocumento) throws Exception {
+		try {
+			getTipoDocumentoDao().removeTipodocumento(tipodocumento);
+		} catch (RuntimeException e) {
+			throw new Exception("removeTipodocumento failed: " + e.getMessage());
+		}
+	}
+	//FIN ------ Implementacion de Metodos de la Entidad TipoDocumento
+	//-------------------------------------------------------------------------------------
+	
 	
 	public boolean crearFile(String path, String nameFile, String ext, String tipoFile, String infoFind) throws Exception{
 		boolean result = true;

@@ -14,6 +14,7 @@ import com.software2g.vo.Persona;
 import com.software2g.vo.Procedimiento;
 import com.software2g.vo.Profesional;
 import com.software2g.vo.Tiemponodisponible;
+import com.software2g.vo.Tipodocumento;
 import com.software2g.vo.Tipoprocedimiento;
 
 public interface IGestionFacadeAgenda {
@@ -241,6 +242,16 @@ public interface IGestionFacadeAgenda {
 	public void removeTipoprocedimiento(Tipoprocedimiento tipoprocedimiento) throws Exception;
 	//-----------------------------------------------------------------------
 	// FIN Tipo Procedimiento
-	//-----------------------------------------------------------------------	
+	//-----------------------------------------------------------------------
+	
+	//--------------------------------------------------------------------------
+	//Metodos Entidad TipoDocumento
+	public Tipodocumento findTipodocumentoById(java.lang.Integer id) throws Exception;
+	public List<Tipodocumento> findAllTipodocumentos() throws Exception;
+	public void persistTipodocumento(Tipodocumento tipodocumento) throws Exception;
+	public void removeTipodocumento(Tipodocumento tipodocumento) throws Exception;
+	//FIN --- Metodos Entidad TipoDocumento
+	//--------------------------------------------------------------------------
+	
 	public boolean crearFile(String path, String nameFile, String ext, String tipoFile, String infoFind) throws Exception;
 }

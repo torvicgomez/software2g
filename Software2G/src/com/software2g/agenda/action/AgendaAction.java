@@ -27,6 +27,7 @@ import com.software2g.vo.Participante;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Procedimiento;
 import com.software2g.vo.Profesional;
+import com.software2g.vo.Tipodocumento;
 import com.software2g.vo.Tipoprocedimiento;
 import com.software2g.vo.Usuario;
 
@@ -64,6 +65,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private List<Tipoprocedimiento> listTipoProcedimiento;
 	private Procedimiento procedimiento;
 	private List<Procedimiento> listProcedimiento;
+	private List<Tipodocumento> listTipoDoc;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -101,7 +103,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setProcedimiento(Procedimiento procedimiento) {this.procedimiento = procedimiento;}
 	public List<Procedimiento> getListProcedimiento() {return listProcedimiento;}
 	public void setListProcedimiento(List<Procedimiento> listProcedimiento) {this.listProcedimiento = listProcedimiento;}
-	
+	public List<Tipodocumento> getListTipoDoc() {return listTipoDoc;}
+	public void setListTipoDoc(List<Tipodocumento> listTipoDoc) {this.listTipoDoc = listTipoDoc;}
 	
 	@SkipValidation
 	public String calendarioMethod(){
@@ -403,8 +406,10 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     		getFuncionPosicionado();
     		System.out.println("######>>>>>>>AgendaAction>>>>servicioClinicoMethod>>>>estado entrada-->>"+estado);
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
-    			System.out.println("Construccion!!!!!!!!!!");
-    			listProcedimiento = gestionFacadeAgenda.findAllProcedimientos(); 
+    			listProcedimiento = gestionFacadeAgenda.findAllProcedimientos();
+    			long idProfesional = request.getParameter("idProfesional")!=null?Long.parseLong(request.getParameter("idProfesional").toString()):0;
+    			profesional = idProfesional>0?gestionFacadeAgenda.findProfesionalById(idProfesional):new Profesional();
+    			listTipoDoc = gestionFacadeAgenda.findAllTipodocumentos();
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			System.out.println("Construccion!!!!!!!!!!");
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){

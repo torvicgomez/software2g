@@ -162,181 +162,108 @@
 	<body id="dt_example">
 		<s:form id="form">
 			<s:hidden name="funcPosicionado"></s:hidden>
-			<s:hidden name="processCalendar"></s:hidden>
 			<s:hidden name="bandEstadoFunc"></s:hidden>
 			<div id="demo">
 				<table cellpadding="0" cellspacing="0" border="0" class="display">
 					<tr>
 						<td>
-							<h1><s:text name="plsalidap.titulo"></s:text></h1>
+							<h1><s:text name="atencioservicio.titulo"></s:text></h1>
 						</td>
 					</tr>
 				</table>
-				<s:if test="estado=='allaaa'">
-					<table>
-						<tr>
-							<td>
-								<h3><s:text name="plsalidap.solscontratadas"></s:text></h3>
-							</td>
-						</tr>
-					</table>
-					<table cellpadding="0" cellspacing="0" border="0" class="display">
-						<thead>
-							<tr>
-								<th><s:text name="columna.detalle"></s:text></th>
-								<th><s:text name="plsalidap.tipoSolicitud"></s:text></th>
-								<th><s:text name="plsalidap.programa"></s:text></th>
-								<th><s:text name="plsalidap.fechaPrevista"></s:text></th>
-								<th><s:text name="plsalidap.responsable"></s:text></th>
-								<th><s:text name="labelbutton.vermapa"></s:text></th>
-							</tr>
-						</thead>
-						<tbody>
-							<s:set name="tmpSol" value="0"/>
-							<s:iterator value="listLugaresParada" id="data">
-								<s:if test="%{#tmpSol!=solicitudviaje.soviId}">
-									<s:set name="tmpSol" value="solicitudviaje.soviId"/>
-									<tr class="p2">
-										<td>
-											<a onclick="resumen('${data.solicitudviaje.soviId}');">
-												<img align="middle" src="<s:url value="/imagenes/icon_detalle.png"/>" alt="Detalle" width="18" height="18">
-											</a>
-										</td>
-										<td><s:property value="solicitudviaje.tiposolicitudviaje.tpsvDescripcion"/></td>
-										<td><s:property value="solicitudviaje.programa.progNombre"/></td>
-										<td><s:property value="solicitudviaje.soviFechaprevista"/></td>
-										<td><s:property value="solicitudviaje.responsableviaje.rvijNombre"/></td>
-										<td align="center"><input type="button" value="<s:text name="labelbutton.vermapa"></s:text>" name="verMapa" id="verMapa" class="buttonSV" onclick="verMapaFuncion('${data.solicitudviaje.soviId}');"/></td>
-									</tr>
-									<tr>
-										<td colspan="6">
-											<table border="1" width="100%" style="background-color: #C69898;">
-												<tr>
-													<th><s:text name="lugarParada.orden"></s:text></th>
-													<th><s:text name="lugarParada.parada"></s:text></th>
-													<th><s:text name="lugarParada.tipoParada"></s:text></th>
-													<th><s:text name="lugarParada.motivoParada"></s:text></th>
-												</tr>
-												<s:iterator value="listLugaresParada" id="data2" status="stat">
-													<s:set name="tmpSol2" value="solicitudviaje.soviId"/>
-													<s:if test="%{#tmpSol==(#tmpSol2)}">
-														<tr>
-															<td><s:property value="lupaOrden"/></td>
-															<td>
-																<s:if test="lupaOrden==0"><s:property value="lupaOrigen"/></s:if>
-																<s:elseif test="lupaOrden==99"><s:property value="lupaFinviaje"/></s:elseif>
-																<s:else><s:property value="lupaParada"/></s:else>
-															</td>
-															<td>
-																<s:if test="lupaOrden==0"><s:text name="lugarParada.labelGridOrigen"></s:text></s:if>
-																<s:elseif test="lupaOrden==99"><s:text name="lugarParada.labelGridDestino"></s:text></s:elseif>
-																<s:else><s:text name="lugarParada.labelGridParada"></s:text></s:else>
-															</td>
-															<td><s:property value="lupaMotivoparada"/></td>
-														</tr>
-													</s:if>
-												</s:iterator>
-											</table>
-										</td>
-									</tr>
-								</s:if>
-							</s:iterator>
-						</tbody>
-						<tfoot></tfoot>
-					</table>
-				</s:if>
 				<s:if test="estado=='all'">
-					<s:hidden name="fechaInicialProg"></s:hidden>
-					<s:hidden name="fechaFinalProg"></s:hidden>
-					<s:hidden name="programacionviaje.prviId"></s:hidden>
-					<s:hidden name="programacionviaje.solicitudviaje.soviId"></s:hidden>
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<tr>
-							<td class="right">
-								<input type="button" value="Volver" class="buttonSV" onclick="buscar();"/>
-								<input type="button" value="Guardar" class="buttonSV" onclick="registrar();"/>
-							</td>
-						</tr>
-					</table>
-					<table cellpadding="0" cellspacing="0" border="0" class="display">
-						<tr>
-							<td class="leftLabel">
-								<s:text name="plsalidap.facultad"></s:text>
-							</td>
-							<td width="35%">
-								<s:iterator value="programacionviaje.solicitudviaje.lisUnidads" id="data">
-									<s:property value="unidNombre"/>
-									<br>
-								</s:iterator>
-							</td>
-							<td class="leftLabel">
-								<s:text name="plsalidap.asignatura"></s:text>
-							</td>
-							<td>
-								<s:property value="lugaresParada.solicitudviaje.materia.mateNombre"/>
-							</td>
+							<s:hidden name="profesional.profId" id="profId"></s:hidden>
+							<td class="leftLabel" colspan="4"><s:text name="profesionalsalud.datosprofesional"></s:text></td>
 						</tr>
 						<tr>
-							<td class="leftLabel">
-								<s:text name="plsalidap.destino"></s:text>
+							<td class="leftLabel"><s:text name="personal.nombre"></s:text></td>
+							<td align="left">
+								<s:property value="profesional.persona.nombreCompleto"/>
 							</td>
-							<td>
-								<s:property value="lugaresParada.lupaFinviaje"/>
-							</td>
-							<td class="leftLabel">
-								<s:text name="plsalidap.numestudiantes"></s:text>
-							</td>
-							<td>
-								<s:property value="programacionviaje.solicitudviaje.soviNrointegranteconfirmado"/>
+							<td class="leftLabel" width="130"><s:text name="profesionalsalud.profesion"></s:text></td>
+							<td align="left">
+								<s:property value="profesional.profEspecialidad"/>
 							</td>
 						</tr>
-						<tr>
-							<td class="leftLabel">
-								<s:text name="plsalidap.docenterespon"></s:text>
-							</td>
-							<td>
-								<s:property value="programacionviaje.solicitudviaje.responsableviaje.rvijNombre"/>
-							</td>
-							<td class="leftLabel">
-								<s:text name="plsalidap.fecha"></s:text>
-							</td>
-							<td>
-								<input type="text" id="fecha" readonly="readonly" class="inputs"/>
-								<script>
-									var fecha = new Date();
-									document.form.fecha.value=fecha.getDate()+"/"+(fecha.getMonth()+1)+"/"+fecha.getFullYear();
-								</script>
-							</td>
-						</tr>
-						<tr>
-							<td class="leftLabel">
-								<s:text name="plsalidap.horaentregaauto"></s:text>
-							</td>
-							<td>
-								<s:textfield name="planillasalidapractica.plspHoraentregavehi" id="horaEntrega" cssClass="inputs" readonly="true"></s:textfield>
-							</td>
-							<td class="leftLabel">
-								<s:text name="plsalidap.horasalidauniv"></s:text>
-							</td>
-							<td>
-								<s:textfield name="planillasalidapractica.plspHorasalidauniv" id="horaSalida" cssClass="inputs" readonly="true"></s:textfield>
-							</td>
-						</tr>
-						<tr>
-							<td class="leftLabel">
-								<s:text name="plsalidap.valorcontratado"></s:text>
-							</td>
-							<td colspan="3">
-								<s:textfield name="planillasalidapractica.plspValorcontratado" id="valorContratado" cssClass="inputs" onkeypress="ValidaSoloNumeros();"></s:textfield>
-							</td>
-						</tr>
-					</table>
+					</table> 
 					<div id="pestanas">
 						<ul>
-							<li><a href="#tabs-1">Datos Conductor</a></li>
-							<li><a href="#tabs-2">Datos Vehiculo</a></li>
+							<li><a href="#tabs-0">Datos Conductor</a></li>
+							<li><a href="#tabs-1"><s:text name="atencioservicio.odontogramapro"></s:text></a></li>
+							<li><a href="#tabs-2">Estado Gral Vehiculo</a></li>
 							<li><a href="#tabs-3">Estado Gral Vehiculo</a></li>
 						</ul>
+						<div id="tabs-0">
+							<table cellpadding="0" cellspacing="0" border="0" class="display">
+								<tr>
+									<td class="leftLabel"><s:text name="personal.numerodocumento"></s:text><s:text name="campo.requerido"></s:text></td>
+									<td>
+										<s:textfield name="persona.documentoPers" size="20" maxlength="15" cssClass="inputs"></s:textfield>
+										<s:select list="listTipoDoc" name="persona.tipodocumento.idTidoc" listKey="idTidoc" listValue="nombreTidoc" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs"/>
+									</td>
+									<td class="leftLabel"><s:text name="personal.fechaexpedicion"></s:text><s:text name="campo.requerido"></s:text></td>
+									<td>
+										<s:textfield name="persona.fechaexpdocPers" id="fechaexpdocPers" size="15" maxlength="10" cssClass="inputs"></s:textfield>
+										<img alt="Fecha Expedicion" src="<s:url value="/imagenes/calendario.gif"/>" onclick="showCalendar('fechaexpdocPers', 'y-mm-dd');">(yyyy-mm-dd)
+									</td>
+								</tr>
+								<tr>
+									<td class="leftLabel"><s:text name="personal.primernombre"></s:text><s:text name="campo.requerido"></s:text></td>
+									<td><s:textfield name="persona.pnombrePers" size="35" maxlength="30" cssClass="inputs"></s:textfield></td>
+									<td class="leftLabel"><s:text name="personal.segundonombre"></s:text></td>
+									<td><s:textfield name="persona.snombrePers" size="35" maxlength="30" cssClass="inputs"></s:textfield></td>
+								</tr>
+								<tr>
+									<td class="leftLabel"><s:text name="personal.primerapellido"></s:text><s:text name="campo.requerido"></s:text></td>
+									<td><s:textfield name="persona.papellidoPers" size="35" maxlength="30" cssClass="inputs"></s:textfield></td>
+									<td class="leftLabel"><s:text name="personal.segundoapellido"></s:text></td>
+									<td><s:textfield name="persona.sapellidoPers" size="35" maxlength="30" cssClass="inputs"></s:textfield></td>
+								</tr>
+								<tr>
+									<td class="leftLabel"><s:text name="personal.sexo"></s:text><s:text name="campo.requerido"></s:text>
+									</td>
+									<td>
+<%-- 										<s:select list="listSexo" name="personaVO.sexoPers" listKey="key" listValue="valor" headerKey="-1" headerValue=".::Seleccione::." />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  --%>
+										<s:text name="personal.estadocivil"></s:text><s:text name="campo.requerido"></s:text>
+<%-- 										<s:select list="listEstadoCivil" name="personaVO.estadocivilPers" listKey="key" listValue="valor" headerKey="-1" headerValue=".::Seleccione::." /> --%>
+									</td>
+									<td class="leftLabel"><s:text name="personal.fechanacimiento"></s:text><s:text name="campo.requerido"></s:text></td>
+									<td>
+										<s:textfield name="persona.fechanacimientoPers" id="fechanacimientoPers" size="15" maxlength="10" cssClass="inputs"></s:textfield>
+										<img alt="Fecha Nacimiento" src="<s:url value="/imagenes/calendario.gif"/>" onclick="showCalendar('fechanacimientoPers', 'y-mm-dd');">(yyyy-mm-dd)
+									</td>
+								</tr>
+								<tr>
+									<td class="leftLabel"><s:text name="personal.telefono"></s:text><s:text name="campo.requerido"></s:text></td>
+									<td><s:textfield name="persona.telefonoPers" size="35" maxlength="30" cssClass="inputs"></s:textfield></td>
+									<td class="leftLabel"><s:text name="personal.email"></s:text><s:text name="campo.requerido"></s:text></td>
+									<td><s:textfield name="persona.emailPers" size="35" maxlength="80" cssClass="inputs"></s:textfield></td>
+								</tr>
+								<tr>
+									<td class="leftLabel"><s:text name="personal.ubicaciongeo"></s:text><s:text name="campo.requerido"></s:text></td>
+									<td>
+<%-- 										<s:select list="listPais" name="personaVO.municipio.departamento.pais.paisId" id="selectPais" listKey="paisId" listValue="nompais" headerKey="-1" headerValue=".::Seleccione::." /> --%>
+<%-- 										<s:if test="personaVO.municipio.departamento.pais.paisId>0"> --%>
+<!-- 											<div id="viewSelectDpto" style="overflow:auto;width:auto;height:auto;display:block"> -->
+<%-- 										</s:if> --%>
+<%-- 										<s:else> --%>
+<!-- 											<div id="viewSelectDpto" style="overflow:auto;width:auto;height:auto;display:none"> -->
+<%-- 										</s:else> --%>
+<%-- 											<s:select list="listDepartamento" name="personaVO.municipio.departamento.dptoId" id="selectDpto" listKey="dptoId" listValue="nomdpto" headerKey="-1" headerValue=".::Seleccione::." /> --%>
+<!-- 										</div> -->
+<!-- 										<div id="viewSelectMcpo"> -->
+<%-- 											<s:if test="listMunicipio!=null&&listMunicipio.size>0"> --%>
+<%-- 												<s:select list="listMunicipio" name="personaVO.municipio.mcpoId" listKey="mcpoId" listValue="nommunicipio" headerKey="-1" headerValue=".::Seleccione::." /> --%>
+<%-- 											</s:if> --%>
+<!-- 										</div> -->
+									</td>
+									<td class="leftLabel"><s:text name="personal.direccion"></s:text><s:text name="campo.requerido"></s:text></td>
+									<td><s:textfield name="persona.direccionPers" size="35" maxlength="100" cssClass="inputs"></s:textfield></td>
+								</tr>
+							</table>
+						</div>
 						<div id="tabs-1">
 <!-- 							<table cellpadding="0" cellspacing="0" border="0" class="display"> -->
 <!-- 								<tr> -->
@@ -572,64 +499,8 @@
 						</tr>
 					</table>
 				</s:if>
-				<s:if test="estado=='selectCalendar'">
-					<table cellpadding="0" cellspacing="0" border="1" class="display">
-						<thead>
-							<tr>
-								<th width="10%"><s:text name="calendarioPractica.item"></s:text></th>
-								<th width="40%"><s:text name="calendarioPractica.fechaInicio"></s:text></th>
-								<th width="40%"><s:text name="calendarioPractica.fechaFinal"></s:text></th>
-								<th width="10%"></th>
-							</tr>
-						</thead>
-						<tbody>
-							<s:iterator value="listCalendarioPracticaSelect" id="data" status="statCalendar">
-								<tr>
-									<td align="center" class="text">${statCalendar.index+1}</td>
-									<td align="center" class="text"><s:property value="caprFechainiView"/></td>
-									<td align="center" class="text"><s:property value="caprFechafinView"/></td>
-									<td align="center"><input type="button" value="<s:text name="labelbutton.seleccionar"></s:text>" onclick="selectCalendar('${statCalendar.index}');" class="buttonSV"/></td>
-								</tr>
-								<tr>
-									<td class="leftLabel" colspan="4">
-										<a onclick="javascript:desplegarInfo('${statCalendar.index+1}');"><img src="<s:url value='/imagenes/flecha_der.png'/>" alt="Mostrar" width="12" height="12"></a>
-										<s:text name="calendarioPractica.procesopractica"></s:text>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="4">
-										<div id="processCalendar_${statCalendar.index+1}" style="overflow:auto;width:auto;height:auto;display:none">
-											<s:if test="procesocalendariopracticas!=null&&procesocalendariopracticas.size()>0">
-												<table cellpadding="0" cellspacing="0" border="1" class="display">
-													<thead>
-														<tr>
-															<th><s:text name="procesopractica.procesopractica"></s:text></th>
-															<th><s:text name="calendarioPractica.fechaInicio"></s:text></th>
-															<th><s:text name="calendarioPractica.fechaFinal"></s:text></th>
-														</tr>
-													</thead> 
-													<tbody>
-														<s:iterator value="procesocalendariopracticas" id="data" status="statProcessCalendar">
-															<tr>
-																<td class="text"><s:property value="procesopractica.prprDescripcion"/></td>
-																<td class="text"><s:property value="pcprFechainiView"/></td>
-																<td class="text"><s:property value="pcprFechafinView"/></td>
-															</tr>
-														</s:iterator>
-													</tbody>
-												</table>	
-											</s:if>
-										</div>
-									</td>
-								</tr>
-							</s:iterator>
-						</tbody>
-						<tfoot></tfoot>
-					</table>
-				</s:if>
 			</div>
 			<div class="spacer"></div>
-			<div id="cargarGoogleMaps"><iframe id="mapaIframe" src=""></iframe></div>
 		</s:form>
 	</body>
 </html>

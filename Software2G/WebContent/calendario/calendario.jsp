@@ -155,9 +155,9 @@
 	
 	function continuar(){
 		var accionRealizar = document.getElementById('accionRealizar').value;
-		alert('accionRealizar: ['+accionRealizar+']')
 		if(accionRealizar == 'AS'){
-			document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoAll%>&funcPosicionado=Calendario/Servicio Clinico";
+			var profId = document.getElementById('profId').value;
+			document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoAll%>&idProfesional="+profId+"&funcPosicionado=Calendario/Servicio Clinico";
 		}else if(accionRealizar == 'CC'){
 			document.form.action="calendario.action?estado=<%=ConstantesAplicativo.constanteEstadoOperacionCita%>";
 		}else if(accionRealizar == 'NA'){

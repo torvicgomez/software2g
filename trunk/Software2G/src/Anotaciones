@@ -24,7 +24,12 @@ Tareas
 19- convertir la variable eventData de calendario.jsp en un archivo dinamico ------------------- .::[O.K]::.
 20- que no se puedan editar la fecha de las citas tanto pa' todos como para cada profesional --- .::[O.K]::.
 21- Validar la caducidad de la session del usuario logeado -------------------------------------
-22- Utilidad Odontograma ----------------------------------------------------------------------- 
+22- Utilidad Odontograma ----------------------------------------------------------------------- .::[O.K]::.
+23- Parametrica Tipo Procedimiento ------------------------------------------------------------- .::[O.K]::.
+24- Parametrica Procedimiento ------------------------------------------------------------------ .::[O.K]::.
+25- Enlace atencion servicio odontologico ------------------------------------------------------ .::[O.K]::.
+26- formulario atencion servicio odontologico --------------------------------------------------
+27- modelamiento de datos servicio odontologico ------------------------------------------------ 
 
 Sugerencia
 * Tabla profesional salud ---------------------------------------------------------------------- .::[O.K]::.

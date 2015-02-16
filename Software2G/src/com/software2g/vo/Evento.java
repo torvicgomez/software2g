@@ -3,15 +3,12 @@ package com.software2g.vo;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.persistence.*;
 
 import com.software2g.util.ConstantesAplicativo;
-import com.software2g.util.ValidaString;
 
 
 /**
@@ -91,6 +88,9 @@ public class Evento implements Serializable {
 	//bi-directional many-to-one association to Participante
 	@OneToMany(mappedBy="evento")
 	private List<Participante> participantes;
+	
+	@Transient
+	private String accion;
 	
 	public Evento() {
 	}
@@ -296,4 +296,13 @@ public class Evento implements Serializable {
 		}
 		return  hora;
 	}
+
+	public String getAccion() {
+		return accion;
+	}
+
+	public void setAccion(String accion) {
+		this.accion = accion;
+	}
+	
 }

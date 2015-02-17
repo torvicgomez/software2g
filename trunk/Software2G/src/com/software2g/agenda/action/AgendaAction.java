@@ -430,6 +430,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			listEstadoCivil = ConstantesAplicativo.constanteEstadoCivil;
     			listPais = gestionFacadeAgenda.findAllPaiss();
     			listDepartamento = gestionFacadeAgenda.findAllDepartamentos();
+    			if(persona!=null&&persona.getExistePaciente().equals(ConstantesAplicativo.constanteCheckSi))
+    				listMunicipio = gestionFacadeAgenda.findAllMunicipios();
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			System.out.println("Construccion!!!!!!!!!!");
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){

@@ -66,6 +66,8 @@ public final class ConstantesAplicativo {
 	public static final String constanteEstadoEventoCreado = "CREADO";
 	
 	public static final List<String> constanteEstadoCivil = new ArrayList<String>(Arrays.asList("CASADO(A)","DIVORCIADO(A)", "SOLTERO(A)", "UNIÓN LIBRE"));
+	public static final String constanteCheckSi = "S"; 
+    public static final String constanteCheckNo = "N";
 	
 	// Acciones a realizar con la cita
 	public static final String constanteNoAplica = "NA";

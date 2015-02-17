@@ -3,7 +3,6 @@ package com.software2g.portal.dao.impl;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -211,5 +210,23 @@ public class PersonaDaoImpl implements IPersonaDao {
             }
         }
 	}
-	
+
+	@SuppressWarnings("unchecked")
+	public Persona findPersona(String documento, String abrevTidoc) {
+        try {
+    		String jpqlString = "select persona from " + Persona.class.getSimpleName() + " persona " +
+    				" where persona.documentoPers =:documento " +
+    				" and persona.tipodocumento.abreviaturaTidoc =:abrevTidoc ";
+    		Query query = em.createQuery( jpqlString );
+            query.setParameter("documento", documento);
+            query.setParameter("abrevTidoc", abrevTidoc);
+            return (Persona) query.getSingleResult();
+        }catch(Exception e){
+        	return null;
+		}finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
 }

@@ -35,4 +35,6 @@ public interface ITipoDocumentoDao {
 	 * Remove the given persistent instance.
 	 */
 	public void removeTipodocumento(Tipodocumento tipodocumento);
+	
+	public Tipodocumento findTipodocumentoAbrev(String abrevTidoc);
 }

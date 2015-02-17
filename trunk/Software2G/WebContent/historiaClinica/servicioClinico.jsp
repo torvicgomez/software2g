@@ -6,6 +6,22 @@
 	<head>
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {
+				$("#selectPais").change(function(event){
+		            var id = $("#selectPais").find(':selected').val();
+		            if(id>0){
+		            	$("#viewSelectDpto").show("block");
+		            	$("#viewSelectMcpo").show("block");
+		            }else{
+		            	$("#viewSelectDpto").hide(1000);
+		            	$("#viewSelectMcpo").hide(1000);
+		            }
+		        });
+		        
+		        $("#selectDpto").change(function(event){
+		            var id = $("#selectDpto").find(':selected').val();
+		            $("#viewSelectMcpo").load('loadMunicipios.action?personaVO.municipio.departamento.dptoId='+id);
+		        });
+		        
 				$( "#fechaexpdocPers" ).datepicker({
 					changeYear: true,
 					yearRange:'-90:+90',
@@ -190,9 +206,9 @@
 					</table> 
 					<div id="pestanas">
 						<ul>
-							<li><a href="#tabs-0">Datos Conductor</a></li>
+							<li><a href="#tabs-0"><s:text name="atencioservicio.datospersonales"></s:text></a></li>
 							<li><a href="#tabs-1"><s:text name="atencioservicio.odontogramapro"></s:text></a></li>
-							<li><a href="#tabs-2">Estado Gral Vehiculo</a></li>
+							<li><a href="#tabs-2"><s:text name="atencioservicio.costotratamiento"></s:text></a></li>
 							<li><a href="#tabs-3">Estado Gral Vehiculo</a></li>
 						</ul>
 						<div id="tabs-0">
@@ -203,56 +219,75 @@
 										<s:textfield name="persona.documentoPers" size="20" maxlength="15" cssClass="inputs"></s:textfield><%--nombreTidoc --%>
 										<s:select list="listTipoDoc" name="persona.tipodocumento.idTidoc" listKey="idTidoc" listValue="abreviaturaTidoc" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs"/>
 									</td>
+								</tr>
+								<tr>
 									<td class="leftLabel"><s:text name="personal.fechaexpedicion"></s:text><s:text name="campo.requerido"></s:text></td>
 									<td><s:textfield name="persona.fechaexpdocPers" id="fechaexpdocPers" size="15" maxlength="10" cssClass="inputs"></s:textfield></td>
 								</tr>
 								<tr>
 									<td class="leftLabel"><s:text name="personal.primernombre"></s:text><s:text name="campo.requerido"></s:text></td>
 									<td><s:textfield name="persona.pnombrePers" size="35" maxlength="30" cssClass="inputs"></s:textfield></td>
+								</tr>
+								<tr>
 									<td class="leftLabel"><s:text name="personal.segundonombre"></s:text></td>
 									<td><s:textfield name="persona.snombrePers" size="35" maxlength="30" cssClass="inputs"></s:textfield></td>
 								</tr>
 								<tr>
 									<td class="leftLabel"><s:text name="personal.primerapellido"></s:text><s:text name="campo.requerido"></s:text></td>
 									<td><s:textfield name="persona.papellidoPers" size="35" maxlength="30" cssClass="inputs"></s:textfield></td>
+								</tr>
+								<tr>
 									<td class="leftLabel"><s:text name="personal.segundoapellido"></s:text></td>
 									<td><s:textfield name="persona.sapellidoPers" size="35" maxlength="30" cssClass="inputs"></s:textfield></td>
 								</tr>
 								<tr>
-									<td class="leftLabel"><s:text name="personal.sexo"></s:text><s:text name="campo.requerido"></s:text>
-									</td>
-									<td>
-										<s:select list="#{'F':'Femenino','M':'Masculino'}" name="persona.sexoPers" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-										<s:text name="personal.estadocivil"></s:text><s:text name="campo.requerido"></s:text>
-<%-- 										<s:select list="listEstadoCivil" name="personaVO.estadocivilPers" listKey="key" listValue="valor" headerKey="-1" headerValue=".::Seleccione::." /> --%>
-									</td>
+									<td class="leftLabel"><s:text name="personal.sexo"></s:text><s:text name="campo.requerido"></s:text></td>
+									<td><s:select list="#{'F':'Femenino','M':'Masculino'}" name="persona.sexoPers" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs" /></td>
+								</tr>
+								<tr>
+									<td class="leftLabel"><s:text name="personal.estadocivil"></s:text><s:text name="campo.requerido"></s:text></td>
+									<td><s:select list="listEstadoCivil" name="persona.estadocivilPers" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs"/></td>
+								</tr>
+								<tr>
 									<td class="leftLabel"><s:text name="personal.fechanacimiento"></s:text><s:text name="campo.requerido"></s:text></td>
 									<td><s:textfield name="persona.fechanacimientoPers" id="fechanacimientoPers" size="15" maxlength="10" cssClass="inputs"></s:textfield></td>
 								</tr>
 								<tr>
 									<td class="leftLabel"><s:text name="personal.telefono"></s:text><s:text name="campo.requerido"></s:text></td>
 									<td><s:textfield name="persona.telefonoPers" size="35" maxlength="30" cssClass="inputs"></s:textfield></td>
+								</tr>
+								<tr>
 									<td class="leftLabel"><s:text name="personal.email"></s:text><s:text name="campo.requerido"></s:text></td>
 									<td><s:textfield name="persona.emailPers" size="35" maxlength="80" cssClass="inputs"></s:textfield></td>
 								</tr>
 								<tr>
 									<td class="leftLabel"><s:text name="personal.ubicaciongeo"></s:text><s:text name="campo.requerido"></s:text></td>
 									<td>
-<%-- 										<s:select list="listPais" name="personaVO.municipio.departamento.pais.paisId" id="selectPais" listKey="paisId" listValue="nompais" headerKey="-1" headerValue=".::Seleccione::." /> --%>
-<%-- 										<s:if test="personaVO.municipio.departamento.pais.paisId>0"> --%>
-<!-- 											<div id="viewSelectDpto" style="overflow:auto;width:auto;height:auto;display:block"> -->
-<%-- 										</s:if> --%>
-<%-- 										<s:else> --%>
-<!-- 											<div id="viewSelectDpto" style="overflow:auto;width:auto;height:auto;display:none"> -->
-<%-- 										</s:else> --%>
-<%-- 											<s:select list="listDepartamento" name="personaVO.municipio.departamento.dptoId" id="selectDpto" listKey="dptoId" listValue="nomdpto" headerKey="-1" headerValue=".::Seleccione::." /> --%>
-<!-- 										</div> -->
-<!-- 										<div id="viewSelectMcpo"> -->
-<%-- 											<s:if test="listMunicipio!=null&&listMunicipio.size>0"> --%>
-<%-- 												<s:select list="listMunicipio" name="personaVO.municipio.mcpoId" listKey="mcpoId" listValue="nommunicipio" headerKey="-1" headerValue=".::Seleccione::." /> --%>
-<%-- 											</s:if> --%>
-<!-- 										</div> -->
+										<table cellpadding="0" cellspacing="0" border="0" class="display">
+											<tr>
+												<td align="left"><s:select list="listPais" name="persona.municipio.departamento.pais.paisId" id="selectPais" listKey="paisId" listValue="nompais" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs"/></td>
+												<td align="left">
+													<s:if test="persona.municipio.departamento.pais.paisId>0">
+														<div id="viewSelectDpto" style="overflow:auto;width:auto;height:auto;display:block">
+													</s:if>
+													<s:else>
+														<div id="viewSelectDpto" style="overflow:auto;width:auto;height:auto;display:none">
+													</s:else>
+														<s:select list="listDepartamento" name="persona.municipio.departamento.dptoId" id="selectDpto" listKey="dptoId" listValue="nomdpto" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs"/>
+													</div>
+												</td>
+												<td align="left">
+													<div id="viewSelectMcpo">
+														<s:if test="listMunicipio!=null&&listMunicipio.size>0">
+															<s:select list="listMunicipio" name="persona.municipio.mcpoId" listKey="mcpoId" listValue="nommunicipio" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs"/>
+														</s:if>
+													</div>
+												</td>
+											</tr>
+										</table>
 									</td>
+								</tr>
+								<tr>
 									<td class="leftLabel"><s:text name="personal.direccion"></s:text><s:text name="campo.requerido"></s:text></td>
 									<td><s:textfield name="persona.direccionPers" size="35" maxlength="100" cssClass="inputs"></s:textfield></td>
 								</tr>

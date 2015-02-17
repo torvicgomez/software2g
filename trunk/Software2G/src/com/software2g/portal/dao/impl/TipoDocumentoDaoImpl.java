@@ -93,4 +93,23 @@ public class TipoDocumentoDaoImpl implements ITipoDocumentoDao {
 		 The merge method returns a managed copy of the given detached entity.*/
 		em.remove(em.merge(tipodocumento));
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Tipodocumento findTipodocumentoAbrev(String abrevTidoc) {
+        try {
+    		String jpqlString = "select tipodocumento from " + Tipodocumento.class.getSimpleName() + " tipodocumento" +
+    				" where tipodocumento.abreviaturaTidoc =:abrevTidoc ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("abrevTidoc", abrevTidoc);
+            return (Tipodocumento) query.getSingleResult();
+        }catch (Exception e){
+        	e.printStackTrace();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+		return null;
+	}
 }

@@ -20,9 +20,11 @@ import com.software2g.agenda.facade.IGestionFacadeAgenda;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Agenda;
-import com.software2g.vo.Estadocivil;
+import com.software2g.vo.Departamento;
 import com.software2g.vo.Evento;
 import com.software2g.vo.Jorandalaboral;
+import com.software2g.vo.Municipio;
+import com.software2g.vo.Pais;
 import com.software2g.vo.Parametroscalendario;
 import com.software2g.vo.Participante;
 import com.software2g.vo.Persona;
@@ -67,7 +69,10 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private Procedimiento procedimiento;
 	private List<Procedimiento> listProcedimiento;
 	private List<Tipodocumento> listTipoDoc;
-	private List<Estadocivil> listEstadoCivil;
+	private List<String> listEstadoCivil;
+	private List<Pais> listPais;
+	private List<Departamento> listDepartamento; 
+	private List<Municipio> listMunicipio;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -107,8 +112,14 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setListProcedimiento(List<Procedimiento> listProcedimiento) {this.listProcedimiento = listProcedimiento;}
 	public List<Tipodocumento> getListTipoDoc() {return listTipoDoc;}
 	public void setListTipoDoc(List<Tipodocumento> listTipoDoc) {this.listTipoDoc = listTipoDoc;}
-	public List<Estadocivil> getListEstadoCivil() {return listEstadoCivil;}
-	public void setListEstadoCivil(List<Estadocivil> listEstadoCivil) {this.listEstadoCivil = listEstadoCivil;}
+	public List<String> getListEstadoCivil() {return listEstadoCivil;}
+	public void setListEstadoCivil(List<String> listEstadoCivil) {this.listEstadoCivil = listEstadoCivil;}
+	public List<Pais> getListPais() {return listPais;}
+	public void setListPais(List<Pais> listPais) {this.listPais = listPais;}
+	public List<Departamento> getListDepartamento() {return listDepartamento;}
+	public void setListDepartamento(List<Departamento> listDepartamento) {this.listDepartamento = listDepartamento;}
+	public List<Municipio> getListMunicipio() {return listMunicipio;}
+	public void setListMunicipio(List<Municipio> listMunicipio) {this.listMunicipio = listMunicipio;}
 	
 	@SkipValidation
 	public String calendarioMethod(){
@@ -410,10 +421,15 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     		getFuncionPosicionado();
     		System.out.println("######>>>>>>>AgendaAction>>>>servicioClinicoMethod>>>>estado entrada-->>"+estado);
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
-    			listProcedimiento = gestionFacadeAgenda.findAllProcedimientos();
     			long idProfesional = request.getParameter("idProfesional")!=null?Long.parseLong(request.getParameter("idProfesional").toString()):0;
+    			long idEvento = request.getParameter("idEvento")!=null?Long.parseLong(request.getParameter("idEvento").toString()):0;
     			profesional = idProfesional>0?gestionFacadeAgenda.findProfesionalById(idProfesional):new Profesional();
+    			persona = gestionFacadeAgenda.findPacienteAtencionServicio(idEvento);
+    			listProcedimiento = gestionFacadeAgenda.findAllProcedimientos();
     			listTipoDoc = gestionFacadeAgenda.findAllTipodocumentos();
+    			listEstadoCivil = ConstantesAplicativo.constanteEstadoCivil;
+    			listPais = gestionFacadeAgenda.findAllPaiss();
+    			listDepartamento = gestionFacadeAgenda.findAllDepartamentos();
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			System.out.println("Construccion!!!!!!!!!!");
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){

@@ -959,7 +959,9 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 					persona.setSapellidoPers(participante.getPartSapellido());
 					persona.setTelefonoPers(participante.getPartTelefono());
 					persona.setEmailPers(participante.getPartEmail());
-				}
+					persona.setExistePaciente(ConstantesAplicativo.constanteCheckNo);
+				}else
+					persona.setExistePaciente(ConstantesAplicativo.constanteCheckSi);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

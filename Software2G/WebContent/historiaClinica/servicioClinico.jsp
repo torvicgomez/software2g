@@ -32,59 +32,14 @@
 					yearRange:'-90:+90',
 					changeMonth: true
 				});
-				$( "#datepicker5" ).datepicker({
-					changeYear: true,
-					yearRange:'-90:+90',
-					changeMonth: true
-				});
-				$( "#datepicker6" ).datepicker({
-					changeYear: true,
-					yearRange:'-90:+90',
-					changeMonth: true
-				});
-				$( "#datepicker7" ).datepicker({
-					changeYear: true,
-					yearRange:'-90:+90',
-					changeMonth: true
-				});
-				$( "#datepicker8" ).datepicker({
-					changeYear: true,
-					yearRange:'-90:+90',
-					changeMonth: true
-				});
+				
 // 				$('.p2').collapser({
 // 					mode: 'block',
 // 					showText: 'Detalle',
 // 					hideText: 'Cerrar',
 // 					changeText: 0
 // 				});
-				$('#horaEntrega').timepicker({
-				    showNowButton: true,
-				    showDeselectButton: true,
-				    defaultTime: '',  // removes the highlighted time for when the input is empty.
-				    showCloseButton: true
-				});
-				$('#horaSalida').timepicker({
-				    showNowButton: true,
-				    showDeselectButton: true,
-				    defaultTime: '',  // removes the highlighted time for when the input is empty.
-				    showCloseButton: true
-				});
-				$("#cargarGoogleMaps").dialog({
-				    autoOpen: false,
-				    modal: true,
-				    open: function(ev, ui){
-				    		 var $led = $("#cargarGoogleMaps");
-				    		 $('#mapaIframe').attr('height','600px');
-				    		 $('#mapaIframe').attr('width','950px');
-				             $('#mapaIframe').attr('src','<%=url%>asigviajes/utilGoogleMaps.jsp?soviId='+$led.data('param'));
-				          },
-				    height: 'auto',
-				    width: 'auto',
-				    resizable: true,
-				    title: 'Ruta Solicitud de Viaje',
-				    position: [50,50]
-				});
+				
 			} );
 			
 			$(function() {
@@ -207,19 +162,28 @@
 					<div id="pestanas">
 						<ul>
 							<li><a href="#tabs-0"><s:text name="atencioservicio.datospersonales"></s:text></a></li>
+							<li><a href="#tabs-0-1"><s:text name="atencioservicio.anamnesis"></s:text></a></li>
 							<li><a href="#tabs-1"><s:text name="atencioservicio.odontogramapro"></s:text></a></li>
 							<li><a href="#tabs-2"><s:text name="atencioservicio.costotratamiento"></s:text></a></li>
 							<li><a href="#tabs-3">Estado Gral Vehiculo</a></li>
 						</ul>
 						<div id="tabs-0">
 							<table cellpadding="0" cellspacing="0" border="0" class="display">
+								
 								<tr>
 									<td class="leftLabel"><s:text name="personal.numerodocumento"></s:text><s:text name="campo.requerido"></s:text></td>
 									<td>
-										<s:textfield name="persona.documentoPers" size="20" maxlength="15" cssClass="inputs"></s:textfield><%--nombreTidoc --%>
-										<s:select list="listTipoDoc" name="persona.tipodocumento.idTidoc" listKey="idTidoc" listValue="abreviaturaTidoc" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs"/>
+										<s:if test="persona.existePaciente==\"S\"">
+											<s:hidden name="persona.tipodocumento.idTidoc"></s:hidden>
+											<s:property value="persona.documentoPers"/>&nbsp;<s:property value="persona.tipodocumento.abreviaturaTidoc"/>
+										</s:if>
+										<s:else>
+											<s:textfield name="persona.documentoPers" size="20" maxlength="15" cssClass="inputs"></s:textfield><%--nombreTidoc --%>
+											<s:select list="listTipoDoc" name="persona.tipodocumento.idTidoc" listKey="idTidoc" listValue="abreviaturaTidoc" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs"/>	
+										</s:else>
 									</td>
 								</tr>
+								
 								<tr>
 									<td class="leftLabel"><s:text name="personal.fechaexpedicion"></s:text><s:text name="campo.requerido"></s:text></td>
 									<td><s:textfield name="persona.fechaexpdocPers" id="fechaexpdocPers" size="15" maxlength="10" cssClass="inputs"></s:textfield></td>
@@ -292,6 +256,9 @@
 									<td><s:textfield name="persona.direccionPers" size="35" maxlength="100" cssClass="inputs"></s:textfield></td>
 								</tr>
 							</table>
+						</div>
+						<div id="tabs-0-1">
+							Construccion!!!
 						</div>
 						<div id="tabs-1">
 <!-- 							<table cellpadding="0" cellspacing="0" border="0" class="display"> -->

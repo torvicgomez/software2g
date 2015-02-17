@@ -97,6 +97,9 @@ public class Persona implements Serializable {
 	@OneToMany(mappedBy="persona")
 	private List<Profesionalsalud> profesionalSalud;
 	
+	@Transient
+	private String existePaciente; 
+	
 	public Persona() {
 	}
 
@@ -317,5 +320,13 @@ public class Persona implements Serializable {
 	public void setProfesionalSalud(List<Profesionalsalud> profesionalSalud) {
 		this.profesionalSalud = profesionalSalud;
 	}
-	
+
+	public String getExistePaciente() {
+		return existePaciente;
+	}
+
+	public void setExistePaciente(String existePaciente) {
+		this.existePaciente = existePaciente;
+	}
+
 }

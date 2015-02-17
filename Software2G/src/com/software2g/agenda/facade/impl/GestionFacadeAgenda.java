@@ -20,12 +20,19 @@ import com.software2g.agenda.dao.IProfesionalDao;
 import com.software2g.agenda.dao.ITiempoNoDisponibleDao;
 import com.software2g.agenda.dao.ITipoProcedimientoDao;
 import com.software2g.agenda.facade.IGestionFacadeAgenda;
+import com.software2g.portal.dao.IDepartamentoDao;
+import com.software2g.portal.dao.IMunicipioDao;
+import com.software2g.portal.dao.IPaisDao;
 import com.software2g.portal.dao.IPersonaDao;
 import com.software2g.portal.dao.ITipoDocumentoDao;
 import com.software2g.util.ConstantesAplicativo;
+import com.software2g.util.ValidaString;
 import com.software2g.vo.Agenda;
+import com.software2g.vo.Departamento;
 import com.software2g.vo.Evento;
 import com.software2g.vo.Jorandalaboral;
+import com.software2g.vo.Municipio;
+import com.software2g.vo.Pais;
 import com.software2g.vo.Parametroscalendario;
 import com.software2g.vo.Participante;
 import com.software2g.vo.Persona;
@@ -59,6 +66,12 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 	ITipoProcedimientoDao tipoProcedimientoDao;
 	@Autowired
 	ITipoDocumentoDao tipoDocumentoDao;
+	@Autowired
+	IPaisDao paisDao;
+	@Autowired
+	IDepartamentoDao departamentoDao;
+	@Autowired
+	IMunicipioDao municipioDao;
 	
 	public IAgendaDao getAgendaDao() {return agendaDao;}
 	public void setAgendaDao(IAgendaDao agendaDao) {this.agendaDao = agendaDao;}
@@ -82,6 +95,12 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 	public void setTipoProcedimientoDao(ITipoProcedimientoDao tipoProcedimientoDao) {this.tipoProcedimientoDao = tipoProcedimientoDao;}
 	public ITipoDocumentoDao getTipoDocumentoDao() {return tipoDocumentoDao;}
 	public void setTipoDocumentoDao(ITipoDocumentoDao tipoDocumentoDao) {this.tipoDocumentoDao = tipoDocumentoDao;}
+	public IPaisDao getPaisDao() {return paisDao;}
+	public void setPaisDao(IPaisDao paisDao) {this.paisDao = paisDao;}
+	public IDepartamentoDao getDepartamentoDao() {return departamentoDao;}
+	public void setDepartamentoDao(IDepartamentoDao departamentoDao) {this.departamentoDao = departamentoDao;}
+	public IMunicipioDao getMunicipioDao() {return municipioDao;}
+	public void setMunicipioDao(IMunicipioDao municipioDao) {this.municipioDao = municipioDao;}
 	
 	//-----------------------------------------------------------------------
 	// Agenda
@@ -764,6 +783,70 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 	//FIN ------ Implementacion de Metodos de la Entidad TipoDocumento
 	//-------------------------------------------------------------------------------------
 	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Pais findPaisById(long id) throws Exception {
+		try {
+			return getPaisDao().findPaisById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findPaisById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Aplicacion</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Pais> findAllPaiss() throws Exception {
+		try {
+			return getPaisDao().findAllPaiss();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllPaiss failed: " + e.getMessage());
+		}
+	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Departamento findDepartamentoById(long id) throws Exception {
+		try {
+			return getDepartamentoDao().findDepartamentoById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findDepartamentoById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Departamento> findAllDepartamentos() throws Exception {
+		try {
+			return getDepartamentoDao().findAllDepartamentos();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllDepartamentos failed: " + e.getMessage());
+		}
+	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Municipio findMunicipioById(long id) throws Exception {
+		try {
+			return getMunicipioDao().findMunicipioById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findMunicipioById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Municipio> findAllMunicipios() throws Exception {
+		try {
+			return getMunicipioDao().findAllMunicipios();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllMunicipios failed: " + e.getMessage());
+		}
+	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Municipio> findAllMunicipios(long idDpto) throws Exception {
+		try {
+			return getMunicipioDao().findAllMunicipios(idDpto);
+		} catch (RuntimeException e) {
+			throw new Exception("findAllMunicipios failed: " + e.getMessage());
+		}
+	}
 	
 	public boolean crearFile(String path, String nameFile, String ext, String tipoFile, String infoFind) throws Exception{
 		boolean result = true;
@@ -852,6 +935,37 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 			result = false;
 		} 
 		return result;
+	}
+	
+	public Persona findPacienteAtencionServicio(long evenId) throws Exception{
+		Persona persona = null; 
+		try {
+			List<Participante> listParticipantes = this.findAllParticipantes(evenId);
+			if(listParticipantes!=null&&listParticipantes.size()==1){
+				Participante participante = (Participante)listParticipantes.get(0);
+				System.out.println("getPartDocumento:["+participante.getPartDocumento()+"]");
+				System.out.println("getPartTipodocumento:["+participante.getPartTipodocumento()+"]");
+				persona = getPersonaDao().findPersona(participante.getPartDocumento(), participante.getPartTipodocumento());
+				System.out.println("persona:["+persona+"]");
+				if(persona==null){
+					persona = new Persona();
+					Tipodocumento tipoDocumento = (Tipodocumento)getTipoDocumentoDao().findTipodocumentoAbrev(participante.getPartTipodocumento()); 
+					ValidaString.imprimirObject(tipoDocumento);
+					persona.setTipodocumento(tipoDocumento);
+					persona.setDocumentoPers(participante.getPartDocumento());
+					persona.setPnombrePers(participante.getPartPnombre());
+					persona.setSnombrePers(participante.getPartSnombre());
+					persona.setPapellidoPers(participante.getPartPapellido());
+					persona.setSapellidoPers(participante.getPartSapellido());
+					persona.setTelefonoPers(participante.getPartTelefono());
+					persona.setEmailPers(participante.getPartEmail());
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return persona;
 	}
 }
 

@@ -1,6 +1,9 @@
 package com.software2g.util;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public final class ConstantesAplicativo {
 	public static final double MILLSECS_PER_DAY = 24 * 60 * 60 * 1000; //Milisegundos al día
@@ -61,6 +64,8 @@ public final class ConstantesAplicativo {
 	public static final String constanteCrearFileJSEventosAll = "allEventos";
 	public static final String constanteCrearFileJSEventosxAgenda = "allEventosxAgenda";
 	public static final String constanteEstadoEventoCreado = "CREADO";
+	
+	public static final List<String> constanteEstadoCivil = new ArrayList<String>(Arrays.asList("CASADO(A)","DIVORCIADO(A)", "SOLTERO(A)", "UNIÓN LIBRE"));
 	
 	// Acciones a realizar con la cita
 	public static final String constanteNoAplica = "NA";

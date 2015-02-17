@@ -6,8 +6,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.software2g.vo.Agenda;
+import com.software2g.vo.Departamento;
 import com.software2g.vo.Evento;
 import com.software2g.vo.Jorandalaboral;
+import com.software2g.vo.Municipio;
+import com.software2g.vo.Pais;
 import com.software2g.vo.Parametroscalendario;
 import com.software2g.vo.Participante;
 import com.software2g.vo.Persona;
@@ -253,5 +256,28 @@ public interface IGestionFacadeAgenda {
 	//FIN --- Metodos Entidad TipoDocumento
 	//--------------------------------------------------------------------------
 	
+	//--------------------------------------------------------------------------
+	//Metodos Entidad Pais
+	public Pais findPaisById(long id) throws Exception;
+	public List<Pais> findAllPaiss() throws Exception;
+	//FIN --- Metodos Entidad Pais
+	//--------------------------------------------------------------------------
+	
+	//--------------------------------------------------------------------------
+	//Metodos Entidad Departamento
+	public Departamento findDepartamentoById(long id) throws Exception;
+	public List<Departamento> findAllDepartamentos() throws Exception;
+	//FIN --- Metodos Entidad Departamento
+	//--------------------------------------------------------------------------
+	
+	//--------------------------------------------------------------------------
+	//Metodos Entidad Municipio
+	public Municipio findMunicipioById(long id) throws Exception;
+	public List<Municipio> findAllMunicipios() throws Exception;
+	public List<Municipio> findAllMunicipios(long idDpto) throws Exception;
+	//FIN --- Metodos Entidad Municipio
+	//--------------------------------------------------------------------------
+	
 	public boolean crearFile(String path, String nameFile, String ext, String tipoFile, String infoFind) throws Exception;
+	public Persona findPacienteAtencionServicio(long evenId)throws Exception;
 }

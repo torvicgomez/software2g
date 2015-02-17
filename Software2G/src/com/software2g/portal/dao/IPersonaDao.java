@@ -41,4 +41,5 @@ public interface IPersonaDao {
 	public List<Persona> findAllPersonas(String datoFind);
 	public List<Persona> findAllPersonasProfesional(String datoFind);
 	public List<Persona> findAllPersonasProfesionales(String datoFind);
+	public Persona findPersona(String documento, String abrevTidoc);
 }

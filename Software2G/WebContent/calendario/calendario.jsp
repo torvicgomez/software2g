@@ -157,7 +157,8 @@
 		var accionRealizar = document.getElementById('accionRealizar').value;
 		if(accionRealizar == 'AS'){
 			var profId = document.getElementById('profId').value;
-			document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoAll%>&idProfesional="+profId+"&funcPosicionado=Calendario/Servicio Clinico";
+			var evenId = document.getElementById('evenId').value;
+			document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoAll%>&idProfesional="+profId+"&idEvento="+evenId+"&funcPosicionado=Calendario/Servicio Clinico";
 		}else if(accionRealizar == 'CC'){
 			document.form.action="calendario.action?estado=<%=ConstantesAplicativo.constanteEstadoOperacionCita%>";
 		}else if(accionRealizar == 'NA'){

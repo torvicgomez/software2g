@@ -20,6 +20,7 @@ import com.software2g.agenda.facade.IGestionFacadeAgenda;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Agenda;
+import com.software2g.vo.Estadocivil;
 import com.software2g.vo.Evento;
 import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Parametroscalendario;
@@ -66,6 +67,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private Procedimiento procedimiento;
 	private List<Procedimiento> listProcedimiento;
 	private List<Tipodocumento> listTipoDoc;
+	private List<Estadocivil> listEstadoCivil;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -105,6 +107,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setListProcedimiento(List<Procedimiento> listProcedimiento) {this.listProcedimiento = listProcedimiento;}
 	public List<Tipodocumento> getListTipoDoc() {return listTipoDoc;}
 	public void setListTipoDoc(List<Tipodocumento> listTipoDoc) {this.listTipoDoc = listTipoDoc;}
+	public List<Estadocivil> getListEstadoCivil() {return listEstadoCivil;}
+	public void setListEstadoCivil(List<Estadocivil> listEstadoCivil) {this.listEstadoCivil = listEstadoCivil;}
 	
 	@SkipValidation
 	public String calendarioMethod(){

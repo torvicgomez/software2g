@@ -6,12 +6,12 @@
 	<head>
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {
-				$( "#datepicker3" ).datepicker({
+				$( "#fechaexpdocPers" ).datepicker({
 					changeYear: true,
 					yearRange:'-90:+90',
 					changeMonth: true
 				});
-				$( "#datepicker4" ).datepicker({
+				$( "#fechanacimientoPers" ).datepicker({
 					changeYear: true,
 					yearRange:'-90:+90',
 					changeMonth: true
@@ -200,14 +200,11 @@
 								<tr>
 									<td class="leftLabel"><s:text name="personal.numerodocumento"></s:text><s:text name="campo.requerido"></s:text></td>
 									<td>
-										<s:textfield name="persona.documentoPers" size="20" maxlength="15" cssClass="inputs"></s:textfield>
-										<s:select list="listTipoDoc" name="persona.tipodocumento.idTidoc" listKey="idTidoc" listValue="nombreTidoc" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs"/>
+										<s:textfield name="persona.documentoPers" size="20" maxlength="15" cssClass="inputs"></s:textfield><%--nombreTidoc --%>
+										<s:select list="listTipoDoc" name="persona.tipodocumento.idTidoc" listKey="idTidoc" listValue="abreviaturaTidoc" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs"/>
 									</td>
 									<td class="leftLabel"><s:text name="personal.fechaexpedicion"></s:text><s:text name="campo.requerido"></s:text></td>
-									<td>
-										<s:textfield name="persona.fechaexpdocPers" id="fechaexpdocPers" size="15" maxlength="10" cssClass="inputs"></s:textfield>
-										<img alt="Fecha Expedicion" src="<s:url value="/imagenes/calendario.gif"/>" onclick="showCalendar('fechaexpdocPers', 'y-mm-dd');">(yyyy-mm-dd)
-									</td>
+									<td><s:textfield name="persona.fechaexpdocPers" id="fechaexpdocPers" size="15" maxlength="10" cssClass="inputs"></s:textfield></td>
 								</tr>
 								<tr>
 									<td class="leftLabel"><s:text name="personal.primernombre"></s:text><s:text name="campo.requerido"></s:text></td>
@@ -225,15 +222,12 @@
 									<td class="leftLabel"><s:text name="personal.sexo"></s:text><s:text name="campo.requerido"></s:text>
 									</td>
 									<td>
-<%-- 										<s:select list="listSexo" name="personaVO.sexoPers" listKey="key" listValue="valor" headerKey="-1" headerValue=".::Seleccione::." />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  --%>
+										<s:select list="#{'F':'Femenino','M':'Masculino'}" name="persona.sexoPers" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 										<s:text name="personal.estadocivil"></s:text><s:text name="campo.requerido"></s:text>
 <%-- 										<s:select list="listEstadoCivil" name="personaVO.estadocivilPers" listKey="key" listValue="valor" headerKey="-1" headerValue=".::Seleccione::." /> --%>
 									</td>
 									<td class="leftLabel"><s:text name="personal.fechanacimiento"></s:text><s:text name="campo.requerido"></s:text></td>
-									<td>
-										<s:textfield name="persona.fechanacimientoPers" id="fechanacimientoPers" size="15" maxlength="10" cssClass="inputs"></s:textfield>
-										<img alt="Fecha Nacimiento" src="<s:url value="/imagenes/calendario.gif"/>" onclick="showCalendar('fechanacimientoPers', 'y-mm-dd');">(yyyy-mm-dd)
-									</td>
+									<td><s:textfield name="persona.fechanacimientoPers" id="fechanacimientoPers" size="15" maxlength="10" cssClass="inputs"></s:textfield></td>
 								</tr>
 								<tr>
 									<td class="leftLabel"><s:text name="personal.telefono"></s:text><s:text name="campo.requerido"></s:text></td>

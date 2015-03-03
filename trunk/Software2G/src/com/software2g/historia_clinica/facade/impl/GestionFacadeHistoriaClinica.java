@@ -8,327 +8,235 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.software2g.agenda.dao.IAgendaDao;
 import com.software2g.historia_clinica.dao.IAcudienteDao;
-import com.software2g.historia_clinica.dao.IAnamnesisDao;
+import com.software2g.historia_clinica.dao.IArchivoServicioDao;
 import com.software2g.historia_clinica.dao.IClaseDiagnosticoDao;
-import com.software2g.historia_clinica.dao.ICodigoEnfermedadesDao;
-import com.software2g.historia_clinica.dao.IConsultaDao;
-import com.software2g.historia_clinica.dao.IConvenioDao;
-import com.software2g.historia_clinica.dao.IDependenciaDao;
+import com.software2g.historia_clinica.dao.ICodigoEnfermedadDao;
 import com.software2g.historia_clinica.dao.IDiagnosticoDao;
-import com.software2g.historia_clinica.dao.IDireccionDao;
-import com.software2g.historia_clinica.dao.IEnfermedadDao;
-import com.software2g.historia_clinica.dao.IEnfermedadSufridaDao;
-import com.software2g.historia_clinica.dao.IEspecificaExamenDao;
-import com.software2g.historia_clinica.dao.IEspecificacionFormulaDao;
 import com.software2g.historia_clinica.dao.IEspecificacionParteCuerpoDao;
-import com.software2g.historia_clinica.dao.IEstadoCivilDao;
-import com.software2g.historia_clinica.dao.IEstadoMedicamentoDao;
-import com.software2g.historia_clinica.dao.IExamenDao;
-import com.software2g.historia_clinica.dao.IExamenParteCuerpoDao;
+import com.software2g.historia_clinica.dao.IExamenOptometriaDao;
 import com.software2g.historia_clinica.dao.IFinalidadDao;
 import com.software2g.historia_clinica.dao.IFormulacionDao;
-import com.software2g.historia_clinica.dao.IFrecuenciaDao;
-import com.software2g.historia_clinica.dao.IListaExamenConsultaDao;
+import com.software2g.historia_clinica.dao.IGafaDao;
+import com.software2g.historia_clinica.dao.IMedicamentoDao;
 import com.software2g.historia_clinica.dao.IMotivoDao;
+import com.software2g.historia_clinica.dao.IOdontogramaDao;
+import com.software2g.historia_clinica.dao.IOpcionRespuestaDao;
 import com.software2g.historia_clinica.dao.IPacienteDao;
 import com.software2g.historia_clinica.dao.IParentescoDao;
-import com.software2g.historia_clinica.dao.IPartesCuerpoDao;
-import com.software2g.historia_clinica.dao.IPersonaPerteneceDao;
+import com.software2g.historia_clinica.dao.IParteCuerpoDao;
 import com.software2g.historia_clinica.dao.IPosicionDao;
-import com.software2g.historia_clinica.dao.IRegistroExamenDao;
-import com.software2g.historia_clinica.dao.IRegistroFormulacionDao;
-import com.software2g.historia_clinica.dao.IRemisionDao;
+import com.software2g.historia_clinica.dao.IPreguntaDao;
+import com.software2g.historia_clinica.dao.IRegistroAVSCDao;
+import com.software2g.historia_clinica.dao.IRegistroCoverTestDao;
+import com.software2g.historia_clinica.dao.IRegistroExamenSimpleDao;
+import com.software2g.historia_clinica.dao.IRegistroOdontogramaDao;
+import com.software2g.historia_clinica.dao.IRegistroRxUsoDao;
+import com.software2g.historia_clinica.dao.IRespuestaDao;
+import com.software2g.historia_clinica.dao.ISeccionOdonDao;
+import com.software2g.historia_clinica.dao.ISegmentoAnamnesisDao;
 import com.software2g.historia_clinica.dao.ISeguridadSocialDao;
 import com.software2g.historia_clinica.dao.IServicioDao;
-import com.software2g.historia_clinica.dao.ISintomaComunDao;
-import com.software2g.historia_clinica.dao.ISintomaDao;
-import com.software2g.historia_clinica.dao.ITelefonoDao;
-import com.software2g.historia_clinica.dao.ITipoDatoDao;
 import com.software2g.historia_clinica.dao.ITipoDiagnosticoDao;
-import com.software2g.historia_clinica.dao.ITipoDocumentoInstitucionDao;
 import com.software2g.historia_clinica.dao.ITipoEspecialidadDao;
+import com.software2g.historia_clinica.dao.ITipoExamenOptDao;
+import com.software2g.historia_clinica.dao.ITipoFormulacionDao;
+import com.software2g.historia_clinica.dao.ITipoPreguntaDao;
+import com.software2g.historia_clinica.dao.ITipoSegmentoDao;
 import com.software2g.historia_clinica.dao.ITipoServicioDao;
-import com.software2g.historia_clinica.dao.ITipoUbicacionDao;
-import com.software2g.historia_clinica.dao.ITipoVirtualLinkDao;
-import com.software2g.historia_clinica.dao.ITomaDrogaDao;
-import com.software2g.historia_clinica.dao.IUbicacionDireccionDao;
-import com.software2g.historia_clinica.dao.IUbicacionTelefonoDao;
-import com.software2g.historia_clinica.dao.IUbicacionVirtualDao;
-import com.software2g.historia_clinica.dao.IUnidadesDao;
-import com.software2g.historia_clinica.dao.IVariableExamenDao;
-import com.software2g.historia_clinica.dao.IVariableFormulacionDao;
-import com.software2g.historia_clinica.dao.IVirtualLinkDao;
 import com.software2g.historia_clinica.facade.IGestionFacadeHistoriaClinica;
 import com.software2g.portal.dao.IPersonaDao;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Acudiente;
-import com.software2g.vo.Anamnesi;
+import com.software2g.vo.Archivoservicio;
 import com.software2g.vo.Clasediagnostico;
 import com.software2g.vo.Codigoenfermedade;
-import com.software2g.vo.Consulta;
-import com.software2g.vo.Convenio;
-import com.software2g.vo.Dependencia;
 import com.software2g.vo.Diagnostico;
-import com.software2g.vo.Direccion;
-import com.software2g.vo.Enfermedad;
-import com.software2g.vo.Enfermedadsufrida;
-import com.software2g.vo.Especificacionformula;
 import com.software2g.vo.Especificacionpartecuerpo;
-import com.software2g.vo.Especificaexamen;
-import com.software2g.vo.Estadocivil;
-import com.software2g.vo.Estadomedicamento;
-import com.software2g.vo.Examen;
-import com.software2g.vo.Examenpartecuerpo;
+import com.software2g.vo.Examenoptometria;
 import com.software2g.vo.Finalidad;
 import com.software2g.vo.Formulacion;
-import com.software2g.vo.Frecuencia;
-import com.software2g.vo.Listaexamenconsulta;
+import com.software2g.vo.Gafa;
+import com.software2g.vo.Medicamento;
 import com.software2g.vo.Motivo;
+import com.software2g.vo.Odontograma;
+import com.software2g.vo.Opcionrespuesta;
 import com.software2g.vo.Paciente;
 import com.software2g.vo.Parentesco;
-import com.software2g.vo.Partescuerpo;
+import com.software2g.vo.Partecuerpo;
 import com.software2g.vo.Persona;
-import com.software2g.vo.Personapertenece;
 import com.software2g.vo.Posicion;
-import com.software2g.vo.Registroexamen;
-import com.software2g.vo.Registroformulacion;
-import com.software2g.vo.Remision;
+import com.software2g.vo.Pregunta;
+import com.software2g.vo.Registroavsc;
+import com.software2g.vo.Registrocovertest;
+import com.software2g.vo.Registroexamensimple;
+import com.software2g.vo.Registroodontograma;
+import com.software2g.vo.Registrorxuso;
+import com.software2g.vo.Respuesta;
+import com.software2g.vo.Seccionodon;
+import com.software2g.vo.Segmentoanamnesi;
 import com.software2g.vo.Seguridadsocial;
 import com.software2g.vo.Servicio;
-import com.software2g.vo.Sintoma;
-import com.software2g.vo.Sintomacomun;
-import com.software2g.vo.Telefono;
-import com.software2g.vo.Tipodato;
 import com.software2g.vo.Tipodiagnostico;
-import com.software2g.vo.Tipodocumentoinst;
 import com.software2g.vo.Tipoespecialidad;
+import com.software2g.vo.Tipoexamenopt;
+import com.software2g.vo.Tipoformulacion;
+import com.software2g.vo.Tipopregunta;
+import com.software2g.vo.Tiposegmento;
 import com.software2g.vo.Tiposervicio;
-import com.software2g.vo.Tipoubicacion;
-import com.software2g.vo.Tipovirtuallink;
-import com.software2g.vo.Tomasinodroga;
-import com.software2g.vo.Ubicaciondireccion;
-import com.software2g.vo.Ubicaciontelefono;
-import com.software2g.vo.Ubicacionvirtual;
-import com.software2g.vo.Unidade;
-import com.software2g.vo.Variableexamen;
-import com.software2g.vo.Variableformulacion;
-import com.software2g.vo.Virtuallink;
 
 public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClinica {
+	
 	@Autowired
 	IAcudienteDao acudienteDao; 
 	@Autowired
-	IAnamnesisDao anamnesisDao;
+	IArchivoServicioDao archivoServicioDao;
 	@Autowired
 	IClaseDiagnosticoDao claseDiagnosticoDao;
 	@Autowired
-	ICodigoEnfermedadesDao codigoEnfermedadesDao;
+	ICodigoEnfermedadDao codigoEnfermedadDao;
 	@Autowired
-	IConsultaDao consultaDao;
-	@Autowired
-	IConvenioDao convenioDao;
-	@Autowired
-	IDependenciaDao dependenciaDao;
-	@Autowired
-	IDiagnosticoDao diagnosticoDao;
-	@Autowired
-	IDireccionDao direccionDao;
-	@Autowired
-	IEnfermedadDao enfermedadDao;
-	@Autowired
-	IEnfermedadSufridaDao enfermedadSufridaDao;
-	@Autowired
-	IEspecificacionFormulaDao especificacionFormulaDao;
+	IDiagnosticoDao diagnosticoDao; 
 	@Autowired
 	IEspecificacionParteCuerpoDao especificacionParteCuerpoDao;
 	@Autowired
-	IEspecificaExamenDao especificaExamenDao;
-	@Autowired
-	IEstadoCivilDao estadoCivilDao;
-	@Autowired
-	IEstadoMedicamentoDao estadoMedicamentoDao;
-	@Autowired
-	IExamenParteCuerpoDao examenParteCuerpoDao;
-	@Autowired
-	IExamenDao examenDao;
+	IExamenOptometriaDao examenOptometriaDao;
 	@Autowired
 	IFinalidadDao finalidadDao;
 	@Autowired
-	IFormulacionDao formulacionDao;
+	IFormulacionDao formulacionDao; 
 	@Autowired
-	IFrecuenciaDao frecuenciaDao;
+	IGafaDao gafaDao;
 	@Autowired
-	IListaExamenConsultaDao listaExamenConsultaDao;
+	IMedicamentoDao medicamentoDao;
 	@Autowired
 	IMotivoDao motivoDao;
+	@Autowired
+	IOdontogramaDao odontogramaDao;
+	@Autowired
+	IOpcionRespuestaDao opcionRespuestaDao;
 	@Autowired
 	IPacienteDao pacienteDao;
 	@Autowired
 	IParentescoDao parentescoDao;
 	@Autowired
-	IPartesCuerpoDao partesCuerpoDao;
-	@Autowired
-	IPersonaPerteneceDao personaPerteneceDao;
+	IParteCuerpoDao parteCuerpoDao ;
 	@Autowired
 	IPosicionDao posicionDao;
 	@Autowired
-	IRegistroExamenDao registroExamenDao;
+	IPreguntaDao preguntaDao;
 	@Autowired
-	IRegistroFormulacionDao registroFormulacionDao;
+	IRegistroAVSCDao registroAVSCDao;
 	@Autowired
-	IRemisionDao remisionDao;
+	IRegistroCoverTestDao registroCoverTestDao;
+	@Autowired
+	IRegistroExamenSimpleDao registroExamenSimpleDao;
+	@Autowired
+	IRegistroOdontogramaDao registroOdontogramaDao;
+	@Autowired
+	IRegistroRxUsoDao registroRxUsoDao;
+	@Autowired
+	IRespuestaDao respuestaDao;
+	@Autowired
+	ISeccionOdonDao seccionOdonDao;
+	@Autowired
+	ISegmentoAnamnesisDao segmentoAnamnesisDao;
 	@Autowired
 	ISeguridadSocialDao seguridadSocialDao;
 	@Autowired
 	IServicioDao servicioDao;
 	@Autowired
-	ISintomaComunDao sintomaComunDao;
-	@Autowired
-	ISintomaDao sintomaDao;
-	@Autowired
-	ITelefonoDao telefonoDao;
-	@Autowired
-	ITipoDatoDao tipoDatoDao;
-	@Autowired
 	ITipoDiagnosticoDao tipoDiagnosticoDao;
-	@Autowired
-	ITipoDocumentoInstitucionDao tipoDocumentoInstitucionDao;
 	@Autowired
 	ITipoEspecialidadDao tipoEspecialidadDao;
 	@Autowired
+	ITipoExamenOptDao tipoExamenOptDao;
+	@Autowired
+	ITipoFormulacionDao tipoFormulacionDao;
+	@Autowired
+	ITipoPreguntaDao tipoPreguntaDao;
+	@Autowired
+	ITipoSegmentoDao tipoSegmentoDao;
+	@Autowired
 	ITipoServicioDao tipoServicioDao;
-	@Autowired
-	ITipoUbicacionDao tipoUbicacionDao;
-	@Autowired
-	ITipoVirtualLinkDao tipoVirtualLinkDao;
-	@Autowired
-	ITomaDrogaDao tomaDrogaDao;
-	@Autowired
-	IUbicacionDireccionDao ubicacionDireccionDao;
-	@Autowired
-	IUbicacionTelefonoDao ubicacionTelefonoDao;
-	@Autowired
-	IUbicacionVirtualDao ubicacionVirtualDao; 
-	@Autowired
-	IUnidadesDao unidadesDao;
-	@Autowired
-	IVariableExamenDao variableExamenDao;
-	@Autowired
-	IVariableFormulacionDao variableFormulacionDao;
-	@Autowired
-	IVirtualLinkDao virtualLinkDao;
-	@Autowired
-	IPersonaDao personaDao;
 	
 	public IAcudienteDao getAcudienteDao() {return acudienteDao;}
 	public void setAcudienteDao(IAcudienteDao acudienteDao) {this.acudienteDao = acudienteDao;}
-	public IAnamnesisDao getAnamnesisDao() {return anamnesisDao;}
-	public void setAnamnesisDao(IAnamnesisDao anamnesisDao) {this.anamnesisDao = anamnesisDao;}
+	public IArchivoServicioDao getArchivoServicioDao() {return archivoServicioDao;}
+	public void setArchivoServicioDao(IArchivoServicioDao archivoServicioDao) {this.archivoServicioDao = archivoServicioDao;}
 	public IClaseDiagnosticoDao getClaseDiagnosticoDao() {return claseDiagnosticoDao;}
 	public void setClaseDiagnosticoDao(IClaseDiagnosticoDao claseDiagnosticoDao) {this.claseDiagnosticoDao = claseDiagnosticoDao;}
-	public ICodigoEnfermedadesDao getCodigoEnfermedadesDao() {return codigoEnfermedadesDao;}
-	public void setCodigoEnfermedadesDao(ICodigoEnfermedadesDao codigoEnfermedadesDao) {this.codigoEnfermedadesDao = codigoEnfermedadesDao;}
-	public IConsultaDao getConsultaDao() {return consultaDao;}
-	public void setConsultaDao(IConsultaDao consultaDao) {this.consultaDao = consultaDao;}
-	public IConvenioDao getConvenioDao() {return convenioDao;}
-	public void setConvenioDao(IConvenioDao convenioDao) {this.convenioDao = convenioDao;}
-	public IDependenciaDao getDependenciaDao() {return dependenciaDao;}
-	public void setDependenciaDao(IDependenciaDao dependenciaDao) {this.dependenciaDao = dependenciaDao;}
+	public ICodigoEnfermedadDao getCodigoEnfermedadDao() {return codigoEnfermedadDao;}
+	public void setCodigoEnfermedadDao(ICodigoEnfermedadDao codigoEnfermedadDao) {this.codigoEnfermedadDao = codigoEnfermedadDao;}
 	public IDiagnosticoDao getDiagnosticoDao() {return diagnosticoDao;}
 	public void setDiagnosticoDao(IDiagnosticoDao diagnosticoDao) {this.diagnosticoDao = diagnosticoDao;}
-	public IDireccionDao getDireccionDao() {return direccionDao;}
-	public void setDireccionDao(IDireccionDao direccionDao) {this.direccionDao = direccionDao;}
-	public IEnfermedadDao getEnfermedadDao() {return enfermedadDao;}
-	public void setEnfermedadDao(IEnfermedadDao enfermedadDao) {this.enfermedadDao = enfermedadDao;}
-	public IEnfermedadSufridaDao getEnfermedadSufridaDao() {return enfermedadSufridaDao;}
-	public void setEnfermedadSufridaDao(IEnfermedadSufridaDao enfermedadSufridaDao) {this.enfermedadSufridaDao = enfermedadSufridaDao;}
-	public IEspecificacionFormulaDao getEspecificacionFormulaDao() {return especificacionFormulaDao;}
-	public void setEspecificacionFormulaDao(IEspecificacionFormulaDao especificacionFormulaDao) {this.especificacionFormulaDao = especificacionFormulaDao;}
 	public IEspecificacionParteCuerpoDao getEspecificacionParteCuerpoDao() {return especificacionParteCuerpoDao;}
 	public void setEspecificacionParteCuerpoDao(IEspecificacionParteCuerpoDao especificacionParteCuerpoDao) {this.especificacionParteCuerpoDao = especificacionParteCuerpoDao;}
-	public IEspecificaExamenDao getEspecificaExamenDao() {return especificaExamenDao;}
-	public void setEspecificaExamenDao(IEspecificaExamenDao especificaExamenDao) {this.especificaExamenDao = especificaExamenDao;}
-	public IEstadoCivilDao getEstadoCivilDao() {return estadoCivilDao;}
-	public void setEstadoCivilDao(IEstadoCivilDao estadoCivilDao) {this.estadoCivilDao = estadoCivilDao;}
-	public IEstadoMedicamentoDao getEstadoMedicamentoDao() {return estadoMedicamentoDao;}
-	public void setEstadoMedicamentoDao(IEstadoMedicamentoDao estadoMedicamentoDao) {this.estadoMedicamentoDao = estadoMedicamentoDao;}
-	public IExamenParteCuerpoDao getExamenParteCuerpoDao() {return examenParteCuerpoDao;}
-	public void setExamenParteCuerpoDao(IExamenParteCuerpoDao examenParteCuerpoDao) {this.examenParteCuerpoDao = examenParteCuerpoDao;}
-	public IExamenDao getExamenDao() {return examenDao;}
-	public void setExamenDao(IExamenDao examenDao) {this.examenDao = examenDao;}
+	public IExamenOptometriaDao getExamenOptometriaDao() {return examenOptometriaDao;}
+	public void setExamenOptometriaDao(IExamenOptometriaDao examenOptometriaDao) {this.examenOptometriaDao = examenOptometriaDao;}
 	public IFinalidadDao getFinalidadDao() {return finalidadDao;}
 	public void setFinalidadDao(IFinalidadDao finalidadDao) {this.finalidadDao = finalidadDao;}
 	public IFormulacionDao getFormulacionDao() {return formulacionDao;}
 	public void setFormulacionDao(IFormulacionDao formulacionDao) {this.formulacionDao = formulacionDao;}
-	public IFrecuenciaDao getFrecuenciaDao() {return frecuenciaDao;}
-	public void setFrecuenciaDao(IFrecuenciaDao frecuenciaDao) {this.frecuenciaDao = frecuenciaDao;}
-	public IListaExamenConsultaDao getListaExamenConsultaDao() {return listaExamenConsultaDao;}
-	public void setListaExamenConsultaDao(IListaExamenConsultaDao listaExamenConsultaDao) {this.listaExamenConsultaDao = listaExamenConsultaDao;}
+	public IGafaDao getGafaDao() {return gafaDao;}
+	public void setGafaDao(IGafaDao gafaDao) {this.gafaDao = gafaDao;}
+	public IMedicamentoDao getMedicamentoDao() {return medicamentoDao;}
+	public void setMedicamentoDao(IMedicamentoDao medicamentoDao) {this.medicamentoDao = medicamentoDao;}
 	public IMotivoDao getMotivoDao() {return motivoDao;}
 	public void setMotivoDao(IMotivoDao motivoDao) {this.motivoDao = motivoDao;}
+	public IOdontogramaDao getOdontogramaDao() {return odontogramaDao;}
+	public void setOdontogramaDao(IOdontogramaDao odontogramaDao) {this.odontogramaDao = odontogramaDao;}
+	public IOpcionRespuestaDao getOpcionRespuestaDao() {return opcionRespuestaDao;}
+	public void setOpcionRespuestaDao(IOpcionRespuestaDao opcionRespuestaDao) {this.opcionRespuestaDao = opcionRespuestaDao;}
 	public IPacienteDao getPacienteDao() {return pacienteDao;}
 	public void setPacienteDao(IPacienteDao pacienteDao) {this.pacienteDao = pacienteDao;}
 	public IParentescoDao getParentescoDao() {return parentescoDao;}
 	public void setParentescoDao(IParentescoDao parentescoDao) {this.parentescoDao = parentescoDao;}
-	public IPartesCuerpoDao getPartesCuerpoDao() {return partesCuerpoDao;}
-	public void setPartesCuerpoDao(IPartesCuerpoDao partesCuerpoDao) {this.partesCuerpoDao = partesCuerpoDao;}
-	public IPersonaPerteneceDao getPersonaPerteneceDao() {return personaPerteneceDao;}
-	public void setPersonaPerteneceDao(IPersonaPerteneceDao personaPerteneceDao) {this.personaPerteneceDao = personaPerteneceDao;}
+	public IParteCuerpoDao getParteCuerpoDao() {return parteCuerpoDao;}
+	public void setParteCuerpoDao(IParteCuerpoDao parteCuerpoDao) {this.parteCuerpoDao = parteCuerpoDao;}
 	public IPosicionDao getPosicionDao() {return posicionDao;}
 	public void setPosicionDao(IPosicionDao posicionDao) {this.posicionDao = posicionDao;}
-	public IRegistroExamenDao getRegistroExamenDao() {return registroExamenDao;}
-	public void setRegistroExamenDao(IRegistroExamenDao registroExamenDao) {this.registroExamenDao = registroExamenDao;}
-	public IRegistroFormulacionDao getRegistroFormulacionDao() {return registroFormulacionDao;}
-	public void setRegistroFormulacionDao(IRegistroFormulacionDao registroFormulacionDao) {this.registroFormulacionDao = registroFormulacionDao;}
-	public IRemisionDao getRemisionDao() {return remisionDao;}
-	public void setRemisionDao(IRemisionDao remisionDao) {this.remisionDao = remisionDao;}
+	public IPreguntaDao getPreguntaDao() {return preguntaDao;}
+	public void setPreguntaDao(IPreguntaDao preguntaDao) {this.preguntaDao = preguntaDao;}
+	public IRegistroAVSCDao getRegistroAVSCDao() {return registroAVSCDao;}
+	public void setRegistroAVSCDao(IRegistroAVSCDao registroAVSCDao) {this.registroAVSCDao = registroAVSCDao;}
+	public IRegistroCoverTestDao getRegistroCoverTestDao() {return registroCoverTestDao;}
+	public void setRegistroCoverTestDao(IRegistroCoverTestDao registroCoverTestDao) {this.registroCoverTestDao = registroCoverTestDao;}
+	public IRegistroExamenSimpleDao getRegistroExamenSimpleDao() {return registroExamenSimpleDao;}
+	public void setRegistroExamenSimpleDao(IRegistroExamenSimpleDao registroExamenSimpleDao) {this.registroExamenSimpleDao = registroExamenSimpleDao;}
+	public IRegistroOdontogramaDao getRegistroOdontogramaDao() {return registroOdontogramaDao;}
+	public void setRegistroOdontogramaDao(IRegistroOdontogramaDao registroOdontogramaDao) {this.registroOdontogramaDao = registroOdontogramaDao;}
+	public IRegistroRxUsoDao getRegistroRxUsoDao() {return registroRxUsoDao;}
+	public void setRegistroRxUsoDao(IRegistroRxUsoDao registroRxUsoDao) {this.registroRxUsoDao = registroRxUsoDao;}
+	public IRespuestaDao getRespuestaDao() {return respuestaDao;}
+	public void setRespuestaDao(IRespuestaDao respuestaDao) {this.respuestaDao = respuestaDao;}
+	public ISeccionOdonDao getSeccionOdonDao() {return seccionOdonDao;}
+	public void setSeccionOdonDao(ISeccionOdonDao seccionOdonDao) {this.seccionOdonDao = seccionOdonDao;}
+	public ISegmentoAnamnesisDao getSegmentoAnamnesisDao() {return segmentoAnamnesisDao;}
+	public void setSegmentoAnamnesisDao(ISegmentoAnamnesisDao segmentoAnamnesisDao) {this.segmentoAnamnesisDao = segmentoAnamnesisDao;}
 	public ISeguridadSocialDao getSeguridadSocialDao() {return seguridadSocialDao;}
 	public void setSeguridadSocialDao(ISeguridadSocialDao seguridadSocialDao) {this.seguridadSocialDao = seguridadSocialDao;}
 	public IServicioDao getServicioDao() {return servicioDao;}
 	public void setServicioDao(IServicioDao servicioDao) {this.servicioDao = servicioDao;}
-	public ISintomaComunDao getSintomaComunDao() {return sintomaComunDao;}
-	public void setSintomaComunDao(ISintomaComunDao sintomaComunDao) {this.sintomaComunDao = sintomaComunDao;}
-	public ISintomaDao getSintomaDao() {return sintomaDao;}
-	public void setSintomaDao(ISintomaDao sintomaDao) {this.sintomaDao = sintomaDao;}
-	public ITelefonoDao getTelefonoDao() {return telefonoDao;}
-	public void setTelefonoDao(ITelefonoDao telefonoDao) {this.telefonoDao = telefonoDao;}
-	public ITipoDatoDao getTipoDatoDao() {return tipoDatoDao;}
-	public void setTipoDatoDao(ITipoDatoDao tipoDatoDao) {this.tipoDatoDao = tipoDatoDao;}
 	public ITipoDiagnosticoDao getTipoDiagnosticoDao() {return tipoDiagnosticoDao;}
 	public void setTipoDiagnosticoDao(ITipoDiagnosticoDao tipoDiagnosticoDao) {this.tipoDiagnosticoDao = tipoDiagnosticoDao;}
-	public ITipoDocumentoInstitucionDao getTipoDocumentoInstitucionDao() {return tipoDocumentoInstitucionDao;}
-	public void setTipoDocumentoInstitucionDao(ITipoDocumentoInstitucionDao tipoDocumentoInstitucionDao) {this.tipoDocumentoInstitucionDao = tipoDocumentoInstitucionDao;}
 	public ITipoEspecialidadDao getTipoEspecialidadDao() {return tipoEspecialidadDao;}
 	public void setTipoEspecialidadDao(ITipoEspecialidadDao tipoEspecialidadDao) {this.tipoEspecialidadDao = tipoEspecialidadDao;}
+	public ITipoExamenOptDao getTipoExamenOptDao() {return tipoExamenOptDao;}
+	public void setTipoExamenOptDao(ITipoExamenOptDao tipoExamenOptDao) {this.tipoExamenOptDao = tipoExamenOptDao;}
+	public ITipoFormulacionDao getTipoFormulacionDao() {return tipoFormulacionDao;}
+	public void setTipoFormulacionDao(ITipoFormulacionDao tipoFormulacionDao) {this.tipoFormulacionDao = tipoFormulacionDao;}
+	public ITipoPreguntaDao getTipoPreguntaDao() {return tipoPreguntaDao;}
+	public void setTipoPreguntaDao(ITipoPreguntaDao tipoPreguntaDao) {this.tipoPreguntaDao = tipoPreguntaDao;}
+	public ITipoSegmentoDao getTipoSegmentoDao() {return tipoSegmentoDao;}
+	public void setTipoSegmentoDao(ITipoSegmentoDao tipoSegmentoDao) {this.tipoSegmentoDao = tipoSegmentoDao;}
 	public ITipoServicioDao getTipoServicioDao() {return tipoServicioDao;}
 	public void setTipoServicioDao(ITipoServicioDao tipoServicioDao) {this.tipoServicioDao = tipoServicioDao;}
-	public ITipoUbicacionDao getTipoUbicacionDao() {return tipoUbicacionDao;}
-	public void setTipoUbicacionDao(ITipoUbicacionDao tipoUbicacionDao) {this.tipoUbicacionDao = tipoUbicacionDao;}
-	public ITipoVirtualLinkDao getTipoVirtualLinkDao() {return tipoVirtualLinkDao;}
-	public void setTipoVirtualLinkDao(ITipoVirtualLinkDao tipoVirtualLinkDao) {this.tipoVirtualLinkDao = tipoVirtualLinkDao;}
-	public ITomaDrogaDao getTomaDrogaDao() {return tomaDrogaDao;}
-	public void setTomaDrogaDao(ITomaDrogaDao tomaDrogaDao) {this.tomaDrogaDao = tomaDrogaDao;}
-	public IUbicacionDireccionDao getUbicacionDireccionDao() {return ubicacionDireccionDao;}
-	public void setUbicacionDireccionDao(IUbicacionDireccionDao ubicacionDireccionDao) {this.ubicacionDireccionDao = ubicacionDireccionDao;}
-	public IUbicacionTelefonoDao getUbicacionTelefonoDao() {return ubicacionTelefonoDao;}
-	public void setUbicacionTelefonoDao(IUbicacionTelefonoDao ubicacionTelefonoDao) {this.ubicacionTelefonoDao = ubicacionTelefonoDao;}
-	public IUbicacionVirtualDao getUbicacionVirtualDao() {return ubicacionVirtualDao;}
-	public void setUbicacionVirtualDao(IUbicacionVirtualDao ubicacionVirtualDao) {this.ubicacionVirtualDao = ubicacionVirtualDao;}
-	public IUnidadesDao getUnidadesDao() {return unidadesDao;}
-	public void setUnidadesDao(IUnidadesDao unidadesDao) {this.unidadesDao = unidadesDao;}
-	public IVariableExamenDao getVariableExamenDao() {return variableExamenDao;}
-	public void setVariableExamenDao(IVariableExamenDao variableExamenDao) {this.variableExamenDao = variableExamenDao;}
-	public IVariableFormulacionDao getVariableFormulacionDao() {return variableFormulacionDao;}
-	public void setVariableFormulacionDao(IVariableFormulacionDao variableFormulacionDao) {this.variableFormulacionDao = variableFormulacionDao;}
-	public IVirtualLinkDao getVirtualLinkDao() {return virtualLinkDao;}
-	public void setVirtualLinkDao(IVirtualLinkDao virtualLinkDao) {this.virtualLinkDao = virtualLinkDao;}
-	public IPersonaDao getPersonaDao() {return personaDao;}
-	public void setPersonaDao(IPersonaDao personaDao) {this.personaDao = personaDao;}
 	
 	//******************************************************************
 	// Acudiente
-	//******************************************************************	
+	//******************************************************************
 	/**
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
@@ -376,58 +284,56 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	//******************************************************************
 	// Fin Acudiente
 	//******************************************************************	
-
 	//******************************************************************
-	// Anamnesis
+	// Archivo Servicio
 	//******************************************************************
 	/**
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Anamnesi findAnamnesiById(long id) throws Exception {
+	public Archivoservicio findArchivoservicioById(long id) throws Exception {
 		try {
-			return getAnamnesisDao().findAnamnesiById(id);
+			return getArchivoServicioDao().findArchivoservicioById(id);
 		} catch (RuntimeException e) {
-			throw new Exception("findAnamnesiById failed with the id " + id + ": " + e.getMessage());
+			throw new Exception("findArchivoservicioById failed with the id " + id + ": " + e.getMessage());
 		}
 	}
 	/**
-	 * Return all persistent instances of the <code>Anamnesi</code> entity.
+	 * Return all persistent instances of the <code>Archivoservicio</code> entity.
 	 */
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Anamnesi> findAllAnamnesis() throws Exception {
+	public List<Archivoservicio> findAllArchivoservicios() throws Exception {
 		try {
-			return getAnamnesisDao().findAllAnamnesis();
+			return getArchivoServicioDao().findAllArchivoservicios();
 		} catch (RuntimeException e) {
-			throw new Exception("findAllAnamnesis failed: " + e.getMessage());
+			throw new Exception("findAllArchivoservicios failed: " + e.getMessage());
 		}
 	}
 
 	/**
 	 * Make the given instance managed and persistent.
 	 */
-	public void persistAnamnesi(Anamnesi anamnesi) throws Exception {
+	public void persistArchivoservicio(Archivoservicio archivoservicio) throws Exception {
 		try {
-			getAnamnesisDao().persistAnamnesi(anamnesi);
+			getArchivoServicioDao().persistArchivoservicio(archivoservicio);
 		} catch (RuntimeException e) {
-			throw new Exception("persistAnamnesi failed: " + e.getMessage());
+			throw new Exception("persistArchivoservicio failed: " + e.getMessage());
 		}
 	}
 	/**
 	 * Remove the given persistent instance.
 	 */
-	public void removeAnamnesi(Anamnesi anamnesi) throws Exception {
+	public void removeArchivoservicio(Archivoservicio archivoservicio) throws Exception {
 		try {
-			getAnamnesisDao().removeAnamnesi(anamnesi);
+			getArchivoServicioDao().removeArchivoservicio(archivoservicio);
 		} catch (RuntimeException e) {
-			throw new Exception("removeAnamnesi failed: " + e.getMessage());
+			throw new Exception("removeArchivoservicio failed: " + e.getMessage());
 		}
 	}
 	//******************************************************************
-	// Fin Anamnesis
+	// Fin Archivo Servicio
 	//******************************************************************	
-
 	//******************************************************************
 	// Clase Diagnostico
 	//******************************************************************
@@ -478,7 +384,6 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	//******************************************************************
 	// Fin Clase Diagnostico
 	//******************************************************************	
-
 	//******************************************************************
 	// Codigo Enfermedades
 	//******************************************************************
@@ -489,7 +394,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
 	public Codigoenfermedade findCodigoenfermedadeById(long id) throws Exception {
 		try {
-			return getCodigoEnfermedadesDao().findCodigoenfermedadeById(id);
+			return getCodigoEnfermedadDao().findCodigoenfermedadeById(id);
 		} catch (RuntimeException e) {
 			throw new Exception("findCodigoenfermedadeById failed with the id " + id + ": " + e.getMessage());
 		}
@@ -500,7 +405,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
 	public List<Codigoenfermedade> findAllCodigoenfermedades() throws Exception {
 		try {
-			return getCodigoEnfermedadesDao().findAllCodigoenfermedades();
+			return getCodigoEnfermedadDao().findAllCodigoenfermedades();
 		} catch (RuntimeException e) {
 			throw new Exception("findAllCodigoenfermedades failed: " + e.getMessage());
 		}
@@ -511,7 +416,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	 */
 	public void persistCodigoenfermedade(Codigoenfermedade codigoenfermedade) throws Exception {
 		try {
-			getCodigoEnfermedadesDao().persistCodigoenfermedade(codigoenfermedade);
+			getCodigoEnfermedadDao().persistCodigoenfermedade(codigoenfermedade);
 		} catch (RuntimeException e) {
 			throw new Exception("persistCodigoenfermedade failed: " + e.getMessage());
 		}
@@ -521,7 +426,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	 */
 	public void removeCodigoenfermedade(Codigoenfermedade codigoenfermedade) throws Exception {
 		try {
-			getCodigoEnfermedadesDao().removeCodigoenfermedade(codigoenfermedade);
+			getCodigoEnfermedadDao().removeCodigoenfermedade(codigoenfermedade);
 		} catch (RuntimeException e) {
 			throw new Exception("removeCodigoenfermedade failed: " + e.getMessage());
 		}
@@ -529,160 +434,6 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	//******************************************************************
 	// Fin Codigo Enfermedades
 	//******************************************************************	
-	
-	//******************************************************************
-	// Consulta
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Consulta findConsultaById(long id) throws Exception {
-		try {
-			return getConsultaDao().findConsultaById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findConsultaById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Consulta</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Consulta> findAllConsultas() throws Exception {
-		try {
-			return getConsultaDao().findAllConsultas();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllConsultas failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistConsulta(Consulta consulta) throws Exception {
-		try {
-			getConsultaDao().persistConsulta(consulta);
-		} catch (RuntimeException e) {
-			throw new Exception("persistConsulta failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeConsulta(Consulta consulta) throws Exception {
-		try {
-			getConsultaDao().removeConsulta(consulta);
-		} catch (RuntimeException e) {
-			throw new Exception("removeConsulta failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Consulta
-	//******************************************************************	
-
-	//******************************************************************
-	// Convenio
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Convenio findConvenioById(com.software2g.vo.ConvenioPK id) throws Exception {
-		try {
-			return getConvenioDao().findConvenioById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findConvenioById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Convenio</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Convenio> findAllConvenios() throws Exception {
-		try {
-			return getConvenioDao().findAllConvenios();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllConvenios failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistConvenio(Convenio convenio) throws Exception {
-		try {
-			getConvenioDao().persistConvenio(convenio);
-		} catch (RuntimeException e) {
-			throw new Exception("persistConvenio failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeConvenio(Convenio convenio) throws Exception {
-		try {
-			getConvenioDao().removeConvenio(convenio);
-		} catch (RuntimeException e) {
-			throw new Exception("removeConvenio failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Convenio
-	//******************************************************************	
-
-	//******************************************************************
-	// Dependnecia
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Dependencia findDependenciaById(long id) throws Exception {
-		try {
-			return getDependenciaDao().findDependenciaById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findDependenciaById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Dependencia</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Dependencia> findAllDependencias() throws Exception {
-		try {
-			return getDependenciaDao().findAllDependencias();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllDependencias failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistDependencia(Dependencia dependencia) throws Exception {
-		try {
-			getDependenciaDao().persistDependencia(dependencia);
-		} catch (RuntimeException e) {
-			throw new Exception("persistDependencia failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeDependencia(Dependencia dependencia) throws Exception {
-		try {
-			getDependenciaDao().removeDependencia(dependencia);
-		} catch (RuntimeException e) {
-			throw new Exception("removeDependencia failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Dependnecia
-	//******************************************************************	
-
 	//******************************************************************
 	// Diagnostico
 	//******************************************************************
@@ -733,211 +484,6 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	//******************************************************************
 	// Fin Diagnostico
 	//******************************************************************	
-
-	//******************************************************************
-	// Direccion
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Direccion findDireccionById(long id) throws Exception {
-		try {
-			return getDireccionDao().findDireccionById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findDireccionById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Direccion</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Direccion> findAllDireccions() throws Exception {
-		try {
-			return getDireccionDao().findAllDireccions();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllDireccions failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistDireccion(Direccion direccion) throws Exception {
-		try {
-			getDireccionDao().persistDireccion(direccion);
-		} catch (RuntimeException e) {
-			throw new Exception("persistDireccion failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeDireccion(Direccion direccion) throws Exception {
-		try {
-			getDireccionDao().removeDireccion(direccion);
-		} catch (RuntimeException e) {
-			throw new Exception("removeDireccion failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Direccion
-	//******************************************************************	
-
-	//******************************************************************
-	// Enfermedad
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Enfermedad findEnfermedadById(long id) throws Exception {
-		try {
-			return getEnfermedadDao().findEnfermedadById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findEnfermedadById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Enfermedad</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Enfermedad> findAllEnfermedads() throws Exception {
-		try {
-			return getEnfermedadDao().findAllEnfermedads();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllEnfermedads failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistEnfermedad(Enfermedad enfermedad) throws Exception {
-		try {
-			getEnfermedadDao().persistEnfermedad(enfermedad);
-		} catch (RuntimeException e) {
-			throw new Exception("persistEnfermedad failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeEnfermedad(Enfermedad enfermedad) throws Exception {
-		try {
-			getEnfermedadDao().removeEnfermedad(enfermedad);
-		} catch (RuntimeException e) {
-			throw new Exception("removeEnfermedad failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Enfermedad
-	//******************************************************************	
-
-	//******************************************************************
-	// Enfermedad Sufrida
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Enfermedadsufrida findEnfermedadsufridaById(long id) throws Exception {
-		try {
-			return getEnfermedadSufridaDao().findEnfermedadsufridaById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findEnfermedadsufridaById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Enfermedadsufrida</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Enfermedadsufrida> findAllEnfermedadsufridas() throws Exception {
-		try {
-			return getEnfermedadSufridaDao().findAllEnfermedadsufridas();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllEnfermedadsufridas failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistEnfermedadsufrida(Enfermedadsufrida enfermedadsufrida) throws Exception {
-		try {
-			getEnfermedadSufridaDao().persistEnfermedadsufrida(enfermedadsufrida);
-		} catch (RuntimeException e) {
-			throw new Exception("persistEnfermedadsufrida failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeEnfermedadsufrida(Enfermedadsufrida enfermedadsufrida) throws Exception {
-		try {
-			getEnfermedadSufridaDao().removeEnfermedadsufrida(enfermedadsufrida);
-		} catch (RuntimeException e) {
-			throw new Exception("removeEnfermedadsufrida failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Enfermedad Sufrida
-	//******************************************************************	
-
-	//******************************************************************
-	// Especificacion Formula
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Especificacionformula findEspecificacionformulaById(long id) throws Exception {
-		try {
-			return getEspecificacionFormulaDao().findEspecificacionformulaById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findEspecificacionformulaById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Especificacionformula</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Especificacionformula> findAllEspecificacionformulas() throws Exception {
-		try {
-			return getEspecificacionFormulaDao().findAllEspecificacionformulas();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllEspecificacionformulas failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistEspecificacionformula(Especificacionformula especificacionformula) throws Exception {
-		try {
-			getEspecificacionFormulaDao().persistEspecificacionformula(especificacionformula);
-		} catch (RuntimeException e) {
-			throw new Exception("persistEspecificacionformula failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeEspecificacionformula(Especificacionformula especificacionformula) throws Exception {
-		try {
-			getEspecificacionFormulaDao().removeEspecificacionformula(especificacionformula);
-		} catch (RuntimeException e) {
-			throw new Exception("removeEspecificacionformula failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Especificacion Formula
-	//******************************************************************	
-
 	//******************************************************************
 	// Especificacion Parte Cuerpo
 	//******************************************************************
@@ -988,262 +534,56 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	//******************************************************************
 	// Fin Especificacion Parte Cuerpo
 	//******************************************************************	
-
 	//******************************************************************
-	// Especificacion Examen
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Especificaexamen findEspecificaexamenById(long id) throws Exception {
-		try {
-			return getEspecificaExamenDao().findEspecificaexamenById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findEspecificaexamenById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Especificaexamen</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Especificaexamen> findAllEspecificaexamens() throws Exception {
-		try {
-			return getEspecificaExamenDao().findAllEspecificaexamens();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllEspecificaexamens failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistEspecificaexamen(Especificaexamen especificaexamen) throws Exception {
-		try {
-			getEspecificaExamenDao().persistEspecificaexamen(especificaexamen);
-		} catch (RuntimeException e) {
-			throw new Exception("persistEspecificaexamen failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeEspecificaexamen(Especificaexamen especificaexamen) throws Exception {
-		try {
-			getEspecificaExamenDao().removeEspecificaexamen(especificaexamen);
-		} catch (RuntimeException e) {
-			throw new Exception("removeEspecificaexamen failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Especificacion Examen
-	//******************************************************************	
-
-	//******************************************************************
-	// Estado Civil
+	// Examen Optometria
 	//******************************************************************
 	/**
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Estadocivil findEstadocivilById(long id) throws Exception {
+	public Examenoptometria findExamenoptometriaById(long id) throws Exception {
 		try {
-			return getEstadoCivilDao().findEstadocivilById(id);
+			return getExamenOptometriaDao().findExamenoptometriaById(id);
 		} catch (RuntimeException e) {
-			throw new Exception("findEstadocivilById failed with the id " + id + ": " + e.getMessage());
+			throw new Exception("findExamenoptometriaById failed with the id " + id + ": " + e.getMessage());
 		}
 	}
 	/**
-	 * Return all persistent instances of the <code>Estadocivil</code> entity.
+	 * Return all persistent instances of the <code>Examenoptometria</code> entity.
 	 */
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Estadocivil> findAllEstadocivils() throws Exception {
+	public List<Examenoptometria> findAllExamenoptometrias() throws Exception {
 		try {
-			return getEstadoCivilDao().findAllEstadocivils();
+			return getExamenOptometriaDao().findAllExamenoptometrias();
 		} catch (RuntimeException e) {
-			throw new Exception("findAllEstadocivils failed: " + e.getMessage());
+			throw new Exception("findAllExamenoptometrias failed: " + e.getMessage());
 		}
 	}
 
 	/**
 	 * Make the given instance managed and persistent.
 	 */
-	public void persistEstadocivil(Estadocivil estadocivil) throws Exception {
+	public void persistExamenoptometria(Examenoptometria examenoptometria) throws Exception {
 		try {
-			getEstadoCivilDao().persistEstadocivil(estadocivil);
+			getExamenOptometriaDao().persistExamenoptometria(examenoptometria);
 		} catch (RuntimeException e) {
-			throw new Exception("persistEstadocivil failed: " + e.getMessage());
+			throw new Exception("persistExamenoptometria failed: " + e.getMessage());
 		}
 	}
 	/**
 	 * Remove the given persistent instance.
 	 */
-	public void removeEstadocivil(Estadocivil estadocivil) throws Exception {
+	public void removeExamenoptometria(Examenoptometria examenoptometria) throws Exception {
 		try {
-			getEstadoCivilDao().removeEstadocivil(estadocivil);
+			getExamenOptometriaDao().removeExamenoptometria(examenoptometria);
 		} catch (RuntimeException e) {
-			throw new Exception("removeEstadocivil failed: " + e.getMessage());
+			throw new Exception("removeExamenoptometria failed: " + e.getMessage());
 		}
 	}
 	//******************************************************************
-	// Fin Estado Civil
+	// Fin Examen Optometria
 	//******************************************************************	
-
-	//******************************************************************
-	// Estado Medicamento
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Estadomedicamento findEstadomedicamentoById(long id) throws Exception {
-		try {
-			return getEstadoMedicamentoDao().findEstadomedicamentoById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findEstadomedicamentoById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Estadomedicamento</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Estadomedicamento> findAllEstadomedicamentos() throws Exception {
-		try {
-			return getEstadoMedicamentoDao().findAllEstadomedicamentos();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllEstadomedicamentos failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistEstadomedicamento(Estadomedicamento estadomedicamento) throws Exception {
-		try {
-			getEstadoMedicamentoDao().persistEstadomedicamento(estadomedicamento);
-		} catch (RuntimeException e) {
-			throw new Exception("persistEstadomedicamento failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeEstadomedicamento(Estadomedicamento estadomedicamento) throws Exception {
-		try {
-			getEstadoMedicamentoDao().removeEstadomedicamento(estadomedicamento);
-		} catch (RuntimeException e) {
-			throw new Exception("removeEstadomedicamento failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Estado Medicamento
-	//******************************************************************	
-
-	//******************************************************************
-	// Examen Parte Cuerpo
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Examenpartecuerpo findExamenpartecuerpoById(long id) throws Exception {
-		try {
-			return getExamenParteCuerpoDao().findExamenpartecuerpoById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findExamenpartecuerpoById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Examenpartecuerpo</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Examenpartecuerpo> findAllExamenpartecuerpos() throws Exception {
-		try {
-			return getExamenParteCuerpoDao().findAllExamenpartecuerpos();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllExamenpartecuerpos failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistExamenpartecuerpo(Examenpartecuerpo examenpartecuerpo) throws Exception {
-		try {
-			getExamenParteCuerpoDao().persistExamenpartecuerpo(examenpartecuerpo);
-		} catch (RuntimeException e) {
-			throw new Exception("persistExamenpartecuerpo failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeExamenpartecuerpo(Examenpartecuerpo examenpartecuerpo) throws Exception {
-		try {
-			getExamenParteCuerpoDao().removeExamenpartecuerpo(examenpartecuerpo);
-		} catch (RuntimeException e) {
-			throw new Exception("removeExamenpartecuerpo failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Examen Parte Cuerpo
-	//******************************************************************	
-
-	//******************************************************************
-	// Examen
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Examen findExamenById(long id) throws Exception {
-		try {
-			return getExamenDao().findExamenById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findExamenById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Examen</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Examen> findAllExamens() throws Exception {
-		try {
-			return getExamenDao().findAllExamens();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllExamens failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistExamen(Examen examen) throws Exception {
-		try {
-			getExamenDao().persistExamen(examen);
-		} catch (RuntimeException e) {
-			throw new Exception("persistExamen failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeExamen(Examen examen) throws Exception {
-		try {
-			getExamenDao().removeExamen(examen);
-		} catch (RuntimeException e) {
-			throw new Exception("removeExamen failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Examen
-	//******************************************************************	
-
 	//******************************************************************
 	// Finalidad
 	//******************************************************************
@@ -1294,7 +634,6 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	//******************************************************************
 	// Fin Finalidad
 	//******************************************************************	
-
 	//******************************************************************
 	// Formulacion
 	//******************************************************************
@@ -1345,109 +684,106 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	//******************************************************************
 	// Fin Formulacion
 	//******************************************************************	
-
 	//******************************************************************
-	// Frecuencia
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Frecuencia findFrecuenciaById(long id) throws Exception {
-		try {
-			return getFrecuenciaDao().findFrecuenciaById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findFrecuenciaById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Frecuencia</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Frecuencia> findAllFrecuencias() throws Exception {
-		try {
-			return getFrecuenciaDao().findAllFrecuencias();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllFrecuencias failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistFrecuencia(Frecuencia frecuencia) throws Exception {
-		try {
-			getFrecuenciaDao().persistFrecuencia(frecuencia);
-		} catch (RuntimeException e) {
-			throw new Exception("persistFrecuencia failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeFrecuencia(Frecuencia frecuencia) throws Exception {
-		try {
-			getFrecuenciaDao().removeFrecuencia(frecuencia);
-		} catch (RuntimeException e) {
-			throw new Exception("removeFrecuencia failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Frecuencia
-	//******************************************************************	
-
-	//******************************************************************
-	// Lista Examen Consulta
+	// Gafas
 	//******************************************************************
 	/**
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Listaexamenconsulta findListaexamenconsultaById(long id) throws Exception {
+	public Gafa findGafaById(long id) throws Exception {
 		try {
-			return getListaExamenConsultaDao().findListaexamenconsultaById(id);
+			return getGafaDao().findGafaById(id);
 		} catch (RuntimeException e) {
-			throw new Exception("findListaexamenconsultaById failed with the id " + id + ": " + e.getMessage());
+			throw new Exception("findGafaById failed with the id " + id + ": " + e.getMessage());
 		}
 	}
 	/**
-	 * Return all persistent instances of the <code>Listaexamenconsulta</code> entity.
+	 * Return all persistent instances of the <code>Gafa</code> entity.
 	 */
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Listaexamenconsulta> findAllListaexamenconsultas() throws Exception {
+	public List<Gafa> findAllGafas() throws Exception {
 		try {
-			return getListaExamenConsultaDao().findAllListaexamenconsultas();
+			return getGafaDao().findAllGafas();
 		} catch (RuntimeException e) {
-			throw new Exception("findAllListaexamenconsultas failed: " + e.getMessage());
+			throw new Exception("findAllGafas failed: " + e.getMessage());
 		}
 	}
 
 	/**
 	 * Make the given instance managed and persistent.
 	 */
-	public void persistListaexamenconsulta(Listaexamenconsulta listaexamenconsulta) throws Exception {
+	public void persistGafa(Gafa gafa) throws Exception {
 		try {
-			getListaExamenConsultaDao().persistListaexamenconsulta(listaexamenconsulta);
+			getGafaDao().persistGafa(gafa);
 		} catch (RuntimeException e) {
-			throw new Exception("persistListaexamenconsulta failed: " + e.getMessage());
+			throw new Exception("persistGafa failed: " + e.getMessage());
 		}
 	}
 	/**
 	 * Remove the given persistent instance.
 	 */
-	public void removeListaexamenconsulta(Listaexamenconsulta listaexamenconsulta) throws Exception {
+	public void removeGafa(Gafa gafa) throws Exception {
 		try {
-			getListaExamenConsultaDao().removeListaexamenconsulta(listaexamenconsulta);
+			getGafaDao().removeGafa(gafa);
 		} catch (RuntimeException e) {
-			throw new Exception("removeListaexamenconsulta failed: " + e.getMessage());
+			throw new Exception("removeGafa failed: " + e.getMessage());
 		}
 	}
 	//******************************************************************
-	// Fin Lista Examen Consulta
+	// Fin Gafas
 	//******************************************************************	
+	//******************************************************************
+	// Medicamento
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Medicamento findMedicamentoById(long id) throws Exception {
+		try {
+			return getMedicamentoDao().findMedicamentoById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findMedicamentoById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Medicamento</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Medicamento> findAllMedicamentos() throws Exception {
+		try {
+			return getMedicamentoDao().findAllMedicamentos();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllMedicamentos failed: " + e.getMessage());
+		}
+	}
 
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistMedicamento(Medicamento medicamento) throws Exception {
+		try {
+			getMedicamentoDao().persistMedicamento(medicamento);
+		} catch (RuntimeException e) {
+			throw new Exception("persistMedicamento failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeMedicamento(Medicamento medicamento) throws Exception {
+		try {
+			getMedicamentoDao().removeMedicamento(medicamento);
+		} catch (RuntimeException e) {
+			throw new Exception("removeMedicamento failed: " + e.getMessage());
+		}
+	}
+	//******************************************************************
+	// Fin Medicamento
+	//******************************************************************	
 	//******************************************************************
 	// Motivo
 	//******************************************************************
@@ -1498,7 +834,106 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	//******************************************************************
 	// Fin Motivo
 	//******************************************************************	
+	//******************************************************************
+	// Odontograma
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Odontograma findOdontogramaById(long id) throws Exception {
+		try {
+			return getOdontogramaDao().findOdontogramaById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findOdontogramaById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Odontograma</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Odontograma> findAllOdontogramas() throws Exception {
+		try {
+			return getOdontogramaDao().findAllOdontogramas();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllOdontogramas failed: " + e.getMessage());
+		}
+	}
 
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistOdontograma(Odontograma odontograma) throws Exception {
+		try {
+			getOdontogramaDao().persistOdontograma(odontograma);
+		} catch (RuntimeException e) {
+			throw new Exception("persistOdontograma failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeOdontograma(Odontograma odontograma) throws Exception {
+		try {
+			getOdontogramaDao().removeOdontograma(odontograma);
+		} catch (RuntimeException e) {
+			throw new Exception("removeOdontograma failed: " + e.getMessage());
+		}
+	}
+	//******************************************************************
+	// Fin Odontograma
+	//******************************************************************	
+	//******************************************************************
+	// Opcion Respuesta
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Opcionrespuesta findOpcionrespuestaById(long id) throws Exception {
+		try {
+			return getOpcionRespuestaDao().findOpcionrespuestaById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findOpcionrespuestaById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Opcionrespuesta</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Opcionrespuesta> findAllOpcionrespuestas() throws Exception {
+		try {
+			return getOpcionRespuestaDao().findAllOpcionrespuestas();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllOpcionrespuestas failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistOpcionrespuesta(Opcionrespuesta opcionrespuesta) throws Exception {
+		try {
+			getOpcionRespuestaDao().persistOpcionrespuesta(opcionrespuesta);
+		} catch (RuntimeException e) {
+			throw new Exception("persistOpcionrespuesta failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeOpcionrespuesta(Opcionrespuesta opcionrespuesta) throws Exception {
+		try {
+			getOpcionRespuestaDao().removeOpcionrespuesta(opcionrespuesta);
+		} catch (RuntimeException e) {
+			throw new Exception("removeOpcionrespuesta failed: " + e.getMessage());
+		}
+	}
+	//******************************************************************
+	// Fin Opcion Respuesta
+	//******************************************************************	
 	//******************************************************************
 	// Paciente
 	//******************************************************************
@@ -1549,7 +984,6 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	//******************************************************************
 	// Fin Paciente
 	//******************************************************************	
-
 	//******************************************************************
 	// Parentesco
 	//******************************************************************
@@ -1600,109 +1034,56 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	//******************************************************************
 	// Fin Parentesco
 	//******************************************************************	
-
 	//******************************************************************
-	// Partes Cuerpo
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Partescuerpo findPartescuerpoById(long id) throws Exception {
-		try {
-			return getPartesCuerpoDao().findPartescuerpoById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findPartescuerpoById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Partescuerpo</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Partescuerpo> findAllPartescuerpos() throws Exception {
-		try {
-			return getPartesCuerpoDao().findAllPartescuerpos();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllPartescuerpos failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistPartescuerpo(Partescuerpo partescuerpo) throws Exception {
-		try {
-			getPartesCuerpoDao().persistPartescuerpo(partescuerpo);
-		} catch (RuntimeException e) {
-			throw new Exception("persistPartescuerpo failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removePartescuerpo(Partescuerpo partescuerpo) throws Exception {
-		try {
-			getPartesCuerpoDao().removePartescuerpo(partescuerpo);
-		} catch (RuntimeException e) {
-			throw new Exception("removePartescuerpo failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Partes Cuerpo
-	//******************************************************************	
-
-	//******************************************************************
-	// Persona Pertenece
+	// Parte Cuerpo
 	//******************************************************************
 	/**
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Personapertenece findPersonaperteneceById(com.software2g.vo.PersonapertenecePK id) throws Exception {
+	public Partecuerpo findPartecuerpoById(long id) throws Exception {
 		try {
-			return getPersonaPerteneceDao().findPersonaperteneceById(id);
+			return getParteCuerpoDao().findPartecuerpoById(id);
 		} catch (RuntimeException e) {
-			throw new Exception("findPersonaperteneceById failed with the id " + id + ": " + e.getMessage());
+			throw new Exception("findPartecuerpoById failed with the id " + id + ": " + e.getMessage());
 		}
 	}
 	/**
-	 * Return all persistent instances of the <code>Personapertenece</code> entity.
+	 * Return all persistent instances of the <code>Partecuerpo</code> entity.
 	 */
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Personapertenece> findAllPersonaperteneces() throws Exception {
+	public List<Partecuerpo> findAllPartecuerpos() throws Exception {
 		try {
-			return getPersonaPerteneceDao().findAllPersonaperteneces();
+			return getParteCuerpoDao().findAllPartecuerpos();
 		} catch (RuntimeException e) {
-			throw new Exception("findAllPersonaperteneces failed: " + e.getMessage());
+			throw new Exception("findAllPartecuerpos failed: " + e.getMessage());
 		}
 	}
 
 	/**
 	 * Make the given instance managed and persistent.
 	 */
-	public void persistPersonapertenece(Personapertenece personapertenece) throws Exception {
+	public void persistPartecuerpo(Partecuerpo partecuerpo) throws Exception {
 		try {
-			getPersonaPerteneceDao().persistPersonapertenece(personapertenece);
+			getParteCuerpoDao().persistPartecuerpo(partecuerpo);
 		} catch (RuntimeException e) {
-			throw new Exception("persistPersonapertenece failed: " + e.getMessage());
+			throw new Exception("persistPartecuerpo failed: " + e.getMessage());
 		}
 	}
 	/**
 	 * Remove the given persistent instance.
 	 */
-	public void removePersonapertenece(Personapertenece personapertenece) throws Exception {
+	public void removePartecuerpo(Partecuerpo partecuerpo) throws Exception {
 		try {
-			getPersonaPerteneceDao().removePersonapertenece(personapertenece);
+			getParteCuerpoDao().removePartecuerpo(partecuerpo);
 		} catch (RuntimeException e) {
-			throw new Exception("removePersonapertenece failed: " + e.getMessage());
+			throw new Exception("removePartecuerpo failed: " + e.getMessage());
 		}
 	}
 	//******************************************************************
-	// Fin Persona Pertenece
+	// Fin Parte Cuerpo
 	//******************************************************************	
-
 	//******************************************************************
 	// Posicion
 	//******************************************************************
@@ -1753,162 +1134,458 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	//******************************************************************
 	// Fin Posicion
 	//******************************************************************	
-
 	//******************************************************************
-	// Registro Examen
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Registroexamen findRegistroexamenById(long id) throws Exception {
-		try {
-			return getRegistroExamenDao().findRegistroexamenById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findRegistroexamenById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Registroexamen</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Registroexamen> findAllRegistroexamens() throws Exception {
-		try {
-			return getRegistroExamenDao().findAllRegistroexamens();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllRegistroexamens failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistRegistroexamen(Registroexamen registroexamen) throws Exception {
-		try {
-			getRegistroExamenDao().persistRegistroexamen(registroexamen);
-		} catch (RuntimeException e) {
-			throw new Exception("persistRegistroexamen failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeRegistroexamen(Registroexamen registroexamen) throws Exception {
-		try {
-			getRegistroExamenDao().removeRegistroexamen(registroexamen);
-		} catch (RuntimeException e) {
-			throw new Exception("removeRegistroexamen failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Registro Examen
-	//******************************************************************	
-
-	//******************************************************************
-	// Registro Formulacion
+	// Pregunta
 	//******************************************************************
 	/**
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Registroformulacion findRegistroformulacionById(long id) throws Exception {
+	public Pregunta findPreguntaById(long id) throws Exception {
 		try {
-			return getRegistroFormulacionDao().findRegistroformulacionById(id);
+			return getPreguntaDao().findPreguntaById(id);
 		} catch (RuntimeException e) {
-			throw new Exception("findRegistroformulacionById failed with the id " + id + ": " + e.getMessage());
+			throw new Exception("findPreguntaById failed with the id " + id + ": " + e.getMessage());
 		}
 	}
 	/**
-	 * Return all persistent instances of the <code>Registroformulacion</code> entity.
+	 * Return all persistent instances of the <code>Pregunta</code> entity.
 	 */
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Registroformulacion> findAllRegistroformulacions() throws Exception {
+	public List<Pregunta> findAllPreguntas() throws Exception {
 		try {
-			return getRegistroFormulacionDao().findAllRegistroformulacions();
+			return getPreguntaDao().findAllPreguntas();
 		} catch (RuntimeException e) {
-			throw new Exception("findAllRegistroformulacions failed: " + e.getMessage());
+			throw new Exception("findAllPreguntas failed: " + e.getMessage());
 		}
 	}
 
 	/**
 	 * Make the given instance managed and persistent.
 	 */
-	public void persistRegistroformulacion(Registroformulacion registroformulacion) throws Exception {
+	public void persistPregunta(Pregunta pregunta) throws Exception {
 		try {
-			getRegistroFormulacionDao().persistRegistroformulacion(registroformulacion);
+			getPreguntaDao().persistPregunta(pregunta);
 		} catch (RuntimeException e) {
-			throw new Exception("persistRegistroformulacion failed: " + e.getMessage());
+			throw new Exception("persistPregunta failed: " + e.getMessage());
 		}
 	}
 	/**
 	 * Remove the given persistent instance.
 	 */
-	public void removeRegistroformulacion(Registroformulacion registroformulacion) throws Exception {
+	public void removePregunta(Pregunta pregunta) throws Exception {
 		try {
-			getRegistroFormulacionDao().removeRegistroformulacion(registroformulacion);
+			getPreguntaDao().removePregunta(pregunta);
 		} catch (RuntimeException e) {
-			throw new Exception("removeRegistroformulacion failed: " + e.getMessage());
+			throw new Exception("removePregunta failed: " + e.getMessage());
 		}
 	}
 	//******************************************************************
-	// Fin Registro Formulacion
+	// Fin Pregunta
 	//******************************************************************	
-
 	//******************************************************************
-	// Remision
+	// Registro AVSC
 	//******************************************************************
 	/**
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Remision findRemisionById(long id) throws Exception {
+	public Registroavsc findRegistroavscById(long id) throws Exception {
 		try {
-			return getRemisionDao().findRemisionById(id);
+			return getRegistroAVSCDao().findRegistroavscById(id);
 		} catch (RuntimeException e) {
-			throw new Exception("findRemisionById failed with the id " + id + ": " + e.getMessage());
+			throw new Exception("findRegistroavscById failed with the id " + id + ": " + e.getMessage());
 		}
 	}
 	/**
-	 * Return all persistent instances of the <code>Remision</code> entity.
+	 * Return all persistent instances of the <code>Registroavsc</code> entity.
 	 */
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Remision> findAllRemisions() throws Exception {
+	public List<Registroavsc> findAllRegistroavscs() throws Exception {
 		try {
-			return getRemisionDao().findAllRemisions();
+			return getRegistroAVSCDao().findAllRegistroavscs();
 		} catch (RuntimeException e) {
-			throw new Exception("findAllRemisions failed: " + e.getMessage());
+			throw new Exception("findAllRegistroavscs failed: " + e.getMessage());
 		}
 	}
 
 	/**
 	 * Make the given instance managed and persistent.
 	 */
-	public void persistRemision(Remision remision) throws Exception {
+	public void persistRegistroavsc(Registroavsc registroavsc) throws Exception {
 		try {
-			getRemisionDao().persistRemision(remision);
+			getRegistroAVSCDao().persistRegistroavsc(registroavsc);
 		} catch (RuntimeException e) {
-			throw new Exception("persistRemision failed: " + e.getMessage());
+			throw new Exception("persistRegistroavsc failed: " + e.getMessage());
 		}
 	}
 	/**
 	 * Remove the given persistent instance.
 	 */
-	public void removeRemision(Remision remision) throws Exception {
+	public void removeRegistroavsc(Registroavsc registroavsc) throws Exception {
 		try {
-			getRemisionDao().removeRemision(remision);
+			getRegistroAVSCDao().removeRegistroavsc(registroavsc);
 		} catch (RuntimeException e) {
-			throw new Exception("removeRemision failed: " + e.getMessage());
+			throw new Exception("removeRegistroavsc failed: " + e.getMessage());
 		}
 	}
 	//******************************************************************
-	// Fin Remision
+	// Fin Registro AVSC
 	//******************************************************************	
-
 	//******************************************************************
-	// Seguridad Social 
+	// Registro Cover Test
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Registrocovertest findRegistrocovertestById(long id) throws Exception {
+		try {
+			return getRegistroCoverTestDao().findRegistrocovertestById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findRegistrocovertestById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Registrocovertest</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Registrocovertest> findAllRegistrocovertests() throws Exception {
+		try {
+			return getRegistroCoverTestDao().findAllRegistrocovertests();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllRegistrocovertests failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistRegistrocovertest(Registrocovertest registrocovertest) throws Exception {
+		try {
+			getRegistroCoverTestDao().persistRegistrocovertest(registrocovertest);
+		} catch (RuntimeException e) {
+			throw new Exception("persistRegistrocovertest failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeRegistrocovertest(Registrocovertest registrocovertest) throws Exception {
+		try {
+			getRegistroCoverTestDao().removeRegistrocovertest(registrocovertest);
+		} catch (RuntimeException e) {
+			throw new Exception("removeRegistrocovertest failed: " + e.getMessage());
+		}
+	}
+	//******************************************************************
+	// Fin Registro Cover Test
+	//******************************************************************	
+	//******************************************************************
+	// Registro Examen Simple
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Registroexamensimple findRegistroexamensimpleById(long id) throws Exception {
+		try {
+			return getRegistroExamenSimpleDao().findRegistroexamensimpleById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findRegistroexamensimpleById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Registroexamensimple</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Registroexamensimple> findAllRegistroexamensimples() throws Exception {
+		try {
+			return getRegistroExamenSimpleDao().findAllRegistroexamensimples();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllRegistroexamensimples failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistRegistroexamensimple(Registroexamensimple registroexamensimple) throws Exception {
+		try {
+			getRegistroExamenSimpleDao().persistRegistroexamensimple(registroexamensimple);
+		} catch (RuntimeException e) {
+			throw new Exception("persistRegistroexamensimple failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeRegistroexamensimple(Registroexamensimple registroexamensimple) throws Exception {
+		try {
+			getRegistroExamenSimpleDao().removeRegistroexamensimple(registroexamensimple);
+		} catch (RuntimeException e) {
+			throw new Exception("removeRegistroexamensimple failed: " + e.getMessage());
+		}
+	}
+	//******************************************************************
+	// Fin Registro Examen Simple
+	//******************************************************************	
+	//******************************************************************
+	// Registro Odontograma
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Registroodontograma findRegistroodontogramaById(long id) throws Exception {
+		try {
+			return getRegistroOdontogramaDao().findRegistroodontogramaById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findRegistroodontogramaById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Registroodontograma</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Registroodontograma> findAllRegistroodontogramas() throws Exception {
+		try {
+			return getRegistroOdontogramaDao().findAllRegistroodontogramas();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllRegistroodontogramas failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistRegistroodontograma(Registroodontograma registroodontograma) throws Exception {
+		try {
+			getRegistroOdontogramaDao().persistRegistroodontograma(registroodontograma);
+		} catch (RuntimeException e) {
+			throw new Exception("persistRegistroodontograma failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeRegistroodontograma(Registroodontograma registroodontograma) throws Exception {
+		try {
+			getRegistroOdontogramaDao().removeRegistroodontograma(registroodontograma);
+		} catch (RuntimeException e) {
+			throw new Exception("removeRegistroodontograma failed: " + e.getMessage());
+		}
+	}
+	//******************************************************************
+	// Fin Registro Odontograma
+	//******************************************************************	
+	//******************************************************************
+	// Registro Rx Uso
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Registrorxuso findRegistrorxusoById(long id) throws Exception {
+		try {
+			return getRegistroRxUsoDao().findRegistrorxusoById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findRegistrorxusoById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Registrorxuso</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Registrorxuso> findAllRegistrorxusos() throws Exception {
+		try {
+			return getRegistroRxUsoDao().findAllRegistrorxusos();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllRegistrorxusos failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistRegistrorxuso(Registrorxuso registrorxuso) throws Exception {
+		try {
+			getRegistroRxUsoDao().persistRegistrorxuso(registrorxuso);
+		} catch (RuntimeException e) {
+			throw new Exception("persistRegistrorxuso failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeRegistrorxuso(Registrorxuso registrorxuso) throws Exception {
+		try {
+			getRegistroRxUsoDao().removeRegistrorxuso(registrorxuso);
+		} catch (RuntimeException e) {
+			throw new Exception("removeRegistrorxuso failed: " + e.getMessage());
+		}
+	}
+	//******************************************************************
+	// Fin Registro Rx Uso
+	//******************************************************************	
+	//******************************************************************
+	// Respuesta
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Respuesta findRespuestaById(long id) throws Exception {
+		try {
+			return getRespuestaDao().findRespuestaById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findRespuestaById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Respuesta</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Respuesta> findAllRespuestas() throws Exception {
+		try {
+			return getRespuestaDao().findAllRespuestas();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllRespuestas failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistRespuesta(Respuesta respuesta) throws Exception {
+		try {
+			getRespuestaDao().persistRespuesta(respuesta);
+		} catch (RuntimeException e) {
+			throw new Exception("persistRespuesta failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeRespuesta(Respuesta respuesta) throws Exception {
+		try {
+			getRespuestaDao().removeRespuesta(respuesta);
+		} catch (RuntimeException e) {
+			throw new Exception("removeRespuesta failed: " + e.getMessage());
+		}
+	}
+	//******************************************************************
+	// Fin Respuesta
+	//******************************************************************	
+	//******************************************************************
+	// Seccion Odon
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Seccionodon findSeccionodonById(long id) throws Exception {
+		try {
+			return getSeccionOdonDao().findSeccionodonById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findSeccionodonById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Seccionodon</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Seccionodon> findAllSeccionodons() throws Exception {
+		try {
+			return getSeccionOdonDao().findAllSeccionodons();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllSeccionodons failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistSeccionodon(Seccionodon seccionodon) throws Exception {
+		try {
+			getSeccionOdonDao().persistSeccionodon(seccionodon);
+		} catch (RuntimeException e) {
+			throw new Exception("persistSeccionodon failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeSeccionodon(Seccionodon seccionodon) throws Exception {
+		try {
+			getSeccionOdonDao().removeSeccionodon(seccionodon);
+		} catch (RuntimeException e) {
+			throw new Exception("removeSeccionodon failed: " + e.getMessage());
+		}
+	}
+	//******************************************************************
+	// Fin Seccion Odon
+	//******************************************************************	
+	//******************************************************************
+	// Segmento Anamnesis
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Segmentoanamnesi findSegmentoanamnesiById(long id) throws Exception {
+		try {
+			return getSegmentoAnamnesisDao().findSegmentoanamnesiById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findSegmentoanamnesiById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Segmentoanamnesi</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Segmentoanamnesi> findAllSegmentoanamnesis() throws Exception {
+		try {
+			return getSegmentoAnamnesisDao().findAllSegmentoanamnesis();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllSegmentoanamnesis failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistSegmentoanamnesi(Segmentoanamnesi segmentoanamnesi) throws Exception {
+		try {
+			getSegmentoAnamnesisDao().persistSegmentoanamnesi(segmentoanamnesi);
+		} catch (RuntimeException e) {
+			throw new Exception("persistSegmentoanamnesi failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeSegmentoanamnesi(Segmentoanamnesi segmentoanamnesi) throws Exception {
+		try {
+			getSegmentoAnamnesisDao().removeSegmentoanamnesi(segmentoanamnesi);
+		} catch (RuntimeException e) {
+			throw new Exception("removeSegmentoanamnesi failed: " + e.getMessage());
+		}
+	}
+	//******************************************************************
+	// Fin Segmento Anamnesis
+	//******************************************************************	
+	//******************************************************************
+	// Seguridad Social
 	//******************************************************************
 	/**
 	 * Find an entity by its id (primary key).
@@ -1957,7 +1634,6 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	//******************************************************************
 	// Fin Seguridad Social
 	//******************************************************************	
-
 	//******************************************************************
 	// Servicio
 	//******************************************************************
@@ -2007,212 +1683,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	}
 	//******************************************************************
 	// Fin Servicio
-	//******************************************************************
-	
-	//******************************************************************
-	// Sintoma Comun
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Sintomacomun findSintomacomunById(long id) throws Exception {
-		try {
-			return getSintomaComunDao().findSintomacomunById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findSintomacomunById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Sintomacomun</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Sintomacomun> findAllSintomacomuns() throws Exception {
-		try {
-			return getSintomaComunDao().findAllSintomacomuns();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllSintomacomuns failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistSintomacomun(Sintomacomun sintomacomun) throws Exception {
-		try {
-			getSintomaComunDao().persistSintomacomun(sintomacomun);
-		} catch (RuntimeException e) {
-			throw new Exception("persistSintomacomun failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeSintomacomun(Sintomacomun sintomacomun) throws Exception {
-		try {
-			getSintomaComunDao().removeSintomacomun(sintomacomun);
-		} catch (RuntimeException e) {
-			throw new Exception("removeSintomacomun failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Sintoma Comun
 	//******************************************************************	
-
-	//******************************************************************
-	// Sintoma
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Sintoma findSintomaById(long id) throws Exception {
-		try {
-			return getSintomaDao().findSintomaById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findSintomaById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Sintoma</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Sintoma> findAllSintomas() throws Exception {
-		try {
-			return getSintomaDao().findAllSintomas();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllSintomas failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistSintoma(Sintoma sintoma) throws Exception {
-		try {
-			getSintomaDao().persistSintoma(sintoma);
-		} catch (RuntimeException e) {
-			throw new Exception("persistSintoma failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeSintoma(Sintoma sintoma) throws Exception {
-		try {
-			getSintomaDao().removeSintoma(sintoma);
-		} catch (RuntimeException e) {
-			throw new Exception("removeSintoma failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Sintoma
-	//******************************************************************
-
-	//******************************************************************
-	// Telefono
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Telefono findTelefonoById(long id) throws Exception {
-		try {
-			return getTelefonoDao().findTelefonoById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findTelefonoById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Telefono</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Telefono> findAllTelefonos() throws Exception {
-		try {
-			return getTelefonoDao().findAllTelefonos();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllTelefonos failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistTelefono(Telefono telefono) throws Exception {
-		try {
-			getTelefonoDao().persistTelefono(telefono);
-		} catch (RuntimeException e) {
-			throw new Exception("persistTelefono failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeTelefono(Telefono telefono) throws Exception {
-		try {
-			getTelefonoDao().removeTelefono(telefono);
-		} catch (RuntimeException e) {
-			throw new Exception("removeTelefono failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Telefono
-	//******************************************************************	
-
-	//******************************************************************
-	// Tipo Dato
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Tipodato findTipodatoById(long id) throws Exception {
-		try {
-			return getTipoDatoDao().findTipodatoById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findTipodatoById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Tipodato</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Tipodato> findAllTipodatos() throws Exception {
-		try {
-			return getTipoDatoDao().findAllTipodatos();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllTipodatos failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistTipodato(Tipodato tipodato) throws Exception {
-		try {
-			getTipoDatoDao().persistTipodato(tipodato);
-		} catch (RuntimeException e) {
-			throw new Exception("persistTipodato failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeTipodato(Tipodato tipodato) throws Exception {
-		try {
-			getTipoDatoDao().removeTipodato(tipodato);
-		} catch (RuntimeException e) {
-			throw new Exception("removeTipodato failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Tipo Dato
-	//******************************************************************
-	
 	//******************************************************************
 	// Tipo Diagnostico
 	//******************************************************************
@@ -2263,58 +1734,6 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	//******************************************************************
 	// Fin Tipo Diagnostico
 	//******************************************************************	
-
-	//******************************************************************
-	// Tipo Documento Institucion
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Tipodocumentoinst findTipodocumentoinstById(long id) throws Exception {
-		try {
-			return getTipoDocumentoInstitucionDao().findTipodocumentoinstById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findTipodocumentoinstById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Tipodocumentoinst</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Tipodocumentoinst> findAllTipodocumentoinsts() throws Exception {
-		try {
-			return getTipoDocumentoInstitucionDao().findAllTipodocumentoinsts();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllTipodocumentoinsts failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistTipodocumentoinst(Tipodocumentoinst tipodocumentoinst) throws Exception {
-		try {
-			getTipoDocumentoInstitucionDao().persistTipodocumentoinst(tipodocumentoinst);
-		} catch (RuntimeException e) {
-			throw new Exception("persistTipodocumentoinst failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeTipodocumentoinst(Tipodocumentoinst tipodocumentoinst) throws Exception {
-		try {
-			getTipoDocumentoInstitucionDao().removeTipodocumentoinst(tipodocumentoinst);
-		} catch (RuntimeException e) {
-			throw new Exception("removeTipodocumentoinst failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Tipo Documento Institucion
-	//******************************************************************
-	
 	//******************************************************************
 	// Tipo Especialidad
 	//******************************************************************
@@ -2364,10 +1783,209 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	}
 	//******************************************************************
 	// Fin Tipo Especialidad
+	//******************************************************************	
 	//******************************************************************
-	
+	// Tipo Examen Opt
 	//******************************************************************
-	// Tipo Servicio 
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Tipoexamenopt findTipoexamenoptById(long id) throws Exception {
+		try {
+			return getTipoExamenOptDao().findTipoexamenoptById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findTipoexamenoptById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Tipoexamenopt</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Tipoexamenopt> findAllTipoexamenopts() throws Exception {
+		try {
+			return getTipoExamenOptDao().findAllTipoexamenopts();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllTipoexamenopts failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistTipoexamenopt(Tipoexamenopt tipoexamenopt) throws Exception {
+		try {
+			getTipoExamenOptDao().persistTipoexamenopt(tipoexamenopt);
+		} catch (RuntimeException e) {
+			throw new Exception("persistTipoexamenopt failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeTipoexamenopt(Tipoexamenopt tipoexamenopt) throws Exception {
+		try {
+			getTipoExamenOptDao().removeTipoexamenopt(tipoexamenopt);
+		} catch (RuntimeException e) {
+			throw new Exception("removeTipoexamenopt failed: " + e.getMessage());
+		}
+	}
+	//******************************************************************
+	// Fin Tipo Examen Opt
+	//******************************************************************	
+	//******************************************************************
+	// Tipo Formulacion
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Tipoformulacion findTipoformulacionById(long id) throws Exception {
+		try {
+			return getTipoFormulacionDao().findTipoformulacionById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findTipoformulacionById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Tipoformulacion</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Tipoformulacion> findAllTipoformulacions() throws Exception {
+		try {
+			return getTipoFormulacionDao().findAllTipoformulacions();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllTipoformulacions failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistTipoformulacion(Tipoformulacion tipoformulacion) throws Exception {
+		try {
+			getTipoFormulacionDao().persistTipoformulacion(tipoformulacion);
+		} catch (RuntimeException e) {
+			throw new Exception("persistTipoformulacion failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeTipoformulacion(Tipoformulacion tipoformulacion) throws Exception {
+		try {
+			getTipoFormulacionDao().removeTipoformulacion(tipoformulacion);
+		} catch (RuntimeException e) {
+			throw new Exception("removeTipoformulacion failed: " + e.getMessage());
+		}
+	}
+	//******************************************************************
+	// Fin Tipo Formulacion
+	//******************************************************************	
+	//******************************************************************
+	// Tipo Pregunta
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Tipopregunta findTipopreguntaById(long id) throws Exception {
+		try {
+			return getTipoPreguntaDao().findTipopreguntaById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findTipopreguntaById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Tipopregunta</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Tipopregunta> findAllTipopreguntas() throws Exception {
+		try {
+			return getTipoPreguntaDao().findAllTipopreguntas();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllTipopreguntas failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistTipopregunta(Tipopregunta tipopregunta) throws Exception {
+		try {
+			getTipoPreguntaDao().persistTipopregunta(tipopregunta);
+		} catch (RuntimeException e) {
+			throw new Exception("persistTipopregunta failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeTipopregunta(Tipopregunta tipopregunta) throws Exception {
+		try {
+			getTipoPreguntaDao().removeTipopregunta(tipopregunta);
+		} catch (RuntimeException e) {
+			throw new Exception("removeTipopregunta failed: " + e.getMessage());
+		}
+	}
+	//******************************************************************
+	// Fin Tipo Pregunta
+	//******************************************************************	
+	//******************************************************************
+	// Tipo Segmento
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Tiposegmento findTiposegmentoById(long id) throws Exception {
+		try {
+			return getTipoSegmentoDao().findTiposegmentoById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findTiposegmentoById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Tiposegmento</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Tiposegmento> findAllTiposegmentos() throws Exception {
+		try {
+			return getTipoSegmentoDao().findAllTiposegmentos();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllTiposegmentos failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistTiposegmento(Tiposegmento tiposegmento) throws Exception {
+		try {
+			getTipoSegmentoDao().persistTiposegmento(tiposegmento);
+		} catch (RuntimeException e) {
+			throw new Exception("persistTiposegmento failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeTiposegmento(Tiposegmento tiposegmento) throws Exception {
+		try {
+			getTipoSegmentoDao().removeTiposegmento(tiposegmento);
+		} catch (RuntimeException e) {
+			throw new Exception("removeTiposegmento failed: " + e.getMessage());
+		}
+	}
+	//******************************************************************
+	// Fin Tipo Segmento
+	//******************************************************************	
+	//******************************************************************
+	// Tipo Servicio
 	//******************************************************************
 	/**
 	 * Find an entity by its id (primary key).
@@ -2415,567 +2033,6 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	}
 	//******************************************************************
 	// Fin Tipo Servicio
-	//******************************************************************
-	
-	//******************************************************************
-	// Tipo Ubicacion
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Tipoubicacion findTipoubicacionById(long id) throws Exception {
-		try {
-			return getTipoUbicacionDao().findTipoubicacionById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findTipoubicacionById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Tipoubicacion</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Tipoubicacion> findAllTipoubicacions() throws Exception {
-		try {
-			return getTipoUbicacionDao().findAllTipoubicacions();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllTipoubicacions failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistTipoubicacion(Tipoubicacion tipoubicacion) throws Exception {
-		try {
-			getTipoUbicacionDao().persistTipoubicacion(tipoubicacion);
-		} catch (RuntimeException e) {
-			throw new Exception("persistTipoubicacion failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeTipoubicacion(Tipoubicacion tipoubicacion) throws Exception {
-		try {
-			getTipoUbicacionDao().removeTipoubicacion(tipoubicacion);
-		} catch (RuntimeException e) {
-			throw new Exception("removeTipoubicacion failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Tipo Ubicacion
-	//******************************************************************
-	
-	//******************************************************************
-	// Tipo Virtual Link 
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Tipovirtuallink findTipovirtuallinkById(long id) throws Exception {
-		try {
-			return getTipoVirtualLinkDao().findTipovirtuallinkById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findTipovirtuallinkById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Tipovirtuallink</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Tipovirtuallink> findAllTipovirtuallinks() throws Exception {
-		try {
-			return getTipoVirtualLinkDao().findAllTipovirtuallinks();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllTipovirtuallinks failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistTipovirtuallink(Tipovirtuallink tipovirtuallink) throws Exception {
-		try {
-			getTipoVirtualLinkDao().persistTipovirtuallink(tipovirtuallink);
-		} catch (RuntimeException e) {
-			throw new Exception("persistTipovirtuallink failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeTipovirtuallink(Tipovirtuallink tipovirtuallink) throws Exception {
-		try {
-			getTipoVirtualLinkDao().removeTipovirtuallink(tipovirtuallink);
-		} catch (RuntimeException e) {
-			throw new Exception("removeTipovirtuallink failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Tipo Virtual Link 
-	//******************************************************************
-	
-	//******************************************************************
-	// Toma Droga
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Tomasinodroga findTomasinodrogaById(long id) throws Exception {
-		try {
-			return getTomaDrogaDao().findTomasinodrogaById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findTomasinodrogaById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Tomasinodroga</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Tomasinodroga> findAllTomasinodrogas() throws Exception {
-		try {
-			return getTomaDrogaDao().findAllTomasinodrogas();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllTomasinodrogas failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistTomasinodroga(Tomasinodroga tomasinodroga) throws Exception {
-		try {
-			getTomaDrogaDao().persistTomasinodroga(tomasinodroga);
-		} catch (RuntimeException e) {
-			throw new Exception("persistTomasinodroga failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeTomasinodroga(Tomasinodroga tomasinodroga) throws Exception {
-		try {
-			getTomaDrogaDao().removeTomasinodroga(tomasinodroga);
-		} catch (RuntimeException e) {
-			throw new Exception("removeTomasinodroga failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Toma Droga
-	//******************************************************************
-	
-	//******************************************************************
-	// Ubicacion Direccion 
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Ubicaciondireccion findUbicaciondireccionById(long id) throws Exception {
-		try {
-			return getUbicacionDireccionDao().findUbicaciondireccionById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findUbicaciondireccionById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Ubicaciondireccion</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Ubicaciondireccion> findAllUbicaciondireccions() throws Exception {
-		try {
-			return getUbicacionDireccionDao().findAllUbicaciondireccions();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllUbicaciondireccions failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistUbicaciondireccion(Ubicaciondireccion ubicaciondireccion) throws Exception {
-		try {
-			getUbicacionDireccionDao().persistUbicaciondireccion(ubicaciondireccion);
-		} catch (RuntimeException e) {
-			throw new Exception("persistUbicaciondireccion failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeUbicaciondireccion(Ubicaciondireccion ubicaciondireccion) throws Exception {
-		try {
-			getUbicacionDireccionDao().removeUbicaciondireccion(ubicaciondireccion);
-		} catch (RuntimeException e) {
-			throw new Exception("removeUbicaciondireccion failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Ubicacion Direccion
-	//******************************************************************
-	
-	//******************************************************************
-	// Ubicacion Telefono
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Ubicaciontelefono findUbicaciontelefonoById(long id) throws Exception {
-		try {
-			return getUbicacionTelefonoDao().findUbicaciontelefonoById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findUbicaciontelefonoById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Ubicaciontelefono</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Ubicaciontelefono> findAllUbicaciontelefonos() throws Exception {
-		try {
-			return getUbicacionTelefonoDao().findAllUbicaciontelefonos();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllUbicaciontelefonos failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistUbicaciontelefono(Ubicaciontelefono ubicaciontelefono) throws Exception {
-		try {
-			getUbicacionTelefonoDao().persistUbicaciontelefono(ubicaciontelefono);
-		} catch (RuntimeException e) {
-			throw new Exception("persistUbicaciontelefono failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeUbicaciontelefono(Ubicaciontelefono ubicaciontelefono) throws Exception {
-		try {
-			getUbicacionTelefonoDao().removeUbicaciontelefono(ubicaciontelefono);
-		} catch (RuntimeException e) {
-			throw new Exception("removeUbicaciontelefono failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Ubicacion Telefono
-	//******************************************************************
-	
-	//******************************************************************
-	// Ubicacion Virtual
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Ubicacionvirtual findUbicacionvirtualById(long id) throws Exception {
-		try {
-			return getUbicacionVirtualDao().findUbicacionvirtualById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findUbicacionvirtualById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Ubicacionvirtual</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Ubicacionvirtual> findAllUbicacionvirtuals() throws Exception {
-		try {
-			return getUbicacionVirtualDao().findAllUbicacionvirtuals();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllUbicacionvirtuals failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistUbicacionvirtual(Ubicacionvirtual ubicacionvirtual) throws Exception {
-		try {
-			getUbicacionVirtualDao().persistUbicacionvirtual(ubicacionvirtual);
-		} catch (RuntimeException e) {
-			throw new Exception("persistUbicacionvirtual failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeUbicacionvirtual(Ubicacionvirtual ubicacionvirtual) throws Exception {
-		try {
-			getUbicacionVirtualDao().removeUbicacionvirtual(ubicacionvirtual);
-		} catch (RuntimeException e) {
-			throw new Exception("removeUbicacionvirtual failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Ubicacion Virtual
-	//******************************************************************
-
-	//******************************************************************
-	// Unidades
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Unidade findUnidadeById(long id) throws Exception {
-		try {
-			return getUnidadesDao().findUnidadeById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findUnidadeById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Unidade</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Unidade> findAllUnidades() throws Exception {
-		try {
-			return getUnidadesDao().findAllUnidades();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllUnidades failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistUnidade(Unidade unidade) throws Exception {
-		try {
-			getUnidadesDao().persistUnidade(unidade);
-		} catch (RuntimeException e) {
-			throw new Exception("persistUnidade failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeUnidade(Unidade unidade) throws Exception {
-		try {
-			getUnidadesDao().removeUnidade(unidade);
-		} catch (RuntimeException e) {
-			throw new Exception("removeUnidade failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Unidades
-	//******************************************************************
-	
-	//******************************************************************
-	// Variable Examen
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Variableexamen findVariableexamenById(long id) throws Exception {
-		try {
-			return getVariableExamenDao().findVariableexamenById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findVariableexamenById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Variableexamen</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Variableexamen> findAllVariableexamens() throws Exception {
-		try {
-			return getVariableExamenDao().findAllVariableexamens();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllVariableexamens failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistVariableexamen(Variableexamen variableexamen) throws Exception {
-		try {
-			getVariableExamenDao().persistVariableexamen(variableexamen);
-		} catch (RuntimeException e) {
-			throw new Exception("persistVariableexamen failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeVariableexamen(Variableexamen variableexamen) throws Exception {
-		try {
-			getVariableExamenDao().removeVariableexamen(variableexamen);
-		} catch (RuntimeException e) {
-			throw new Exception("removeVariableexamen failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Variable Examen
-	//******************************************************************
-	
-	//******************************************************************
-	// Variable Formulacion
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Variableformulacion findVariableformulacionById(long id) throws Exception {
-		try {
-			return getVariableFormulacionDao().findVariableformulacionById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findVariableformulacionById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Variableformulacion</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Variableformulacion> findAllVariableformulacions() throws Exception {
-		try {
-			return getVariableFormulacionDao().findAllVariableformulacions();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllVariableformulacions failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistVariableformulacion(Variableformulacion variableformulacion) throws Exception {
-		try {
-			getVariableFormulacionDao().persistVariableformulacion(variableformulacion);
-		} catch (RuntimeException e) {
-			throw new Exception("persistVariableformulacion failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeVariableformulacion(Variableformulacion variableformulacion) throws Exception {
-		try {
-			getVariableFormulacionDao().removeVariableformulacion(variableformulacion);
-		} catch (RuntimeException e) {
-			throw new Exception("removeVariableformulacion failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Variable Formulacion
-	//******************************************************************
-	
-	//******************************************************************
-	// Virtual Link
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Virtuallink findVirtuallinkById(long id) throws Exception {
-		try {
-			return getVirtualLinkDao().findVirtuallinkById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findVirtuallinkById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Virtuallink</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Virtuallink> findAllVirtuallinks() throws Exception {
-		try {
-			return getVirtualLinkDao().findAllVirtuallinks();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllVirtuallinks failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistVirtuallink(Virtuallink virtuallink) throws Exception {
-		try {
-			getVirtualLinkDao().persistVirtuallink(virtuallink);
-		} catch (RuntimeException e) {
-			throw new Exception("persistVirtuallink failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeVirtuallink(Virtuallink virtuallink) throws Exception {
-		try {
-			getVirtualLinkDao().removeVirtuallink(virtuallink);
-		} catch (RuntimeException e) {
-			throw new Exception("removeVirtuallink failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Virtual Link
-	//******************************************************************
-
-	//******************************************************************
-	// Persona
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Persona findPersonaById(java.lang.Long id) throws Exception {
-		try {
-			return getPersonaDao().findPersonaById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findPersonaById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Persona</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Persona> findAllPersonas() throws Exception {
-		try {
-			return getPersonaDao().findAllPersonas();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllPersonas failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistPersona(Persona persona) throws Exception {
-		try {
-			getPersonaDao().persistPersona(persona);
-		} catch (RuntimeException e) {
-			throw new Exception("persistPersona failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removePersona(Persona persona) throws Exception {
-		try {
-			getPersonaDao().removePersona(persona);
-		} catch (RuntimeException e) {
-			throw new Exception("removePersona failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Persona
 	//******************************************************************	
 
 }

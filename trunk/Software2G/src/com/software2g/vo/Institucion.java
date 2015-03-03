@@ -15,7 +15,7 @@ import java.util.List;
 public class Institucion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
+	@Id 
 	@SequenceGenerator(name="INSTITUCION_IDINST_GENERATOR", sequenceName="PORTAL.SEQ_INSTITUCION")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="INSTITUCION_IDINST_GENERATOR")
 	@Column(name="id_inst")
@@ -41,9 +41,9 @@ public class Institucion implements Serializable {
 	private List<Personainstitucion> personainstitucions;
 
 	//bi-directional many-to-one association to Tipopagare
-	@ManyToOne
-	@JoinColumn(name="id_tipoinst")
-	private Tipodocumentoinst tipodocumentoinst;
+//	@ManyToOne
+//	@JoinColumn(name="id_tipoinst")
+//	private Tipodocumentoinst tipodocumentoinst;
 	
 	public Institucion() {
 	}
@@ -112,12 +112,12 @@ public class Institucion implements Serializable {
 		this.personainstitucions = personainstitucions;
 	}
 
-	public Tipodocumentoinst getTipodocumentoinst() {
-		return tipodocumentoinst;
-	}
-
-	public void setTipodocumentoinst(Tipodocumentoinst tipodocumentoinst) {
-		this.tipodocumentoinst = tipodocumentoinst;
-	}
+//	public Tipodocumentoinst getTipodocumentoinst() {
+//		return tipodocumentoinst;
+//	}
+//
+//	public void setTipodocumentoinst(Tipodocumentoinst tipodocumentoinst) {
+//		this.tipodocumentoinst = tipodocumentoinst;
+//	}
 
 }

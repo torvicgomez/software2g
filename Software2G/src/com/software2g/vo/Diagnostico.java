@@ -1,81 +1,123 @@
 package com.software2g.vo;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
 /**
- * The persistent class for the diagnostico database table.
+ * The persistent class for the "DIAGNOSTICO" database table.
  * 
  */
 @Entity
-@Table(name="diagnostico", schema="public")
+@Table(name="\"DIAGNOSTICO\"", schema="\"HISCLINICA\"")
 public class Diagnostico implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private String descdiagnos;
-
-	@Column(name="id_clasediagnostico")
-	private long idClasediagnostico;
-
-	@Column(name="id_codenfermedad")
-	private long idCodenfermedad;
-
-	@Column(name="id_consulta")
-	private long idConsulta;
-
 	@Id
-	@SequenceGenerator(name="DIAGNOSTICO_IDDIAGNOSTICO_GENERATOR", sequenceName="PUBLIC.diagnostico_id_diagnostico_seq")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DIAGNOSTICO_IDDIAGNOSTICO_GENERATOR")
-	@Column(name="id_diagnostico")
-	private long idDiagnostico;
+	@SequenceGenerator(name="DIAGNOSTICO_DIAGID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_DIAG_ID\"", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="DIAGNOSTICO_DIAGID_GENERATOR")
+	@Column(name="diag_id")
+	private long diagId;
+
+	@Column(name="diag_fechacambio")
+	private String diagFechacambio;
+
+	@Column(name="diag_horacambio")
+	private String diagHoracambio;
+
+	@Column(name="diag_orden")
+	private long diagOrden;
+
+	@Column(name="diag_registradopor")
+	private String diagRegistradopor;
+
+	//bi-directional many-to-one association to Clasediagnostico
+	@ManyToOne
+	@JoinColumn(name="cldi_id")
+	private Clasediagnostico clasediagnostico;
+
+	//bi-directional many-to-one association to Codigoenfermedade
+	@ManyToOne
+	@JoinColumn(name="coen_id")
+	private Codigoenfermedade codigoenfermedade;
+
+	//bi-directional many-to-one association to Servicio
+	@ManyToOne
+	@JoinColumn(name="serv_id")
+	private Servicio servicio;
 
 	//bi-directional many-to-one association to Tipodiagnostico
 	@ManyToOne
-	@JoinColumn(name="id_tipodiagnos")
+	@JoinColumn(name="tidi_id")
 	private Tipodiagnostico tipodiagnostico;
 
 	public Diagnostico() {
 	}
 
-	public String getDescdiagnos() {
-		return this.descdiagnos;
+	public long getDiagId() {
+		return this.diagId;
 	}
 
-	public void setDescdiagnos(String descdiagnos) {
-		this.descdiagnos = descdiagnos;
+	public void setDiagId(long diagId) {
+		this.diagId = diagId;
 	}
 
-	public long getIdClasediagnostico() {
-		return this.idClasediagnostico;
+	public String getDiagFechacambio() {
+		return this.diagFechacambio;
 	}
 
-	public void setIdClasediagnostico(long idClasediagnostico) {
-		this.idClasediagnostico = idClasediagnostico;
+	public void setDiagFechacambio(String diagFechacambio) {
+		this.diagFechacambio = diagFechacambio;
 	}
 
-	public long getIdCodenfermedad() {
-		return this.idCodenfermedad;
+	public String getDiagHoracambio() {
+		return this.diagHoracambio;
 	}
 
-	public void setIdCodenfermedad(long idCodenfermedad) {
-		this.idCodenfermedad = idCodenfermedad;
+	public void setDiagHoracambio(String diagHoracambio) {
+		this.diagHoracambio = diagHoracambio;
 	}
 
-	public long getIdConsulta() {
-		return this.idConsulta;
+	public long getDiagOrden() {
+		return this.diagOrden;
 	}
 
-	public void setIdConsulta(long idConsulta) {
-		this.idConsulta = idConsulta;
+	public void setDiagOrden(long diagOrden) {
+		this.diagOrden = diagOrden;
 	}
 
-	public long getIdDiagnostico() {
-		return this.idDiagnostico;
+	public String getDiagRegistradopor() {
+		return this.diagRegistradopor;
 	}
 
-	public void setIdDiagnostico(long idDiagnostico) {
-		this.idDiagnostico = idDiagnostico;
+	public void setDiagRegistradopor(String diagRegistradopor) {
+		this.diagRegistradopor = diagRegistradopor;
+	}
+
+	public Clasediagnostico getClasediagnostico() {
+		return this.clasediagnostico;
+	}
+
+	public void setClasediagnostico(Clasediagnostico clasediagnostico) {
+		this.clasediagnostico = clasediagnostico;
+	}
+
+	public Codigoenfermedade getCodigoenfermedade() {
+		return this.codigoenfermedade;
+	}
+
+	public void setCodigoenfermedade(Codigoenfermedade codigoenfermedade) {
+		this.codigoenfermedade = codigoenfermedade;
+	}
+
+	public Servicio getServicio() {
+		return this.servicio;
+	}
+
+	public void setServicio(Servicio servicio) {
+		this.servicio = servicio;
 	}
 
 	public Tipodiagnostico getTipodiagnostico() {
@@ -86,4 +128,11 @@ public class Diagnostico implements Serializable {
 		this.tipodiagnostico = tipodiagnostico;
 	}
 
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.diagRegistradopor=data.get(0);
+			this.diagFechacambio=data.get(1);
+			this.diagHoracambio=data.get(2);
+		}
+	}
 }

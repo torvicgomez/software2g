@@ -2,157 +2,189 @@ package com.software2g.vo;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
-import java.sql.Time;
-import java.util.Date;
 import java.util.List;
 
 
 /**
- * The persistent class for the servicio database table.
+ * The persistent class for the "SERVICIO" database table.
  * 
  */
 @Entity
-@Table(schema="public", name="servicio")
+@Table(name="\"SERVICIO\"", schema="\"HISCLINICA\"")
 public class Servicio implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="SERVICIO_IDSERVICIO_GENERATOR", sequenceName="PUBLIC.SERVICIO_ID_SERVICIO_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SERVICIO_IDSERVICIO_GENERATOR")
-	@Column(name="id_servicio")
-	private long idServicio;
+	@SequenceGenerator(name="SERVICIO_SERVID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_SERV_ID\"", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SERVICIO_SERVID_GENERATOR")
+	@Column(name="serv_id")
+	private long servId;
 
-	@Temporal(TemporalType.DATE)
-	private Date fecha;
+	@Column(name="prof_id")
+	private java.math.BigDecimal profId;
 
-	private Time horafinal;
+	@Column(name="serv_fechacambio")
+	private String servFechacambio;
 
-	private Time horainicio;
+	@Column(name="serv_fechahoraingreso")
+	private String servFechahoraingreso;
 
-	@Column(name="id_dependencia")
-	private long idDependencia;
+	@Column(name="serv_fechahorasalida")
+	private String servFechahorasalida;
 
-	@Column(name="id_finalidad")
-	private long idFinalidad;
+	@Column(name="serv_horacambio")
+	private String servHoracambio;
 
-	@Column(name="id_motivo")
-	private long idMotivo;
+	@Column(name="serv_registradopor")
+	private String servRegistradopor;
 
-	@Column(name="id_paciente")
-	private long idPaciente;
+	//bi-directional many-to-one association to Diagnostico
+	@OneToMany(mappedBy="servicio")
+	private List<Diagnostico> diagnosticos;
 
-	private double valor;
+	//bi-directional many-to-one association to Examenoptometria
+	@OneToMany(mappedBy="servicio")
+	private List<Examenoptometria> examenoptometrias;
 
-	//bi-directional many-to-many association to Profesional
-	@ManyToMany
-	@JoinTable(
-		name="profesionalservicio"
-		, joinColumns={
-			@JoinColumn(name="id_servicio")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="id_profesional")
-			}
-		)
-	private List<Profesional> profesionals;
+	//bi-directional many-to-one association to Formulacion
+	@OneToMany(mappedBy="servicio")
+	private List<Formulacion> formulacions;
+
+	//bi-directional many-to-one association to Odontograma
+	@OneToMany(mappedBy="servicio")
+	private List<Odontograma> odontogramas;
+
+	//bi-directional many-to-one association to Respuesta
+	@OneToMany(mappedBy="servicio")
+	private List<Respuesta> respuestas;
 
 	//bi-directional many-to-one association to Acudiente
 	@ManyToOne
-	@JoinColumn(name="id_acudiente")
+	@JoinColumn(name="acud_id")
 	private Acudiente acudiente;
+
+	//bi-directional many-to-one association to Finalidad
+	@ManyToOne
+	@JoinColumn(name="fina_id")
+	private Finalidad finalidad;
+
+	//bi-directional many-to-one association to Motivo
+	@ManyToOne
+	@JoinColumn(name="moti_id")
+	private Motivo motivo;
+
+	//bi-directional many-to-one association to Paciente
+	@ManyToOne
+	@JoinColumn(name="paci_id")
+	private Paciente paciente;
 
 	//bi-directional many-to-one association to Seguridadsocial
 	@ManyToOne
-	@JoinColumn(name="id_seguridad")
+	@JoinColumn(name="segu_id")
 	private Seguridadsocial seguridadsocial;
 
 	//bi-directional many-to-one association to Tiposervicio
 	@ManyToOne
-	@JoinColumn(name="id_tiposervicio")
+	@JoinColumn(name="tise_id")
 	private Tiposervicio tiposervicio;
 
 	public Servicio() {
 	}
 
-	public long getIdServicio() {
-		return this.idServicio;
+	public long getServId() {
+		return this.servId;
 	}
 
-	public void setIdServicio(long idServicio) {
-		this.idServicio = idServicio;
+	public void setServId(long servId) {
+		this.servId = servId;
 	}
 
-	public Date getFecha() {
-		return this.fecha;
+	public java.math.BigDecimal getProfId() {
+		return this.profId;
 	}
 
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setProfId(java.math.BigDecimal profId) {
+		this.profId = profId;
 	}
 
-	public Time getHorafinal() {
-		return this.horafinal;
+	public String getServFechacambio() {
+		return this.servFechacambio;
 	}
 
-	public void setHorafinal(Time horafinal) {
-		this.horafinal = horafinal;
+	public void setServFechacambio(String servFechacambio) {
+		this.servFechacambio = servFechacambio;
 	}
 
-	public Time getHorainicio() {
-		return this.horainicio;
+	public String getServFechahoraingreso() {
+		return this.servFechahoraingreso;
 	}
 
-	public void setHorainicio(Time horainicio) {
-		this.horainicio = horainicio;
+	public void setServFechahoraingreso(String servFechahoraingreso) {
+		this.servFechahoraingreso = servFechahoraingreso;
 	}
 
-	public long getIdDependencia() {
-		return this.idDependencia;
+	public String getServFechahorasalida() {
+		return this.servFechahorasalida;
 	}
 
-	public void setIdDependencia(long idDependencia) {
-		this.idDependencia = idDependencia;
+	public void setServFechahorasalida(String servFechahorasalida) {
+		this.servFechahorasalida = servFechahorasalida;
 	}
 
-	public long getIdFinalidad() {
-		return this.idFinalidad;
+	public String getServHoracambio() {
+		return this.servHoracambio;
 	}
 
-	public void setIdFinalidad(long idFinalidad) {
-		this.idFinalidad = idFinalidad;
+	public void setServHoracambio(String servHoracambio) {
+		this.servHoracambio = servHoracambio;
 	}
 
-	public long getIdMotivo() {
-		return this.idMotivo;
+	public String getServRegistradopor() {
+		return this.servRegistradopor;
 	}
 
-	public void setIdMotivo(long idMotivo) {
-		this.idMotivo = idMotivo;
+	public void setServRegistradopor(String servRegistradopor) {
+		this.servRegistradopor = servRegistradopor;
 	}
 
-	public long getIdPaciente() {
-		return this.idPaciente;
+	public List<Diagnostico> getDiagnosticos() {
+		return this.diagnosticos;
 	}
 
-	public void setIdPaciente(long idPaciente) {
-		this.idPaciente = idPaciente;
+	public void setDiagnosticos(List<Diagnostico> diagnosticos) {
+		this.diagnosticos = diagnosticos;
 	}
 
-	public double getValor() {
-		return this.valor;
+	public List<Examenoptometria> getExamenoptometrias() {
+		return this.examenoptometrias;
 	}
 
-	public void setValor(double valor) {
-		this.valor = valor;
+	public void setExamenoptometrias(List<Examenoptometria> examenoptometrias) {
+		this.examenoptometrias = examenoptometrias;
 	}
 
-	public List<Profesional> getProfesionals() {
-		return this.profesionals;
+	public List<Formulacion> getFormulacions() {
+		return this.formulacions;
 	}
 
-	public void setProfesionals(List<Profesional> profesionals) {
-		this.profesionals = profesionals;
+	public void setFormulacions(List<Formulacion> formulacions) {
+		this.formulacions = formulacions;
+	}
+
+	public List<Odontograma> getOdontogramas() {
+		return this.odontogramas;
+	}
+
+	public void setOdontogramas(List<Odontograma> odontogramas) {
+		this.odontogramas = odontogramas;
+	}
+
+	public List<Respuesta> getRespuestas() {
+		return this.respuestas;
+	}
+
+	public void setRespuestas(List<Respuesta> respuestas) {
+		this.respuestas = respuestas;
 	}
 
 	public Acudiente getAcudiente() {
@@ -161,6 +193,30 @@ public class Servicio implements Serializable {
 
 	public void setAcudiente(Acudiente acudiente) {
 		this.acudiente = acudiente;
+	}
+
+	public Finalidad getFinalidad() {
+		return this.finalidad;
+	}
+
+	public void setFinalidad(Finalidad finalidad) {
+		this.finalidad = finalidad;
+	}
+
+	public Motivo getMotivo() {
+		return this.motivo;
+	}
+
+	public void setMotivo(Motivo motivo) {
+		this.motivo = motivo;
+	}
+
+	public Paciente getPaciente() {
+		return this.paciente;
+	}
+
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
 	}
 
 	public Seguridadsocial getSeguridadsocial() {
@@ -179,4 +235,11 @@ public class Servicio implements Serializable {
 		this.tiposervicio = tiposervicio;
 	}
 
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.servRegistradopor=data.get(0);
+			this.servFechacambio=data.get(1);
+			this.servHoracambio=data.get(2);
+		}
+	}
 }

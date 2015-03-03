@@ -2,77 +2,97 @@ package com.software2g.vo;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
- * The persistent class for the codigoenfermedades database table.
+ * The persistent class for the "CODIGOENFERMEDADES" database table.
  * 
  */
 @Entity
-@Table(name="codigoenfermedades", schema="public")
+@Table(name="\"CODIGOENFERMEDADES\"", schema="\"HISCLINICA\"")
 public class Codigoenfermedade implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private String abreviacodenfermedad;
-
-	private String codenfermedad;
-
-	private String desccodenfermedad;
-
 	@Id
-	@SequenceGenerator(name="CODIGOENFERMEDADE_IDCODIGOENFERMEDADE_GENERATOR", sequenceName="PUBLIC.codigoenfermedades_id_codenfermedad_seq")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CODIGOENFERMEDADE_IDCODIGOENFERMEDADE_GENERATOR")
-	@Column(name="id_codenfermedad")
-	private long idCodenfermedad;
+	@SequenceGenerator(name="CODIGOENFERMEDADES_COENID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_COEN_ID\"", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CODIGOENFERMEDADES_COENID_GENERATOR")
+	@Column(name="coen_id")
+	private long coenId;
 
-	private String nomcodenfermedad;
+	@Column(name="coen_codigo")
+	private String coenCodigo;
+
+	@Column(name="coen_fechacambio")
+	private String coenFechacambio;
+
+	@Column(name="coen_horacambio")
+	private String coenHoracambio;
+
+	@Column(name="coen_nombre")
+	private String coenNombre;
+
+	@Column(name="coen_registradopor")
+	private String coenRegistradopor;
 
 	//bi-directional many-to-one association to Tipoespecialidad
 	@ManyToOne
-	@JoinColumn(name="id_tipoconsulta")
+	@JoinColumn(name="ties_id")
 	private Tipoespecialidad tipoespecialidad;
+
+	//bi-directional many-to-one association to Diagnostico
+	@OneToMany(mappedBy="codigoenfermedade")
+	private List<Diagnostico> diagnosticos;
 
 	public Codigoenfermedade() {
 	}
 
-	public String getAbreviacodenfermedad() {
-		return this.abreviacodenfermedad;
+	public long getCoenId() {
+		return this.coenId;
 	}
 
-	public void setAbreviacodenfermedad(String abreviacodenfermedad) {
-		this.abreviacodenfermedad = abreviacodenfermedad;
+	public void setCoenId(long coenId) {
+		this.coenId = coenId;
 	}
 
-	public String getCodenfermedad() {
-		return this.codenfermedad;
+	public String getCoenCodigo() {
+		return this.coenCodigo;
 	}
 
-	public void setCodenfermedad(String codenfermedad) {
-		this.codenfermedad = codenfermedad;
+	public void setCoenCodigo(String coenCodigo) {
+		this.coenCodigo = coenCodigo;
 	}
 
-	public String getDesccodenfermedad() {
-		return this.desccodenfermedad;
+	public String getCoenFechacambio() {
+		return this.coenFechacambio;
 	}
 
-	public void setDesccodenfermedad(String desccodenfermedad) {
-		this.desccodenfermedad = desccodenfermedad;
+	public void setCoenFechacambio(String coenFechacambio) {
+		this.coenFechacambio = coenFechacambio;
 	}
 
-	public long getIdCodenfermedad() {
-		return this.idCodenfermedad;
+	public String getCoenHoracambio() {
+		return this.coenHoracambio;
 	}
 
-	public void setIdCodenfermedad(long idCodenfermedad) {
-		this.idCodenfermedad = idCodenfermedad;
+	public void setCoenHoracambio(String coenHoracambio) {
+		this.coenHoracambio = coenHoracambio;
 	}
 
-	public String getNomcodenfermedad() {
-		return this.nomcodenfermedad;
+	public String getCoenNombre() {
+		return this.coenNombre;
 	}
 
-	public void setNomcodenfermedad(String nomcodenfermedad) {
-		this.nomcodenfermedad = nomcodenfermedad;
+	public void setCoenNombre(String coenNombre) {
+		this.coenNombre = coenNombre;
+	}
+
+	public String getCoenRegistradopor() {
+		return this.coenRegistradopor;
+	}
+
+	public void setCoenRegistradopor(String coenRegistradopor) {
+		this.coenRegistradopor = coenRegistradopor;
 	}
 
 	public Tipoespecialidad getTipoespecialidad() {
@@ -83,4 +103,19 @@ public class Codigoenfermedade implements Serializable {
 		this.tipoespecialidad = tipoespecialidad;
 	}
 
+	public List<Diagnostico> getDiagnosticos() {
+		return this.diagnosticos;
+	}
+
+	public void setDiagnosticos(List<Diagnostico> diagnosticos) {
+		this.diagnosticos = diagnosticos;
+	}
+
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.coenRegistradopor=data.get(0);
+			this.coenFechacambio=data.get(1);
+			this.coenHoracambio=data.get(2);
+		}
+	}
 }

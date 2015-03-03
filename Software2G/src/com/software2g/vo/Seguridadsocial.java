@@ -2,44 +2,38 @@ package com.software2g.vo;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.List;
 
 
 /**
- * The persistent class for the seguridadsocial database table.
+ * The persistent class for the "SEGURIDADSOCIAL" database table.
  * 
  */
 @Entity
-@Table(schema="public", name="seguridadsocial")
+@Table(name="\"SEGURIDADSOCIAL\"", schema="\"HISCLINICA\"")
 public class Seguridadsocial implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="SEGURIDADSOCIAL_IDSEGURIDAD_GENERATOR", sequenceName="PUBLIC.SEGURIDADSOCIAL_ID_SEGURIDAD_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEGURIDADSOCIAL_IDSEGURIDAD_GENERATOR")
-	@Column(name="id_seguridad")
-	private long idSeguridad;
+	@SequenceGenerator(name="SEGURIDADSOCIAL_SEGUID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_SEGU_ID\"", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEGURIDADSOCIAL_SEGUID_GENERATOR")
+	@Column(name="segu_id")
+	private long seguId;
 
-	@Column(name="descsegu")
-	private String descsegu;
+	@Column(name="segu_abreviatura")
+	private String seguAbreviatura;
 
-	@Column(name="nivelsegu")
-	private String nivelsegu;
+	@Column(name="segu_fechacambio")
+	private String seguFechacambio;
 
-	@Column(name="nomsegur")
-	private String nomsegur;
+	@Column(name="segu_horacambio")
+	private String seguHoracambio;
 
-	@Column(name="siglasegu")
-	private String siglasegu;
+	@Column(name="segu_nombre")
+	private String seguNombre;
 
-	//bi-directional many-to-one association to Convenio
-	@OneToMany(mappedBy="seguridadsocial")
-	private List<Convenio> convenios;
-
-	//bi-directional many-to-one association to Paciente
-	@OneToMany(mappedBy="seguridadsocial")
-	private List<Paciente> pacientes;
+	@Column(name="segu_registradopor")
+	private String seguRegistradopor;
 
 	//bi-directional many-to-one association to Servicio
 	@OneToMany(mappedBy="seguridadsocial")
@@ -48,60 +42,52 @@ public class Seguridadsocial implements Serializable {
 	public Seguridadsocial() {
 	}
 
-	public long getIdSeguridad() {
-		return this.idSeguridad;
+	public long getSeguId() {
+		return this.seguId;
 	}
 
-	public void setIdSeguridad(long idSeguridad) {
-		this.idSeguridad = idSeguridad;
+	public void setSeguId(long seguId) {
+		this.seguId = seguId;
 	}
 
-	public String getDescsegu() {
-		return this.descsegu;
+	public String getSeguAbreviatura() {
+		return this.seguAbreviatura;
 	}
 
-	public void setDescsegu(String descsegu) {
-		this.descsegu = descsegu;
+	public void setSeguAbreviatura(String seguAbreviatura) {
+		this.seguAbreviatura = seguAbreviatura;
 	}
 
-	public String getNivelsegu() {
-		return this.nivelsegu;
+	public String getSeguFechacambio() {
+		return this.seguFechacambio;
 	}
 
-	public void setNivelsegu(String nivelsegu) {
-		this.nivelsegu = nivelsegu;
+	public void setSeguFechacambio(String seguFechacambio) {
+		this.seguFechacambio = seguFechacambio;
 	}
 
-	public String getNomsegur() {
-		return this.nomsegur;
+	public String getSeguHoracambio() {
+		return this.seguHoracambio;
 	}
 
-	public void setNomsegur(String nomsegur) {
-		this.nomsegur = nomsegur;
+	public void setSeguHoracambio(String seguHoracambio) {
+		this.seguHoracambio = seguHoracambio;
 	}
 
-	public String getSiglasegu() {
-		return this.siglasegu;
+	public String getSeguNombre() {
+		return this.seguNombre;
 	}
 
-	public void setSiglasegu(String siglasegu) {
-		this.siglasegu = siglasegu;
+	public void setSeguNombre(String seguNombre) {
+		this.seguNombre = seguNombre;
 	}
 
-	public List<Convenio> getConvenios() {
-		return this.convenios;
+	public String getSeguRegistradopor() {
+		return this.seguRegistradopor;
 	}
 
-	public void setConvenios(List<Convenio> convenios) {
-		this.convenios = convenios;
-	}
-
-	public List<Paciente> getPacientes() {
-		return this.pacientes;
-	}
-
-	public void setPacientes(List<Paciente> pacientes) {
-		this.pacientes = pacientes;
+	public void setSeguRegistradopor(String seguRegistradopor) {
+		this.seguRegistradopor = seguRegistradopor;
 	}
 
 	public List<Servicio> getServicios() {
@@ -112,4 +98,11 @@ public class Seguridadsocial implements Serializable {
 		this.servicios = servicios;
 	}
 
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.seguRegistradopor=data.get(0);
+			this.seguFechacambio=data.get(1);
+			this.seguHoracambio=data.get(2);
+		}
+	}
 }

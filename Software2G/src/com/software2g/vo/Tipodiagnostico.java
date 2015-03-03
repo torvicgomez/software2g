@@ -2,30 +2,38 @@ package com.software2g.vo;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.List;
 
 
 /**
- * The persistent class for the tipodiagnostico database table.
+ * The persistent class for the "TIPODIAGNOSTICO" database table.
  * 
  */
 @Entity
-@Table(name="tipodiagnostico", schema="public")
+@Table(name="\"TIPODIAGNOSTICO\"", schema="\"HISCLINICA\"")
 public class Tipodiagnostico implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="TIPODIAGNOSTICO_IDTIPODIAGNOS_GENERATOR", sequenceName="PUBLIC.TIPODIAGNOSTICO_ID_TIPODIAGNOS_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TIPODIAGNOSTICO_IDTIPODIAGNOS_GENERATOR")
-	@Column(name="id_tipodiagnos")
-	private long idTipodiagnos;
+	@SequenceGenerator(name="TIPODIAGNOSTICO_TIDIID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_TIDI_ID\"", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TIPODIAGNOSTICO_TIDIID_GENERATOR")
+	@Column(name="tidi_id")
+	private long tidiId;
 
-	private String abreviatipodiag;
+	@Column(name="tidi_abreviatura")
+	private String tidiAbreviatura;
 
-	private String desctipodiag;
+	@Column(name="tidi_fechacambio")
+	private String tidiFechacambio;
 
-	private String nomtipodiag;
+	@Column(name="tidi_horacambio")
+	private String tidiHoracambio;
+
+	@Column(name="tidi_nombre")
+	private String tidiNombre;
+
+	@Column(name="tidi_registradopor")
+	private String tidiRegistradopor;
 
 	//bi-directional many-to-one association to Diagnostico
 	@OneToMany(mappedBy="tipodiagnostico")
@@ -34,36 +42,52 @@ public class Tipodiagnostico implements Serializable {
 	public Tipodiagnostico() {
 	}
 
-	public long getIdTipodiagnos() {
-		return this.idTipodiagnos;
+	public long getTidiId() {
+		return this.tidiId;
 	}
 
-	public void setIdTipodiagnos(long idTipodiagnos) {
-		this.idTipodiagnos = idTipodiagnos;
+	public void setTidiId(long tidiId) {
+		this.tidiId = tidiId;
 	}
 
-	public String getAbreviatipodiag() {
-		return this.abreviatipodiag;
+	public String getTidiAbreviatura() {
+		return this.tidiAbreviatura;
 	}
 
-	public void setAbreviatipodiag(String abreviatipodiag) {
-		this.abreviatipodiag = abreviatipodiag;
+	public void setTidiAbreviatura(String tidiAbreviatura) {
+		this.tidiAbreviatura = tidiAbreviatura;
 	}
 
-	public String getDesctipodiag() {
-		return this.desctipodiag;
+	public String getTidiFechacambio() {
+		return this.tidiFechacambio;
 	}
 
-	public void setDesctipodiag(String desctipodiag) {
-		this.desctipodiag = desctipodiag;
+	public void setTidiFechacambio(String tidiFechacambio) {
+		this.tidiFechacambio = tidiFechacambio;
 	}
 
-	public String getNomtipodiag() {
-		return this.nomtipodiag;
+	public String getTidiHoracambio() {
+		return this.tidiHoracambio;
 	}
 
-	public void setNomtipodiag(String nomtipodiag) {
-		this.nomtipodiag = nomtipodiag;
+	public void setTidiHoracambio(String tidiHoracambio) {
+		this.tidiHoracambio = tidiHoracambio;
+	}
+
+	public String getTidiNombre() {
+		return this.tidiNombre;
+	}
+
+	public void setTidiNombre(String tidiNombre) {
+		this.tidiNombre = tidiNombre;
+	}
+
+	public String getTidiRegistradopor() {
+		return this.tidiRegistradopor;
+	}
+
+	public void setTidiRegistradopor(String tidiRegistradopor) {
+		this.tidiRegistradopor = tidiRegistradopor;
 	}
 
 	public List<Diagnostico> getDiagnosticos() {
@@ -74,4 +98,11 @@ public class Tipodiagnostico implements Serializable {
 		this.diagnosticos = diagnosticos;
 	}
 
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.tidiRegistradopor=data.get(0);
+			this.tidiFechacambio=data.get(1);
+			this.tidiHoracambio=data.get(2);
+		}
+	}
 }

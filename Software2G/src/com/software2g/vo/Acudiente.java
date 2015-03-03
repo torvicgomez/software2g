@@ -7,25 +7,41 @@ import java.util.List;
 
 
 /**
- * The persistent class for the acudiente database table.
+ * The persistent class for the "ACUDIENTE" database table.
  * 
  */
 @Entity
-@Table(schema="PUBLIC", name="ACUDIENTE")
+@Table(name="\"ACUDIENTE\"", schema="\"HISCLINICA\"")
 public class Acudiente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="ACUDIENTE_IDACUDIENTE_GENERATOR", sequenceName="PUBLIC.ACUDIENTE_ID_ACUDIENTE_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ACUDIENTE_IDACUDIENTE_GENERATOR")
-	@Column(name="id_acudiente")
-	private long idAcudiente;
+	@SequenceGenerator(name="ACUDIENTE_ACUDID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_ACUD_ID\"", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ACUDIENTE_ACUDID_GENERATOR")
+	@Column(name="acud_id")
+	private long acudId;
 
-	@Column(name="id_parentesco")
-	private long idParentesco;
+	@Column(name="acud_fechacambio")
+	private String acudFechacambio;
 
-	@Column(name="id_persona")
-	private long idPersona;
+	@Column(name="acud_horacambio")
+	private String acudHoracambio;
+
+	@Column(name="acud_registradopor")
+	private String acudRegistradopor;
+
+//	@Column(name="pers_id")
+//	private java.math.BigDecimal persId;
+	
+	@ManyToOne
+	@JoinColumn(name="pers_id")
+	private Persona persona;
+	
+
+	//bi-directional many-to-one association to Parentesco
+	@ManyToOne
+	@JoinColumn(name="pare_id")
+	private Parentesco parentesco;
 
 	//bi-directional many-to-one association to Servicio
 	@OneToMany(mappedBy="acudiente")
@@ -34,28 +50,52 @@ public class Acudiente implements Serializable {
 	public Acudiente() {
 	}
 
-	public long getIdAcudiente() {
-		return this.idAcudiente;
+	public long getAcudId() {
+		return this.acudId;
 	}
 
-	public void setIdAcudiente(long idAcudiente) {
-		this.idAcudiente = idAcudiente;
+	public void setAcudId(long acudId) {
+		this.acudId = acudId;
 	}
 
-	public long getIdParentesco() {
-		return this.idParentesco;
+	public String getAcudFechacambio() {
+		return this.acudFechacambio;
 	}
 
-	public void setIdParentesco(long idParentesco) {
-		this.idParentesco = idParentesco;
+	public void setAcudFechacambio(String acudFechacambio) {
+		this.acudFechacambio = acudFechacambio;
 	}
 
-	public long getIdPersona() {
-		return this.idPersona;
+	public String getAcudHoracambio() {
+		return this.acudHoracambio;
 	}
 
-	public void setIdPersona(long idPersona) {
-		this.idPersona = idPersona;
+	public void setAcudHoracambio(String acudHoracambio) {
+		this.acudHoracambio = acudHoracambio;
+	}
+
+	public String getAcudRegistradopor() {
+		return this.acudRegistradopor;
+	}
+
+	public void setAcudRegistradopor(String acudRegistradopor) {
+		this.acudRegistradopor = acudRegistradopor;
+	}
+
+//	public java.math.BigDecimal getPersId() {
+//		return this.persId;
+//	}
+//
+//	public void setPersId(java.math.BigDecimal persId) {
+//		this.persId = persId;
+//	}
+
+	public Parentesco getParentesco() {
+		return this.parentesco;
+	}
+
+	public void setParentesco(Parentesco parentesco) {
+		this.parentesco = parentesco;
 	}
 
 	public List<Servicio> getServicios() {
@@ -66,4 +106,19 @@ public class Acudiente implements Serializable {
 		this.servicios = servicios;
 	}
 
+	public Persona getPersona() {
+		return persona;
+	}
+
+	public void setPersona(Persona persona) {
+		this.persona = persona;
+	}
+	
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.acudRegistradopor=data.get(0);
+			this.acudFechacambio=data.get(1);
+			this.acudHoracambio=data.get(2);
+		}
+	}
 }

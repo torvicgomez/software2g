@@ -93,10 +93,14 @@ public class Persona implements Serializable {
 	@OneToMany(mappedBy="persona")
 	private List<Profesional> profesional;
 	
-	//bi-directional many-to-one association to Profesional Salud
+	//bi-directional many-to-one association to Acudiente Servicio
 	@OneToMany(mappedBy="persona")
-	private List<Profesionalsalud> profesionalSalud;
+	private List<Acudiente> acudiente;
 	
+	//bi-directional many-to-one association to Paciente
+	@OneToMany(mappedBy="persona")
+	private List<Paciente> paciente;
+		
 	@Transient
 	private String existePaciente; 
 	
@@ -313,14 +317,6 @@ public class Persona implements Serializable {
             return edad_ano+" AÑOS "+edad_mes+" MESES";
     }
 
-	public List<Profesionalsalud> getProfesionalSalud() {
-		return profesionalSalud;
-	}
-
-	public void setProfesionalSalud(List<Profesionalsalud> profesionalSalud) {
-		this.profesionalSalud = profesionalSalud;
-	}
-
 	public String getExistePaciente() {
 		return existePaciente;
 	}
@@ -329,4 +325,21 @@ public class Persona implements Serializable {
 		this.existePaciente = existePaciente;
 	}
 
+	public List<Acudiente> getAcudiente() {
+		return acudiente;
+	}
+
+	public void setAcudiente(List<Acudiente> acudiente) {
+		this.acudiente = acudiente;
+	}
+
+	public List<Paciente> getPaciente() {
+		return paciente;
+	}
+
+	public void setPaciente(List<Paciente> paciente) {
+		this.paciente = paciente;
+	}
+
+	
 }

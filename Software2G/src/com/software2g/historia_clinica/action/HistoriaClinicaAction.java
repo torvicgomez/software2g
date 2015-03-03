@@ -19,7 +19,6 @@ import com.software2g.historia_clinica.facade.IGestionFacadeHistoriaClinica;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Acudiente;
-import com.software2g.vo.Anamnesi;
 import com.software2g.vo.Finalidad;
 import com.software2g.vo.Motivo;
 import com.software2g.vo.Persona;
@@ -55,7 +54,6 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 	private Finalidad finalidad;
 	private Motivo motivo;
 	private Seguridadsocial seguridadSocial;
-	private Anamnesi anamnesis;
 	private Servicio servicio;
 	
 	public List<Persona> getListPersona() {return listPersona;}
@@ -74,8 +72,6 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 	public void setMotivo(Motivo motivo) {this.motivo = motivo;}
 	public Seguridadsocial getSeguridadSocial() {return seguridadSocial;}
 	public void setSeguridadSocial(Seguridadsocial seguridadSocial) {this.seguridadSocial = seguridadSocial;}
-	public Anamnesi getAnamnesis() {return anamnesis;}
-	public void setAnamnesis(Anamnesi anamnesis) {this.anamnesis = anamnesis;}
 	public Servicio getServicio() {return servicio;}
 	public void setServicio(Servicio servicio) {this.servicio = servicio;}
 	
@@ -97,11 +93,11 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     		getFuncionPosicionado();
     		System.out.println("######>>>>>>>HistoriaClinicaAction>>>>servicioMethod>>>>estado entrada-->>"+estado);
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
-    			listPersona = gestionFacadeHistoriaClinica.findAllPersonas();
+    			listPersona = null;//gestionFacadeHistoriaClinica.findAllPersonas();
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAdd)){
     			System.out.println("entra esta parte!!!!!");
     			System.out.println("ID:["+this.getIdLong()+"]");
-    			persona = gestionFacadeHistoriaClinica.findPersonaById(this.getIdLong());
+    			persona = null;//gestionFacadeHistoriaClinica.findPersonaById(this.getIdLong());
     			System.out.println("Edad: ["+persona.getEdad()+"]");
     			listFinalidad = gestionFacadeHistoriaClinica.findAllFinalidads();
     			listMotivo = gestionFacadeHistoriaClinica.findAllMotivos();

@@ -66,8 +66,7 @@ public class SeguridadSocialDAOImpl implements ISeguridadSocialDao {
 	@SuppressWarnings("unchecked")
 	public List<Seguridadsocial> findAllSeguridadsocials() {
         try {
-    		String jpqlString = "select seguridadsocial from " + Seguridadsocial.class.getSimpleName() + " seguridadsocial " +
-    				" order by seguridadsocial.nomsegur asc ";
+    		String jpqlString = "select seguridadsocial from " + Seguridadsocial.class.getSimpleName() + " seguridadsocial";
             Query query = em.createQuery( jpqlString );
             return query.getResultList();
         }

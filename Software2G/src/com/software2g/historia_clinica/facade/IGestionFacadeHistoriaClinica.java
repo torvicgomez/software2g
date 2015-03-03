@@ -3,57 +3,42 @@ package com.software2g.historia_clinica.facade;
 import java.util.List;
 
 import com.software2g.vo.Acudiente;
-import com.software2g.vo.Anamnesi;
+import com.software2g.vo.Archivoservicio;
 import com.software2g.vo.Clasediagnostico;
 import com.software2g.vo.Codigoenfermedade;
-import com.software2g.vo.Consulta;
-import com.software2g.vo.Convenio;
-import com.software2g.vo.Dependencia;
 import com.software2g.vo.Diagnostico;
-import com.software2g.vo.Direccion;
-import com.software2g.vo.Enfermedad;
-import com.software2g.vo.Enfermedadsufrida;
-import com.software2g.vo.Especificacionformula;
 import com.software2g.vo.Especificacionpartecuerpo;
-import com.software2g.vo.Especificaexamen;
-import com.software2g.vo.Estadocivil;
-import com.software2g.vo.Estadomedicamento;
-import com.software2g.vo.Examen;
-import com.software2g.vo.Examenpartecuerpo;
+import com.software2g.vo.Examenoptometria;
 import com.software2g.vo.Finalidad;
 import com.software2g.vo.Formulacion;
-import com.software2g.vo.Frecuencia;
-import com.software2g.vo.Listaexamenconsulta;
+import com.software2g.vo.Gafa;
+import com.software2g.vo.Medicamento;
 import com.software2g.vo.Motivo;
+import com.software2g.vo.Odontograma;
+import com.software2g.vo.Opcionrespuesta;
 import com.software2g.vo.Paciente;
 import com.software2g.vo.Parentesco;
-import com.software2g.vo.Partescuerpo;
+import com.software2g.vo.Partecuerpo;
 import com.software2g.vo.Persona;
-import com.software2g.vo.Personapertenece;
 import com.software2g.vo.Posicion;
-import com.software2g.vo.Registroexamen;
-import com.software2g.vo.Registroformulacion;
-import com.software2g.vo.Remision;
+import com.software2g.vo.Pregunta;
+import com.software2g.vo.Registroavsc;
+import com.software2g.vo.Registrocovertest;
+import com.software2g.vo.Registroexamensimple;
+import com.software2g.vo.Registroodontograma;
+import com.software2g.vo.Registrorxuso;
+import com.software2g.vo.Respuesta;
+import com.software2g.vo.Seccionodon;
+import com.software2g.vo.Segmentoanamnesi;
 import com.software2g.vo.Seguridadsocial;
 import com.software2g.vo.Servicio;
-import com.software2g.vo.Sintoma;
-import com.software2g.vo.Sintomacomun;
-import com.software2g.vo.Telefono;
-import com.software2g.vo.Tipodato;
 import com.software2g.vo.Tipodiagnostico;
-import com.software2g.vo.Tipodocumentoinst;
 import com.software2g.vo.Tipoespecialidad;
+import com.software2g.vo.Tipoexamenopt;
+import com.software2g.vo.Tipoformulacion;
+import com.software2g.vo.Tipopregunta;
+import com.software2g.vo.Tiposegmento;
 import com.software2g.vo.Tiposervicio;
-import com.software2g.vo.Tipoubicacion;
-import com.software2g.vo.Tipovirtuallink;
-import com.software2g.vo.Tomasinodroga;
-import com.software2g.vo.Ubicaciondireccion;
-import com.software2g.vo.Ubicaciontelefono;
-import com.software2g.vo.Ubicacionvirtual;
-import com.software2g.vo.Unidade;
-import com.software2g.vo.Variableexamen;
-import com.software2g.vo.Variableformulacion;
-import com.software2g.vo.Virtuallink;
 
 public interface IGestionFacadeHistoriaClinica {
 
@@ -78,36 +63,33 @@ public interface IGestionFacadeHistoriaClinica {
 	 */
 	public void removeAcudiente(Acudiente acudiente) throws Exception;
 	//******************************************************************
-	// Fin Acudiente
+	// FIN Acudiente
 	//******************************************************************
-	
 	//******************************************************************
-	// Anamnesis
+	// Archivo Servicio
 	//******************************************************************
 	/**
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
-	public Anamnesi findAnamnesiById(long id) throws Exception;
+	public Archivoservicio findArchivoservicioById(long id) throws Exception;
 	/**
-	 * Return all persistent instances of the <code>Anamnesi</code> entity.
+	 * Return all persistent instances of the <code>Archivoservicio</code> entity.
 	 */
-	public List<Anamnesi> findAllAnamnesis() throws Exception;
+	public List<Archivoservicio> findAllArchivoservicios() throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */
-	public void persistAnamnesi(Anamnesi anamnesi) throws Exception;
+	public void persistArchivoservicio(Archivoservicio archivoservicio) throws Exception;
 	/**
 	 * Remove the given persistent instance.
 	 */
-	public void removeAnamnesi(Anamnesi anamnesi) throws Exception;
+	public void removeArchivoservicio(Archivoservicio archivoservicio) throws Exception;
 	//******************************************************************
-	// Fin Anamnesis
+	// FIN Archivo Servicio
 	//******************************************************************
-	
-
 	//******************************************************************
-	// Clase Diagnostico	
+	// Clase Diagnostico
 	//******************************************************************
 	/**
 	 * Find an entity by its id (primary key).
@@ -127,9 +109,8 @@ public interface IGestionFacadeHistoriaClinica {
 	 */
 	public void removeClasediagnostico(Clasediagnostico clasediagnostico) throws Exception;
 	//******************************************************************
-	// Fin Clase Diagnostico
-	//******************************************************************	
-	
+	// FIN Clase Diagnostico
+	//******************************************************************
 	//******************************************************************
 	// Codigo Enfermedades
 	//******************************************************************
@@ -151,81 +132,8 @@ public interface IGestionFacadeHistoriaClinica {
 	 */
 	public void removeCodigoenfermedade(Codigoenfermedade codigoenfermedade) throws Exception;
 	//******************************************************************
-	// Fin Codigo Enfermedades
-	//******************************************************************	
-
+	// FIN Codigo Enfermedades
 	//******************************************************************
-	// Consulta
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Consulta findConsultaById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Consulta</code> entity.
-	 */
-	public List<Consulta> findAllConsultas() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistConsulta(Consulta consulta) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeConsulta(Consulta consulta) throws Exception;
-	//******************************************************************
-	// Fin Consulta
-	//******************************************************************	
-
-	//******************************************************************
-	// Convenio
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Convenio findConvenioById(com.software2g.vo.ConvenioPK id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Convenio</code> entity.
-	 */
-	public List<Convenio> findAllConvenios() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistConvenio(Convenio convenio) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeConvenio(Convenio convenio) throws Exception;
-	//******************************************************************
-	// Fin Convenio
-	//******************************************************************	
-
-	//******************************************************************
-	// Dependencia
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Dependencia findDependenciaById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Dependencia</code> entity.
-	 */
-	public List<Dependencia> findAllDependencias() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistDependencia(Dependencia dependencia) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeDependencia(Dependencia dependencia) throws Exception;
-	//******************************************************************
-	// Fin Dependencia
-	//******************************************************************	
-
 	//******************************************************************
 	// Diagnostico
 	//******************************************************************
@@ -247,105 +155,8 @@ public interface IGestionFacadeHistoriaClinica {
 	 */
 	public void removeDiagnostico(Diagnostico diagnostico) throws Exception;
 	//******************************************************************
-	// Fin Diagnostico
-	//******************************************************************	
-
+	// FIN Diagnostico
 	//******************************************************************
-	// Direccion
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Direccion findDireccionById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Direccion</code> entity.
-	 */
-	public List<Direccion> findAllDireccions() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistDireccion(Direccion direccion) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeDireccion(Direccion direccion) throws Exception;
-	//******************************************************************
-	// Fin Direccion
-	//******************************************************************	
-
-	//******************************************************************
-	// Enfermedad
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Enfermedad findEnfermedadById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Enfermedad</code> entity.
-	 */
-	public List<Enfermedad> findAllEnfermedads() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistEnfermedad(Enfermedad enfermedad) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeEnfermedad(Enfermedad enfermedad) throws Exception;
-	//******************************************************************
-	// Fin Enfermedad
-	//******************************************************************	
-
-	//******************************************************************
-	// Enfermedad Sufrida
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Enfermedadsufrida findEnfermedadsufridaById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Enfermedadsufrida</code> entity.
-	 */
-	public List<Enfermedadsufrida> findAllEnfermedadsufridas() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistEnfermedadsufrida(Enfermedadsufrida enfermedadsufrida) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeEnfermedadsufrida(Enfermedadsufrida enfermedadsufrida) throws Exception;
-	//******************************************************************
-	// Fin Enfermedad Sufrida
-	//******************************************************************	
-
-	//******************************************************************
-	// Especificacion Formula
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Especificacionformula findEspecificacionformulaById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Especificacionformula</code> entity.
-	 */
-	public List<Especificacionformula> findAllEspecificacionformulas() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistEspecificacionformula(Especificacionformula especificacionformula) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeEspecificacionformula(Especificacionformula especificacionformula) throws Exception;
-	//******************************************************************
-	// Fin Especificacion Formula
-	//******************************************************************	
-
 	//******************************************************************
 	// Especificacion Parte Cuerpo
 	//******************************************************************
@@ -367,129 +178,31 @@ public interface IGestionFacadeHistoriaClinica {
 	 */
 	public void removeEspecificacionpartecuerpo(Especificacionpartecuerpo especificacionpartecuerpo) throws Exception;
 	//******************************************************************
-	// Fin Especificacion Parte Cuerpo
-	//******************************************************************	
-
+	// FIN Especificacion Parte Cuerpo
 	//******************************************************************
-	// Especificacion Examen
 	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Especificaexamen findEspecificaexamenById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Especificaexamen</code> entity.
-	 */
-	public List<Especificaexamen> findAllEspecificaexamens() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistEspecificaexamen(Especificaexamen especificaexamen) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeEspecificaexamen(Especificaexamen especificaexamen) throws Exception;
-	//******************************************************************
-	// Fin Especificacion Examen
-	//******************************************************************	
-
-	//******************************************************************
-	// Estado Civil
+	// Examen Optometria
 	//******************************************************************
 	/**
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
-	public Estadocivil findEstadocivilById(long id) throws Exception;
+	public Examenoptometria findExamenoptometriaById(long id) throws Exception;
 	/**
-	 * Return all persistent instances of the <code>Estadocivil</code> entity.
+	 * Return all persistent instances of the <code>Examenoptometria</code> entity.
 	 */
-	public List<Estadocivil> findAllEstadocivils() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistEstadocivil(Estadocivil estadocivil) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeEstadocivil(Estadocivil estadocivil) throws Exception;
-	//******************************************************************
-	// Fin Estado Civil
-	//******************************************************************	
-
-	//******************************************************************
-	// Estado Medicamento
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Estadomedicamento findEstadomedicamentoById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Estadomedicamento</code> entity.
-	 */
-	public List<Estadomedicamento> findAllEstadomedicamentos() throws Exception;
+	public List<Examenoptometria> findAllExamenoptometrias() throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */
-	public void persistEstadomedicamento(Estadomedicamento estadomedicamento) throws Exception;
+	public void persistExamenoptometria(Examenoptometria examenoptometria) throws Exception;
 	/**
 	 * Remove the given persistent instance.
 	 */
-	public void removeEstadomedicamento(Estadomedicamento estadomedicamento) throws Exception;
+	public void removeExamenoptometria(Examenoptometria examenoptometria) throws Exception;
 	//******************************************************************
-	// Fin Estado Medicamento
-	//******************************************************************	
-
+	// FIN Examen Optometria
 	//******************************************************************
-	// Examen Parte Cuerpo
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Examenpartecuerpo findExamenpartecuerpoById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Examenpartecuerpo</code> entity.
-	 */
-	public List<Examenpartecuerpo> findAllExamenpartecuerpos() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistExamenpartecuerpo(Examenpartecuerpo examenpartecuerpo) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeExamenpartecuerpo(Examenpartecuerpo examenpartecuerpo) throws Exception;
-	//******************************************************************
-	// Fin Examen Parte Cuerpo
-	//******************************************************************	
-
-	//******************************************************************
-	// Examen
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Examen findExamenById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Examen</code> entity.
-	 */
-	public List<Examen> findAllExamens() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistExamen(Examen examen) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeExamen(Examen examen) throws Exception;
-	//******************************************************************
-	// Fin Examen
-	//******************************************************************	
-
 	//******************************************************************
 	// Finalidad
 	//******************************************************************
@@ -511,9 +224,8 @@ public interface IGestionFacadeHistoriaClinica {
 	 */
 	public void removeFinalidad(Finalidad finalidad) throws Exception;
 	//******************************************************************
-	// Fin Finalidad
-	//******************************************************************	
-
+	// FIN Finalidad
+	//******************************************************************
 	//******************************************************************
 	// Formulacion
 	//******************************************************************
@@ -535,57 +247,54 @@ public interface IGestionFacadeHistoriaClinica {
 	 */
 	public void removeFormulacion(Formulacion formulacion) throws Exception;
 	//******************************************************************
-	// Fin Formulacion
-	//******************************************************************	
-
+	// FIN Formulacion
 	//******************************************************************
-	// Frecuencia
 	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Frecuencia findFrecuenciaById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Frecuencia</code> entity.
-	 */
-	public List<Frecuencia> findAllFrecuencias() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistFrecuencia(Frecuencia frecuencia) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeFrecuencia(Frecuencia frecuencia) throws Exception;
-	//******************************************************************
-	// Fin Frecuencia
-	//******************************************************************	
-
-	//******************************************************************
-	// Lista Examen Consulta
+	// Gafas
 	//******************************************************************
 	/**
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
-	public Listaexamenconsulta findListaexamenconsultaById(long id) throws Exception;
+	public Gafa findGafaById(long id) throws Exception;
 	/**
-	 * Return all persistent instances of the <code>Listaexamenconsulta</code> entity.
+	 * Return all persistent instances of the <code>Gafa</code> entity.
 	 */
-	public List<Listaexamenconsulta> findAllListaexamenconsultas() throws Exception;
+	public List<Gafa> findAllGafas() throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */
-	public void persistListaexamenconsulta(Listaexamenconsulta listaexamenconsulta) throws Exception;
+	public void persistGafa(Gafa gafa) throws Exception;
 	/**
 	 * Remove the given persistent instance.
 	 */
-	public void removeListaexamenconsulta(Listaexamenconsulta listaexamenconsulta) throws Exception;
+	public void removeGafa(Gafa gafa) throws Exception;
 	//******************************************************************
-	// Fin Lista Examen Consulta
-	//******************************************************************	
-
+	// FIN Gafas
+	//******************************************************************
+	//******************************************************************
+	// Medicamento
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Medicamento findMedicamentoById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Medicamento</code> entity.
+	 */
+	public List<Medicamento> findAllMedicamentos() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistMedicamento(Medicamento medicamento) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeMedicamento(Medicamento medicamento) throws Exception;
+	//******************************************************************
+	// FIN Medicamento
+	//******************************************************************
 	//******************************************************************
 	// Motivo
 	//******************************************************************
@@ -607,9 +316,54 @@ public interface IGestionFacadeHistoriaClinica {
 	 */
 	public void removeMotivo(Motivo motivo) throws Exception;
 	//******************************************************************
-	// Fin Motivo
-	//******************************************************************	
-
+	// FIN Motivo
+	//******************************************************************
+	//******************************************************************
+	// Odontograma
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Odontograma findOdontogramaById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Odontograma</code> entity.
+	 */
+	public List<Odontograma> findAllOdontogramas() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistOdontograma(Odontograma odontograma) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeOdontograma(Odontograma odontograma) throws Exception;
+	//******************************************************************
+	// FIN Odontograma
+	//******************************************************************
+	//******************************************************************
+	// Opcion Respuesta
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Opcionrespuesta findOpcionrespuestaById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Opcionrespuesta</code> entity.
+	 */
+	public List<Opcionrespuesta> findAllOpcionrespuestas() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistOpcionrespuesta(Opcionrespuesta opcionrespuesta) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeOpcionrespuesta(Opcionrespuesta opcionrespuesta) throws Exception;
+	//******************************************************************
+	// FIN Opcion Respuesta
+	//******************************************************************
 	//******************************************************************
 	// Paciente
 	//******************************************************************
@@ -631,9 +385,8 @@ public interface IGestionFacadeHistoriaClinica {
 	 */
 	public void removePaciente(Paciente paciente) throws Exception;
 	//******************************************************************
-	// Fin Paciente
-	//******************************************************************	
-
+	// FIN Paciente
+	//******************************************************************
 	//******************************************************************
 	// Parentesco
 	//******************************************************************
@@ -655,57 +408,31 @@ public interface IGestionFacadeHistoriaClinica {
 	 */
 	public void removeParentesco(Parentesco parentesco) throws Exception;
 	//******************************************************************
-	// Fin Parentesco
-	//******************************************************************	
-
+	// FIN Parentesco
 	//******************************************************************
-	// Partes Cuerpo
 	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Partescuerpo findPartescuerpoById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Partescuerpo</code> entity.
-	 */
-	public List<Partescuerpo> findAllPartescuerpos() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistPartescuerpo(Partescuerpo partescuerpo) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removePartescuerpo(Partescuerpo partescuerpo) throws Exception;
-	//******************************************************************
-	// Fin Partes Cuerpo
-	//******************************************************************	
-
-	//******************************************************************
-	// Persona Pertenece
+	// Parte Cuerpo
 	//******************************************************************
 	/**
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
-	public Personapertenece findPersonaperteneceById(com.software2g.vo.PersonapertenecePK id) throws Exception;
+	public Partecuerpo findPartecuerpoById(long id) throws Exception;
 	/**
-	 * Return all persistent instances of the <code>Personapertenece</code> entity.
+	 * Return all persistent instances of the <code>Partecuerpo</code> entity.
 	 */
-	public List<Personapertenece> findAllPersonaperteneces() throws Exception;
+	public List<Partecuerpo> findAllPartecuerpos() throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */
-	public void persistPersonapertenece(Personapertenece personapertenece) throws Exception;
+	public void persistPartecuerpo(Partecuerpo partecuerpo) throws Exception;
 	/**
 	 * Remove the given persistent instance.
 	 */
-	public void removePersonapertenece(Personapertenece personapertenece) throws Exception;
+	public void removePartecuerpo(Partecuerpo partecuerpo) throws Exception;
 	//******************************************************************
-	// Fin Persona Pertenece
-	//******************************************************************	
-
+	// FIN Parte Cuerpo
+	//******************************************************************
 	//******************************************************************
 	// Posicion
 	//******************************************************************
@@ -727,81 +454,215 @@ public interface IGestionFacadeHistoriaClinica {
 	 */
 	public void removePosicion(Posicion posicion) throws Exception;
 	//******************************************************************
-	// Fin Posicion
-	//******************************************************************	
-
+	// FIN Posicion
 	//******************************************************************
-	// Registro Examen
 	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Registroexamen findRegistroexamenById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Registroexamen</code> entity.
-	 */
-	public List<Registroexamen> findAllRegistroexamens() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistRegistroexamen(Registroexamen registroexamen) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeRegistroexamen(Registroexamen registroexamen) throws Exception;
-	//******************************************************************
-	// Fin Registro Examen
-	//******************************************************************	
-
-	//******************************************************************
-	// Registro Formulacion
+	// Pregunta
 	//******************************************************************
 	/**
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
-	public Registroformulacion findRegistroformulacionById(long id) throws Exception;
+	public Pregunta findPreguntaById(long id) throws Exception;
 	/**
-	 * Return all persistent instances of the <code>Registroformulacion</code> entity.
+	 * Return all persistent instances of the <code>Pregunta</code> entity.
 	 */
-	public List<Registroformulacion> findAllRegistroformulacions() throws Exception;
+	public List<Pregunta> findAllPreguntas() throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */
-	public void persistRegistroformulacion(Registroformulacion registroformulacion) throws Exception;
+	public void persistPregunta(Pregunta pregunta) throws Exception;
 	/**
 	 * Remove the given persistent instance.
 	 */
-	public void removeRegistroformulacion(Registroformulacion registroformulacion) throws Exception;
+	public void removePregunta(Pregunta pregunta) throws Exception;
 	//******************************************************************
-	// Fin Registro Formulacion
-	//******************************************************************	
-
+	// FIN Pregunta
 	//******************************************************************
-	// Remision
+	//******************************************************************
+	// Registro AVSC
 	//******************************************************************
 	/**
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
-	public Remision findRemisionById(long id) throws Exception;
+	public Registroavsc findRegistroavscById(long id) throws Exception;
 	/**
-	 * Return all persistent instances of the <code>Remision</code> entity.
+	 * Return all persistent instances of the <code>Registroavsc</code> entity.
 	 */
-	public List<Remision> findAllRemisions() throws Exception;
+	public List<Registroavsc> findAllRegistroavscs() throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */
-	public void persistRemision(Remision remision) throws Exception;
+	public void persistRegistroavsc(Registroavsc registroavsc) throws Exception;
 	/**
 	 * Remove the given persistent instance.
 	 */
-	public void removeRemision(Remision remision) throws Exception;
+	public void removeRegistroavsc(Registroavsc registroavsc) throws Exception;
 	//******************************************************************
-	// Fin Remision
-	//******************************************************************	
-
+	// FIN Registro AVSC
+	//******************************************************************
+	//******************************************************************
+	// Registro Cover Test
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Registrocovertest findRegistrocovertestById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Registrocovertest</code> entity.
+	 */
+	public List<Registrocovertest> findAllRegistrocovertests() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistRegistrocovertest(Registrocovertest registrocovertest) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeRegistrocovertest(Registrocovertest registrocovertest) throws Exception;
+	//******************************************************************
+	// FIN Registro Covert Test
+	//******************************************************************
+	//******************************************************************
+	// Registro Examen Simple
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Registroexamensimple findRegistroexamensimpleById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Registroexamensimple</code> entity.
+	 */
+	public List<Registroexamensimple> findAllRegistroexamensimples() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistRegistroexamensimple(Registroexamensimple registroexamensimple) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeRegistroexamensimple(Registroexamensimple registroexamensimple) throws Exception;
+	//******************************************************************
+	// FIN Registro Examen Simple
+	//******************************************************************
+	//******************************************************************
+	// Registro Odontograma
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Registroodontograma findRegistroodontogramaById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Registroodontograma</code> entity.
+	 */
+	public List<Registroodontograma> findAllRegistroodontogramas() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistRegistroodontograma(Registroodontograma registroodontograma) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeRegistroodontograma(Registroodontograma registroodontograma) throws Exception;
+	//******************************************************************
+	// FIN Registro Odontograma
+	//******************************************************************
+	//******************************************************************
+	// Registro Rx Uso
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Registrorxuso findRegistrorxusoById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Registrorxuso</code> entity.
+	 */
+	public List<Registrorxuso> findAllRegistrorxusos() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistRegistrorxuso(Registrorxuso registrorxuso) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeRegistrorxuso(Registrorxuso registrorxuso) throws Exception;
+	//******************************************************************
+	// FIN Registro Rx Uso
+	//******************************************************************
+	//******************************************************************
+	// Respuesta
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Respuesta findRespuestaById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Respuesta</code> entity.
+	 */
+	public List<Respuesta> findAllRespuestas() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistRespuesta(Respuesta respuesta) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeRespuesta(Respuesta respuesta) throws Exception;
+	//******************************************************************
+	// FIN Respuesta
+	//******************************************************************
+	//******************************************************************
+	// Seccion Odon
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Seccionodon findSeccionodonById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Seccionodon</code> entity.
+	 */
+	public List<Seccionodon> findAllSeccionodons() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistSeccionodon(Seccionodon seccionodon) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeSeccionodon(Seccionodon seccionodon) throws Exception;
+	//******************************************************************
+	// FIN Seccion Odon
+	//******************************************************************
+	//******************************************************************
+	// Segmento Anamnesis
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Segmentoanamnesi findSegmentoanamnesiById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Segmentoanamnesi</code> entity.
+	 */
+	public List<Segmentoanamnesi> findAllSegmentoanamnesis() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistSegmentoanamnesi(Segmentoanamnesi segmentoanamnesi) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeSegmentoanamnesi(Segmentoanamnesi segmentoanamnesi) throws Exception;
+	//******************************************************************
+	// FIN Segmento Anamnesis
+	//******************************************************************
 	//******************************************************************
 	// Seguridad Social
 	//******************************************************************
@@ -823,9 +684,8 @@ public interface IGestionFacadeHistoriaClinica {
 	 */
 	public void removeSeguridadsocial(Seguridadsocial seguridadsocial) throws Exception;
 	//******************************************************************
-	// Fin Seguridad Social
-	//******************************************************************	
-
+	// FIN Seguridad Social
+	//******************************************************************
 	//******************************************************************
 	// Servicio
 	//******************************************************************
@@ -847,105 +707,8 @@ public interface IGestionFacadeHistoriaClinica {
 	 */
 	public void removeServicio(Servicio servicio) throws Exception;
 	//******************************************************************
-	// Fin Servicio
+	// FIN Servicio
 	//******************************************************************
-	
-	//******************************************************************
-	// Sintoma Comun
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Sintomacomun findSintomacomunById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Sintomacomun</code> entity.
-	 */
-	public List<Sintomacomun> findAllSintomacomuns() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistSintomacomun(Sintomacomun sintomacomun) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeSintomacomun(Sintomacomun sintomacomun) throws Exception;
-	//******************************************************************
-	// Fin Sintoma Comun
-	//******************************************************************	
-
-	//******************************************************************
-	// Sintoma
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Sintoma findSintomaById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Sintoma</code> entity.
-	 */
-	public List<Sintoma> findAllSintomas() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistSintoma(Sintoma sintoma) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeSintoma(Sintoma sintoma) throws Exception;
-	//******************************************************************
-	// Fin Sintoma
-	//******************************************************************
-
-	//******************************************************************
-	// Telefono
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Telefono findTelefonoById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Telefono</code> entity.
-	 */
-	public List<Telefono> findAllTelefonos() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistTelefono(Telefono telefono) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeTelefono(Telefono telefono) throws Exception;
-	//******************************************************************
-	// Fin Telefono
-	//******************************************************************	
-
-	//******************************************************************
-	// Tipo Dato
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Tipodato findTipodatoById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Tipodato</code> entity.
-	 */
-	public List<Tipodato> findAllTipodatos() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistTipodato(Tipodato tipodato) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeTipodato(Tipodato tipodato) throws Exception;
-	//******************************************************************
-	// Fin Tipo Dato
-	//******************************************************************
-	
 	//******************************************************************
 	// Tipo Diagnostico
 	//******************************************************************
@@ -967,33 +730,8 @@ public interface IGestionFacadeHistoriaClinica {
 	 */
 	public void removeTipodiagnostico(Tipodiagnostico tipodiagnostico) throws Exception;
 	//******************************************************************
-	// Fin Tipo Diagnostico
-	//******************************************************************	
-
+	// FIN Tipo Diagnostico
 	//******************************************************************
-	// Tipo Documento Institucion
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Tipodocumentoinst findTipodocumentoinstById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Tipodocumentoinst</code> entity.
-	 */
-	public List<Tipodocumentoinst> findAllTipodocumentoinsts() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistTipodocumentoinst(Tipodocumentoinst tipodocumentoinst) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeTipodocumentoinst(Tipodocumentoinst tipodocumentoinst) throws Exception;
-	//******************************************************************
-	// Fin Tipo Documento Institucion
-	//******************************************************************
-	
 	//******************************************************************
 	// Tipo Especialidad
 	//******************************************************************
@@ -1015,9 +753,100 @@ public interface IGestionFacadeHistoriaClinica {
 	 */
 	public void removeTipoespecialidad(Tipoespecialidad tipoespecialidad) throws Exception;
 	//******************************************************************
-	// Fin Tipo Especialidad
+	// FIN Tipo Especialidad
 	//******************************************************************
-	
+	//******************************************************************
+	// Tipo Examen Opt
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Tipoexamenopt findTipoexamenoptById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Tipoexamenopt</code> entity.
+	 */
+	public List<Tipoexamenopt> findAllTipoexamenopts() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistTipoexamenopt(Tipoexamenopt tipoexamenopt) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeTipoexamenopt(Tipoexamenopt tipoexamenopt) throws Exception;
+	//******************************************************************
+	// FIN Tipo Examen Opt
+	//******************************************************************
+	//******************************************************************
+	// Tipo Formulacion
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Tipoformulacion findTipoformulacionById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Tipoformulacion</code> entity.
+	 */
+	public List<Tipoformulacion> findAllTipoformulacions() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistTipoformulacion(Tipoformulacion tipoformulacion) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeTipoformulacion(Tipoformulacion tipoformulacion) throws Exception;
+	//******************************************************************
+	// FIN Tipo Formulacion
+	//******************************************************************
+	//******************************************************************
+	// Tipo Pregunta
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Tipopregunta findTipopreguntaById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Tipopregunta</code> entity.
+	 */
+	public List<Tipopregunta> findAllTipopreguntas() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistTipopregunta(Tipopregunta tipopregunta) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeTipopregunta(Tipopregunta tipopregunta) throws Exception;
+	//******************************************************************
+	// FIN Tipo Pregunta
+	//******************************************************************
+	//******************************************************************
+	// Tipo Segmento
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Tiposegmento findTiposegmentoById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Tiposegmento</code> entity.
+	 */
+	public List<Tiposegmento> findAllTiposegmentos() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistTiposegmento(Tiposegmento tiposegmento) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeTiposegmento(Tiposegmento tiposegmento) throws Exception;
+	//******************************************************************
+	// FIN Tipo Segmento
+	//******************************************************************
 	//******************************************************************
 	// Tipo Servicio
 	//******************************************************************
@@ -1039,274 +868,7 @@ public interface IGestionFacadeHistoriaClinica {
 	 */
 	public void removeTiposervicio(Tiposervicio tiposervicio) throws Exception;
 	//******************************************************************
-	// Fin Tipo Servicio
-	//******************************************************************
-	
-	//******************************************************************
-	// Tipo Ubicacion
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Tipoubicacion findTipoubicacionById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Tipoubicacion</code> entity.
-	 */
-	public List<Tipoubicacion> findAllTipoubicacions() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistTipoubicacion(Tipoubicacion tipoubicacion) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeTipoubicacion(Tipoubicacion tipoubicacion) throws Exception;
-	//******************************************************************
-	// Fin Tipo Ubicacion 
-	//******************************************************************
-	
-	//******************************************************************
-	// Tipo Virtual Link
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Tipovirtuallink findTipovirtuallinkById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Tipovirtuallink</code> entity.
-	 */
-	public List<Tipovirtuallink> findAllTipovirtuallinks() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistTipovirtuallink(Tipovirtuallink tipovirtuallink) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeTipovirtuallink(Tipovirtuallink tipovirtuallink) throws Exception;
-	//******************************************************************
-	// Fin Tipo Virtual Link
-	//******************************************************************
-	
-	//******************************************************************
-	// Toma Droga
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Tomasinodroga findTomasinodrogaById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Tomasinodroga</code> entity.
-	 */
-	public List<Tomasinodroga> findAllTomasinodrogas() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistTomasinodroga(Tomasinodroga tomasinodroga) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeTomasinodroga(Tomasinodroga tomasinodroga) throws Exception;
-	//******************************************************************
-	// Fin Toma Droga
-	//******************************************************************
-	
-	//******************************************************************
-	// Ubicacion Direccion
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Ubicaciondireccion findUbicaciondireccionById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Ubicaciondireccion</code> entity.
-	 */
-	public List<Ubicaciondireccion> findAllUbicaciondireccions() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistUbicaciondireccion(Ubicaciondireccion ubicaciondireccion) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeUbicaciondireccion(Ubicaciondireccion ubicaciondireccion) throws Exception;
-	//******************************************************************
-	// Fin Ubicacion Direccion 
-	//******************************************************************
-	
-	//******************************************************************
-	// Ubicacion Telefono
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Ubicaciontelefono findUbicaciontelefonoById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Ubicaciontelefono</code> entity.
-	 */
-	public List<Ubicaciontelefono> findAllUbicaciontelefonos() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistUbicaciontelefono(Ubicaciontelefono ubicaciontelefono) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeUbicaciontelefono(Ubicaciontelefono ubicaciontelefono) throws Exception;
-	//******************************************************************
-	// Fin Ubicacion Telefono
-	//******************************************************************
-	
-	//******************************************************************
-	// Ubicacion Virtual
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Ubicacionvirtual findUbicacionvirtualById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Ubicacionvirtual</code> entity.
-	 */
-	public List<Ubicacionvirtual> findAllUbicacionvirtuals() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistUbicacionvirtual(Ubicacionvirtual ubicacionvirtual) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeUbicacionvirtual(Ubicacionvirtual ubicacionvirtual) throws Exception;
-	//******************************************************************
-	// Fin Ubicacion Virtual
-	//******************************************************************
-
-	//******************************************************************
-	// Unidades
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Unidade findUnidadeById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Unidade</code> entity.
-	 */
-	public List<Unidade> findAllUnidades() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistUnidade(Unidade unidade) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeUnidade(Unidade unidade) throws Exception;
-	//******************************************************************
-	// Fin Unidades
-	//******************************************************************
-	
-	//******************************************************************
-	// Variable Examen
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Variableexamen findVariableexamenById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Variableexamen</code> entity.
-	 */
-	public List<Variableexamen> findAllVariableexamens() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistVariableexamen(Variableexamen variableexamen) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeVariableexamen(Variableexamen variableexamen) throws Exception;
-	//******************************************************************
-	// Fin Variable Examen
-	//******************************************************************
-	
-	//******************************************************************
-	// Variable Formualcion
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Variableformulacion findVariableformulacionById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Variableformulacion</code> entity.
-	 */
-	public List<Variableformulacion> findAllVariableformulacions() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistVariableformulacion(Variableformulacion variableformulacion) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeVariableformulacion(Variableformulacion variableformulacion) throws Exception;
-	//******************************************************************
-	// Fin Variable Formulacion
-	//******************************************************************
-	
-	//******************************************************************
-	// Virtual Link
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Virtuallink findVirtuallinkById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Virtuallink</code> entity.
-	 */
-	public List<Virtuallink> findAllVirtuallinks() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistVirtuallink(Virtuallink virtuallink) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeVirtuallink(Virtuallink virtuallink) throws Exception;
-	//******************************************************************
-	// Fin Virtual Link
-	//******************************************************************
-
-	//******************************************************************
-	// Persona
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Persona findPersonaById(java.lang.Long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Persona</code> entity.
-	 */
-	public List<Persona> findAllPersonas() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistPersona(Persona persona) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removePersona(Persona persona) throws Exception;
-	
-//	public List<Persona> findAllPersonas(String datoFind, String tipoFind) throws Exception;
-//	public List<Persona> findAllPersonasProfesionales(String datoFind) throws Exception;
-	//******************************************************************
-	// FIN Persona
+	// FIN Tipo Servicio
 	//******************************************************************
 
 }

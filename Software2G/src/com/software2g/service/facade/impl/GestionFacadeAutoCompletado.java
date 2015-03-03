@@ -11,7 +11,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.software2g.historia_clinica.dao.IEspecificaExamenDao;
 import com.software2g.portal.dao.IPersonaDao;
 import com.software2g.service.facade.IGestionFacadeAutoCompletado;
 import com.software2g.util.ConstantesAplicativo;

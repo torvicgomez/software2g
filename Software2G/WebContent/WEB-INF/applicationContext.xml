@@ -156,57 +156,41 @@
 	</bean>    
 	
 	<bean class="com.software2g.historia_clinica.facade.impl.GestionFacadeHistoriaClinica" id="gestionFacadeHistoriaClinica">
-        <property name="acudienteDao"><bean class="com.software2g.historia_clinica.dao.impl.AcudienteDAOImpl"/></property>
-        <property name="anamnesisDao"><bean class="com.software2g.historia_clinica.dao.impl.AnamnesisDAOImpl"/></property>
+	    <property name="acudienteDao"><bean class="com.software2g.historia_clinica.dao.impl.AcudienteDAOImpl"/></property>
+        <property name="archivoServicioDao"><bean class="com.software2g.historia_clinica.dao.impl.ArchivoServicioDAOImpl"/></property>
         <property name="claseDiagnosticoDao"><bean class="com.software2g.historia_clinica.dao.impl.ClaseDiagnosticoDAOImpl"/></property>
-        <property name="codigoEnfermedadesDao"><bean class="com.software2g.historia_clinica.dao.impl.CodigoEnfermedadesDAOImpl"/></property>
-        <property name="consultaDao"><bean class="com.software2g.historia_clinica.dao.impl.ConsultaDAO"/></property>
-        <property name="convenioDao"><bean class="com.software2g.historia_clinica.dao.impl.ConvenioDAOImpl"/></property>
-        <property name="dependenciaDao"><bean class="com.software2g.historia_clinica.dao.impl.DependenciaDAO"/></property>
+        <property name="codigoEnfermedadDao"><bean class="com.software2g.historia_clinica.dao.impl.CodigoEnfermedadDAOImpl"/></property>
         <property name="diagnosticoDao"><bean class="com.software2g.historia_clinica.dao.impl.DiagnosticoDAOImpl"/></property>
-        <property name="direccionDao"><bean class="com.software2g.historia_clinica.dao.impl.DireccionDAOImpl"/></property>
-        <property name="enfermedadDao"><bean class="com.software2g.historia_clinica.dao.impl.EnfermedadDAOImpl"/></property>
-        <property name="enfermedadSufridaDao"><bean class="com.software2g.historia_clinica.dao.impl.EnfermedadSufridaDAOImpl"/></property>
-        <property name="especificaExamenDao"><bean class="com.software2g.historia_clinica.dao.impl.EspecificaExamenDAOImpl"/></property>
-        <property name="especificacionFormulaDao"><bean class="com.software2g.historia_clinica.dao.impl.EspecificacionFormulaDAOImpl"/></property>
         <property name="especificacionParteCuerpoDao"><bean class="com.software2g.historia_clinica.dao.impl.EspecificacionParteCuerpoDAOImpl"/></property>
-        <property name="estadoCivilDao"><bean class="com.software2g.historia_clinica.dao.impl.EstadoCivilDAOImpl"/></property>
-        <property name="estadoMedicamentoDao"><bean class="com.software2g.historia_clinica.dao.impl.EstadoMedicamentoDAOImpl"/></property>
-        <property name="examenDao"><bean class="com.software2g.historia_clinica.dao.impl.ExamenDAOImpl"/></property>
-        <property name="examenParteCuerpoDao"><bean class="com.software2g.historia_clinica.dao.impl.ExamenParteCuerpoDAOImpl"/></property>
+        <property name="examenOptometriaDao"><bean class="com.software2g.historia_clinica.dao.impl.ExamenOptometriaDAOImpl"/></property>
         <property name="finalidadDao"><bean class="com.software2g.historia_clinica.dao.impl.FinalidadDAOImpl"/></property>
         <property name="formulacionDao"><bean class="com.software2g.historia_clinica.dao.impl.FormulacionDAOImpl"/></property>
-        <property name="frecuenciaDao"><bean class="com.software2g.historia_clinica.dao.impl.FrecuenciaDAOImpl"/></property>
-        <property name="listaExamenConsultaDao"><bean class="com.software2g.historia_clinica.dao.impl.ListaExamenConsultaDAOImpl"/></property>
+        <property name="gafaDao"><bean class="com.software2g.historia_clinica.dao.impl.GafaDAOImpl"/></property>
+        <property name="medicamentoDao"><bean class="com.software2g.historia_clinica.dao.impl.MedicamentoDAOImpl"/></property>
         <property name="motivoDao"><bean class="com.software2g.historia_clinica.dao.impl.MotivoDAOImpl"/></property>
+        <property name="odontogramaDao"><bean class="com.software2g.historia_clinica.dao.impl.OdontogramaDAOImpl"/></property>
+        <property name="opcionRespuestaDao"><bean class="com.software2g.historia_clinica.dao.impl.OpcionRespuestaDAOImpl"/></property>
         <property name="pacienteDao"><bean class="com.software2g.historia_clinica.dao.impl.PacienteDAOImpl"/></property>
         <property name="parentescoDao"><bean class="com.software2g.historia_clinica.dao.impl.ParentescoDAOImpl"/></property>
-        <property name="partesCuerpoDao"><bean class="com.software2g.historia_clinica.dao.impl.PartesCuerpoDAOImpl"/></property>
-        <property name="personaPerteneceDao"><bean class="com.software2g.historia_clinica.dao.impl.PersonaPerteneceDAOImpl"/></property>
+        <property name="parteCuerpoDao"><bean class="com.software2g.historia_clinica.dao.impl.ParteCuerpoDAOImpl"/></property>
         <property name="posicionDao"><bean class="com.software2g.historia_clinica.dao.impl.PosicionDAOImpl"/></property>
-        <property name="registroExamenDao"><bean class="com.software2g.historia_clinica.dao.impl.RegistroExamenDAOImpl"/></property>
-        <property name="registroFormulacionDao"><bean class="com.software2g.historia_clinica.dao.impl.RegistroFormulacionDAOImpl"/></property>
-        <property name="remisionDao"><bean class="com.software2g.historia_clinica.dao.impl.RemisionDAOImpl"/></property>
+        <property name="preguntaDao"><bean class="com.software2g.historia_clinica.dao.impl.PreguntaDAOImpl"/></property>
+        <property name="registroAVSCDao"><bean class="com.software2g.historia_clinica.dao.impl.RegistroAVSCDAOImpl"/></property>
+        <property name="registroCoverTestDao"><bean class="com.software2g.historia_clinica.dao.impl.RegistroCoverTestDAOImpl"/></property>
+        <property name="registroExamenSimpleDao"><bean class="com.software2g.historia_clinica.dao.impl.RegistroExamenSimpleDAOImpl"/></property>
+        <property name="registroOdontogramaDao"><bean class="com.software2g.historia_clinica.dao.impl.RegistroOdontogramaDAOImpl"/></property>
+        <property name="registroRxUsoDao"><bean class="com.software2g.historia_clinica.dao.impl.RegistroRxUsoDAOImpl"/></property>
+        <property name="respuestaDao"><bean class="com.software2g.historia_clinica.dao.impl.RespuestaDAOImpl"/></property>
+        <property name="seccionOdonDao"><bean class="com.software2g.historia_clinica.dao.impl.SeccionOdonDAOImpl"/></property>
+        <property name="segmentoAnamnesisDao"><bean class="com.software2g.historia_clinica.dao.impl.SegmentoAnamnesisDAOImpl"/></property>
         <property name="seguridadSocialDao"><bean class="com.software2g.historia_clinica.dao.impl.SeguridadSocialDAOImpl"/></property>
         <property name="servicioDao"><bean class="com.software2g.historia_clinica.dao.impl.ServicioDAOImpl"/></property>
-        <property name="sintomaComunDao"><bean class="com.software2g.historia_clinica.dao.impl.SintomaComunDAOImpl"/></property>
-        <property name="sintomaDao"><bean class="com.software2g.historia_clinica.dao.impl.SintomaDAOImpl"/></property>
-        <property name="telefonoDao"><bean class="com.software2g.historia_clinica.dao.impl.TelefonoDAOImpl"/></property>
-        <property name="tipoDatoDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoDatoDAOImpl"/></property>
         <property name="tipoDiagnosticoDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoDiagnosticoDAOImpl"/></property>
-        <property name="tipoDocumentoInstitucionDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoDocumentoInstitucionDAOImpl"/></property>
         <property name="tipoEspecialidadDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoEspecialidadDAOImpl"/></property>
+        <property name="tipoExamenOptDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoExamenOptDAOImpl"/></property>
+        <property name="tipoFormulacionDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoFormulacionDAOImpl"/></property>
+        <property name="tipoPreguntaDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoPreguntaDAOImpl"/></property>
+        <property name="tipoSegmentoDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoSegmentoDAOImpl"/></property>
         <property name="tipoServicioDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoServicioDAOImpl"/></property>
-        <property name="tipoUbicacionDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoUbicacionDAOImpl"/></property>
-        <property name="tipoVirtualLinkDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoVirtualLinkDAOImpl"/></property>
-        <property name="tomaDrogaDao"><bean class="com.software2g.historia_clinica.dao.impl.TomaDrogaDAOImpl"/></property>
-        <property name="ubicacionDireccionDao"><bean class="com.software2g.historia_clinica.dao.impl.UbicacionDireccionDAOImpl"/></property>
-        <property name="ubicacionTelefonoDao"><bean class="com.software2g.historia_clinica.dao.impl.UbicacionTelefonoDAOImpl"/></property>
-        <property name="ubicacionVirtualDao"><bean class="com.software2g.historia_clinica.dao.impl.UbicacionVirtualDAOImpl"/></property>
-        <property name="unidadesDao"><bean class="com.software2g.historia_clinica.dao.impl.UnidadesDAOImpl"/></property>
-        <property name="variableExamenDao"><bean class="com.software2g.historia_clinica.dao.impl.VariableExamenDAOImpl"/></property>
-        <property name="variableFormulacionDao"><bean class="com.software2g.historia_clinica.dao.impl.VariableFormulacionDAOImpl"/></property>
-        <property name="virtualLinkDao"><bean class="com.software2g.historia_clinica.dao.impl.VirtualLinkDAOImpl"/></property>
-        <property name="personaDao"><bean class="com.software2g.portal.dao.impl.PersonaDaoImpl"/></property>
-     </bean>
+    </bean>
 </beans>

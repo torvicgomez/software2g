@@ -30,13 +30,9 @@ public class Acudiente implements Serializable {
 	@Column(name="acud_registradopor")
 	private String acudRegistradopor;
 
-//	@Column(name="pers_id")
-//	private java.math.BigDecimal persId;
-	
 	@ManyToOne
 	@JoinColumn(name="pers_id")
 	private Persona persona;
-	
 
 	//bi-directional many-to-one association to Parentesco
 	@ManyToOne
@@ -81,14 +77,6 @@ public class Acudiente implements Serializable {
 	public void setAcudRegistradopor(String acudRegistradopor) {
 		this.acudRegistradopor = acudRegistradopor;
 	}
-
-//	public java.math.BigDecimal getPersId() {
-//		return this.persId;
-//	}
-//
-//	public void setPersId(java.math.BigDecimal persId) {
-//		this.persId = persId;
-//	}
 
 	public Parentesco getParentesco() {
 		return this.parentesco;

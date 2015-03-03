@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class TipoDiagnosticoDAOImpl implements ITipoDiagnosticoDao {
-	@PersistenceContext(unitName="entityManagerFactoryPostgresOptica")
+	@PersistenceContext(unitName="entityManagerFactoryPostgres")
     private EntityManager em;
 
 	public TipoDiagnosticoDAOImpl() {

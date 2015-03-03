@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class AcudienteDAOImpl implements IAcudienteDao {
-	@PersistenceContext(unitName="entityManagerFactoryPostgresOptica")
+	@PersistenceContext(unitName="entityManagerFactoryPostgres")
     private EntityManager em;
 
 	public AcudienteDAOImpl() {

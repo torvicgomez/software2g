@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="\"FINALIDAD\"", schema="\"HISCLINICA\"")
-public class Finalidad implements Serializable {
+public class Finalidad implements Serializable { 
 	private static final long serialVersionUID = 1L;
 
 	@Id 

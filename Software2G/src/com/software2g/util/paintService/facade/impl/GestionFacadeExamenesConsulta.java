@@ -10,7 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.software2g.historia_clinica.dao.IEspecificaExamenDao;
+//import com.software2g.historia_clinica.dao.IEspecificaExamenDao;
 import com.software2g.util.paintService.facade.IGestionFacadeExamenesConsulta;
 
 @Transactional(propagation=Propagation.REQUIRED)
@@ -18,11 +18,11 @@ public class GestionFacadeExamenesConsulta implements IGestionFacadeExamenesCons
 	private HttpServletRequest request;
 	private static final String SERVICE_BEAN_ID = "gestionFacadeExamenesConsulta";
 	
-	@Autowired
-	IEspecificaExamenDao especificacionExamenDao;
-	
-	public IEspecificaExamenDao getEspecificacionExamenDao() {return especificacionExamenDao;}
-	public void setEspecificacionExamenDao(IEspecificaExamenDao especificacionExamenDao) {this.especificacionExamenDao = especificacionExamenDao;}
+//	@Autowired
+//	IEspecificaExamenDao especificacionExamenDao;
+//	
+//	public IEspecificaExamenDao getEspecificacionExamenDao() {return especificacionExamenDao;}
+//	public void setEspecificacionExamenDao(IEspecificaExamenDao especificacionExamenDao) {this.especificacionExamenDao = especificacionExamenDao;}
 	
 	
 	public GestionFacadeExamenesConsulta() {
@@ -39,7 +39,7 @@ public class GestionFacadeExamenesConsulta implements IGestionFacadeExamenesCons
 	 */
 	public List<Object[]> findExamenesConsultaEspecialidad(long idInstitucion, long idEspecialidad)  throws Exception {
 		try {
-			return getEspecificacionExamenDao().findExamenesConsultaEspecialidad(idInstitucion, idEspecialidad);
+			return null;//getEspecificacionExamenDao().findExamenesConsultaEspecialidad(idInstitucion, idEspecialidad);
 		} catch (Exception e) {
 			System.out.println("ERROR ::> GestionFacadeExamenesConsulta ::> findExamenesConsultaEspecialidad ::> " + e.getMessage());
 			return null;

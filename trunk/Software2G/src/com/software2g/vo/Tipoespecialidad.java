@@ -2,104 +2,85 @@ package com.software2g.vo;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.List;
 
 
 /**
- * The persistent class for the tipoespecialidad database table.
+ * The persistent class for the "TIPOESPECIALIDAD" database table.
  * 
  */
 @Entity
-@Table(name="tipoespecialidad", schema="public")
+@Table(name="\"TIPOESPECIALIDAD\"", schema="\"HISCLINICA\"")
 public class Tipoespecialidad implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="TIPOESPECIALIDAD_IDTIPOCONSULTA_GENERATOR", sequenceName="PUBLIC.TIPOESPECIALIDAD_ID_TIPOCONSULTA_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TIPOESPECIALIDAD_IDTIPOCONSULTA_GENERATOR")
-	@Column(name="id_tipoconsulta")
-	private long idTipoconsulta;
+	@SequenceGenerator(name="TIPOESPECIALIDAD_TIESID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_TIES_ID\"", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TIPOESPECIALIDAD_TIESID_GENERATOR")
+	@Column(name="ties_id")
+	private long tiesId;
 
-	@Column(name="abreviatipocons")
-	private String abreviatipocons;
+	@Column(name="ties_especialidad")
+	private String tiesEspecialidad;
 
-	@Column(name="desctipocons")
-	private String desctipocons;
+	@Column(name="ties_fechacambio")
+	private String tiesFechacambio;
 
-	@Column(name="nomtipocons")
-	private String nomtipocons;
+	@Column(name="ties_horacambio")
+	private String tiesHoracambio;
+
+	@Column(name="ties_registradopor")
+	private String tiesRegistradopor;
 
 	//bi-directional many-to-one association to Codigoenfermedade
 	@OneToMany(mappedBy="tipoespecialidad")
 	private List<Codigoenfermedade> codigoenfermedades;
 
-	//bi-directional many-to-one association to Consulta
+	//bi-directional many-to-one association to Segmentoanamnesi
 	@OneToMany(mappedBy="tipoespecialidad")
-	private List<Consulta> consultas;
-
-	//bi-directional many-to-one association to Especificacionformula
-	@OneToMany(mappedBy="tipoespecialidad")
-	private List<Especificacionformula> especificacionformulas;
-
-	//bi-directional many-to-one association to Especificaexamen
-	@OneToMany(mappedBy="tipoespecialidad")
-	private List<Especificaexamen> especificaexamens;
-
-	//bi-directional many-to-one association to Listaexamenconsulta
-	@OneToMany(mappedBy="tipoespecialidad")
-	private List<Listaexamenconsulta> listaexamenconsultas;
-
-	//bi-directional many-to-many association to Profesional
-	@ManyToMany
-	@JoinTable(
-		name="profetipoespecialidad"
-		, joinColumns={
-			@JoinColumn(name="id_tipoconsulta")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="id_profesional")
-			}
-		)
-	private List<Profesional> profesionals;
-
-	//bi-directional many-to-one association to Sintomacomun
-	@OneToMany(mappedBy="tipoespecialidad")
-	private List<Sintomacomun> sintomacomuns;
+	private List<Segmentoanamnesi> segmentoanamnesis;
 
 	public Tipoespecialidad() {
 	}
 
-	public long getIdTipoconsulta() {
-		return this.idTipoconsulta;
+	public long getTiesId() {
+		return this.tiesId;
 	}
 
-	public void setIdTipoconsulta(long idTipoconsulta) {
-		this.idTipoconsulta = idTipoconsulta;
+	public void setTiesId(long tiesId) {
+		this.tiesId = tiesId;
 	}
 
-	public String getAbreviatipocons() {
-		return this.abreviatipocons;
+	public String getTiesEspecialidad() {
+		return this.tiesEspecialidad;
 	}
 
-	public void setAbreviatipocons(String abreviatipocons) {
-		this.abreviatipocons = abreviatipocons;
+	public void setTiesEspecialidad(String tiesEspecialidad) {
+		this.tiesEspecialidad = tiesEspecialidad;
 	}
 
-	public String getDesctipocons() {
-		return this.desctipocons;
+	public String getTiesFechacambio() {
+		return this.tiesFechacambio;
 	}
 
-	public void setDesctipocons(String desctipocons) {
-		this.desctipocons = desctipocons;
+	public void setTiesFechacambio(String tiesFechacambio) {
+		this.tiesFechacambio = tiesFechacambio;
 	}
 
-	public String getNomtipocons() {
-		return this.nomtipocons;
+	public String getTiesHoracambio() {
+		return this.tiesHoracambio;
 	}
 
-	public void setNomtipocons(String nomtipocons) {
-		this.nomtipocons = nomtipocons;
+	public void setTiesHoracambio(String tiesHoracambio) {
+		this.tiesHoracambio = tiesHoracambio;
+	}
+
+	public String getTiesRegistradopor() {
+		return this.tiesRegistradopor;
+	}
+
+	public void setTiesRegistradopor(String tiesRegistradopor) {
+		this.tiesRegistradopor = tiesRegistradopor;
 	}
 
 	public List<Codigoenfermedade> getCodigoenfermedades() {
@@ -110,52 +91,19 @@ public class Tipoespecialidad implements Serializable {
 		this.codigoenfermedades = codigoenfermedades;
 	}
 
-	public List<Consulta> getConsultas() {
-		return this.consultas;
+	public List<Segmentoanamnesi> getSegmentoanamnesis() {
+		return this.segmentoanamnesis;
 	}
 
-	public void setConsultas(List<Consulta> consultas) {
-		this.consultas = consultas;
+	public void setSegmentoanamnesis(List<Segmentoanamnesi> segmentoanamnesis) {
+		this.segmentoanamnesis = segmentoanamnesis;
 	}
 
-	public List<Especificacionformula> getEspecificacionformulas() {
-		return this.especificacionformulas;
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.tiesRegistradopor=data.get(0);
+			this.tiesFechacambio=data.get(1);
+			this.tiesHoracambio=data.get(2);
+		}
 	}
-
-	public void setEspecificacionformulas(List<Especificacionformula> especificacionformulas) {
-		this.especificacionformulas = especificacionformulas;
-	}
-
-	public List<Especificaexamen> getEspecificaexamens() {
-		return this.especificaexamens;
-	}
-
-	public void setEspecificaexamens(List<Especificaexamen> especificaexamens) {
-		this.especificaexamens = especificaexamens;
-	}
-
-	public List<Listaexamenconsulta> getListaexamenconsultas() {
-		return this.listaexamenconsultas;
-	}
-
-	public void setListaexamenconsultas(List<Listaexamenconsulta> listaexamenconsultas) {
-		this.listaexamenconsultas = listaexamenconsultas;
-	}
-
-	public List<Profesional> getProfesionals() {
-		return this.profesionals;
-	}
-
-	public void setProfesionals(List<Profesional> profesionals) {
-		this.profesionals = profesionals;
-	}
-
-	public List<Sintomacomun> getSintomacomuns() {
-		return this.sintomacomuns;
-	}
-
-	public void setSintomacomuns(List<Sintomacomun> sintomacomuns) {
-		this.sintomacomuns = sintomacomuns;
-	}
-
 }

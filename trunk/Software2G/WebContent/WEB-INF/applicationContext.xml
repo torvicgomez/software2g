@@ -158,7 +158,6 @@
 	<bean class="com.software2g.historia_clinica.facade.impl.GestionFacadeHistoriaClinica" id="gestionFacadeHistoriaClinica">
         <property name="acudienteDao"><bean class="com.software2g.historia_clinica.dao.impl.AcudienteDAOImpl"/></property>
         <property name="anamnesisDao"><bean class="com.software2g.historia_clinica.dao.impl.AnamnesisDAOImpl"/></property>
-        <property name="antecedentesFliaDao"><bean class="com.software2g.historia_clinica.dao.impl.AntecedentesFliaDAOImpl"/></property>
         <property name="claseDiagnosticoDao"><bean class="com.software2g.historia_clinica.dao.impl.ClaseDiagnosticoDAOImpl"/></property>
         <property name="codigoEnfermedadesDao"><bean class="com.software2g.historia_clinica.dao.impl.CodigoEnfermedadesDAOImpl"/></property>
         <property name="consultaDao"><bean class="com.software2g.historia_clinica.dao.impl.ConsultaDAO"/></property>
@@ -209,6 +208,5 @@
         <property name="variableFormulacionDao"><bean class="com.software2g.historia_clinica.dao.impl.VariableFormulacionDAOImpl"/></property>
         <property name="virtualLinkDao"><bean class="com.software2g.historia_clinica.dao.impl.VirtualLinkDAOImpl"/></property>
         <property name="personaDao"><bean class="com.software2g.portal.dao.impl.PersonaDaoImpl"/></property>
-        <property name="profesionalSaludDao"><bean class="com.software2g.historia_clinica.dao.impl.PrefesionalSaludDAOImpl"/></property>
      </bean>
 </beans>

@@ -2,83 +2,107 @@ package com.software2g.vo;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
-import com.software2g.util.ConstantesAplicativo;
+import java.util.List;
 
 
 /**
- * The persistent class for the finalidad database table.
+ * The persistent class for the "FINALIDAD" database table.
  * 
  */
 @Entity
-@Table(schema="public", name="finalidad")
+@Table(name="\"FINALIDAD\"", schema="\"HISCLINICA\"")
 public class Finalidad implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="codfinalidad")
-	private String codfinalidad;
+	@Id 
+	@SequenceGenerator(name="FINALIDAD_FINAID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_FINA_ID\"", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="FINALIDAD_FINAID_GENERATOR")
+	@Column(name="fina_id")
+	private long finaId;
 
-	@Column(name="descfinalidad")
-	private String descfinalidad;
+	@Column(name="fina_codigo")
+	private String finaCodigo;
 
-	@Id
-	@SequenceGenerator(name="FINALIDAD_IDFINALIDAD_GENERATOR", sequenceName="PUBLIC.finalidad_id_finalidad_seq")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="FINALIDAD_IDFINALIDAD_GENERATOR")
-	@Column(name="id_finalidad")
-	private long idFinalidad;
+	@Column(name="fina_fechacambio")
+	private String finaFechacambio;
 
-	@Column(name="nomfinalidad")
-	private String nomfinalidad;
+	@Column(name="fina_horacambio")
+	private String finaHoracambio;
 
-	@Transient
-	private String helpView;
-	
+	@Column(name="fina_finalidad") 
+	private String finaFinalidad;
+
+	@Column(name="fina_registradopor")
+	private String finaRegistradopor;
+
+	//bi-directional many-to-one association to Servicio
+	@OneToMany(mappedBy="finalidad")
+	private List<Servicio> servicios;
+
 	public Finalidad() {
 	}
 
-	public String getCodfinalidad() {
-		return this.codfinalidad;
+	public long getFinaId() {
+		return this.finaId;
 	}
 
-	public void setCodfinalidad(String codfinalidad) {
-		this.codfinalidad = codfinalidad;
+	public void setFinaId(long finaId) {
+		this.finaId = finaId;
 	}
 
-	public String getDescfinalidad() {
-		return this.descfinalidad;
+	public String getFinaCodigo() {
+		return this.finaCodigo;
 	}
 
-	public void setDescfinalidad(String descfinalidad) {
-		this.descfinalidad = descfinalidad;
+	public void setFinaCodigo(String finaCodigo) {
+		this.finaCodigo = finaCodigo;
 	}
 
-	public long getIdFinalidad() {
-		return this.idFinalidad;
+	public String getFinaFechacambio() {
+		return this.finaFechacambio;
 	}
 
-	public void setIdFinalidad(long idFinalidad) {
-		this.idFinalidad = idFinalidad;
+	public void setFinaFechacambio(String finaFechacambio) {
+		this.finaFechacambio = finaFechacambio;
 	}
 
-	public String getNomfinalidad() {
-		return this.nomfinalidad;
+	public String getFinaHoracambio() {
+		return this.finaHoracambio;
 	}
 
-	public void setNomfinalidad(String nomfinalidad) {
-		this.nomfinalidad = nomfinalidad;
+	public void setFinaHoracambio(String finaHoracambio) {
+		this.finaHoracambio = finaHoracambio;
 	}
 
-	public String getListKey(){
-		return this.idFinalidad+ConstantesAplicativo.constanteSplit+this.codfinalidad+ConstantesAplicativo.constanteSplit+this.nomfinalidad;
+	public String getFinaRegistradopor() {
+		return this.finaRegistradopor;
 	}
 
-	public String getHelpView() {
-		return helpView;
+	public void setFinaRegistradopor(String finaRegistradopor) {
+		this.finaRegistradopor = finaRegistradopor;
 	}
 
-	public void setHelpView(String helpView) {
-		this.helpView = helpView;
+	public List<Servicio> getServicios() {
+		return this.servicios;
 	}
 
+	public void setServicios(List<Servicio> servicios) {
+		this.servicios = servicios;
+	}
+
+	public String getFinaFinalidad() {
+		return finaFinalidad;
+	}
+
+	public void setFinaFinalidad(String finaFinalidad) {
+		this.finaFinalidad = finaFinalidad; 
+	}
 	
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.finaRegistradopor=data.get(0);
+			this.finaFechacambio=data.get(1);
+			this.finaHoracambio=data.get(2);
+		}
+	}
 }

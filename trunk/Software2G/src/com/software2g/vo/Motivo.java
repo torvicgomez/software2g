@@ -2,82 +2,107 @@ package com.software2g.vo;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
-import com.software2g.util.ConstantesAplicativo;
+import java.util.List;
 
 
 /**
- * The persistent class for the motivo database table.
+ * The persistent class for the "MOTIVO" database table.
  * 
  */
 @Entity
-@Table(schema="public", name="Motivo")
+@Table(name="\"MOTIVO\"", schema="\"HISCLINICA\"")
 public class Motivo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="codmotivo")
-	private String codmotivo;
-
-	@Column(name="descmov")
-	private String descmov;
-
 	@Id
-	@SequenceGenerator(name="MOTIVO_IDMOTIVO_GENERATOR", sequenceName="PUBLIC.motivo_id_motivo_seq")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MOTIVO_IDMOTIVO_GENERATOR")
-	@Column(name="id_motivo")
-	private long idMotivo;
+	@SequenceGenerator(name="MOTIVO_MOTIID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_MOTI_ID\"", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="MOTIVO_MOTIID_GENERATOR")
+	@Column(name="moti_id")
+	private long motiId;
 
-	@Column(name="nommotivo")
-	private String nommotivo;
+	@Column(name="moti_codigo")
+	private String motiCodigo;
 
-	@Transient
-	private String helpView;
-	
+	@Column(name="moti_fechacambio")
+	private String motiFechacambio;
+
+	@Column(name="moti_horacambio")
+	private String motiHoracambio;
+
+	@Column(name="moti_motivo")
+	private String motiMotivo;
+
+	@Column(name="moti_registradopor")
+	private String motiRegistradopor;
+
+	//bi-directional many-to-one association to Servicio
+	@OneToMany(mappedBy="motivo")
+	private List<Servicio> servicios;
+
 	public Motivo() {
 	}
 
-	public String getCodmotivo() {
-		return this.codmotivo;
+	public long getMotiId() {
+		return this.motiId;
 	}
 
-	public void setCodmotivo(String codmotivo) {
-		this.codmotivo = codmotivo;
+	public void setMotiId(long motiId) {
+		this.motiId = motiId;
 	}
 
-	public String getDescmov() {
-		return this.descmov;
+	public String getMotiCodigo() {
+		return this.motiCodigo;
 	}
 
-	public void setDescmov(String descmov) {
-		this.descmov = descmov;
+	public void setMotiCodigo(String motiCodigo) {
+		this.motiCodigo = motiCodigo;
 	}
 
-	public long getIdMotivo() {
-		return this.idMotivo;
+	public String getMotiFechacambio() {
+		return this.motiFechacambio;
 	}
 
-	public void setIdMotivo(long idMotivo) {
-		this.idMotivo = idMotivo;
+	public void setMotiFechacambio(String motiFechacambio) {
+		this.motiFechacambio = motiFechacambio;
 	}
 
-	public String getNommotivo() {
-		return this.nommotivo;
+	public String getMotiHoracambio() {
+		return this.motiHoracambio;
 	}
 
-	public void setNommotivo(String nommotivo) {
-		this.nommotivo = nommotivo;
+	public void setMotiHoracambio(String motiHoracambio) {
+		this.motiHoracambio = motiHoracambio;
 	}
 
-	public String getListKey(){
-		return this.idMotivo+ConstantesAplicativo.constanteSplit+this.codmotivo+ConstantesAplicativo.constanteSplit+this.nommotivo;
+	public String getMotiMotivo() {
+		return this.motiMotivo;
 	}
 
-	public String getHelpView() {
-		return helpView;
+	public void setMotiMotivo(String motiMotivo) {
+		this.motiMotivo = motiMotivo;
 	}
 
-	public void setHelpView(String helpView) {
-		this.helpView = helpView;
+	public String getMotiRegistradopor() {
+		return this.motiRegistradopor;
 	}
-	
+
+	public void setMotiRegistradopor(String motiRegistradopor) {
+		this.motiRegistradopor = motiRegistradopor;
+	}
+
+	public List<Servicio> getServicios() {
+		return this.servicios;
+	}
+
+	public void setServicios(List<Servicio> servicios) {
+		this.servicios = servicios;
+	}
+
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.motiRegistradopor=data.get(0);
+			this.motiFechacambio=data.get(1);
+			this.motiHoracambio=data.get(2);
+		}
+	}
 }

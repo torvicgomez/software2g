@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.software2g.historia_clinica.dao.IAcudienteDao;
 import com.software2g.historia_clinica.dao.IAnamnesisDao;
-import com.software2g.historia_clinica.dao.IAntecedentesFliaDao;
 import com.software2g.historia_clinica.dao.IClaseDiagnosticoDao;
 import com.software2g.historia_clinica.dao.ICodigoEnfermedadesDao;
 import com.software2g.historia_clinica.dao.IConsultaDao;
@@ -37,7 +36,6 @@ import com.software2g.historia_clinica.dao.IParentescoDao;
 import com.software2g.historia_clinica.dao.IPartesCuerpoDao;
 import com.software2g.historia_clinica.dao.IPersonaPerteneceDao;
 import com.software2g.historia_clinica.dao.IPosicionDao;
-import com.software2g.historia_clinica.dao.IPrefesionalSaludDao;
 import com.software2g.historia_clinica.dao.IRegistroExamenDao;
 import com.software2g.historia_clinica.dao.IRegistroFormulacionDao;
 import com.software2g.historia_clinica.dao.IRemisionDao;
@@ -66,7 +64,6 @@ import com.software2g.portal.dao.IPersonaDao;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Acudiente;
 import com.software2g.vo.Anamnesi;
-import com.software2g.vo.Antecesentesflia;
 import com.software2g.vo.Clasediagnostico;
 import com.software2g.vo.Codigoenfermedade;
 import com.software2g.vo.Consulta;
@@ -94,7 +91,6 @@ import com.software2g.vo.Partescuerpo;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Personapertenece;
 import com.software2g.vo.Posicion;
-import com.software2g.vo.Profesionalsalud;
 import com.software2g.vo.Registroexamen;
 import com.software2g.vo.Registroformulacion;
 import com.software2g.vo.Remision;
@@ -124,8 +120,6 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	IAcudienteDao acudienteDao; 
 	@Autowired
 	IAnamnesisDao anamnesisDao;
-	@Autowired
-	IAntecedentesFliaDao antecedentesFliaDao;
 	@Autowired
 	IClaseDiagnosticoDao claseDiagnosticoDao;
 	@Autowired
@@ -226,15 +220,11 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	IVirtualLinkDao virtualLinkDao;
 	@Autowired
 	IPersonaDao personaDao;
-	@Autowired
-	IPrefesionalSaludDao profesionalSaludDao;
 	
 	public IAcudienteDao getAcudienteDao() {return acudienteDao;}
 	public void setAcudienteDao(IAcudienteDao acudienteDao) {this.acudienteDao = acudienteDao;}
 	public IAnamnesisDao getAnamnesisDao() {return anamnesisDao;}
 	public void setAnamnesisDao(IAnamnesisDao anamnesisDao) {this.anamnesisDao = anamnesisDao;}
-	public IAntecedentesFliaDao getAntecedentesFliaDao() {return antecedentesFliaDao;}
-	public void setAntecedentesFliaDao(IAntecedentesFliaDao antecedentesFliaDao) {this.antecedentesFliaDao = antecedentesFliaDao;}
 	public IClaseDiagnosticoDao getClaseDiagnosticoDao() {return claseDiagnosticoDao;}
 	public void setClaseDiagnosticoDao(IClaseDiagnosticoDao claseDiagnosticoDao) {this.claseDiagnosticoDao = claseDiagnosticoDao;}
 	public ICodigoEnfermedadesDao getCodigoEnfermedadesDao() {return codigoEnfermedadesDao;}
@@ -335,8 +325,6 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	public void setVirtualLinkDao(IVirtualLinkDao virtualLinkDao) {this.virtualLinkDao = virtualLinkDao;}
 	public IPersonaDao getPersonaDao() {return personaDao;}
 	public void setPersonaDao(IPersonaDao personaDao) {this.personaDao = personaDao;}
-	public IPrefesionalSaludDao getProfesionalSaludDao() {return profesionalSaludDao;}
-	public void setProfesionalSaludDao(IPrefesionalSaludDao profesionalSaludDao) {this.profesionalSaludDao = profesionalSaludDao;}
 	
 	//******************************************************************
 	// Acudiente
@@ -440,57 +428,6 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	// Fin Anamnesis
 	//******************************************************************	
 
-	//******************************************************************
-	// Antecedentes Familiares 
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Antecesentesflia findAntecesentesfliaById(long id) throws Exception {
-		try {
-			return getAntecedentesFliaDao().findAntecesentesfliaById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findAntecesentesfliaById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Antecesentesflia</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Antecesentesflia> findAllAntecesentesflias() throws Exception {
-		try {
-			return getAntecedentesFliaDao().findAllAntecesentesflias();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllAntecesentesflias failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistAntecesentesflia(Antecesentesflia antecesentesflia) throws Exception {
-		try {
-			getAntecedentesFliaDao().persistAntecesentesflia(antecesentesflia);
-		} catch (RuntimeException e) {
-			throw new Exception("persistAntecesentesflia failed: " + e.getMessage());
-		}
-	}
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeAntecesentesflia(Antecesentesflia antecesentesflia) throws Exception {
-		try {
-			getAntecedentesFliaDao().removeAntecesentesflia(antecesentesflia);
-		} catch (RuntimeException e) {
-			throw new Exception("removeAntecesentesflia failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Antecedentes Familiares
-	//******************************************************************
-	
 	//******************************************************************
 	// Clase Diagnostico
 	//******************************************************************
@@ -3041,70 +2978,4 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	// Fin Persona
 	//******************************************************************	
 
-	//******************************************************************
-	// Profesional Salud
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public Profesionalsalud findProfesionalsaludById(long id) throws Exception {
-		try {
-			return getProfesionalSaludDao().findProfesionalsaludById(id);
-		} catch (RuntimeException e) {
-			throw new Exception("findProfesionalsaludById failed with the id " + id + ": " + e.getMessage());
-		}
-	}
-	/**
-	 * Return all persistent instances of the <code>Profesionalsalud</code> entity.
-	 */
-	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Profesionalsalud> findAllProfesionalsaluds() throws Exception {
-		try {
-			return getProfesionalSaludDao().findAllProfesionalsaluds();
-		} catch (RuntimeException e) {
-			throw new Exception("findAllProfesionalsaluds failed: " + e.getMessage());
-		}
-	}
-
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistProfesionalsalud(Profesionalsalud profesionalsalud) throws Exception {
-		try {
-			getProfesionalSaludDao().persistProfesionalsalud(profesionalsalud);
-		} catch (RuntimeException e) {
-			//throw new Exception("persistProfesionalsalud failed: " + e.getMessage());
-			System.out.println("Entra esta parte!!!!!!!!!!!");
-			e.printStackTrace();
-		}
-	}
-	
-	public long persistProfesionalsaludId(Profesionalsalud profesionalsalud) throws Exception {
-		try {
-			long id = getProfesionalSaludDao().persistProfesionalsaludId(profesionalsalud);
-			System.out.println("ID:["+id+"]");
-			return id;
-		} catch (RuntimeException e) {
-			//throw new Exception("persistProfesionalsaludId failed: " + e.getMessage());
-			System.out.println("Entra esta parte!!!!!!!!!!!");
-			e.printStackTrace();
-			return 0;
-		}
-	}
-	
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeProfesionalsalud(Profesionalsalud profesionalsalud) throws Exception {
-		try {
-			getProfesionalSaludDao().removeProfesionalsalud(profesionalsalud);
-		} catch (RuntimeException e) {
-			throw new Exception("removeProfesionalsalud failed: " + e.getMessage());
-		}
-	}
-	//******************************************************************
-	// Fin Profesional Salud
-	//******************************************************************	
 }

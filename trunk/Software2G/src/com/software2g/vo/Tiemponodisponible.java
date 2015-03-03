@@ -10,12 +10,12 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="TIEMPONODISPONIBLE", schema="HISCLINICA")
+@Table(name="\"TIEMPONODISPONIBLE\"", schema="\"HISCLINICA\"")
 public class Tiemponodisponible implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="TIEMPONODISPONIBLE_TINDID_GENERATOR", sequenceName="HISCLINICA.SEQ_TIND_ID")
+	@SequenceGenerator(name="TIEMPONODISPONIBLE_TINDID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_TIND_ID\"", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TIEMPONODISPONIBLE_TINDID_GENERATOR")
 	@Column(name="tind_id")
 	private long tindId;

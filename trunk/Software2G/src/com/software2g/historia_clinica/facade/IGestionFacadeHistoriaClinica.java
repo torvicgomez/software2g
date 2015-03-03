@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.software2g.vo.Acudiente;
 import com.software2g.vo.Anamnesi;
-import com.software2g.vo.Antecesentesflia;
 import com.software2g.vo.Clasediagnostico;
 import com.software2g.vo.Codigoenfermedade;
 import com.software2g.vo.Consulta;
@@ -32,7 +31,6 @@ import com.software2g.vo.Partescuerpo;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Personapertenece;
 import com.software2g.vo.Posicion;
-import com.software2g.vo.Profesionalsalud;
 import com.software2g.vo.Registroexamen;
 import com.software2g.vo.Registroformulacion;
 import com.software2g.vo.Remision;
@@ -107,29 +105,6 @@ public interface IGestionFacadeHistoriaClinica {
 	// Fin Anamnesis
 	//******************************************************************
 	
-	//******************************************************************
-	// Antecedentes Familiares
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Antecesentesflia findAntecesentesfliaById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Antecesentesflia</code> entity.
-	 */
-	public List<Antecesentesflia> findAllAntecesentesflias() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistAntecesentesflia(Antecesentesflia antecesentesflia) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeAntecesentesflia(Antecesentesflia antecesentesflia) throws Exception;
-	//******************************************************************
-	// Fin Antecedentes Familiares
-	//******************************************************************	
 
 	//******************************************************************
 	// Clase Diagnostico	
@@ -1334,28 +1309,4 @@ public interface IGestionFacadeHistoriaClinica {
 	// FIN Persona
 	//******************************************************************
 
-	//******************************************************************
-	// Profesional Salud
-	//******************************************************************
-	/**
-	 * Find an entity by its id (primary key).
-	 * @return The found entity instance or null if the entity does not exist.
-	 */
-	public Profesionalsalud findProfesionalsaludById(long id) throws Exception;
-	/**
-	 * Return all persistent instances of the <code>Profesionalsalud</code> entity.
-	 */
-	public List<Profesionalsalud> findAllProfesionalsaluds() throws Exception;
-	/**
-	 * Make the given instance managed and persistent.
-	 */
-	public void persistProfesionalsalud(Profesionalsalud profesionalsalud) throws Exception;
-	public long persistProfesionalsaludId(Profesionalsalud profesionalsalud) throws Exception;
-	/**
-	 * Remove the given persistent instance.
-	 */
-	public void removeProfesionalsalud(Profesionalsalud profesionalsalud) throws Exception;
-	//******************************************************************
-	// FIN Profesional Salud
-	//******************************************************************	
 }

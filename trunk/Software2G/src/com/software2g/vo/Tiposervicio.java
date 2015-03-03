@@ -2,30 +2,41 @@ package com.software2g.vo;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.List;
 
 
 /**
- * The persistent class for the tiposervicio database table.
+ * The persistent class for the "TIPOSERVICIO" database table.
  * 
  */
 @Entity
-@Table(name="tiposervicio", schema="public")
+@Table(name="\"TIPOSERVICIO\"", schema="\"HISCLINICA\"")
 public class Tiposervicio implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="TIPOSERVICIO_IDTIPOSERVICIO_GENERATOR", sequenceName="PUBLIC.TIPOSERVICIO_ID_TIPOSERVICIO_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TIPOSERVICIO_IDTIPOSERVICIO_GENERATOR")
-	@Column(name="id_tiposervicio")
-	private long idTiposervicio;
+	@SequenceGenerator(name="TIPOSERVICIO_TISEID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_TISE_ID\"", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TIPOSERVICIO_TISEID_GENERATOR")
+	@Column(name="tise_id")
+	private long tiseId;
 
-	private String codtiposerv;
+	@Column(name="tise_codigo")
+	private String tiseCodigo;
 
-	private String desctiposerv;
+	@Column(name="tise_descripcion")
+	private String tiseDescripcion;
 
-	private String nomtiposerv;
+	@Column(name="tise_fechacambio")
+	private String tiseFechacambio;
+
+	@Column(name="tise_horacambio")
+	private String tiseHoracambio;
+
+	@Column(name="tise_nombre")
+	private String tiseNombre;
+
+	@Column(name="tise_registradopor")
+	private String tiseRegistradopor;
 
 	//bi-directional many-to-one association to Servicio
 	@OneToMany(mappedBy="tiposervicio")
@@ -34,36 +45,60 @@ public class Tiposervicio implements Serializable {
 	public Tiposervicio() {
 	}
 
-	public long getIdTiposervicio() {
-		return this.idTiposervicio;
+	public long getTiseId() {
+		return this.tiseId;
 	}
 
-	public void setIdTiposervicio(long idTiposervicio) {
-		this.idTiposervicio = idTiposervicio;
+	public void setTiseId(long tiseId) {
+		this.tiseId = tiseId;
 	}
 
-	public String getCodtiposerv() {
-		return this.codtiposerv;
+	public String getTiseCodigo() {
+		return this.tiseCodigo;
 	}
 
-	public void setCodtiposerv(String codtiposerv) {
-		this.codtiposerv = codtiposerv;
+	public void setTiseCodigo(String tiseCodigo) {
+		this.tiseCodigo = tiseCodigo;
 	}
 
-	public String getDesctiposerv() {
-		return this.desctiposerv;
+	public String getTiseDescripcion() {
+		return this.tiseDescripcion;
 	}
 
-	public void setDesctiposerv(String desctiposerv) {
-		this.desctiposerv = desctiposerv;
+	public void setTiseDescripcion(String tiseDescripcion) {
+		this.tiseDescripcion = tiseDescripcion;
 	}
 
-	public String getNomtiposerv() {
-		return this.nomtiposerv;
+	public String getTiseFechacambio() {
+		return this.tiseFechacambio;
 	}
 
-	public void setNomtiposerv(String nomtiposerv) {
-		this.nomtiposerv = nomtiposerv;
+	public void setTiseFechacambio(String tiseFechacambio) {
+		this.tiseFechacambio = tiseFechacambio;
+	}
+
+	public String getTiseHoracambio() {
+		return this.tiseHoracambio;
+	}
+
+	public void setTiseHoracambio(String tiseHoracambio) {
+		this.tiseHoracambio = tiseHoracambio;
+	}
+
+	public String getTiseNombre() {
+		return this.tiseNombre;
+	}
+
+	public void setTiseNombre(String tiseNombre) {
+		this.tiseNombre = tiseNombre;
+	}
+
+	public String getTiseRegistradopor() {
+		return this.tiseRegistradopor;
+	}
+
+	public void setTiseRegistradopor(String tiseRegistradopor) {
+		this.tiseRegistradopor = tiseRegistradopor;
 	}
 
 	public List<Servicio> getServicios() {
@@ -74,4 +109,11 @@ public class Tiposervicio implements Serializable {
 		this.servicios = servicios;
 	}
 
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.tiseRegistradopor=data.get(0);
+			this.tiseFechacambio=data.get(1);
+			this.tiseHoracambio=data.get(2);
+		}
+	}
 }

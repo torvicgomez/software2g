@@ -3,86 +3,119 @@ package com.software2g.vo;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import java.util.List;
+
 
 /**
- * The persistent class for the paciente database table.
+ * The persistent class for the "PACIENTE" database table.
  * 
  */
 @Entity
-@Table(schema="public", name="paciente")
+@Table(name="\"PACIENTE\"", schema="\"HISCLINICA\"")
 public class Paciente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private int estado;
-
-	@Column(name="id_municipio")
-	private long idMunicipio;
-
 	@Id
-	@SequenceGenerator(name="PACIENTE_IDPACIENTE_GENERATOR", sequenceName="PUBLIC.paciente_id_paciente_seq")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PACIENTE_IDPACIENTE_GENERATOR")
-	@Column(name="id_paciente")
-	private long idPaciente;
+	@SequenceGenerator(name="PACIENTE_PACIID_GENERATOR", sequenceName="\"HISCLINICA\".\"SEQ_PACI_ID\"", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PACIENTE_PACIID_GENERATOR")
+	@Column(name="paci_id")
+	private long paciId;
 
-	@Column(name="id_persona")
-	private long idPersona;
+	@Column(name="paci_fechacambio")
+	private String paciFechacambio;
 
-	private String ocupacion;
+	@Column(name="paci_horacambio")
+	private String paciHoracambio;
 
-	//bi-directional many-to-one association to Seguridadsocial
+	@Column(name="paci_ocupacion")
+	private String paciOcupacion;
+
+	@Column(name="paci_registradopor")
+	private String paciRegistradopor;
+
+//	@Column(name="pers_id")
+//	private java.math.BigDecimal persId;
+
 	@ManyToOne
-	@JoinColumn(name="id_seguridad")
-	private Seguridadsocial seguridadsocial;
+	@JoinColumn(name="pers_id")
+	private Persona persona;
+	
+	//bi-directional many-to-one association to Servicio
+	@OneToMany(mappedBy="paciente")
+	private List<Servicio> servicios;
 
 	public Paciente() {
 	}
 
-	public int getEstado() {
-		return this.estado;
+	public long getPaciId() {
+		return this.paciId;
 	}
 
-	public void setEstado(int estado) {
-		this.estado = estado;
+	public void setPaciId(long paciId) {
+		this.paciId = paciId;
 	}
 
-	public long getIdMunicipio() {
-		return this.idMunicipio;
+	public String getPaciFechacambio() {
+		return this.paciFechacambio;
 	}
 
-	public void setIdMunicipio(long idMunicipio) {
-		this.idMunicipio = idMunicipio;
+	public void setPaciFechacambio(String paciFechacambio) {
+		this.paciFechacambio = paciFechacambio;
 	}
 
-	public long getIdPaciente() {
-		return this.idPaciente;
+	public String getPaciHoracambio() {
+		return this.paciHoracambio;
 	}
 
-	public void setIdPaciente(long idPaciente) {
-		this.idPaciente = idPaciente;
+	public void setPaciHoracambio(String paciHoracambio) {
+		this.paciHoracambio = paciHoracambio;
 	}
 
-	public long getIdPersona() {
-		return this.idPersona;
+	public String getPaciOcupacion() {
+		return this.paciOcupacion;
 	}
 
-	public void setIdPersona(long idPersona) {
-		this.idPersona = idPersona;
+	public void setPaciOcupacion(String paciOcupacion) {
+		this.paciOcupacion = paciOcupacion;
 	}
 
-	public String getOcupacion() {
-		return this.ocupacion;
+	public String getPaciRegistradopor() {
+		return this.paciRegistradopor;
 	}
 
-	public void setOcupacion(String ocupacion) {
-		this.ocupacion = ocupacion;
+	public void setPaciRegistradopor(String paciRegistradopor) {
+		this.paciRegistradopor = paciRegistradopor;
 	}
 
-	public Seguridadsocial getSeguridadsocial() {
-		return this.seguridadsocial;
+//	public java.math.BigDecimal getPersId() {
+//		return this.persId;
+//	}
+//
+//	public void setPersId(java.math.BigDecimal persId) {
+//		this.persId = persId;
+//	}
+
+	public List<Servicio> getServicios() {
+		return this.servicios;
 	}
 
-	public void setSeguridadsocial(Seguridadsocial seguridadsocial) {
-		this.seguridadsocial = seguridadsocial;
+	public void setServicios(List<Servicio> servicios) {
+		this.servicios = servicios;
 	}
 
+	public Persona getPersona() {
+		return persona;
+	}
+
+	public void setPersona(Persona persona) {
+		this.persona = persona;
+	}
+
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.paciRegistradopor=data.get(0);
+			this.paciFechacambio=data.get(1);
+			this.paciHoracambio=data.get(2);
+		}
+	}
 }

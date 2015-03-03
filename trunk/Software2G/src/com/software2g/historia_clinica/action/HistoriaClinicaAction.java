@@ -1,8 +1,6 @@
 package com.software2g.historia_clinica.action;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -25,7 +23,6 @@ import com.software2g.vo.Anamnesi;
 import com.software2g.vo.Finalidad;
 import com.software2g.vo.Motivo;
 import com.software2g.vo.Persona;
-import com.software2g.vo.Profesionalsalud;
 import com.software2g.vo.Seguridadsocial;
 import com.software2g.vo.Servicio;
 import com.software2g.vo.Usuario;
@@ -40,15 +37,15 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 	private String id;
 	private String dataAutoCompletado;
 	
-	private List<Profesionalsalud> listProfesionalSalud;
-	private Profesionalsalud profesionalSalud;
+//	private List<Profesionalsalud> listProfesionalSalud;
+//	private Profesionalsalud profesionalSalud;
 	private InputStream strDatosPersona;
 	
-	public List<Profesionalsalud> getListProfesionalSalud() {return listProfesionalSalud;}
-	public void setListProfesionalSalud(List<Profesionalsalud> listProfesionalSalud) {this.listProfesionalSalud = listProfesionalSalud;}
-	public Profesionalsalud getProfesionalSalud() {return profesionalSalud;}
-	public void setProfesionalSalud(Profesionalsalud profesionalSalud) {this.profesionalSalud = profesionalSalud;}
-	
+//	public List<Profesionalsalud> getListProfesionalSalud() {return listProfesionalSalud;}
+//	public void setListProfesionalSalud(List<Profesionalsalud> listProfesionalSalud) {this.listProfesionalSalud = listProfesionalSalud;}
+//	public Profesionalsalud getProfesionalSalud() {return profesionalSalud;}
+//	public void setProfesionalSalud(Profesionalsalud profesionalSalud) {this.profesionalSalud = profesionalSalud;}
+//	
 	
 	private List<Persona> listPersona;
 	private Persona persona;
@@ -110,9 +107,9 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     			listMotivo = gestionFacadeHistoriaClinica.findAllMotivos();
     			listSeguridadSocial = gestionFacadeHistoriaClinica.findAllSeguridadsocials();
     			System.out.println("listFinalidad:["+listFinalidad+"]");
-    			for(Finalidad elem: listFinalidad){
-    				System.out.println("Finalidad:["+elem.getCodfinalidad()+"]-["+elem.getNomfinalidad()+"]");
-    			}
+//    			for(Finalidad elem: listFinalidad){
+//    				System.out.println("Finalidad:["+elem.getCodfinalidad()+"]-["+elem.getNomfinalidad()+"]");
+//    			}
     		}/*else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			if(ValidaString.isNullOrEmptyString(parametroCalendario.getPacaVariable()))
     				addActionError(getText("validacion.requerido","pacaVariable","Variable"));

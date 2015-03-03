@@ -49,7 +49,6 @@
 		<class>com.software2g.vo.Tiemponodisponible</class>
 		<class>com.software2g.vo.Acudiente</class>
 		<class>com.software2g.vo.Anamnesi</class>
-		<class>com.software2g.vo.Antecesentesflia</class>
 		<class>com.software2g.vo.Clasediagnostico</class>
 		<class>com.software2g.vo.Codigoenfermedade</class>
 		<class>com.software2g.vo.Consulta</class>
@@ -102,12 +101,28 @@
 		<class>com.software2g.vo.Variableformulacion</class>
 		<class>com.software2g.vo.Virtuallink</class>
 		<class>com.software2g.vo.Valorexamen</class>
-		<class>com.software2g.vo.Profesionalsalud</class>
-		<class>com.software2g.vo.Agendamedica</class>
-		<class>com.software2g.vo.Eventosagenda</class>
-		<class>com.software2g.vo.Participanteagenda</class>
 		<class>com.software2g.vo.Participante</class>
 		<class>com.software2g.vo.Procedimiento</class>
-		<class>com.software2g.vo.Tipoprocedimiento</class> 
+		<class>com.software2g.vo.Tipoprocedimiento</class>
+		<class>com.software2g.vo.Archivoservicio</class>
+		<class>com.software2g.vo.Examenoptometria</class>
+		<class>com.software2g.vo.Gafa</class>
+		<class>com.software2g.vo.Medicamento</class>
+		<class>com.software2g.vo.Odontograma</class>
+		<class>com.software2g.vo.Opcionrespuesta</class>
+		<class>com.software2g.vo.Partecuerpo</class>
+		<class>com.software2g.vo.Pregunta</class>
+		<class>com.software2g.vo.Registroavsc</class>
+		<class>com.software2g.vo.Registrocovertest</class>
+		<class>com.software2g.vo.Registroexamensimple</class>
+		<class>com.software2g.vo.Registroodontograma</class>
+		<class>com.software2g.vo.Registrorxuso</class>
+		<class>com.software2g.vo.Respuesta</class>
+		<class>com.software2g.vo.Seccionodon</class>
+		<class>com.software2g.vo.Segmentoanamnesi</class>
+		<class>com.software2g.vo.Tipoexamenopt</class>
+		<class>com.software2g.vo.Tipoformulacion</class>
+		<class>com.software2g.vo.Tipopregunta</class>
+		<class>com.software2g.vo.Tiposegmento</class> 
 	</persistence-unit>
 </persistence>

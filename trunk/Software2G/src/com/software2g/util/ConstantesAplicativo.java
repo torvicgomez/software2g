@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.software2g.vo.UtilGenerico;
+
 public final class ConstantesAplicativo {
 	public static final double MILLSECS_PER_DAY = 24 * 60 * 60 * 1000; //Milisegundos al día
 	public static final double DIAS_MES = 30;
@@ -73,4 +75,30 @@ public final class ConstantesAplicativo {
 	public static final String constanteNoAplica = "NA";
 	public static final String constanteAtenderServicio = "AS";
 	public static final String constanteCancelarCita = "CC";
+	
+	public static final List<UtilGenerico> listAVC = new ArrayList<UtilGenerico>(
+						Arrays.asList(new UtilGenerico("0.5 M", "0.5 M"), 
+										new UtilGenerico("0.75 M", "0.75 M"),
+										new UtilGenerico("1 M", "1 M"),
+										new UtilGenerico("1.25 M", "1.25 M"),
+										new UtilGenerico("1.75 M", "1.75 M"),
+										new UtilGenerico("2 M", "2 M"),
+										new UtilGenerico("CD 2 M", "CD 2 M"),
+										new UtilGenerico("CD 1 M", "CD 1 M"),
+										new UtilGenerico("CD 5 M", "CD 5 M"),
+										new UtilGenerico("PL", "PL"),
+										new UtilGenerico("NPL", "NPL"),
+										new UtilGenerico("Ninguno", "Ninguno")));
+	
+	public static final List<UtilGenerico> listCoverTest = new ArrayList<UtilGenerico>(
+			Arrays.asList(new UtilGenerico("Ortoforia", "Ortoforia"), 
+							new UtilGenerico("Exoforia", "Exoforia"),
+							new UtilGenerico("Endoforia", "Endoforia"),
+							new UtilGenerico("Hipoforia", "Hipoforia"),
+							new UtilGenerico("Hiperforia", "Hiperforia"),
+							new UtilGenerico("Ortotropia", "Ortotropia"),
+							new UtilGenerico("Exotropia", "Exotropia"),
+							new UtilGenerico("Endotropia", "Endotropia"),
+							new UtilGenerico("Hipotropia", "Hipotropia"),
+							new UtilGenerico("Hipertropia", "Hipertropia")));
 }

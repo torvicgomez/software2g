@@ -1587,4 +1587,139 @@ CREATE SEQUENCE "HISCLINICA"."SEQ_TISE_ID"
   CACHE 1;
 ALTER TABLE "HISCLINICA"."SEQ_TISE_ID"
   OWNER TO postgres;                
+
+---------------
+-- 04-03-2015 -
+---------------
+INSERT INTO "HISCLINICA"."PARENTESCO" VALUES (nextval('"HISCLINICA"."SEQ_PARE_ID"'), 'Conyuge',null,to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."PARENTESCO" VALUES (nextval('"HISCLINICA"."SEQ_PARE_ID"'), 'Padre',null,to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."PARENTESCO" VALUES (nextval('"HISCLINICA"."SEQ_PARE_ID"'), 'Madre',null,to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."PARENTESCO" VALUES (nextval('"HISCLINICA"."SEQ_PARE_ID"'), 'Hermano(a)',null,to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."PARENTESCO" VALUES (nextval('"HISCLINICA"."SEQ_PARE_ID"'), 'Abuelo(a)',null,to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."PARENTESCO" VALUES (nextval('"HISCLINICA"."SEQ_PARE_ID"'), 'Tio(a)',null,to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."PARENTESCO" VALUES (nextval('"HISCLINICA"."SEQ_PARE_ID"'), 'Primo(a)',null,to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."PARENTESCO" VALUES (nextval('"HISCLINICA"."SEQ_PARE_ID"'), 'Amigo(a)',null,to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."PARENTESCO" VALUES (nextval('"HISCLINICA"."SEQ_PARE_ID"'), 'Otro',null,to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+
+INSERT INTO "HISCLINICA"."TIPOSERVICIO" VALUES (nextval('"HISCLINICA"."SEQ_TISE_ID"'), 'Consulta','CONS',null,to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."TIPOSERVICIO" VALUES (nextval('"HISCLINICA"."SEQ_TISE_ID"'), 'Consulta Externa','CONE',null,to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."TIPOSERVICIO" VALUES (nextval('"HISCLINICA"."SEQ_TISE_ID"'), 'Urgencia','URG',null,to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."TIPOSERVICIO" VALUES (nextval('"HISCLINICA"."SEQ_TISE_ID"'), 'Hospitalización','HOS',null,to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."TIPOSERVICIO" VALUES (nextval('"HISCLINICA"."SEQ_TISE_ID"'), 'Procedimiento','PRO',null,to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."TIPOSERVICIO" VALUES (nextval('"HISCLINICA"."SEQ_TISE_ID"'), 'Examen','EXA',null,to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+
+INSERT INTO "HISCLINICA"."MOTIVO" VALUES (nextval('"HISCLINICA"."SEQ_MOTI_ID"'), 'Accidente de Trabajo','01',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."MOTIVO" VALUES (nextval('"HISCLINICA"."SEQ_MOTI_ID"'), 'Accidente de Transito','02',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."MOTIVO" VALUES (nextval('"HISCLINICA"."SEQ_MOTI_ID"'), 'Accidente de Radico','03',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."MOTIVO" VALUES (nextval('"HISCLINICA"."SEQ_MOTI_ID"'), 'Accidente de Ofidico','04',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."MOTIVO" VALUES (nextval('"HISCLINICA"."SEQ_MOTI_ID"'), 'Otro tipo de Accidente','05',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."MOTIVO" VALUES (nextval('"HISCLINICA"."SEQ_MOTI_ID"'), 'Evento Catastrofico','06',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."MOTIVO" VALUES (nextval('"HISCLINICA"."SEQ_MOTI_ID"'), 'Lesión Agresión','07',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."MOTIVO" VALUES (nextval('"HISCLINICA"."SEQ_MOTI_ID"'), 'Lesión Autoinflijida','08',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."MOTIVO" VALUES (nextval('"HISCLINICA"."SEQ_MOTI_ID"'), 'Sospecha Maltrato Físico','09',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."MOTIVO" VALUES (nextval('"HISCLINICA"."SEQ_MOTI_ID"'), 'Sospecha Abuso Sexual','10',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."MOTIVO" VALUES (nextval('"HISCLINICA"."SEQ_MOTI_ID"'), 'Sospecha Violencia Sexual','11',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."MOTIVO" VALUES (nextval('"HISCLINICA"."SEQ_MOTI_ID"'), 'Sospecha Maltrato Emosional','12',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."MOTIVO" VALUES (nextval('"HISCLINICA"."SEQ_MOTI_ID"'), 'Enfermedad General','13',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."MOTIVO" VALUES (nextval('"HISCLINICA"."SEQ_MOTI_ID"'), 'Enfermedad Profesional','14',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."MOTIVO" VALUES (nextval('"HISCLINICA"."SEQ_MOTI_ID"'), 'Otro','15',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+
+INSERT INTO "HISCLINICA"."FINALIDAD" VALUES (nextval('"HISCLINICA"."SEQ_FINA_ID"'), 'Atención Parto','01',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."FINALIDAD" VALUES (nextval('"HISCLINICA"."SEQ_FINA_ID"'), 'Atención Recien Nacido','02',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."FINALIDAD" VALUES (nextval('"HISCLINICA"."SEQ_FINA_ID"'), 'Atención Planificación Familiar','03',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."FINALIDAD" VALUES (nextval('"HISCLINICA"."SEQ_FINA_ID"'), 'Detección Alteración Crecimiento Desarrollo','04',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."FINALIDAD" VALUES (nextval('"HISCLINICA"."SEQ_FINA_ID"'), 'Detección Alteración Joven','05',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."FINALIDAD" VALUES (nextval('"HISCLINICA"."SEQ_FINA_ID"'), 'Detección de Alteración Embarazo','06',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."FINALIDAD" VALUES (nextval('"HISCLINICA"."SEQ_FINA_ID"'), 'Detección Alteración Adulto','07',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."FINALIDAD" VALUES (nextval('"HISCLINICA"."SEQ_FINA_ID"'), 'Detección Alteración Agudeza Visual','08',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."FINALIDAD" VALUES (nextval('"HISCLINICA"."SEQ_FINA_ID"'), 'Detección Alteración Enfermedad Profesional','09',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."FINALIDAD" VALUES (nextval('"HISCLINICA"."SEQ_FINA_ID"'), 'No Aplica','10',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+
+INSERT INTO "HISCLINICA"."SEGURIDADSOCIAL" (SEGU_ID, SEGU_NOMBRE, SEGU_FECHACAMBIO, SEGU_HORACAMBIO, SEGU_REGISTRADOPOR)  
+	SELECT nextval('"HISCLINICA"."SEQ_SEGU_ID"'), upper(NOMSEGUR), to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl'
+	FROM public.seguridadsocial ORDER BY NOMSEGUR ASC ;
+
+INSERT INTO "HISCLINICA"."TIPOESPECIALIDAD" 
+	SELECT nextval('"HISCLINICA"."SEQ_TIES_ID"'), NOMTIPOCONS, to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl'
+	FROM public.tipoespecialidad ;
+
+INSERT INTO "HISCLINICA"."CODIGOENFERMEDADES" 
+	SELECT nextval('"HISCLINICA"."SEQ_COEN_ID"'), ID_TIPOCONSULTA, NOMCODENFERMEDAD, CODENFERMEDAD, to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl'
+	FROM public.CODIGOENFERMEDADES ;
+
+INSERT INTO "HISCLINICA"."TIPODIAGNOSTICO" 
+	SELECT nextval('"HISCLINICA"."SEQ_TIDI_ID"'), NOMTIPODIAG, ABREVIATIPODIAG, to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl'
+	FROM public.tipodiagnostico ;
+
+INSERT INTO "HISCLINICA"."CLASEDIAGNOSTICO" VALUES (nextval('"HISCLINICA"."SEQ_CLDI_ID"'), 'Diagnóstico Principal','Dx Ppal',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."CLASEDIAGNOSTICO" VALUES (nextval('"HISCLINICA"."SEQ_CLDI_ID"'), 'Diagnóstico Relacional','Dx Rnal',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+
+INSERT INTO "HISCLINICA"."POSICION" VALUES (nextval('"HISCLINICA"."SEQ_POSI_ID"'), 'Izquierdo','IZQ',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."POSICION" VALUES (nextval('"HISCLINICA"."SEQ_POSI_ID"'), 'Derecho','DER',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."POSICION" VALUES (nextval('"HISCLINICA"."SEQ_POSI_ID"'), 'Unico','UNI',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+
+INSERT INTO "HISCLINICA"."PARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_PARC_ID"'), 'OJOS','HUMANA',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."PARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_PARC_ID"'), 'BOCA','HUMANA',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+
+
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 1, 1, 'Ojo Izquierdo','OI',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 1, 2, 'Ojo Derecho','OD',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 1, 3, 'Ambos Ojos','ODI',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 11','11',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 12','12',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 13','13',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 14','14',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 15','15',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 16','16',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 17','17',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 18','18',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 21','21',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 22','22',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 23','23',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 24','24',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 25','25',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 26','26',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 27','27',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 28','28',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 31','31',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 32','32',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 33','33',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 34','34',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 35','35',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 36','36',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 37','37',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 38','38',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 41','41',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 42','42',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 43','43',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 44','44',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 45','45',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 46','46',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 47','47',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 48','48',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 51','51',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 52','52',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 53','53',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 54','54',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 55','55',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 61','61',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 62','62',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 63','63',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 64','64',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 65','65',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 71','71',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 72','72',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 73','73',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 74','74',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 75','75',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 81','81',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 82','82',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 83','83',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 84','84',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 85','85',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+
+
+INSERT INTO "HISCLINICA"."TIPOFORMULACION" VALUES (nextval('"HISCLINICA"."SEQ_TIFO_ID"'), 'Elemento','A',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+INSERT INTO "HISCLINICA"."TIPOFORMULACION" VALUES (nextval('"HISCLINICA"."SEQ_TIFO_ID"'), 'Medicamento','A',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
+
   

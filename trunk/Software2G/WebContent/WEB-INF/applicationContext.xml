@@ -69,6 +69,7 @@
     </bean> 
     <bean class="com.software2g.agenda.action.AgendaAction" id="AgendaAction" scope="prototype">
     	<constructor-arg ref="gestionFacadeAgenda"/> 
+    	<constructor-arg ref="gestionFacadeHistoriaClinica"/>
     </bean>
     <bean class="com.software2g.historia_clinica.action.HistoriaClinicaAction" id="HistoriaClinicaAction" scope="prototype">
     	<constructor-arg ref="gestionFacadeHistoriaClinica"/> 

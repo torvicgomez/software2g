@@ -17,12 +17,15 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import com.software2g.agenda.facade.IGestionFacadeAgenda;
+import com.software2g.historia_clinica.facade.IGestionFacadeHistoriaClinica;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Agenda;
 import com.software2g.vo.Departamento;
 import com.software2g.vo.Evento;
+import com.software2g.vo.Finalidad;
 import com.software2g.vo.Jorandalaboral;
+import com.software2g.vo.Motivo;
 import com.software2g.vo.Municipio;
 import com.software2g.vo.Pais;
 import com.software2g.vo.Parametroscalendario;
@@ -30,15 +33,19 @@ import com.software2g.vo.Participante;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Procedimiento;
 import com.software2g.vo.Profesional;
+import com.software2g.vo.Registrorxuso;
+import com.software2g.vo.Seguridadsocial;
 import com.software2g.vo.Tipodocumento;
 import com.software2g.vo.Tipoprocedimiento;
 import com.software2g.vo.Usuario;
+import com.software2g.vo.UtilGenerico;
 
 public class AgendaAction extends ActionSupport implements ServletRequestAware,ServletResponseAware {
 	private static final long serialVersionUID = 1L;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private IGestionFacadeAgenda gestionFacadeAgenda;
+	private IGestionFacadeHistoriaClinica gestionFacadeHistoriaClinica;
 	private String estado;
 	private String funcPosicionado;
 	private String bandEstadoFunc;
@@ -73,6 +80,17 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private List<Pais> listPais;
 	private List<Departamento> listDepartamento; 
 	private List<Municipio> listMunicipio;
+	
+	private List<Finalidad> listFinalidad;
+	private Finalidad finalidad;
+	private List<Motivo> listMotivo;
+	private Motivo motivo;
+	private List<Seguridadsocial> listSeguridadSocial;
+	private Seguridadsocial seguridadSocial;
+	private Registrorxuso rxUsoOD;
+	private Registrorxuso rxUsoOI;
+	private List<UtilGenerico> listAVC = ConstantesAplicativo.listAVC;
+	private List<UtilGenerico> listCoverTest = ConstantesAplicativo.listCoverTest;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -120,6 +138,27 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setListDepartamento(List<Departamento> listDepartamento) {this.listDepartamento = listDepartamento;}
 	public List<Municipio> getListMunicipio() {return listMunicipio;}
 	public void setListMunicipio(List<Municipio> listMunicipio) {this.listMunicipio = listMunicipio;}
+	
+	public List<Finalidad> getListFinalidad() {return listFinalidad;}
+	public void setListFinalidad(List<Finalidad> listFinalidad) {this.listFinalidad = listFinalidad;}
+	public List<Motivo> getListMotivo() {return listMotivo;}
+	public void setListMotivo(List<Motivo> listMotivo) {this.listMotivo = listMotivo;}
+	public List<Seguridadsocial> getListSeguridadSocial() {return listSeguridadSocial;}
+	public void setListSeguridadSocial(List<Seguridadsocial> listSeguridadSocial) {this.listSeguridadSocial = listSeguridadSocial;}
+	public Finalidad getFinalidad() {return finalidad;}
+	public void setFinalidad(Finalidad finalidad) {this.finalidad = finalidad;}
+	public Motivo getMotivo() {return motivo;}
+	public void setMotivo(Motivo motivo) {this.motivo = motivo;}
+	public Seguridadsocial getSeguridadSocial() {return seguridadSocial;}
+	public void setSeguridadSocial(Seguridadsocial seguridadSocial) {this.seguridadSocial = seguridadSocial;}
+	public Registrorxuso getRxUsoOD() {return rxUsoOD;}
+	public void setRxUsoOD(Registrorxuso rxUsoOD) {this.rxUsoOD = rxUsoOD;}
+	public Registrorxuso getRxUsoOI() {return rxUsoOI;}
+	public void setRxUsoOI(Registrorxuso rxUsoOI) {this.rxUsoOI = rxUsoOI;}
+	public List<UtilGenerico> getListAVC() {return listAVC;}
+	public void setListAVC(List<UtilGenerico> listAVC) {this.listAVC = listAVC;}
+	public List<UtilGenerico> getListCoverTest() {return listCoverTest;}
+	public void setListCoverTest(List<UtilGenerico> listCoverTest) {this.listCoverTest = listCoverTest;}
 	
 	@SkipValidation
 	public String calendarioMethod(){
@@ -432,6 +471,13 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			listDepartamento = gestionFacadeAgenda.findAllDepartamentos();
     			if(persona!=null&&persona.getExistePaciente().equals(ConstantesAplicativo.constanteCheckSi))
     				listMunicipio = gestionFacadeAgenda.findAllMunicipios();
+    			
+    			
+    			listFinalidad = gestionFacadeHistoriaClinica.findAllFinalidads();
+    			listMotivo = gestionFacadeHistoriaClinica.findAllMotivos();
+    			listSeguridadSocial = gestionFacadeHistoriaClinica.findAllSeguridadsocials();
+    			
+    			
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			System.out.println("Construccion!!!!!!!!!!");
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
@@ -512,8 +558,10 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     	return Action.SUCCESS;
 	}
 	
-	
-	public AgendaAction(IGestionFacadeAgenda gestionFacadeAgenda) {this.gestionFacadeAgenda = gestionFacadeAgenda;}
+	public AgendaAction(IGestionFacadeAgenda gestionFacadeAgenda, IGestionFacadeHistoriaClinica gestionFacadeHistoriaClinica) {
+		this.gestionFacadeAgenda = gestionFacadeAgenda;
+		this.gestionFacadeHistoriaClinica = gestionFacadeHistoriaClinica;
+	}
 	public HttpServletRequest getRequest() {return request;}
 	public void setRequest(HttpServletRequest request) {this.request = request;}
 	public HttpServletResponse getResponse() {return response;}

@@ -8,6 +8,11 @@ public class UtilGenerico implements Serializable {
 	private String valor;
 
 	public UtilGenerico(){}
+	
+	public UtilGenerico(String key, String valor){
+		this.key = key;
+		this.valor = valor;
+	}
 
 	public String getKey() {
 		return key;

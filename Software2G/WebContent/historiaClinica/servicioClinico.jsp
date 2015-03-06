@@ -166,6 +166,7 @@
 							<li><a href="#tabs-1"><s:text name="atencioservicio.odontogramapro"></s:text></a></li>
 							<li><a href="#tabs-2"><s:text name="atencioservicio.costotratamiento"></s:text></a></li>
 							<li><a href="#tabs-3">Estado Gral Vehiculo</a></li>
+							<li><a href="#tabs-4"><s:text name="atencioservicio.examenesopt"></s:text></a></li>
 						</ul>
 						<div id="tabs-0">
 							<table cellpadding="0" cellspacing="0" border="0" class="display">
@@ -258,7 +259,20 @@
 							</table>
 						</div>
 						<div id="tabs-0-1">
-							Construccion!!!
+							<table cellpadding="0" cellspacing="0" border="0" class="display">
+								<tr>
+									<td class="leftLabel"><s:text name="servicioanamnesis.finalidad"></s:text><s:text name="campo.requerido"></s:text></td>
+									<td><s:select list="listFinalidad" name="finalidad.finaId" listKey="finaId" listValue="finaFinalidad" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs"/></td>
+								</tr>
+								<tr>
+									<td class="leftLabel"><s:text name="servicioanamnesis.motivo"></s:text><s:text name="campo.requerido"></s:text></td>
+									<td><s:select list="listMotivo" name="motivo.motiId" listKey="motiId" listValue="motiMotivo" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs"/></td>
+								</tr>
+								<tr>
+									<td class="leftLabel"><s:text name="servicioanamnesis.seguridadsocial"></s:text><s:text name="campo.requerido"></s:text></td>
+									<td><s:select list="listSeguridadSocial" name="seguridadSocial.seguId" listKey="seguId" listValue="seguNombre" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs"/></td>
+								</tr>
+							</table>
 						</div>
 						<div id="tabs-1">
 <!-- 							<table cellpadding="0" cellspacing="0" border="0" class="display"> -->
@@ -481,6 +495,18 @@
 									</td>
 									<td colspan="3">
 										<s:textarea name="planillaestadogrlvehiculo.plegObservaciondocente" id="observaciones" cssClass="inputs" cols="90"></s:textarea>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<div id="tabs-4">
+							<table cellpadding="0" cellspacing="0" border="0" class="display">
+								<tr>
+									<td>
+										<jsp:include page="rxUso.jsp" flush="true"/>
+<%-- 											<jsp:param value="${idSolicitud.soviId}" name="soviId"/> --%>
+<%-- 											<jsp:param value="1" name="posibles_rutas"/>  --%>
+<%-- 										</jsp:include> --%>
 									</td>
 								</tr>
 							</table>

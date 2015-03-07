@@ -6,6 +6,70 @@
 	<head>
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {
+				
+				$("#rxUso").click(function() {
+					var divRxUso = document.getElementById("divRxUso");
+					if($('input:checkbox[id=rxUso]:nth(0)').is(':checked')) {
+						divRxUso.style.display = 'block';
+			    	}else{
+			    		divRxUso.style.display = 'none';
+			    	}
+		    	});
+			
+				$("#avsc").click(function() {
+					var divAVSC = document.getElementById("divAVSC");
+					if($('input:checkbox[id=avsc]:nth(0)').is(':checked')) {
+						divAVSC.style.display = 'block';
+			    	}else{
+			    		divAVSC.style.display = 'none';
+			    	}
+		    	});
+		    	
+		    	$("#coverTest").click(function() {
+					var divCoverTest = document.getElementById("divCoverTest");
+					if($('input:checkbox[id=coverTest]:nth(0)').is(':checked')) {
+						divCoverTest.style.display = 'block';
+			    	}else{
+			    		divCoverTest.style.display = 'none';
+			    	}
+		    	});
+		    	
+		    	$("#examenExterno").click(function() {
+					var divExamenExterno = document.getElementById("divExamenExterno");
+					if($('input:checkbox[id=examenExterno]:nth(0)').is(':checked')) {
+						divExamenExterno.style.display = 'block';
+			    	}else{
+			    		divExamenExterno.style.display = 'none';
+			    	}
+		    	});
+		    	
+		    	$("#oftalmoscopia").click(function() {
+					var divOftalmoscopia = document.getElementById("divOftalmoscopia");
+					if($('input:checkbox[id=oftalmoscopia]:nth(0)').is(':checked')) {
+						divOftalmoscopia.style.display = 'block';
+			    	}else{
+			    		divOftalmoscopia.style.display = 'none';
+			    	}
+		    	});
+		    	
+		    	$("#keratometria").click(function() {
+					var divKeratometria = document.getElementById("divKeratometria");
+					if($('input:checkbox[id=keratometria]:nth(0)').is(':checked')) {
+						divKeratometria.style.display = 'block';
+			    	}else{
+			    		divKeratometria.style.display = 'none';
+			    	}
+		    	});
+		    	
+		    	$("#retinoscopia").click(function() {
+					var divRetinoscopia = document.getElementById("divRetinoscopia");
+					if($('input:checkbox[id=retinoscopia]:nth(0)').is(':checked')) {
+						divRetinoscopia.style.display = 'block';
+			    	}else{
+			    		divRetinoscopia.style.display = 'none';
+			    	}
+		    	});
+		    	
 				$("#selectPais").change(function(event){
 		            var id = $("#selectPais").find(':selected').val();
 		            if(id>0){
@@ -507,6 +571,36 @@
 <%-- 											<jsp:param value="${idSolicitud.soviId}" name="soviId"/> --%>
 <%-- 											<jsp:param value="1" name="posibles_rutas"/>  --%>
 <%-- 										</jsp:include> --%>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<jsp:include page="avsc.jsp" flush="true"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<jsp:include page="coverTest.jsp" flush="true"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<jsp:include page="examenExterno.jsp" flush="true"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<jsp:include page="oftalmoscopia.jsp" flush="true"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<jsp:include page="keratometria.jsp" flush="true"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<jsp:include page="retinoscopia.jsp" flush="true"/>
 									</td>
 								</tr>
 							</table>

@@ -33,6 +33,9 @@ import com.software2g.vo.Participante;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Procedimiento;
 import com.software2g.vo.Profesional;
+import com.software2g.vo.Registroavsc;
+import com.software2g.vo.Registrocovertest;
+import com.software2g.vo.Registroexamensimple;
 import com.software2g.vo.Registrorxuso;
 import com.software2g.vo.Seguridadsocial;
 import com.software2g.vo.Tipodocumento;
@@ -91,6 +94,17 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private Registrorxuso rxUsoOI;
 	private List<UtilGenerico> listAVC = ConstantesAplicativo.listAVC;
 	private List<UtilGenerico> listCoverTest = ConstantesAplicativo.listCoverTest;
+	private Registroavsc avscOD;
+	private Registroavsc avscOI;
+	private Registrocovertest coverTest;
+	private Registroexamensimple examenExternoOD;
+	private Registroexamensimple examenExternoOI;
+	private Registroexamensimple oftalmoscopiaOD;
+	private Registroexamensimple oftalmoscopiaOI;
+	private Registroexamensimple keratometriaOD;
+	private Registroexamensimple keratometriaOI;
+	private Registroexamensimple retinoscopiaOD;
+	private Registroexamensimple retinoscopiaOI;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -159,6 +173,29 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setListAVC(List<UtilGenerico> listAVC) {this.listAVC = listAVC;}
 	public List<UtilGenerico> getListCoverTest() {return listCoverTest;}
 	public void setListCoverTest(List<UtilGenerico> listCoverTest) {this.listCoverTest = listCoverTest;}
+	public Registroavsc getAvscOD() {return avscOD;}
+	public void setAvscOD(Registroavsc avscOD) {this.avscOD = avscOD;}
+	public Registroavsc getAvscOI() {return avscOI;}
+	public void setAvscOI(Registroavsc avscOI) {this.avscOI = avscOI;}
+	public Registrocovertest getCoverTest() {return coverTest;}
+	public void setCoverTest(Registrocovertest coverTest) {this.coverTest = coverTest;}
+	public Registroexamensimple getExamenExternoOD() {return examenExternoOD;}
+	public void setExamenExternoOD(Registroexamensimple examenExternoOD) {this.examenExternoOD = examenExternoOD;}
+	public Registroexamensimple getExamenExternoOI() {return examenExternoOI;}
+	public void setExamenExternoOI(Registroexamensimple examenExternoOI) {this.examenExternoOI = examenExternoOI;}
+	public Registroexamensimple getOftalmoscopiaOD() {return oftalmoscopiaOD;}
+	public void setOftalmoscopiaOD(Registroexamensimple oftalmoscopiaOD) {this.oftalmoscopiaOD = oftalmoscopiaOD;}
+	public Registroexamensimple getOftalmoscopiaOI() {return oftalmoscopiaOI;}
+	public void setOftalmoscopiaOI(Registroexamensimple oftalmoscopiaOI) {this.oftalmoscopiaOI = oftalmoscopiaOI;}
+	public Registroexamensimple getKeratometriaOD() {return keratometriaOD;}
+	public void setKeratometriaOD(Registroexamensimple keratometriaOD) {this.keratometriaOD = keratometriaOD;}
+	public Registroexamensimple getKeratometriaOI() {return keratometriaOI;}
+	public void setKeratometriaOI(Registroexamensimple keratometriaOI) {this.keratometriaOI = keratometriaOI;}
+	public Registroexamensimple getRetinoscopiaOD() {return retinoscopiaOD;}
+	public void setRetinoscopiaOD(Registroexamensimple retinoscopiaOD) {this.retinoscopiaOD = retinoscopiaOD;}
+	public Registroexamensimple getRetinoscopiaOI() {return retinoscopiaOI;}
+	public void setRetinoscopiaOI(Registroexamensimple retinoscopiaOI) {this.retinoscopiaOI = retinoscopiaOI;}
+	
 	
 	@SkipValidation
 	public String calendarioMethod(){

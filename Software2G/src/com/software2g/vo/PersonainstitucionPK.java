@@ -53,5 +53,5 @@ public class PersonainstitucionPK implements Serializable {
 		hash = hash * prime + this.idInst.hashCode();
 		
 		return hash; 
-	}
+	} 
 }

@@ -44,6 +44,7 @@
     
     <bean id="gestionFacadeAutoCompletado" class="com.software2g.service.facade.impl.GestionFacadeAutoCompletado" scope="prototype">
         <property name="personaDao"><bean class="com.software2g.portal.dao.impl.PersonaDaoImpl"/></property>
+        <property name="preguntaDao"><bean class="com.software2g.historia_clinica.dao.impl.PreguntaDAOImpl"/></property>
     </bean>
     
 </beans>

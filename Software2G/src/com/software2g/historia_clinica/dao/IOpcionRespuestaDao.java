@@ -27,6 +27,7 @@ public interface IOpcionRespuestaDao {
 	 * Return all persistent instances of the <code>Opcionrespuesta</code> entity.
 	 */
 	public List<Opcionrespuesta> findAllOpcionrespuestas();
+	public List<Opcionrespuesta> findAllOpcionrespuestas(long preg_id);
 	/**
 	 * Make the given instance managed and persistent.
 	 */

@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,16 +28,19 @@ import com.software2g.vo.Finalidad;
 import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Motivo;
 import com.software2g.vo.Municipio;
+import com.software2g.vo.Opcionrespuesta;
 import com.software2g.vo.Pais;
 import com.software2g.vo.Parametroscalendario;
 import com.software2g.vo.Participante;
 import com.software2g.vo.Persona;
+import com.software2g.vo.Pregunta;
 import com.software2g.vo.Procedimiento;
 import com.software2g.vo.Profesional;
 import com.software2g.vo.Registroavsc;
 import com.software2g.vo.Registrocovertest;
 import com.software2g.vo.Registroexamensimple;
 import com.software2g.vo.Registrorxuso;
+import com.software2g.vo.Segmentoanamnesi;
 import com.software2g.vo.Seguridadsocial;
 import com.software2g.vo.Tipodocumento;
 import com.software2g.vo.Tipoprocedimiento;
@@ -105,6 +109,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private Registroexamensimple keratometriaOI;
 	private Registroexamensimple retinoscopiaOD;
 	private Registroexamensimple retinoscopiaOI;
+	private List<Segmentoanamnesi> listSegmentoAnamnesis; 
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -195,7 +200,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setRetinoscopiaOD(Registroexamensimple retinoscopiaOD) {this.retinoscopiaOD = retinoscopiaOD;}
 	public Registroexamensimple getRetinoscopiaOI() {return retinoscopiaOI;}
 	public void setRetinoscopiaOI(Registroexamensimple retinoscopiaOI) {this.retinoscopiaOI = retinoscopiaOI;}
-	
+	public List<Segmentoanamnesi> getListSegmentoAnamnesis() {return listSegmentoAnamnesis;}
+	public void setListSegmentoAnamnesis(List<Segmentoanamnesi> listSegmentoAnamnesis) {this.listSegmentoAnamnesis = listSegmentoAnamnesis;}
 	
 	@SkipValidation
 	public String calendarioMethod(){
@@ -515,6 +521,27 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			listSeguridadSocial = gestionFacadeHistoriaClinica.findAllSeguridadsocials();
     			
     			
+    			listSegmentoAnamnesis = gestionFacadeHistoriaClinica.findAllSegmentoanamnesis();
+    			if(listSegmentoAnamnesis!=null&&listSegmentoAnamnesis.size()>0){
+    				for(Segmentoanamnesi elem:listSegmentoAnamnesis){
+    					System.out.println("getSeanId:["+elem.getSeanId()+"]");
+    					elem.setPreguntas(gestionFacadeHistoriaClinica.findAllPreguntasXSegmentoAna(elem.getSeanId()));
+    					Collections.sort(elem.getPreguntas());
+    					if(elem.getPreguntas()!=null&&elem.getPreguntas().size()>0){
+    						for(Pregunta elem1:elem.getPreguntas()){
+    							System.out.println("getPregId:["+elem1.getPregId()+"]");
+    							elem1.setOpcionrespuestas(gestionFacadeHistoriaClinica.findAllOpcionrespuestas(elem1.getPregId()));
+    							if(elem1.getOpcionrespuestas()!=null&&elem1.getOpcionrespuestas().size()>0){
+    								Collections.sort(elem1.getOpcionrespuestas());
+    								for(Opcionrespuesta elem2:elem1.getOpcionrespuestas()){
+    									System.out.println("getOpreId:["+elem2.getOpreId()+"]");
+    								}
+    							}
+    						}
+    					}
+    				}
+    			}
+    			
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			System.out.println("Construccion!!!!!!!!!!");
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
@@ -599,6 +626,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 		this.gestionFacadeAgenda = gestionFacadeAgenda;
 		this.gestionFacadeHistoriaClinica = gestionFacadeHistoriaClinica;
 	}
+	
 	public HttpServletRequest getRequest() {return request;}
 	public void setRequest(HttpServletRequest request) {this.request = request;}
 	public HttpServletResponse getResponse() {return response;}

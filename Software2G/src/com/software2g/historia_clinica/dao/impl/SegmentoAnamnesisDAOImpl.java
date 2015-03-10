@@ -66,7 +66,8 @@ public class SegmentoAnamnesisDAOImpl implements ISegmentoAnamnesisDao {
 	@SuppressWarnings("unchecked")
 	public List<Segmentoanamnesi> findAllSegmentoanamnesis() {
         try {
-    		String jpqlString = "select segmentoanamnesi from " + Segmentoanamnesi.class.getSimpleName() + " segmentoanamnesi";
+    		String jpqlString = "select segmentoanamnesi  " +
+    				" from " + Segmentoanamnesi.class.getSimpleName() + " segmentoanamnesi";
             Query query = em.createQuery( jpqlString );
             return query.getResultList();
         }

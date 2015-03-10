@@ -1718,8 +1718,18 @@ INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINIC
 INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 84','84',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
 INSERT INTO "HISCLINICA"."ESPECIFICACIONPARTECUERPO" VALUES (nextval('"HISCLINICA"."SEQ_ESPC_ID"'), 2, 3, 'Diente 85','85',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
 
-
+----------------
+-- 09-03-2015 --
+----------------
 INSERT INTO "HISCLINICA"."TIPOFORMULACION" VALUES (nextval('"HISCLINICA"."SEQ_TIFO_ID"'), 'Elemento','A',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
 INSERT INTO "HISCLINICA"."TIPOFORMULACION" VALUES (nextval('"HISCLINICA"."SEQ_TIFO_ID"'), 'Medicamento','A',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');	
 
-  
+INSERT INTO "HISCLINICA"."TIPOSEGMENTO" VALUES (nextval('"HISCLINICA"."SEQ_TISA_ID"'), 'Preguntas','PRG',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+INSERT INTO "HISCLINICA"."TIPOSEGMENTO" VALUES (nextval('"HISCLINICA"."SEQ_TISA_ID"'), 'Unico Valor','UVLR',to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+
+INSERT INTO "HISCLINICA"."SEGMENTOANAMNESIS" VALUES (nextval('"HISCLINICA"."SEQ_SEAN_ID"'), 2, 2, 'Anamnesis','Anamnesis', 'Anamnesis' ,to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+
+INSERT INTO "HISCLINICA"."TIPOPREGUNTA" VALUES (nextval('"HISCLINICA"."SEQ_TIPG_ID"'), 'Abierta','Abierta', '(Max 500 caracteres)' ,to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
+
+INSERT INTO "HISCLINICA"."PREGUNTA" VALUES (nextval('"HISCLINICA"."SEQ_PREG_ID"'), 1, 1, 'Anamnesis', '(Max 500 caracteres)', 'String', 1, to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');  
+

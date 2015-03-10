@@ -911,6 +911,15 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 		}
 	}
 
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Opcionrespuesta> findAllOpcionrespuestas(long preg_id) throws Exception {
+		try {
+			return getOpcionRespuestaDao().findAllOpcionrespuestas(preg_id);
+		} catch (RuntimeException e) {
+			//throw new Exception("findAllOpcionrespuestas failed: " + e.getMessage());
+			return null;
+		}
+	}
 	/**
 	 * Make the given instance managed and persistent.
 	 */
@@ -1161,6 +1170,15 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 		}
 	}
 
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Pregunta> findAllPreguntasXSegmentoAna(long seanId) throws Exception {
+		try {
+			return getPreguntaDao().findAllPreguntasXSegmentoAna(seanId);
+		} catch (RuntimeException e) {
+			throw new Exception("findAllPreguntas failed: " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

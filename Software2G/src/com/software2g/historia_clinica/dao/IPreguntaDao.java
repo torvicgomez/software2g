@@ -27,6 +27,7 @@ public interface IPreguntaDao {
 	 * Return all persistent instances of the <code>Pregunta</code> entity.
 	 */
 	public List<Pregunta> findAllPreguntas();
+	public List<Pregunta> findAllPreguntasXSegmentoAna(long seanId);
 	/**
 	 * Make the given instance managed and persistent.
 	 */

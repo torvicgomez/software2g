@@ -12,7 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="\"OPCIONRESPUESTA\"", schema="\"HISCLINICA\"")
-public class Opcionrespuesta implements Serializable {
+public class Opcionrespuesta implements Serializable, Comparable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -47,6 +47,12 @@ public class Opcionrespuesta implements Serializable {
 	public Opcionrespuesta() {
 	}
 
+	@Override
+	public int compareTo(Object obj) {
+		Opcionrespuesta opcionRespuesta = (Opcionrespuesta)obj;
+		return (int) (opcionRespuesta.getOpreOrden() - this.opreOrden);
+	}
+	
 	public long getOpreId() {
 		return this.opreId;
 	}

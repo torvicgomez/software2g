@@ -48,7 +48,7 @@ $(document).ready(function() {
 });
 </script>
 </head>
-<body class="fondo">
+<body >
 <!--WRAPPER--> 
 <div id="wrapper">
 

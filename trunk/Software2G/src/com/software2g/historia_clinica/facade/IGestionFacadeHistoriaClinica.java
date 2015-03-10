@@ -353,6 +353,7 @@ public interface IGestionFacadeHistoriaClinica {
 	 * Return all persistent instances of the <code>Opcionrespuesta</code> entity.
 	 */
 	public List<Opcionrespuesta> findAllOpcionrespuestas() throws Exception;
+	public List<Opcionrespuesta> findAllOpcionrespuestas(long preg_id) throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */
@@ -468,6 +469,7 @@ public interface IGestionFacadeHistoriaClinica {
 	 * Return all persistent instances of the <code>Pregunta</code> entity.
 	 */
 	public List<Pregunta> findAllPreguntas() throws Exception;
+	public List<Pregunta> findAllPreguntasXSegmentoAna(long seanId) throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */

@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="\"PREGUNTA\"", schema="\"HISCLINICA\"")
-public class Pregunta implements Serializable {
+public class Pregunta implements Serializable, Comparable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -62,6 +62,12 @@ public class Pregunta implements Serializable {
 	public Pregunta() {
 	}
 
+	@Override
+	public int compareTo(Object obj) {
+		Pregunta pregunta = (Pregunta)obj;
+		return (int) (pregunta.getPregOrden() - this.pregOrden);
+	}
+	
 	public long getPregId() {
 		return this.pregId;
 	}

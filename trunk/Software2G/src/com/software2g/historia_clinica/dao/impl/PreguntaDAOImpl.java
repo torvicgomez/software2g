@@ -1,5 +1,7 @@
 package com.software2g.historia_clinica.dao.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,6 +78,68 @@ public class PreguntaDAOImpl implements IPreguntaDao {
             }
         }
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Pregunta> findAllPreguntasXSegmentoAna(long seanId) {
+        try {
+    		String jpqlString = "select pregunta from " + Pregunta.class.getSimpleName() + " pregunta " +
+    				" where pregunta.segmentoanamnesi.seanId =:seanId ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("seanId", seanId);
+            return query.getResultList();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
+	@SuppressWarnings("unchecked")
+	public HashMap<String, String> findPreguntasXTipoEspecialidad(long tiesId) {
+        try {
+    		String sqlString = " select sean.sean_id, preg.preg_id, opre.opre_id, " +
+    				" case when sean.tisa_id is not null then (select tisa.tisa_abreviatura from \"HISCLINICA\".\"TIPOSEGMENTO\" as tisa where tisa.tisa_id = sean.tisa_id) else '---' end as tiposegana," +
+					" sean.sean_nombre, sean.sean_etiqueta, sean.sean_mensajeayuda," +
+					" case when preg.tipr_id is not null then ( select tipr.tipr_etiqueta from \"HISCLINICA\".\"TIPOPREGUNTA\" as tipr where tipr.tipr_id = preg.tipr_id ) else '---' end as tipopreg," +
+					" preg.preg_pregunta, preg.preg_mensajeayuda, preg.preg_tipodato, preg.preg_orden, " +
+					" opre.opre_etiqueta, opre.opre_valor, opre.opre_valor, opre.opre_orden " +
+					" from \"HISCLINICA\".\"PREGUNTA\" as preg " +
+					" inner join \"HISCLINICA\".\"SEGMENTOANAMNESIS\" as sean on (sean.sean_id = preg.sean_id and sean.ties_id =:tiesId )-- Especialidad Tipo Optometria " +
+					" left outer join \"HISCLINICA\".\"OPCIONRESPUESTA\" AS opre  on (opre.preg_id = preg.preg_id) " +
+					" order by preg.preg_id, preg.preg_orden, opre.opre_orden asc ";
+            Query query = em.createQuery( sqlString );
+            query.setParameter("tiesId", tiesId);
+            List<List<HashMap<String, String>>> a = null;
+            List<Object[]> list = query.getResultList();
+            HashMap<String, String> listResult = new HashMap<String, String>(); 
+            for(Object[] elem:list){
+            	listResult.put("sean_id", elem[0].toString());
+            	listResult.put("preg_id", elem[1].toString());
+            	listResult.put("opre_id", elem[2].toString());
+            	listResult.put("tiposegana", elem[3].toString());
+            	listResult.put("sean_nombre", elem[4].toString());
+            	listResult.put("sean_etiqueta", elem[5].toString());
+            	listResult.put("sean_mensajeayuda", elem[6].toString());
+            	listResult.put("tipopreg", elem[7].toString());
+            	listResult.put("preg_pregunta", elem[8].toString());
+            	listResult.put("preg_mensajeayuda", elem[9].toString());
+            	listResult.put("preg_tipodato", elem[10].toString());
+            	listResult.put("preg_orden", elem[11].toString());
+            	listResult.put("opre_etiqueta", elem[12].toString());
+            	listResult.put("opre_valor", elem[13].toString());
+            	listResult.put("opre_valor", elem[14].toString());
+            	listResult.put("opre_orden", elem[15].toString());
+            }
+            return listResult;
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

@@ -76,6 +76,22 @@ public class OpcionRespuestaDAOImpl implements IOpcionRespuestaDao {
             }
         }
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Opcionrespuesta> findAllOpcionrespuestas(long preg_id) {
+        try {
+    		String jpqlString = "select opcionrespuesta from " + Opcionrespuesta.class.getSimpleName() + " opcionrespuesta " +
+    				" where opcionrespuesta.pregunta.preg_id =:preg_id ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("preg_id", preg_id);
+            return query.getResultList();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
 	/**
 	 * Make the given instance managed and persistent.
 	 */

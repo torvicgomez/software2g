@@ -11,6 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.software2g.historia_clinica.dao.IPreguntaDao;
 import com.software2g.portal.dao.IPersonaDao;
 import com.software2g.service.facade.IGestionFacadeAutoCompletado;
 import com.software2g.util.ConstantesAplicativo;
@@ -24,9 +25,13 @@ public class GestionFacadeAutoCompletado implements IGestionFacadeAutoCompletado
 	
 	@Autowired
 	IPersonaDao personaDao;
+	@Autowired
+	IPreguntaDao preguntaDao;
 	
 	public IPersonaDao getPersonaDao() {return personaDao;}
 	public void setPersonaDao(IPersonaDao personaDao) {this.personaDao = personaDao;}
+	public IPreguntaDao getPreguntaDao() {return preguntaDao;}
+	public void setPreguntaDao(IPreguntaDao preguntaDao) {this.preguntaDao = preguntaDao;}
 	
 	public GestionFacadeAutoCompletado() {
 		super();

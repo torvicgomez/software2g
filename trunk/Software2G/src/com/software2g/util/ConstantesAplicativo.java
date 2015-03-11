@@ -101,4 +101,13 @@ public final class ConstantesAplicativo {
 							new UtilGenerico("Endotropia", "Endotropia"),
 							new UtilGenerico("Hipotropia", "Hipotropia"),
 							new UtilGenerico("Hipertropia", "Hipertropia")));
+	
+	public static final String constanteTipoPregAbierta = "ABIERTA";
+	public static final String constanteTipoPregMultipleMR = "MULTIPLEMR";
+	
+	public static final String constanteTipoObjetoViewTextField = "textfield";
+	public static final String constanteTipoObjetoViewCheckBox = "checkbox";
+	public static final String constanteTipoObjetoViewTextArea = "textarea";
+	public static final String constanteTipoObjetoViewSelect = "select";
+	
 }

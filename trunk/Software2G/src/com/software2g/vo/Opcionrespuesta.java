@@ -50,7 +50,7 @@ public class Opcionrespuesta implements Serializable, Comparable {
 	@Override
 	public int compareTo(Object obj) {
 		Opcionrespuesta opcionRespuesta = (Opcionrespuesta)obj;
-		return (int) (opcionRespuesta.getOpreOrden() - this.opreOrden);
+		return (int) (this.opreOrden - opcionRespuesta.getOpreOrden());
 	}
 	
 	public long getOpreId() {

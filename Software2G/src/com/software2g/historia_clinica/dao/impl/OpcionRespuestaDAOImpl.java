@@ -78,12 +78,12 @@ public class OpcionRespuestaDAOImpl implements IOpcionRespuestaDao {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Opcionrespuesta> findAllOpcionrespuestas(long preg_id) {
+	public List<Opcionrespuesta> findAllOpcionrespuestas(long pregId) {
         try {
     		String jpqlString = "select opcionrespuesta from " + Opcionrespuesta.class.getSimpleName() + " opcionrespuesta " +
-    				" where opcionrespuesta.pregunta.preg_id =:preg_id ";
+    				" where opcionrespuesta.pregunta.pregId =:pregId ";
             Query query = em.createQuery( jpqlString );
-            query.setParameter("preg_id", preg_id);
+            query.setParameter("pregId", pregId);
             return query.getResultList();
         }
         finally {

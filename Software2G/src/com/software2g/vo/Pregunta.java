@@ -41,6 +41,9 @@ public class Pregunta implements Serializable, Comparable {
 	@Column(name="preg_tipodato")
 	private String pregTipodato;
 
+	@Column(name="preg_objetoview")
+	private String pregObjetoview;
+	
 	//bi-directional many-to-one association to Opcionrespuesta
 	@OneToMany(mappedBy="pregunta")
 	private List<Opcionrespuesta> opcionrespuestas;
@@ -65,7 +68,7 @@ public class Pregunta implements Serializable, Comparable {
 	@Override
 	public int compareTo(Object obj) {
 		Pregunta pregunta = (Pregunta)obj;
-		return (int) (pregunta.getPregOrden() - this.pregOrden);
+		return (int) (this.pregOrden - pregunta.getPregOrden());
 	}
 	
 	public long getPregId() {
@@ -171,4 +174,13 @@ public class Pregunta implements Serializable, Comparable {
 			this.pregHoracambio=data.get(2);
 		}
 	}
+
+	public String getPregObjetoview() {
+		return pregObjetoview;
+	}
+
+	public void setPregObjetoview(String pregObjetoview) {
+		this.pregObjetoview = pregObjetoview;
+	}
+	
 }

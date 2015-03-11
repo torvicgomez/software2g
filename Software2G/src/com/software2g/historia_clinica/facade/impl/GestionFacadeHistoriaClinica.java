@@ -912,11 +912,14 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	}
 
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
-	public List<Opcionrespuesta> findAllOpcionrespuestas(long preg_id) throws Exception {
+	public List<Opcionrespuesta> findAllOpcionrespuestas(long pregId) throws Exception {
 		try {
-			return getOpcionRespuestaDao().findAllOpcionrespuestas(preg_id);
+			System.out.println("Entra esta Parte!!!");
+			System.out.println("preg_id:["+pregId+"]");
+			return getOpcionRespuestaDao().findAllOpcionrespuestas(pregId);
 		} catch (RuntimeException e) {
 			//throw new Exception("findAllOpcionrespuestas failed: " + e.getMessage());
+			e.printStackTrace();
 			return null;
 		}
 	}

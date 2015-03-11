@@ -336,6 +336,11 @@
 									<td class="leftLabel"><s:text name="servicioanamnesis.seguridadsocial"></s:text><s:text name="campo.requerido"></s:text></td>
 									<td><s:select list="listSeguridadSocial" name="seguridadSocial.seguId" listKey="seguId" listValue="seguNombre" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs"/></td>
 								</tr>
+								<tr>
+									<td colspan="2">
+										<jsp:include page="anamnesis.jsp" flush="true"/>
+									</td>
+								</tr>
 							</table>
 						</div>
 						<div id="tabs-1">

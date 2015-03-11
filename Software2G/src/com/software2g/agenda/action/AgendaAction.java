@@ -88,6 +88,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private List<Departamento> listDepartamento; 
 	private List<Municipio> listMunicipio;
 	
+	
 	private List<Finalidad> listFinalidad;
 	private Finalidad finalidad;
 	private List<Motivo> listMotivo;
@@ -202,6 +203,15 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setRetinoscopiaOI(Registroexamensimple retinoscopiaOI) {this.retinoscopiaOI = retinoscopiaOI;}
 	public List<Segmentoanamnesi> getListSegmentoAnamnesis() {return listSegmentoAnamnesis;}
 	public void setListSegmentoAnamnesis(List<Segmentoanamnesi> listSegmentoAnamnesis) {this.listSegmentoAnamnesis = listSegmentoAnamnesis;}
+	
+	public String getConstanteTipoPregAbierta(){ return ConstantesAplicativo.constanteTipoPregAbierta;}
+	public String getConstanteTipoPregMultipleMR(){ return ConstantesAplicativo.constanteTipoPregMultipleMR;}
+
+	public String getConstanteTipoObjetoViewTextField(){ return ConstantesAplicativo.constanteTipoObjetoViewTextField;}
+	public String getConstanteTipoObjetoViewCheckBox(){ return ConstantesAplicativo.constanteTipoObjetoViewCheckBox;}
+	public String getConstanteTipoObjetoViewTextArea(){ return ConstantesAplicativo.constanteTipoObjetoViewTextArea;}
+	public String getConstanteTipoObjetoViewTextSelect(){ return ConstantesAplicativo.constanteTipoObjetoViewSelect;}
+	
 	
 	@SkipValidation
 	public String calendarioMethod(){

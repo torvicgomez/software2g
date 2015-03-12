@@ -40,6 +40,7 @@ import com.software2g.vo.Registroavsc;
 import com.software2g.vo.Registrocovertest;
 import com.software2g.vo.Registroexamensimple;
 import com.software2g.vo.Registrorxuso;
+import com.software2g.vo.Respuesta;
 import com.software2g.vo.Segmentoanamnesi;
 import com.software2g.vo.Seguridadsocial;
 import com.software2g.vo.Tipodocumento;
@@ -111,6 +112,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private Registroexamensimple retinoscopiaOD;
 	private Registroexamensimple retinoscopiaOI;
 	private List<Segmentoanamnesi> listSegmentoAnamnesis; 
+	private List<Respuesta> listRespuesta;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -203,6 +205,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setRetinoscopiaOI(Registroexamensimple retinoscopiaOI) {this.retinoscopiaOI = retinoscopiaOI;}
 	public List<Segmentoanamnesi> getListSegmentoAnamnesis() {return listSegmentoAnamnesis;}
 	public void setListSegmentoAnamnesis(List<Segmentoanamnesi> listSegmentoAnamnesis) {this.listSegmentoAnamnesis = listSegmentoAnamnesis;}
+	public List<Respuesta> getListRespuesta() {return listRespuesta;}
+	public void setListRespuesta(List<Respuesta> listRespuesta) {this.listRespuesta = listRespuesta;}
 	
 	public String getConstanteTipoPregAbierta(){ return ConstantesAplicativo.constanteTipoPregAbierta;}
 	public String getConstanteTipoPregMultipleMR(){ return ConstantesAplicativo.constanteTipoPregMultipleMR;}

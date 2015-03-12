@@ -28,8 +28,13 @@ Tareas
 23- Parametrica Tipo Procedimiento ------------------------------------------------------------- .::[O.K]::.
 24- Parametrica Procedimiento ------------------------------------------------------------------ .::[O.K]::.
 25- Enlace atencion servicio odontologico ------------------------------------------------------ .::[O.K]::.
-26- formulario atencion servicio odontologico --------------------------------------------------
-27- modelamiento de datos servicio odontologico ------------------------------------------------ 
+26- formulario atencion servicio odontologico -------------------------------------------------- .::[O.K]::.
+27- modelamiento de datos servicio odontologico ------------------------------------------------ .::[O.K]::.
+28- Definicion comportamiento de segmentos anamnesis -------------------------------------------
+29- Implementacion comportamiento de segmentos anamnesis ---------------------------------------
+30- Crear historia clinica optometria ----------------------------------------------------------
+31- Crear historia clinica odontologica --------------------------------------------------------
+32- Registro de las respuestas de la implementacion de los segmentos anamnesis -----------------
 
 Sugerencia
 * Tabla profesional salud ---------------------------------------------------------------------- .::[O.K]::.

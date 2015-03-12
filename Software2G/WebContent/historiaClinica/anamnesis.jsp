@@ -4,6 +4,16 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<script type="text/javascript" charset="utf-8">
+		function cambioView(obj){
+			var segmentoAnamnesis = document.getElementById("segmentoAnamnesis_"+obj);
+			if($('input:checkbox[id=segana_'+obj+']:nth(0)').is(':checked')) {
+				segmentoAnamnesis.style.display = 'block';
+	    	}else{
+	    		segmentoAnamnesis.style.display = 'none';
+	    	}		
+		}
+	</script>
 </head>
 <body>
 	<s:form id="form">
@@ -11,62 +21,60 @@
 			<s:iterator value="listSegmentoAnamnesis" id="data" var="segana" status="stat">
 				<table cellpadding="0" cellspacing="0" border="0" class="display">
 					<tr><td>
-						<h1><input type="checkbox" id="segana_${stat.index}"/>
-<%-- 						${data.seanEtiqueta} --%>
-						<s:property value="#segana.seanEtiqueta"/>
+						<h1>
+							<input type="checkbox" id="segana_${stat.index}" onchange="javascript:cambioView(${stat.index});"/>
+							<s:property value="#segana.seanEtiqueta"/>
 						</h1>
 					</td></tr>
 				</table>
-				<s:if test="#segana.preguntas!=null&&#segana.preguntas.size()>0">
-					<s:iterator value="#segana.preguntas" id="dataPreg" var="preg" status="statPreg">
-<%-- 						${data.pregPregunta} --%>
-						<s:property value="#preg.pregPregunta"/>
-						<s:property value="#preg.pregMensajeayuda"/>
-						<s:property value="#preg.pregOrden"/>
-						<s:property value="#preg.pregTipodato"/>
-						
-<!-- 					Creacion tipo pregunta abierta -->
-						<s:if test="#preg.tipopregunta.tiprEtiqueta!=null&&#preg.tipopregunta.tiprEtiqueta==constanteTipoPregAbierta">
-							<table cellpadding="0" cellspacing="0" border="0" class="display">
-								<tr>
-									<td class="leftLabel"><s:property value="#preg.pregPregunta"/></td>
-									<s:if test="#preg.pregObjetoview==constanteTipoObjetoViewTextArea">
-										<td><s:textarea name="examenExternoOD.reesValor" cols="100" rows="3" cssClass="inputs"></s:textarea></td>
-									</s:if>
-									<s:elseif test="#preg.pregObjetoview==constanteTipoObjetoViewTextField">
-										<td><s:textfield name="avscOD.avscAvl" id="avscAvl" size="10" cssClass="inputs"></s:textfield></td>
-									</s:elseif>
-									
-								</tr>
-							</table>							
-						</s:if>
-<!-- 					Creacion tipo pregunta multiple con multiple respuesta -->
-						<s:elseif test="#preg.tipopregunta.tiprEtiqueta!=null&&#preg.tipopregunta.tiprEtiqueta==constanteTipoPregMultipleMR">
-							<table cellpadding="0" cellspacing="0" border="0" class="display">
-								<tr>
-									<td class="leftLabel"><s:property value="#preg.pregPregunta"/></td>
-									<s:if test="#preg.pregObjetoview==constanteTipoObjetoViewCheckBox">
-										<td>
-											<s:iterator value="#preg.opcionrespuestas" id="dataOpcres" var="resp" status="statOpcr">
-												<input type="checkbox"/><s:property value="#resp.opreEtiqueta"/>
-											</s:iterator>
-										</td>
-									</s:if>
-									<s:elseif test="#preg.pregObjetoview==constanteTipoObjetoViewSelect">
-										<td><s:select list="#preg.opcionrespuestas" listKey="opreValor" listValue="opreEtiqueta" headerKey="" headerValue=".::Seleccione::."></s:select></td>
-									</s:elseif>
-								</tr>
-							</table>
-						</s:elseif>
-						<s:if test="#preg.opcionrespuestas!=null&&#preg.opcionrespuestas.size()>0">
-							<s:iterator value="#preg.opcionrespuestas" id="dataOpcres" var="resp" status="statOpcr">
-								<s:property value="#resp.opreEtiqueta"/>
-								<s:property value="#resp.opreOrden"/>
-								<s:property value="#resp.opreValor"/>
-							</s:iterator>
-						</s:if>
-					</s:iterator>
-				</s:if>
+				<div id="segmentoAnamnesis_${stat.index}" style="overflow:auto;width:auto;height:auto;display:none">
+					<s:if test="#segana.preguntas!=null&&#segana.preguntas.size()>0">
+						<s:iterator value="#segana.preguntas" id="dataPreg" var="preg" status="statPreg">
+							<s:hidden name="listRespuesta[%{#statPreg.index}].pregunta.pregId" value="%{#preg.pregId}"/>
+<%-- 							<s:property value='#preg.pregId'/> ---- <br> --%>
+<%-- 							${dataPreg.pregId} --%>
+<!-- 						Creacion tipo pregunta abierta -->
+							<s:if test="#preg.tipopregunta.tiprEtiqueta!=null&&#preg.tipopregunta.tiprEtiqueta==constanteTipoPregAbierta">
+								<table cellpadding="0" cellspacing="0" border="0" class="display">
+									<tr>
+										<td class="leftLabel"><s:property value="#preg.pregPregunta"/></td>
+										<s:if test="#preg.pregObjetoview==constanteTipoObjetoViewTextArea">
+											<td><s:textarea name="listRespuesta[%{#statPreg.index}].respRespuesta" cols="100" rows="3" cssClass="inputs"></s:textarea></td>
+										</s:if>
+										<s:elseif test="#preg.pregObjetoview==constanteTipoObjetoViewTextField">
+											<td><s:textfield name="listRespuesta[%{#statPreg.index}].respRespuesta" id="avscAvl" size="10" cssClass="inputs"></s:textfield></td>
+										</s:elseif>
+									</tr>
+								</table>							
+							</s:if>
+<!-- 						Creacion tipo pregunta multiple con multiple respuesta -->
+							<s:elseif test="#preg.tipopregunta.tiprEtiqueta!=null&&#preg.tipopregunta.tiprEtiqueta==constanteTipoPregMultipleMR">
+								<table cellpadding="0" cellspacing="0" border="0" class="display">
+									<tr>
+										<td class="leftLabel"><s:property value="#preg.pregPregunta"/></td>
+										<s:if test="#preg.pregObjetoview==constanteTipoObjetoViewCheckBox">
+											<td>
+												<s:iterator value="#preg.opcionrespuestas" id="dataOpcres" var="resp" status="statOpcr">
+													<input type="checkbox"/><s:property value="#resp.opreEtiqueta"/>
+												</s:iterator>
+											</td>
+										</s:if>
+										<s:elseif test="#preg.pregObjetoview==constanteTipoObjetoViewSelect">
+											<td><s:select name="listRespuesta[%{#statPreg.index}].respRespuesta" list="#preg.opcionrespuestas" listKey="opreValor" listValue="opreEtiqueta" headerKey="" headerValue=".::Seleccione::."></s:select></td>
+										</s:elseif>
+									</tr>
+								</table>
+							</s:elseif>
+	<%-- 						<s:if test="#preg.opcionrespuestas!=null&&#preg.opcionrespuestas.size()>0"> --%>
+	<%-- 							<s:iterator value="#preg.opcionrespuestas" id="dataOpcres" var="resp" status="statOpcr"> --%>
+	<%-- 								<s:property value="#resp.opreEtiqueta"/> --%>
+	<%-- 								<s:property value="#resp.opreOrden"/> --%>
+	<%-- 								<s:property value="#resp.opreValor"/> --%>
+	<%-- 							</s:iterator> --%>
+	<%-- 						</s:if> --%>
+						</s:iterator>
+					</s:if>
+				</div>
 			</s:iterator>
 			
 <%-- 			<s:iterator var="parent" value="parents"> --%>

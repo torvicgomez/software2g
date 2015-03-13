@@ -53,5 +53,27 @@
         <action name="servicio" method="servicioMethod" class="HistoriaClinicaAction">
         	<result name="success" type="tiles">historiaClinica.servicio</result>
         </action>
+        
+        <action name="tiposeganamnesis" method="tipoSegmentoAnamnesisMethod" class="HistoriaClinicaAction">
+        	<result name="success" type="tiles">historiaClinica.tiposeganamnesis</result>
+        </action>
+        
+        <action name="tipopregunta" method="tipoPreguntaMethod" class="HistoriaClinicaAction">
+        	<result name="success" type="tiles">historiaClinica.tipopregunta</result>
+        </action>
+        
+        <action name="segmentoanamnesis" method="segmentoAnamnesisMethod" class="HistoriaClinicaAction">
+        	<result name="success" type="tiles">historiaClinica.segmentoanamnesis</result>
+        </action>
+        
+        <action name="pregunta" method="preguntaMethod" class="HistoriaClinicaAction">
+        	<result name="success" type="tiles">historiaClinica.pregunta</result>
+        </action>
+        
+        <action name="opcionrespuesta" method="opcionRespuestaMethod" class="HistoriaClinicaAction">
+        	<result name="success" type="tiles">historiaClinica.opcionrespuesta</result>
+        </action>
+        
+        
     </package>
 </struts>

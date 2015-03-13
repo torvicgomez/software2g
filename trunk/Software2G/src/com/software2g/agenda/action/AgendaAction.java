@@ -210,6 +210,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	
 	public String getConstanteTipoPregAbierta(){ return ConstantesAplicativo.constanteTipoPregAbierta;}
 	public String getConstanteTipoPregMultipleMR(){ return ConstantesAplicativo.constanteTipoPregMultipleMR;}
+	public String getConstanteTipoPregMultipleUR(){ return ConstantesAplicativo.constanteTipoPregMultipleUR;}
 
 	public String getConstanteTipoObjetoViewTextField(){ return ConstantesAplicativo.constanteTipoObjetoViewTextField;}
 	public String getConstanteTipoObjetoViewCheckBox(){ return ConstantesAplicativo.constanteTipoObjetoViewCheckBox;}

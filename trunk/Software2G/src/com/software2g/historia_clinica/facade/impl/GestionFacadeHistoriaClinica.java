@@ -926,6 +926,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistOpcionrespuesta(Opcionrespuesta opcionrespuesta) throws Exception {
 		try {
 			getOpcionRespuestaDao().persistOpcionrespuesta(opcionrespuesta);
@@ -1185,6 +1186,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistPregunta(Pregunta pregunta) throws Exception {
 		try {
 			getPreguntaDao().persistPregunta(pregunta);
@@ -1585,6 +1587,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistSegmentoanamnesi(Segmentoanamnesi segmentoanamnesi) throws Exception {
 		try {
 			getSegmentoAnamnesisDao().persistSegmentoanamnesi(segmentoanamnesi);
@@ -1935,11 +1938,13 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistTipopregunta(Tipopregunta tipopregunta) throws Exception {
 		try {
 			getTipoPreguntaDao().persistTipopregunta(tipopregunta);
 		} catch (RuntimeException e) {
-			throw new Exception("persistTipopregunta failed: " + e.getMessage());
+			//throw new Exception("persistTipopregunta failed: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	/**
@@ -1985,6 +1990,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistTiposegmento(Tiposegmento tiposegmento) throws Exception {
 		try {
 			getTipoSegmentoDao().persistTiposegmento(tiposegmento);

@@ -44,6 +44,9 @@ public class Pregunta implements Serializable, Comparable {
 	@Column(name="preg_objetoview")
 	private String pregObjetoview;
 	
+	@Column(name="preg_estado")
+	private String pregEstado;
+	
 	//bi-directional many-to-one association to Opcionrespuesta
 	@OneToMany(mappedBy="pregunta")
 	private List<Opcionrespuesta> opcionrespuestas;
@@ -54,7 +57,7 @@ public class Pregunta implements Serializable, Comparable {
 	private Segmentoanamnesi segmentoanamnesi;
 
 	//bi-directional many-to-one association to Tipopregunta
-	@ManyToOne
+	@ManyToOne(targetEntity=Tipopregunta.class)
 	@JoinColumn(name="tipr_id")
 	private Tipopregunta tipopregunta;
 
@@ -182,5 +185,13 @@ public class Pregunta implements Serializable, Comparable {
 	public void setPregObjetoview(String pregObjetoview) {
 		this.pregObjetoview = pregObjetoview;
 	}
-	
+
+	public String getPregEstado() {
+		return pregEstado;
+	}
+
+	public void setPregEstado(String pregEstado) {
+		this.pregEstado = pregEstado;
+	}
+
 }

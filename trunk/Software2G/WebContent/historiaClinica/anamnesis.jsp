@@ -31,8 +31,6 @@
 					<s:if test="#segana.preguntas!=null&&#segana.preguntas.size()>0">
 						<s:iterator value="#segana.preguntas" id="dataPreg" var="preg" status="statPreg">
 							<s:hidden name="listRespuesta[%{#statPreg.index}].pregunta.pregId" value="%{#preg.pregId}"/>
-<%-- 							<s:property value='#preg.pregId'/> ---- <br> --%>
-<%-- 							${dataPreg.pregId} --%>
 <!-- 						Creacion tipo pregunta abierta -->
 							<s:if test="#preg.tipopregunta.tiprEtiqueta!=null&&#preg.tipopregunta.tiprEtiqueta==constanteTipoPregAbierta">
 								<table cellpadding="0" cellspacing="0" border="0" class="display">
@@ -59,52 +57,24 @@
 												</s:iterator>
 											</td>
 										</s:if>
-										<s:elseif test="#preg.pregObjetoview==constanteTipoObjetoViewSelect">
-											<td><s:select name="listRespuesta[%{#statPreg.index}].respRespuesta" list="#preg.opcionrespuestas" listKey="opreValor" listValue="opreEtiqueta" headerKey="" headerValue=".::Seleccione::."></s:select></td>
-										</s:elseif>
 									</tr>
 								</table>
 							</s:elseif>
-	<%-- 						<s:if test="#preg.opcionrespuestas!=null&&#preg.opcionrespuestas.size()>0"> --%>
-	<%-- 							<s:iterator value="#preg.opcionrespuestas" id="dataOpcres" var="resp" status="statOpcr"> --%>
-	<%-- 								<s:property value="#resp.opreEtiqueta"/> --%>
-	<%-- 								<s:property value="#resp.opreOrden"/> --%>
-	<%-- 								<s:property value="#resp.opreValor"/> --%>
-	<%-- 							</s:iterator> --%>
-	<%-- 						</s:if> --%>
+<!-- 						Creacion tipo pregunta multiple con unica respuesta -->
+							<s:elseif test="#preg.tipopregunta.tiprEtiqueta!=null&&#preg.tipopregunta.tiprEtiqueta==constanteTipoPregMultipleUR">
+								<table cellpadding="0" cellspacing="0" border="0" class="display">
+									<tr>
+										<td class="leftLabel"><s:property value="#preg.pregPregunta"/></td>
+										<s:if test="#preg.pregObjetoview==constanteTipoObjetoViewSelect">
+											<td><s:select name="listRespuesta[%{#statPreg.index}].respRespuesta" list="#preg.opcionrespuestas" listKey="opreValor" listValue="opreEtiqueta" headerKey="" headerValue=".::Seleccione::."></s:select></td>
+										</s:if>
+									</tr>
+								</table>	
+							</s:elseif>
 						</s:iterator>
 					</s:if>
 				</div>
 			</s:iterator>
-			
-<%-- 			<s:iterator var="parent" value="parents"> --%>
-<%-- 			    <s:iterator var="child" value="#parent.children"> --%>
-<%-- 			        <s:property value="#child.name"/> --%>
-<%-- 			    <s:iterator> --%>
-<%-- 			<s:iterator> --%>
-			
-<!-- 			<div id="divAVSC" style="overflow:auto;width:auto;height:auto;display:none"> -->
-<!-- 				<table cellpadding="0" cellspacing="0" border="0" class="display"> -->
-<%-- 					<s:hidden name="avscOD.avscId" ></s:hidden> --%>
-<%-- 					<s:hidden name="avscOI.avscId" ></s:hidden> --%>
-<!-- 					<tr> -->
-<%-- 						<td class="leftLabel"><s:text name="servicioexamenopt.ojoderecho"></s:text></td> --%>
-<%-- 						<td class="leftLabel"><s:text name="servicioexamenopt.avl"></s:text></td> --%>
-<%-- 						<td><s:textfield name="avscOD.avscAvl" id="avscAvl" size="10" cssClass="inputs"></s:textfield></td> --%>
-<%-- 						<td class="leftLabel"><s:text name="servicioexamenopt.avc"></s:text></td> --%>
-<%-- 						<td><s:select list="listAVC" name="avscOD.avscAvc" listKey="key" listValue="valor" headerKey="" headerValue=".::Selecione::." cssClass="inputs"/></td> --%>
-<!-- 					</tr> -->
-<!-- 					<tr> -->
-<%-- 						<td class="leftLabel"><s:text name="servicioexamenopt.ojoizquierdo"></s:text></td> --%>
-<%-- 						<td class="leftLabel"><s:text name="servicioexamenopt.avl"></s:text></td> --%>
-<%-- 						<td><s:textfield name="avscOI.reruAvl" id="avscAvl" size="10" cssClass="inputs"></s:textfield></td> --%>
-<%-- 						<td class="leftLabel"><s:text name="servicioexamenopt.avc"></s:text></td> --%>
-<%-- 						<td><s:select list="listAVC" name="avscOI.avscAvc" listKey="key" listValue="valor" headerKey="" headerValue=".::Selecione::." cssClass="inputs"/></td> --%>
-<!-- 					</tr> -->
-<!-- 				</table> -->
-<!-- 			</div> -->
-
-
 		</div>
 		<div class="spacer"></div>
 	</s:form>

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 /**
  * The DAO class for the Tipopregunta entity.
  */
-@Repository
+@Repository(value="tipoPreguntaDao")
 public class TipoPreguntaDAOImpl implements ITipoPreguntaDao {
 	@PersistenceContext(unitName="entityManagerFactoryPostgres")
     private EntityManager em;
@@ -80,7 +80,11 @@ public class TipoPreguntaDAOImpl implements ITipoPreguntaDao {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistTipopregunta(Tipopregunta tipopregunta) {
-		em.persist(em.merge(tipopregunta));
+		Tipopregunta  obj = (Tipopregunta) em.merge(tipopregunta);
+		System.out.println("*****************************************");
+		System.out.println("getTiprId:["+obj.getTiprId()+"]");
+		System.out.println("*****************************************");
+		em.persist(obj);
 	}
 	/**
 	 * Remove the given persistent instance.

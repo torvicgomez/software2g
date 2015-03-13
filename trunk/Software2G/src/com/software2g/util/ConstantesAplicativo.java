@@ -102,8 +102,31 @@ public final class ConstantesAplicativo {
 							new UtilGenerico("Hipotropia", "Hipotropia"),
 							new UtilGenerico("Hipertropia", "Hipertropia")));
 	
+	public static final List<UtilGenerico> listOrden = new ArrayList<UtilGenerico>(
+			Arrays.asList(new UtilGenerico("1", "1"),new UtilGenerico("2", "2"),
+							new UtilGenerico("3", "3"),new UtilGenerico("3", "3"),
+							new UtilGenerico("4", "4"),new UtilGenerico("5", "5"),
+							new UtilGenerico("6", "6"),new UtilGenerico("7", "7"),
+							new UtilGenerico("8", "8"),new UtilGenerico("9", "9")));
+	
+	public static final List<UtilGenerico> listEstado = new ArrayList<UtilGenerico>(
+			Arrays.asList(new UtilGenerico("ACTIVO", "Activo"),new UtilGenerico("INACTIVO", "INACTIVO")));
+	
+	public static final List<UtilGenerico> listObjetoView = new ArrayList<UtilGenerico>(
+			Arrays.asList(new UtilGenerico("textarea", "textarea"),
+					new UtilGenerico("textfield", "textfield"),
+					new UtilGenerico("checkbox", "checkbox"),
+					new UtilGenerico("select", "select"),
+					new UtilGenerico("calendar", "calendar")));
+	
+	public static final List<UtilGenerico> listTipoDato = new ArrayList<UtilGenerico>(
+			Arrays.asList(new UtilGenerico("String", "String"),
+					new UtilGenerico("long", "long")));
+	
+	
 	public static final String constanteTipoPregAbierta = "ABIERTA";
 	public static final String constanteTipoPregMultipleMR = "MULTIPLEMR";
+	public static final String constanteTipoPregMultipleUR = "MULTIPLEUR";
 	
 	public static final String constanteTipoObjetoViewTextField = "textfield";
 	public static final String constanteTipoObjetoViewCheckBox = "checkbox";

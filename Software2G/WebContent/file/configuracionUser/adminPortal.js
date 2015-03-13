@@ -15,6 +15,13 @@ var zNodes = [
 	{id:3006, pId:3000, name:"Tipo Procedimiento", file:"tipoProcedimiento.action?estado=all&funcPosicionado=Calendario/Tipo Procedimiento"},
 	{id:3007, pId:3000, name:"Procedimiento", file:"procedimiento.action?estado=all&funcPosicionado=Calendario/Procedimiento"},
 	{id:3008, pId:3000, name:"Servicio Clinico", file:"servicioclinico.action?estado=all&funcPosicionado=Calendario/Servicio Clinico"},
+	
+	{id:3009, pId:3000, name:"Tipo Segmento Anamnesis", file:"tiposeganamnesis.action?estado=all&funcPosicionado=Calendario/Tipo Segmento Anamnesis"},
+	{id:3010, pId:3000, name:"Tipo Pregunta", file:"tipopregunta.action?estado=all&funcPosicionado=Calendario/Tipo Pregunta"},
+	{id:3011, pId:3000, name:"Segmentos Anamnesis", file:"segmentoanamnesis.action?estado=all&funcPosicionado=Calendario/Segmentos Anamnesis"},
+	{id:3012, pId:3000, name:"Preguntas", file:"pregunta.action?estado=all&funcPosicionado=Calendario/Preguntas"},
+	{id:3013, pId:3000, name:"Opciones Respuestas", file:"opcionrespuesta.action?estado=all&funcPosicionado=Calendario/Opciones Respuestas"},
+	
 	{id:4000, pId:0, name:"Personal", open:true},
 	{id:4001, pId:4000, name:"Administración Personal", file:"listPersonal.action?url=Personal::>Administración Personal"},
 	{id:4002, pId:4000, name:"Cambiar Contraseña", file:"cambiarPassword.action?url=Personal::>Cambiar Contraseña"}

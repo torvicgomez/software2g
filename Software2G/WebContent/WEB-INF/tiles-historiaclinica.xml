@@ -16,4 +16,23 @@
 		<put-attribute name="body" value="/historiaClinica/servicio.jsp" />
 	</definition>
 	
+	<definition name="historiaClinica.tiposeganamnesis" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/historiaClinica/tipoSegmentoAnamnesis.jsp" />
+	</definition>
+	
+	<definition name="historiaClinica.tipopregunta" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/historiaClinica/tipoPregunta.jsp" />
+	</definition>
+	
+	<definition name="historiaClinica.segmentoanamnesis" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/historiaClinica/segmentoAnamnesis.jsp" />
+	</definition>
+	
+	<definition name="historiaClinica.pregunta" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/historiaClinica/pregunta.jsp" />
+	</definition>
+	
+	<definition name="historiaClinica.opcionrespuesta" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/historiaClinica/opcionRespuesta.jsp" />
+	</definition>
 </tiles-definitions>

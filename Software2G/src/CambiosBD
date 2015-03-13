@@ -1748,3 +1748,4 @@ INSERT INTO "HISCLINICA"."OPCIONRESPUESTA" VALUES (nextval('"HISCLINICA"."SEQ_OP
 INSERT INTO "HISCLINICA"."OPCIONRESPUESTA" VALUES (nextval('"HISCLINICA"."SEQ_OPRE_ID"'), 7, 'Periapical', 'PERIAPICAL', 3, to_char(current_timestamp,'yyyy-MM-dd'), to_char(current_timestamp,'HH24:MI:SS'), 'vhgomezl');
 
 ALTER TABLE "HISCLINICA"."PREGUNTA" ADD COLUMN preg_objetoview varchar(30) ;
+ALTER TABLE "HISCLINICA"."PREGUNTA" ADD COLUMN preg_estado varchar(10) ;

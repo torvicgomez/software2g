@@ -215,8 +215,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public String getConstanteTipoObjetoViewTextField(){ return ConstantesAplicativo.constanteTipoObjetoViewTextField;}
 	public String getConstanteTipoObjetoViewCheckBox(){ return ConstantesAplicativo.constanteTipoObjetoViewCheckBox;}
 	public String getConstanteTipoObjetoViewTextArea(){ return ConstantesAplicativo.constanteTipoObjetoViewTextArea;}
-	public String getConstanteTipoObjetoViewTextSelect(){ return ConstantesAplicativo.constanteTipoObjetoViewSelect;}
-	
+	public String getConstanteTipoObjetoViewSelect(){ return ConstantesAplicativo.constanteTipoObjetoViewSelect;}
 	
 	@SkipValidation
 	public String calendarioMethod(){

@@ -266,9 +266,12 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     				gestionFacadeHistoriaClinica.persistSegmentoanamnesi(segmentoAnamnesis);
     				estado = ConstantesAplicativo.constanteEstadoAbstract;
     				addActionMessage(getText("accion.satisfactoria"));
+    				segmentoAnamnesis.setTiposegmento(gestionFacadeHistoriaClinica.findTiposegmentoById(segmentoAnamnesis.getTiposegmento().getTisaId()));
+    				segmentoAnamnesis.setTipoespecialidad(gestionFacadeHistoriaClinica.findTipoespecialidadById(segmentoAnamnesis.getTipoespecialidad().getTiesId()));
+    			}else{
+    				listTipoSegmento = gestionFacadeHistoriaClinica.findAllTiposegmentos();
+    				listTipoEspecialidad = gestionFacadeHistoriaClinica.findAllTipoespecialidads();
     			}
-    			listTipoSegmento = gestionFacadeHistoriaClinica.findAllTiposegmentos();
-        		listTipoEspecialidad = gestionFacadeHistoriaClinica.findAllTipoespecialidads();
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			segmentoAnamnesis = gestionFacadeHistoriaClinica.findSegmentoanamnesiById(getIdLong());
     			listTipoSegmento = gestionFacadeHistoriaClinica.findAllTiposegmentos();
@@ -306,7 +309,7 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     				addActionError(getText("validacion.requerido","pregTipoDato","Tipo de Dato"));
     			if(ValidaString.isNullOrEmptyString(pregunta.getPregObjetoview()))
     				addActionError(getText("validacion.requerido","pregObjetoView","Visualización Objeto"));
-    			if(pregunta.getPregOrden()>0)
+    			if(pregunta.getPregOrden()<=0)
     				addActionError(getText("validacion.requerido","pregOrden","Orden"));
     			if(!hasActionErrors()){
     				pregunta.setDatosAud(this.getDatosAud());
@@ -314,9 +317,12 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     				gestionFacadeHistoriaClinica.persistPregunta(pregunta);
     				estado = ConstantesAplicativo.constanteEstadoAbstract;
     				addActionMessage(getText("accion.satisfactoria"));
+    				pregunta.setSegmentoanamnesi(gestionFacadeHistoriaClinica.findSegmentoanamnesiById(pregunta.getSegmentoanamnesi().getSeanId()));
+    				pregunta.setTipopregunta(gestionFacadeHistoriaClinica.findTipopreguntaById(pregunta.getTipopregunta().getTiprId()));
+    			}else{
+    				listSegmentoAnamnesis = gestionFacadeHistoriaClinica.findAllSegmentoanamnesis();
+    				listTipoPregunta = gestionFacadeHistoriaClinica.findAllTipopreguntas();
     			}
-    			listSegmentoAnamnesis = gestionFacadeHistoriaClinica.findAllSegmentoanamnesis();
-    			listTipoPregunta = gestionFacadeHistoriaClinica.findAllTipopreguntas();
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			pregunta = gestionFacadeHistoriaClinica.findPreguntaById(getIdLong());
     			listSegmentoAnamnesis = gestionFacadeHistoriaClinica.findAllSegmentoanamnesis();
@@ -347,7 +353,7 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     				addActionError(getText("validacion.requerido","opreEtiqueta","Etiqueta"));
     			if(ValidaString.isNullOrEmptyString(opcionRespuesta.getOpreValor()))
     				addActionError(getText("validacion.requerido","opreValor","Valor"));
-    			if(opcionRespuesta.getOpreOrden()>0)
+    			if(opcionRespuesta.getOpreOrden()<=0)
     				addActionError(getText("validacion.requerido","opreOrden","Orden"));
     			if(!hasActionErrors()){
     				opcionRespuesta.setDatosAud(this.getDatosAud());
@@ -355,8 +361,9 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     				gestionFacadeHistoriaClinica.persistOpcionrespuesta(opcionRespuesta);
     				estado = ConstantesAplicativo.constanteEstadoAbstract;
     				addActionMessage(getText("accion.satisfactoria"));
-    			}
-    			listPregunta = gestionFacadeHistoriaClinica.findAllPreguntas();
+    				opcionRespuesta.setPregunta(gestionFacadeHistoriaClinica.findPreguntaById(opcionRespuesta.getPregunta().getPregId()));
+    			}else
+    				listPregunta = gestionFacadeHistoriaClinica.findAllPreguntas();
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			opcionRespuesta = gestionFacadeHistoriaClinica.findOpcionrespuestaById(getIdLong());
     			listPregunta = gestionFacadeHistoriaClinica.findAllPreguntas();

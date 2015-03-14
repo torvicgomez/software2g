@@ -110,7 +110,7 @@ public final class ConstantesAplicativo {
 							new UtilGenerico("8", "8"),new UtilGenerico("9", "9")));
 	
 	public static final List<UtilGenerico> listEstado = new ArrayList<UtilGenerico>(
-			Arrays.asList(new UtilGenerico("ACTIVO", "Activo"),new UtilGenerico("INACTIVO", "INACTIVO")));
+			Arrays.asList(new UtilGenerico("ACTIVO", "Activo"),new UtilGenerico("INACTIVO", "Inactivo")));
 	
 	public static final List<UtilGenerico> listObjetoView = new ArrayList<UtilGenerico>(
 			Arrays.asList(new UtilGenerico("textarea", "textarea"),

@@ -156,11 +156,11 @@
 						<tr>
 							<td class="leftLabel"><s:text name="pregunta.objetoview"></s:text></td>
 							<td>
-								<s:select list="listObjetoView" id="objetoView" name="pregunta.pregObjetoview" listKey="key" listValue="valor" headerKey="-1" headerValue=".::Seleccion::." cssClass="inputs"></s:select>
+								<s:select list="listObjetoView" id="objetoView" name="pregunta.pregObjetoview" listKey="key" listValue="valor" headerKey="" headerValue=".::Seleccion::." cssClass="inputs"></s:select>
 							</td>
 							<td class="leftLabel"><s:text name="pregunta.estado"></s:text></td>
 							<td>
-								<s:select list="listEstado" id="estado" name="pregunta.pregEstado" listKey="key" listValue="valor" headerKey="-1" headerValue=".::Seleccion::." cssClass="inputs"></s:select>
+								<s:select list="listEstado" id="estado" name="pregunta.pregEstado" listKey="key" listValue="valor" headerKey="" headerValue=".::Seleccion::." cssClass="inputs"></s:select>
 							</td>
 						</tr>
 						<tr>
@@ -170,7 +170,7 @@
 							</td>
 							<td class="leftLabel"><s:text name="pregunta.tipodato"></s:text></td>
 							<td>
-								<s:select list="listTipoDato" id="tipoDato" name="pregunta.pregTipodato" listKey="key" listValue="valor" headerKey="-1" headerValue=".::Seleccion::." cssClass="inputs"></s:select>
+								<s:select list="listTipoDato" id="tipoDato" name="pregunta.pregTipodato" listKey="key" listValue="valor" headerKey="" headerValue=".::Seleccion::." cssClass="inputs"></s:select>
 							</td>
 						</tr>
 						<tr>

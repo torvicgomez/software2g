@@ -57,31 +57,6 @@
 			
 			//alert( rgbToHex(0, 51, 255) );
 			
-			function agregar(){
-				document.form.action="profesionalsalud.action?estado=<%=ConstantesAplicativo.constanteEstadoAdd%>";
-				document.form.submit();
-			}
-			
-			function registrar(){
-				document.form.action="profesionalsalud.action?estado=<%=ConstantesAplicativo.constanteEstadoSave%>";
-				document.form.submit();
-			}
-			
-			function volver(){
-				document.form.action="profesionalsalud.action?estado=<%=ConstantesAplicativo.constanteEstadoAll%>";
-				document.form.submit();
-			}
-			
-			function modificar(param){
-				document.form.action="profesionalsalud.action?estado=<%=ConstantesAplicativo.constanteEstadoEdit%>&id="+param;
-				document.form.submit();
-			}
-			
-			function detalle(param){
-				document.form.action="profesionalsalud.action?estado=<%=ConstantesAplicativo.constanteEstadoAbstract%>&id="+param;
-				document.form.submit();
-			}
-			
 		</script>
 	<style type="text/css">
 		.diente{
@@ -219,7 +194,7 @@
 	</style>
 	</head>
 	<body id="dt_example">
-		<s:form id="form">
+<%-- 		<s:form id="form"> --%>
 			<s:hidden name="funcPosicionado"></s:hidden>
 			<s:hidden name="bandEstadoFunc"></s:hidden>
 			<s:textfield name="odontograma" id="odontograma"></s:textfield>
@@ -845,6 +820,6 @@
 				</s:elseif>
 			</div>
 			<div class="spacer"></div>
-		</s:form>
+<%-- 		</s:form> --%>
 	</body>
 </html>

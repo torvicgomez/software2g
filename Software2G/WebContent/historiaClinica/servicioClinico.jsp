@@ -97,13 +97,6 @@
 					changeMonth: true
 				});
 				
-// 				$('.p2').collapser({
-// 					mode: 'block',
-// 					showText: 'Detalle',
-// 					hideText: 'Cerrar',
-// 					changeText: 0
-// 				});
-				
 			} );
 			
 			$(function() {
@@ -131,67 +124,22 @@
 				}
 			);
 			
-			$(function() {
-				$( "#slider-range-min" ).slider({
-					range: "min",
-					value: 1,
-					min: 1,
-					max: 99,
-					slide: function( event, ui ) {
-						$( "#amount" ).val( ui.value );
-					}
-				});
-				if(document.form.amount.value <= 1){
-					$( "#amount" ).val( $( "#slider-range-min" ).slider( "value" ) );
-				}else{
-					$( "#slider-range-min" ).slider({
-						value: document.form.amount.value
-					});
-				}
-			});
 			
 			function buscar(){
-				document.form.action="planillaSalidaPractica.action?estado=<%=ConstantesAplicativo.constanteEstadoSearch%>";
+				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoSearch%>";
 				document.form.submit();
 			}
 			
 			function resumen(param){
-				document.form.action="planillaSalidaPractica.action?estado=<%=ConstantesAplicativo.constanteEstadoAbstract%>&idSol="+param;
+				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoAbstract%>&idSol="+param;
 				document.form.submit();
-			}
-			
-			function verMapaFuncion(param){
-				$('#cargarGoogleMaps').data('param', param);
-				$('#cargarGoogleMaps').dialog('open');
 			}
 			
 			function registrar(){
-				document.form.action="planillaSalidaPractica.action?estado=<%=ConstantesAplicativo.constanteEstadoSave%>";
+				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoSave%>";
 				document.form.submit();
 			}
 			
-			function desplegarInfo(pos){
-				var despliegeInfo = document.getElementById('processCalendar_'+pos);
-				if(despliegeInfo.style.display=='none')
-					despliegeInfo.style.display = 'block';
-				else
-					despliegeInfo.style.display = 'none';
-			}
-			
-// 			function selectCalendar(pos){
-<%-- 				document.form.action="planillaSalidaPractica.action?estado=<%=ConstantesAplicativo.constanteEstadoSelectCalendar%>&posListCalendar="+pos; --%>
-// 				document.form.submit();
-// 			}
-			
-// 			function cambiarCalendarSelect(){
-<%-- 				document.form.action="planillaSalidaPractica.action?estado=<%=ConstantesAplicativo.constanteEstadoUpdateSelectCalendar%>"; --%>
-// 				document.form.submit();
-// 			}
-			
-			function ValidaSoloNumeros() {
-				if ((event.keyCode < 48) || (event.keyCode > 57))
-					event.returnValue = false;
-			}
 		</script>
 	</head>
 	<body id="dt_example">
@@ -359,113 +307,7 @@
 							<table cellpadding="0" cellspacing="0" border="0" class="display">
 								<tr>
 									<td class="leftLabel">
-										<s:text name="vehiculo.tipoVehiculo"></s:text>
-									</td>
-									<td>
-<%-- 										<s:select list="listTipovehiculo" name="planilladatosvehiculo.tipovehiculo.tiveId" listKey="tiveId" listValue="tiveDescripcion" headerKey="" headerValue=".::Selecione::." cssClass="inputs"/> --%>
-									</td>
-									<td colspan="2">
-										<label for="amount"><s:text name="plsalidap.vehi.numPasajeros"></s:text></label>
-										<s:textfield name="planilladatosvehiculo.pldvNumeropasajeros" id="amount" readonly="true" cssStyle="border:0; color:#FF0303; font-weight:bold;"></s:textfield>
-										<div id="slider-range-min"></div>
-									</td>
-								</tr>
-								<tr>
-									<td class="leftLabel">
-										<s:text name="plsalidap.vehi.placa"></s:text>
-									</td>
-									<td>
-										<s:textfield name="planilladatosvehiculo.pldvPlaca" id="placa" size="30" maxlength="6" cssClass="inputs"></s:textfield>
-									</td>
-									<td class="leftLabel">
-										<s:text name="plsalidap.vehi.modelo"></s:text>
-									</td>
-									<td>
-										<s:textfield name="planilladatosvehiculo.pldvModelo" id="modelo" size="30" maxlength="50" cssClass="inputs"></s:textfield>
-									</td>
-								</tr>
-								<tr>
-									<td class="leftLabel">
-										<s:text name="plsalidap.vehi.soat"></s:text>
-									</td>
-									<td>
-										<s:radio name="planilladatosvehiculo.pldvSoat" list="#{'S':'Si','N':'No'}" cssClass="inputs"></s:radio>
-									</td>
-									<td class="leftLabel">
-										<s:text name="plsalidap.vehi.fechavencimiento"></s:text>
-									</td>
-									<td>
-										<s:textfield name="planilladatosvehiculo.pldvFechavsoat" id="datepicker4" cssClass="inputs" readonly="true"></s:textfield>
-									</td>
-								</tr>
-								<tr>
-									<td class="leftLabel">
-										<s:text name="plsalidap.vehi.rcextracontractual"></s:text>
-									</td>
-									<td>
-										<s:radio name="planilladatosvehiculo.pldvRcextra" list="#{'S':'Si','N':'No'}" cssClass="inputs"></s:radio>
-									</td>
-									<td class="leftLabel">
-										<s:text name="plsalidap.vehi.fechavencimiento"></s:text>
-									</td>
-									<td>
-										<s:textfield name="planilladatosvehiculo.pldvFechavrcex" id="datepicker5" cssClass="inputs" readonly="true"></s:textfield>
-									</td>
-								</tr>
-								<tr>
-									<td class="leftLabel">
-										<s:text name="plsalidap.vehi.rcpasajeros"></s:text>
-									</td>
-									<td>
-										<s:radio name="planilladatosvehiculo.pldvRcpasajeros" list="#{'S':'Si','N':'No'}" cssClass="inputs"></s:radio>
-									</td>
-									<td class="leftLabel">
-										<s:text name="plsalidap.vehi.fechavencimiento"></s:text>
-									</td>
-									<td>
-										<s:textfield name="planilladatosvehiculo.pldvFechavrcpa" id="datepicker6" cssClass="inputs" readonly="true"></s:textfield>
-									</td>
-								</tr>
-								<tr>
-									<td class="leftLabel">
-										<s:text name="plsalidap.vehi.revisiontecnico"></s:text>
-									</td>
-									<td>
-										<s:radio name="planilladatosvehiculo.pldvRevisiontcm" list="#{'S':'Si','N':'No'}" cssClass="inputs"></s:radio>
-									</td>
-									<td class="leftLabel">
-										<s:text name="plsalidap.vehi.fechavencimiento"></s:text>
-									</td>
-									<td>
-										<s:textfield name="planilladatosvehiculo.pldvFechavrevisiontcm" id="datepicker7" cssClass="inputs" readonly="true"></s:textfield>
-									</td>
-								</tr>
-								<tr>
-									<td class="leftLabel">
-										<s:text name="plsalidap.vehi.tarjetaoperacion"></s:text>
-									</td>
-									<td>
-										<s:radio name="planilladatosvehiculo.pldvTarjoperacion" list="#{'S':'Si','N':'No'}" cssClass="inputs"></s:radio>
-									</td>
-									<td class="leftLabel">
-										<s:text name="plsalidap.vehi.fechavencimiento"></s:text>
-									</td>
-									<td>
-										<s:textfield name="planilladatosvehiculo.pldvFechavtarjop" id="datepicker8" cssClass="inputs" readonly="true"></s:textfield>
-									</td>
-								</tr>
-								<tr>
-									<td class="leftLabel">
-										<s:text name="plsalidap.vehi.tipocombustible"></s:text>
-									</td>
-									<td>
-										<s:select list="#{'GASOLINA':'GASOLINA','ACPM':'ACPM','GAS':'GAS'}" name="planilladatosvehiculo.pldvTipocombustible" headerKey="" headerValue=".::Selecione::." cssClass="inputs"/>
-									</td>
-									<td class="leftLabel">
-										<s:text name="plsalidap.vehi.tarjetapropiedad"></s:text>
-									</td>
-									<td>
-										<s:radio name="planilladatosvehiculo.pldvTarjpropiedad" list="#{'S':'Si','N':'No'}" cssClass="inputs"></s:radio>
+										Construccion!!!!
 									</td>
 								</tr>
 							</table>
@@ -474,96 +316,7 @@
 							<table cellpadding="0" cellspacing="0" border="0" class="display">
 								<tr>
 									<td class="centerLabel" colspan="2">
-										<s:text name="plsalidap.estadogrl.parteinterna"></s:text>
-									</td>
-									<td class="centerLabel" colspan="2">
-										<s:text name="plsalidap.estadogrl.parteexterna"></s:text>
-									</td>
-								</tr>
-								<tr>
-									<td class="leftLabel">
-										<s:text name="plsalidap.estadogrl.silleteria"></s:text>
-									</td>
-									<td>
-										<s:radio name="planillaestadogrlvehiculo.plegSilleteria" list="#{'O':'Optimo','B':'Bueno','R':'Regular'}" cssClass="inputs"></s:radio>
-									</td>
-									<td class="leftLabel">
-										<s:text name="plsalidap.estadogrl.latoneria"></s:text>
-									</td>
-									<td>
-										<s:radio name="planillaestadogrlvehiculo.plegLatoneria" list="#{'O':'Optimo','B':'Bueno','R':'Regular'}" cssClass="inputs"></s:radio>
-									</td>
-								</tr>
-								<tr>
-									<td class="leftLabel">
-										<s:text name="plsalidap.estadogrl.aseo"></s:text>
-									</td>
-									<td>
-										<s:radio name="planillaestadogrlvehiculo.plegAseo" list="#{'O':'Optimo','B':'Bueno','R':'Regular'}" cssClass="inputs"></s:radio>
-									</td>
-									<td class="leftLabel">
-										<s:text name="plsalidap.estadogrl.pintura"></s:text>
-									</td>
-									<td>
-										<s:radio name="planillaestadogrlvehiculo.plegPintura" list="#{'O':'Optimo','B':'Bueno','R':'Regular'}" cssClass="inputs"></s:radio>
-									</td>
-								</tr>
-								<tr>
-									<td class="leftLabel">
-										<s:text name="plsalidap.estadogrl.equipocarretera"></s:text>
-									</td>
-									<td>
-										<s:radio name="planillaestadogrlvehiculo.plegEquipocarretera" list="#{'O':'Optimo','B':'Bueno','R':'Regular'}" cssClass="inputs"></s:radio>
-									</td>
-									<td class="leftLabel">
-										<s:text name="plsalidap.estadogrl.ventanas"></s:text>
-									</td>
-									<td>
-										<s:radio name="planillaestadogrlvehiculo.plegVentanas" list="#{'O':'Optimo','B':'Bueno','R':'Regular'}" cssClass="inputs"></s:radio>
-									</td>
-								</tr>
-								<tr>
-									<td class="leftLabel">
-										<s:text name="plsalidap.estadogrl.equipoprimerosaux"></s:text>
-									</td>
-									<td>
-										<s:radio name="planillaestadogrlvehiculo.plegPrimerosauxilios" list="#{'O':'Optimo','B':'Bueno','R':'Regular'}" cssClass="inputs"></s:radio>
-									</td>
-									<td class="leftLabel">
-										<s:text name="plsalidap.estadogrl.llantas"></s:text>
-									</td>
-									<td>
-										<s:radio name="planillaestadogrlvehiculo.plegLlantas" list="#{'O':'Optimo','B':'Bueno','R':'Regular'}" cssClass="inputs"></s:radio>
-									</td>
-								</tr>
-								<tr>
-									<td class="leftLabel">
-										<s:text name="plsalidap.estadogrl.aspectoscarroceria"></s:text>
-									</td>
-									<td>
-										<s:radio name="planillaestadogrlvehiculo.plegAspectoscarroceria" list="#{'O':'Optimo','B':'Bueno','R':'Regular'}" cssClass="inputs"></s:radio>
-									</td>
-									<td class="leftLabel">
-										<s:text name="plsalidap.estadogrl.logotipos"></s:text>
-									</td>
-									<td>
-										<s:radio name="planillaestadogrlvehiculo.plegLogotipos" list="#{'O':'Optimo','B':'Bueno','R':'Regular'}" cssClass="inputs"></s:radio>
-									</td>
-								</tr>
-								<tr>
-									<td class="leftLabel" colspan="2">
-										<s:text name="plsalidap.estadogrl.razonsocial"></s:text>
-									</td>
-									<td colspan="2">
-										<s:textfield name="planillaestadogrlvehiculo.plegRazonsocial" id="razonsocial" size="50" maxlength="50" cssClass="inputs"></s:textfield>
-									</td>
-								</tr>
-								<tr>
-									<td class="leftLabel">
-										<s:text name="plsalidap.estadogrl.obserdocente"></s:text>
-									</td>
-									<td colspan="3">
-										<s:textarea name="planillaestadogrlvehiculo.plegObservaciondocente" id="observaciones" cssClass="inputs" cols="90"></s:textarea>
+										Construccion!!!!
 									</td>
 								</tr>
 							</table>

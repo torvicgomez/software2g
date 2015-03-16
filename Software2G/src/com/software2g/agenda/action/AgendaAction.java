@@ -112,7 +112,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private Registroexamensimple retinoscopiaOD;
 	private Registroexamensimple retinoscopiaOI;
 	private List<Segmentoanamnesi> listSegmentoAnamnesis; 
-	private List<Respuesta> listRespuesta;
+	private Respuesta[][] listRespuesta;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -205,17 +205,25 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setRetinoscopiaOI(Registroexamensimple retinoscopiaOI) {this.retinoscopiaOI = retinoscopiaOI;}
 	public List<Segmentoanamnesi> getListSegmentoAnamnesis() {return listSegmentoAnamnesis;}
 	public void setListSegmentoAnamnesis(List<Segmentoanamnesi> listSegmentoAnamnesis) {this.listSegmentoAnamnesis = listSegmentoAnamnesis;}
-	public List<Respuesta> getListRespuesta() {return listRespuesta;}
-	public void setListRespuesta(List<Respuesta> listRespuesta) {this.listRespuesta = listRespuesta;}
+//	public List<Respuesta>[][] getListRespuesta() {return listRespuesta;}
+//	public void setListRespuesta(List<Respuesta>[][] listRespuesta) {this.listRespuesta = listRespuesta;}
+	
+	public Respuesta[][] getListRespuesta() {return listRespuesta;}
+	public void setListRespuesta(Respuesta[][] listRespuesta) {this.listRespuesta = listRespuesta;}
+	
 	
 	public String getConstanteTipoPregAbierta(){ return ConstantesAplicativo.constanteTipoPregAbierta;}
 	public String getConstanteTipoPregMultipleMR(){ return ConstantesAplicativo.constanteTipoPregMultipleMR;}
 	public String getConstanteTipoPregMultipleUR(){ return ConstantesAplicativo.constanteTipoPregMultipleUR;}
+	public String getConstanteTipoPregFecha(){ return ConstantesAplicativo.constanteTipoPregFecha;}
+	
 
 	public String getConstanteTipoObjetoViewTextField(){ return ConstantesAplicativo.constanteTipoObjetoViewTextField;}
 	public String getConstanteTipoObjetoViewCheckBox(){ return ConstantesAplicativo.constanteTipoObjetoViewCheckBox;}
 	public String getConstanteTipoObjetoViewTextArea(){ return ConstantesAplicativo.constanteTipoObjetoViewTextArea;}
 	public String getConstanteTipoObjetoViewSelect(){ return ConstantesAplicativo.constanteTipoObjetoViewSelect;}
+	public String getConstanteTipoObjetoViewCalendar(){ return ConstantesAplicativo.constanteTipoObjetoViewCalendar;}
+	
 	
 	@SkipValidation
 	public String calendarioMethod(){
@@ -535,7 +543,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			listSeguridadSocial = gestionFacadeHistoriaClinica.findAllSeguridadsocials();
     			
     			
-    			listSegmentoAnamnesis = gestionFacadeHistoriaClinica.findAllSegmentoanamnesis();
+    			listSegmentoAnamnesis = gestionFacadeHistoriaClinica.findAllSegmentoanamnesis(2);
     			if(listSegmentoAnamnesis!=null&&listSegmentoAnamnesis.size()>0){
     				for(Segmentoanamnesi elem:listSegmentoAnamnesis){
     					System.out.println("getSeanId:["+elem.getSeanId()+"]");
@@ -555,9 +563,41 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     					}
     				}
     			}
+    			request.getSession().setAttribute("listSegmentoAnamnesis", listSegmentoAnamnesis);
     			
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			System.out.println("Construccion!!!!!!!!!!");
+    			listSegmentoAnamnesis = (List<Segmentoanamnesi>) request.getSession().getAttribute("listSegmentoAnamnesis");
+    			if(listSegmentoAnamnesis!=null&&listSegmentoAnamnesis.size()>0){
+    				System.out.println("*******************************************");
+    				System.out.println("Entra evaluar resuestas segmentos!!!!!");
+    				System.out.println("*******************************************");
+    				int i=0;
+    				int j=0;
+    				for(Segmentoanamnesi elem:listSegmentoAnamnesis){
+    					if(elem.getPreguntas()!=null&&elem.getPreguntas().size()>0){
+    						for(Pregunta elem1:elem.getPreguntas()){
+    							
+    							System.out.println("[i]:["+i+"]");
+    							System.out.println("[j]:["+j+"]");
+    							Respuesta dato = listRespuesta[i][j];
+    							System.out.println("dato:["+dato+"]");
+    							
+    							System.out.println("*******************************************");
+    							System.out.println("getSeanEtiqueta:["+elem.getSeanEtiqueta()+"]");
+    							System.out.println("getPregPregunta:["+elem1.getPregPregunta()+"]");
+    							System.out.println("getPregId:["+((Respuesta)listRespuesta[i][j] ).getPregunta().getPregId()+"]");
+    							System.out.println("getRespRespuesta:["+((Respuesta)listRespuesta[i][j]).getRespRespuesta()+"]");
+    							System.out.println("*******************************************");
+    							j++;
+    						}
+    					}
+    					j=0;
+    					i++;
+    				}
+    			}
+    			
+    			
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			System.out.println("Construccion!!!!!!!!!!");
     		}

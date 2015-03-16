@@ -77,6 +77,24 @@ public class SegmentoAnamnesisDAOImpl implements ISegmentoAnamnesisDao {
             }
         }
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Segmentoanamnesi> findAllSegmentoanamnesis(long tiesId) {
+        try {
+    		String jpqlString = "select segmentoanamnesi  " +
+    				" from " + Segmentoanamnesi.class.getSimpleName() + " segmentoanamnesi " +
+					" where segmentoanamnesi.tipoespecialidad.tiesId =:tiesId ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("tiesId", tiesId);
+            return query.getResultList();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

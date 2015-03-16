@@ -127,10 +127,13 @@ public final class ConstantesAplicativo {
 	public static final String constanteTipoPregAbierta = "ABIERTA";
 	public static final String constanteTipoPregMultipleMR = "MULTIPLEMR";
 	public static final String constanteTipoPregMultipleUR = "MULTIPLEUR";
+	public static final String constanteTipoPregFecha = "FECHA";
 	
 	public static final String constanteTipoObjetoViewTextField = "textfield";
 	public static final String constanteTipoObjetoViewCheckBox = "checkbox";
 	public static final String constanteTipoObjetoViewTextArea = "textarea";
 	public static final String constanteTipoObjetoViewSelect = "select";
+	public static final String constanteTipoObjetoViewCalendar = "calendar";
+	
 	
 }

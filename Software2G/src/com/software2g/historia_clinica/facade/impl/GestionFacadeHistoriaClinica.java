@@ -1584,6 +1584,14 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 		}
 	}
 
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Segmentoanamnesi> findAllSegmentoanamnesis(long tiesId) throws Exception {
+		try {
+			return getSegmentoAnamnesisDao().findAllSegmentoanamnesis(tiesId);
+		} catch (RuntimeException e) {
+			throw new Exception("findAllSegmentoanamnesis failed: " + e.getMessage());
+		}
+	}
 	/**
 	 * Make the given instance managed and persistent.
 	 */

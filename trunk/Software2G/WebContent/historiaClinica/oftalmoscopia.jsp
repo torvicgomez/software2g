@@ -5,29 +5,26 @@
 	<head>
 	</head>
 	<body id="dt_example">
-		<s:form id="form">
-			<div id="demo">
+		<div id="demo">
+			<table cellpadding="0" cellspacing="0" border="0" class="display">
+				<tr><td>
+					<h1><input type="checkbox" id="oftalmoscopia"/><s:text name="servicioexamenopt.exaoptoftalmoscopia"></s:text></h1>
+				</td></tr>
+			</table>
+			<div id="divOftalmoscopia" style="overflow:auto;width:auto;height:auto;display:none">
 				<table cellpadding="0" cellspacing="0" border="0" class="display">
-					<tr><td>
-						<h1><input type="checkbox" id="oftalmoscopia"/><s:text name="servicioexamenopt.exaoptoftalmoscopia"></s:text></h1>
-					</td></tr>
+					<s:hidden name="oftalmoscopiaOD.reesId" ></s:hidden>
+					<s:hidden name="oftalmoscopiaOI.reesId" ></s:hidden>
+					<tr>
+						<td class="leftLabel"><s:text name="servicioexamenopt.ojoderecho"></s:text></td>
+						<td><s:textarea name="oftalmoscopiaOD.reesValor" cols="100" rows="3" cssClass="inputs"></s:textarea></td>
+					</tr>
+					<tr>
+						<td class="leftLabel"><s:text name="servicioexamenopt.ojoizquierdo"></s:text></td>
+						<td><s:textarea name="oftalmoscopiaOI.reesValor" cols="100" rows="3" cssClass="inputs"></s:textarea></td>
+					</tr>
 				</table>
-				<div id="divOftalmoscopia" style="overflow:auto;width:auto;height:auto;display:none">
-					<table cellpadding="0" cellspacing="0" border="0" class="display">
-						<s:hidden name="oftalmoscopiaOD.reesId" ></s:hidden>
-						<s:hidden name="oftalmoscopiaOI.reesId" ></s:hidden>
-						<tr>
-							<td class="leftLabel"><s:text name="servicioexamenopt.ojoderecho"></s:text></td>
-							<td><s:textarea name="oftalmoscopiaOD.reesValor" cols="100" rows="3" cssClass="inputs"></s:textarea></td>
-						</tr>
-						<tr>
-							<td class="leftLabel"><s:text name="servicioexamenopt.ojoizquierdo"></s:text></td>
-							<td><s:textarea name="oftalmoscopiaOI.reesValor" cols="100" rows="3" cssClass="inputs"></s:textarea></td>
-						</tr>
-					</table>
-				</div>
 			</div>
-			<div class="spacer"></div>
-		</s:form>
+		</div>
 	</body>
 </html>

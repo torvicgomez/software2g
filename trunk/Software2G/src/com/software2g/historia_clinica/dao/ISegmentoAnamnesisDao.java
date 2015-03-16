@@ -27,6 +27,7 @@ public interface ISegmentoAnamnesisDao {
 	 * Return all persistent instances of the <code>Segmentoanamnesi</code> entity.
 	 */
 	public List<Segmentoanamnesi> findAllSegmentoanamnesis();
+	public List<Segmentoanamnesi> findAllSegmentoanamnesis(long tiesId);
 	/**
 	 * Make the given instance managed and persistent.
 	 */

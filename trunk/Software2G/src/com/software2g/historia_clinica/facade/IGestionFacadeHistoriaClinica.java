@@ -654,6 +654,7 @@ public interface IGestionFacadeHistoriaClinica {
 	 * Return all persistent instances of the <code>Segmentoanamnesi</code> entity.
 	 */
 	public List<Segmentoanamnesi> findAllSegmentoanamnesis() throws Exception;
+	public List<Segmentoanamnesi> findAllSegmentoanamnesis(long tiesId) throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */

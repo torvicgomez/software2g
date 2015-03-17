@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -112,7 +113,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private Registroexamensimple retinoscopiaOD;
 	private Registroexamensimple retinoscopiaOI;
 	private List<Segmentoanamnesi> listSegmentoAnamnesis; 
-	private Respuesta[][] listRespuesta;
+	private List<Respuesta> listRespuesta;
+	private Segmentoanamnesi segmentoAnamnesis;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -205,12 +207,11 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setRetinoscopiaOI(Registroexamensimple retinoscopiaOI) {this.retinoscopiaOI = retinoscopiaOI;}
 	public List<Segmentoanamnesi> getListSegmentoAnamnesis() {return listSegmentoAnamnesis;}
 	public void setListSegmentoAnamnesis(List<Segmentoanamnesi> listSegmentoAnamnesis) {this.listSegmentoAnamnesis = listSegmentoAnamnesis;}
-//	public List<Respuesta>[][] getListRespuesta() {return listRespuesta;}
-//	public void setListRespuesta(List<Respuesta>[][] listRespuesta) {this.listRespuesta = listRespuesta;}
+	public Segmentoanamnesi getSegmentoAnamnesis() {return segmentoAnamnesis;}
+	public void setSegmentoAnamnesis(Segmentoanamnesi segmentoAnamnesis) {this.segmentoAnamnesis = segmentoAnamnesis;}
 	
-	public Respuesta[][] getListRespuesta() {return listRespuesta;}
-	public void setListRespuesta(Respuesta[][] listRespuesta) {this.listRespuesta = listRespuesta;}
-	
+	public List<Respuesta> getListRespuesta() {return listRespuesta;}
+	public void setListRespuesta(List<Respuesta> listRespuesta) {this.listRespuesta = listRespuesta;}
 	
 	public String getConstanteTipoPregAbierta(){ return ConstantesAplicativo.constanteTipoPregAbierta;}
 	public String getConstanteTipoPregMultipleMR(){ return ConstantesAplicativo.constanteTipoPregMultipleMR;}
@@ -543,7 +544,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			listSeguridadSocial = gestionFacadeHistoriaClinica.findAllSeguridadsocials();
     			
     			
-    			listSegmentoAnamnesis = gestionFacadeHistoriaClinica.findAllSegmentoanamnesis(2);
+    			listSegmentoAnamnesis = gestionFacadeHistoriaClinica.findAllSegmentoanamnesis();
+//    			listSegmentoAnamnesis = gestionFacadeHistoriaClinica.findAllSegmentoanamnesis(2);
     			if(listSegmentoAnamnesis!=null&&listSegmentoAnamnesis.size()>0){
     				for(Segmentoanamnesi elem:listSegmentoAnamnesis){
     					System.out.println("getSeanId:["+elem.getSeanId()+"]");
@@ -552,6 +554,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     					if(elem.getPreguntas()!=null&&elem.getPreguntas().size()>0){
     						for(Pregunta elem1:elem.getPreguntas()){
     							System.out.println("getPregId:["+elem1.getPregId()+"]");
+    							elem1.setRespuestas(new ArrayList<Respuesta>());
     							elem1.setOpcionrespuestas(gestionFacadeHistoriaClinica.findAllOpcionrespuestas(elem1.getPregId()));
     							if(elem1.getOpcionrespuestas()!=null&&elem1.getOpcionrespuestas().size()>0){
     								Collections.sort(elem1.getOpcionrespuestas());
@@ -567,33 +570,26 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			System.out.println("Construccion!!!!!!!!!!");
-    			listSegmentoAnamnesis = (List<Segmentoanamnesi>) request.getSession().getAttribute("listSegmentoAnamnesis");
+    			//listSegmentoAnamnesis = (List<Segmentoanamnesi>) request.getSession().getAttribute("listSegmentoAnamnesis");
+    			System.out.println("listSegmentoAnamnesis:["+listSegmentoAnamnesis+"]");
     			if(listSegmentoAnamnesis!=null&&listSegmentoAnamnesis.size()>0){
     				System.out.println("*******************************************");
     				System.out.println("Entra evaluar resuestas segmentos!!!!!");
+    				System.out.println("listSegmentoAnamnesis.size():["+listSegmentoAnamnesis.size()+"]");
     				System.out.println("*******************************************");
-    				int i=0;
-    				int j=0;
     				for(Segmentoanamnesi elem:listSegmentoAnamnesis){
     					if(elem.getPreguntas()!=null&&elem.getPreguntas().size()>0){
     						for(Pregunta elem1:elem.getPreguntas()){
-    							
-    							System.out.println("[i]:["+i+"]");
-    							System.out.println("[j]:["+j+"]");
-    							Respuesta dato = listRespuesta[i][j];
-    							System.out.println("dato:["+dato+"]");
-    							
     							System.out.println("*******************************************");
-    							System.out.println("getSeanEtiqueta:["+elem.getSeanEtiqueta()+"]");
-    							System.out.println("getPregPregunta:["+elem1.getPregPregunta()+"]");
-    							System.out.println("getPregId:["+((Respuesta)listRespuesta[i][j] ).getPregunta().getPregId()+"]");
-    							System.out.println("getRespRespuesta:["+((Respuesta)listRespuesta[i][j]).getRespRespuesta()+"]");
+    							System.out.println("getPregId:["+elem1.getPregId()+"]");
+    							if(elem1.getRespuestas()!=null&&elem1.getRespuestas().size()>0){
+    								for(Respuesta elem2:elem1.getRespuestas()){
+    									System.out.println("getRespRespuesta:["+elem2.getRespRespuesta()+"]");
+    								}
+    							}
     							System.out.println("*******************************************");
-    							j++;
     						}
     					}
-    					j=0;
-    					i++;
     				}
     			}
     			

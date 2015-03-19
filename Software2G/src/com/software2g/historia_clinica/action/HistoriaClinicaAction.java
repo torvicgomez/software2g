@@ -123,6 +123,8 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 	public List<UtilGenerico> getListObjetoView() {return ConstantesAplicativo.listObjetoView;}
 	public List<UtilGenerico> getListOrden() {return ConstantesAplicativo.listOrden;}
 	public List<UtilGenerico> getListTipoDato() {return ConstantesAplicativo.listTipoDato;}
+	public List<UtilGenerico> getListRespObligatoria() {return ConstantesAplicativo.listRespObligatoria;}
+	
 	
 	private void getFuncionPosicionado(){
 		if(request.getSession().getAttribute("funcPosicionado")==null){
@@ -303,6 +305,8 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     				addActionError(getText("validacion.requerido","tiprId","Tipo Pregunta"));
     			if(ValidaString.isNullOrEmptyString(pregunta.getPregPregunta()))
     				addActionError(getText("validacion.requerido","pregPregunta","Pregunta"));
+    			if(ValidaString.isNullOrEmptyString(pregunta.getPregRespobligatoria()))
+    				addActionError(getText("validacion.requerido","pregRespObligatoria","Respuesta Obligatoria"));
     			if(ValidaString.isNullOrEmptyString(pregunta.getPregEstado()))
     				addActionError(getText("validacion.requerido","pregEstado","Estado"));
     			if(ValidaString.isNullOrEmptyString(pregunta.getPregTipodato()))

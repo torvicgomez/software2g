@@ -112,6 +112,9 @@ public final class ConstantesAplicativo {
 	public static final List<UtilGenerico> listEstado = new ArrayList<UtilGenerico>(
 			Arrays.asList(new UtilGenerico("ACTIVO", "Activo"),new UtilGenerico("INACTIVO", "Inactivo")));
 	
+	public static final List<UtilGenerico> listRespObligatoria = new ArrayList<UtilGenerico>(
+			Arrays.asList(new UtilGenerico("SI", "Si"),new UtilGenerico("NO", "No")));
+	
 	public static final List<UtilGenerico> listObjetoView = new ArrayList<UtilGenerico>(
 			Arrays.asList(new UtilGenerico("textarea", "textarea"),
 					new UtilGenerico("textfield", "textfield"),
@@ -120,9 +123,18 @@ public final class ConstantesAplicativo {
 					new UtilGenerico("calendar", "calendar")));
 	
 	public static final List<UtilGenerico> listTipoDato = new ArrayList<UtilGenerico>(
-			Arrays.asList(new UtilGenerico("String", "String"),
-					new UtilGenerico("long", "long")));
+			Arrays.asList(new UtilGenerico("Alfanumerico", "Alfanumérico"),
+					new UtilGenerico("Entero", "Entero"),
+					new UtilGenerico("Fecha", "Fecha"),
+					new UtilGenerico("Numerico", "Numérico")));
 	
+	public static final String constanteTipoDatoAlfanumerico = "Alfanumerico";
+	public static final String constanteTipoDatoNumerico = "Numerico";
+	public static final String constanteTipoDatoFecha = "Fecha";
+	public static final String constanteTipoDatoEntero = "Entero";
+	
+	public static final String constanteRespObligatoriaSI = "SI";
+	public static final String constanteRespObligatoriaNO = "NO";
 	
 	public static final String constanteTipoPregAbierta = "ABIERTA";
 	public static final String constanteTipoPregMultipleMR = "MULTIPLEMR";

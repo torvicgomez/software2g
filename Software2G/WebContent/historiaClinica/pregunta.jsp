@@ -154,6 +154,12 @@
 							</td>
 						</tr>
 						<tr>
+							<td class="leftLabel"><s:text name="pregunta.respobligatoria"></s:text></td>
+							<td colspan="3">
+								<s:select list="listRespObligatoria" id="respObligatoria" name="pregunta.pregRespobligatoria" listKey="key" listValue="valor" headerKey="" headerValue=".::Seleccion::." cssClass="inputs"></s:select>
+							</td>
+						</tr>
+						<tr>
 							<td class="leftLabel"><s:text name="pregunta.objetoview"></s:text></td>
 							<td>
 								<s:select list="listObjetoView" id="objetoView" name="pregunta.pregObjetoview" listKey="key" listValue="valor" headerKey="" headerValue=".::Seleccion::." cssClass="inputs"></s:select>
@@ -202,6 +208,10 @@
 						<tr>
 							<td class="leftLabel"><s:text name="pregunta.pregunta"></s:text></td>
 							<td colspan="3"><s:property value="pregunta.pregPregunta"/></td>
+						</tr>
+						<tr>
+							<td class="leftLabel"><s:text name="pregunta.respobligatoria"></s:text></td>
+							<td colspan="3"><s:property value="pregunta.pregRespobligatoria"/></td>
 						</tr>
 						<tr>
 							<td class="leftLabel"><s:text name="pregunta.objetoview"></s:text></td>

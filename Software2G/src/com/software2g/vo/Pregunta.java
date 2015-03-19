@@ -47,6 +47,9 @@ public class Pregunta implements Serializable, Comparable {
 	@Column(name="preg_estado")
 	private String pregEstado;
 	
+	@Column(name="preg_respobligatoria")
+	private String pregRespobligatoria;
+	
 	//bi-directional many-to-one association to Opcionrespuesta
 	@OneToMany(mappedBy="pregunta")
 	private List<Opcionrespuesta> opcionrespuestas;
@@ -192,6 +195,14 @@ public class Pregunta implements Serializable, Comparable {
 
 	public void setPregEstado(String pregEstado) {
 		this.pregEstado = pregEstado;
+	}
+
+	public String getPregRespobligatoria() {
+		return pregRespobligatoria;
+	}
+
+	public void setPregRespobligatoria(String pregRespobligatoria) {
+		this.pregRespobligatoria = pregRespobligatoria;
 	}
 
 }

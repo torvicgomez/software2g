@@ -48,6 +48,7 @@ import com.software2g.vo.Tipodocumento;
 import com.software2g.vo.Tipoprocedimiento;
 import com.software2g.vo.Usuario;
 import com.software2g.vo.UtilGenerico;
+import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 public class AgendaAction extends ActionSupport implements ServletRequestAware,ServletResponseAware {
 	private static final long serialVersionUID = 1L;
@@ -579,12 +580,33 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     				System.out.println("*******************************************");
     				for(Segmentoanamnesi elem:listSegmentoAnamnesis){
     					if(elem.getPreguntas()!=null&&elem.getPreguntas().size()>0){
+    						System.out.println("*******************************************");
+							System.out.println("getSeanEtiqueta:["+elem.getSeanEtiqueta()+"]");
     						for(Pregunta elem1:elem.getPreguntas()){
-    							System.out.println("*******************************************");
     							System.out.println("getPregId:["+elem1.getPregId()+"]");
+    							System.out.println("getPregPregunta:["+elem1.getPregPregunta()+"]");
+    							System.out.println("getPregTipodato:["+elem1.getPregTipodato()+"]");
+    							System.out.println("getPregRespobligatoria:["+elem1.getPregRespobligatoria()+"]");
     							if(elem1.getRespuestas()!=null&&elem1.getRespuestas().size()>0){
     								for(Respuesta elem2:elem1.getRespuestas()){
     									System.out.println("getRespRespuesta:["+elem2.getRespRespuesta()+"]");
+    									if(elem1.getPregRespobligatoria().equals(ConstantesAplicativo.constanteRespObligatoriaSI)){
+    										if(ValidaString.isNullOrEmptyString(elem2.getRespRespuesta()))
+    						    				addActionError(getText("validacion.pregrequerida","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),elem.getSeanEtiqueta()))));
+    									}
+    									if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoAlfanumerico)){
+    										if(!ValidaString.alfanumerico(elem2.getRespRespuesta()))
+    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Alfanumérico"))));
+    									}else if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoNumerico)){
+    										if(!ValidaString.isNumeric(elem2.getRespRespuesta()))
+    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Numérico"))));
+    									}else if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoFecha)){
+    										if(!ValidaString.validarFecha(elem2.getRespRespuesta()))
+    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Fecha"))));
+    									}else if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoEntero)){
+    										if(!ValidaString.isEntero(elem2.getRespRespuesta()))
+    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Entero"))));
+    									}
     								}
     							}
     							System.out.println("*******************************************");

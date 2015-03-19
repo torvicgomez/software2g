@@ -41,17 +41,21 @@
 			<div id="segmentoAnamnesis_${stat.index}" style="overflow:auto;width:auto;height:auto;display:none">
 				<s:if test="#segana.preguntas!=null&&#segana.preguntas.size()>0">
 					<s:iterator value="#segana.preguntas" id="dataPreg" var="preg" status="statPreg">
-						<s:hidden name="listRespuesta[%{#stat.index}][%{#statPreg.index}].pregunta.pregId" value="%{#preg.pregId}"/>
+						<s:hidden name="listSegmentoAnamnesis[%{#stat.index}].seanEtiqueta" value="%{#segana.seanEtiqueta}"/>
+						<s:hidden name="listSegmentoAnamnesis[%{#stat.index}].preguntas[%{#statPreg.index}].pregPregunta" value="%{#preg.pregPregunta}"/>
+						<s:hidden name="listSegmentoAnamnesis[%{#stat.index}].preguntas[%{#statPreg.index}].pregId" value="%{#preg.pregId}"/>
+						<s:hidden name="listSegmentoAnamnesis[%{#stat.index}].preguntas[%{#statPreg.index}].pregTipodato" value="%{#preg.pregTipodato}"/>
+						<s:hidden name="listSegmentoAnamnesis[%{#stat.index}].preguntas[%{#statPreg.index}].pregRespobligatoria" value="%{#preg.pregRespobligatoria}"/>
 <!-- 						Creacion tipo pregunta abierta -->
 						<s:if test="#preg.tipopregunta.tiprEtiqueta!=null&&#preg.tipopregunta.tiprEtiqueta==constanteTipoPregAbierta">
 							<table cellpadding="0" cellspacing="0" border="0" class="display">
 								<tr>
 									<td class="leftLabel"><s:property value="#preg.pregPregunta"/></td>
 									<s:if test="#preg.pregObjetoview==constanteTipoObjetoViewTextArea">
-										<td><s:textarea name="listRespuesta[%{#stat.index}][%{#statPreg.index}].respRespuesta" cols="100" rows="3" cssClass="inputs"></s:textarea></td>
+										<td><s:textarea name="listSegmentoAnamnesis[%{#stat.index}].preguntas[%{#statPreg.index}].respuestas[0].respRespuesta" cols="100" rows="3" cssClass="inputs"></s:textarea></td>
 									</s:if>
 									<s:elseif test="#preg.pregObjetoview==constanteTipoObjetoViewTextField">
-										<td><s:textfield name="listRespuesta[%{#stat.index}][%{#statPreg.index}].respRespuesta" size="10" cssClass="inputs"></s:textfield></td>
+										<td><s:textfield name="listSegmentoAnamnesis[%{#stat.index}].preguntas[%{#statPreg.index}].respuestas[0].respRespuesta" size="10" cssClass="inputs"></s:textfield></td>
 									</s:elseif>
 								</tr>
 							</table>							
@@ -63,7 +67,7 @@
 									<td class="leftLabel"><s:property value="#preg.pregPregunta"/></td>
 									<s:if test="#preg.pregObjetoview==constanteTipoObjetoViewCheckBox">
 										<td>
-											<s:hidden id="pregCheck_%{#preg.pregId}" name="listRespuesta[%{#stat.index}][%{#statPreg.index}].respRespuesta"/> 
+											<s:hidden id="pregCheck_%{#preg.pregId}" name="listSegmentoAnamnesis[%{#stat.index}].preguntas[%{#statPreg.index}].respuestas[0].respRespuesta"/> 
 											<s:iterator value="#preg.opcionrespuestas" id="dataOpcres" var="resp" status="statOpcr">
 												<input type="checkbox" onchange="javascrip:registroCheck(this,${preg.pregId});" value="${resp.opreValor}"/><s:property value="#resp.opreEtiqueta"/>
 											</s:iterator>
@@ -78,7 +82,7 @@
 								<tr>
 									<td class="leftLabel"><s:property value="#preg.pregPregunta"/></td>
 									<s:if test="#preg.pregObjetoview==constanteTipoObjetoViewSelect">
-										<td><s:select name="listRespuesta[%{#stat.index}][%{#statPreg.index}].respRespuesta" list="#preg.opcionrespuestas" listKey="opreValor" listValue="opreEtiqueta" headerKey="" headerValue=".::Seleccione::."></s:select></td>
+										<td><s:select name="listSegmentoAnamnesis[%{#stat.index}].preguntas[%{#statPreg.index}].respuestas[0].respRespuesta" list="#preg.opcionrespuestas" listKey="opreValor" listValue="opreEtiqueta" headerKey="" headerValue=".::Seleccione::."></s:select></td>
 									</s:if>
 								</tr>
 							</table>	
@@ -89,7 +93,7 @@
 								<tr>
 									<td class="leftLabel"><s:property value="#preg.pregPregunta"/></td>
 									<s:if test="#preg.pregObjetoview==constanteTipoObjetoViewCalendar">
-										<td><s:textfield name="listRespuesta[%{#stat.index}][%{#statPreg.index}].respRespuesta" id="pregFecha_%{#preg.pregId}" size="15" maxlength="10" cssClass="inputs"></s:textfield></td>
+										<td><s:textfield name="listSegmentoAnamnesis[%{#stat.index}].preguntas[%{#statPreg.index}].respuestas[0].respRespuesta" id="pregFecha_%{#preg.pregId}" size="15" maxlength="10" cssClass="inputs"></s:textfield></td>
 										<script type="text/javascript" charset="utf-8">
 											$("#pregFecha_${preg.pregId}").datepicker({changeYear: true,yearRange:'-90:+90',changeMonth: true});
 										</script>

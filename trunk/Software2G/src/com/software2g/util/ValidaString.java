@@ -325,4 +325,51 @@ public class ValidaString {
             return false;
         }
     }
+    
+    
+    public static boolean isNumeric(String cadena) {
+        for(int i=0;i<cadena.length();i++){
+            if(!esDigito(cadena.substring(i, i+1))){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public static boolean esDigito(String cadena) {
+    	if (cadena.length()>1){
+            return false;
+        }
+        String a= "1234567890.,-";
+        if (a.indexOf(cadena)!= -1){
+            return true;
+        }
+        return false;
+    }
+    
+    public static boolean isEntero(String str){
+    	try {
+    		Integer.parseInt(str);
+    		return true;
+    	} catch (NumberFormatException nfe){
+    		return false;
+    	}
+    }
+    
+    public static boolean alfanumerico(String cadena){
+        String letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyzáéíóúü,;:.0123456789 !\"#$%&()*./:;?@[\\]^_`{|}~+<=>"; 
+        String letra = null;
+        boolean esLetra = true;
+        
+        for(int i=0;i<cadena.length();i++){
+            letra = cadena.substring(i, (i+1));
+            if(!letra.equals(" ")){
+                if(letras.indexOf(letra) <0){
+                    esLetra = false;
+                    break;
+                }
+            }
+        }
+        return esLetra;
+    } 
 }

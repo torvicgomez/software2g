@@ -124,7 +124,7 @@
 				}
 			);
 			
-			
+		
 			function buscar(){
 				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoSearch%>";
 				document.form.submit();

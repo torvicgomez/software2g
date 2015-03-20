@@ -41,7 +41,27 @@ Tareas
 36- Parametrica Pregunta ----------------------------------------------------------------------- .::[O.K]::.
 37- Parametrica Opciones de Respuesta ---------------------------------------------------------- .::[O.K]::.
 38- Validacion de los valores de las preguntas segun su tipo de dato --------------------------- .::[O.K]::.
-
+39- Consolidacion información requeridad para la atencion del servicio clinico a prestar -------
+	39.1- Datos personales del paciente y acudiente si es el caso ------------------------------
+	39.2- Datos Clinicos de la historia clinica dependiendo de la especialidad -----------------
+	39.3- Examenes especificos segun especialidad ----------------------------------------------	
+		39.3.1- Odontograma --------------------------------------------------------------------
+		39.3.2- Rx en Uso ----------------------------------------------------------------------
+		39.3.3- AVSC ---------------------------------------------------------------------------
+		39.3.4- Cover Test ---------------------------------------------------------------------
+		39.3.5- Examen Externo -----------------------------------------------------------------
+		39.3.6- Oftalmoscopia ------------------------------------------------------------------
+		39.3.7- Keratometria -------------------------------------------------------------------
+		39.3.8- Retinoscopia -------------------------------------------------------------------
+	39.4- Formulacion Medicamentos -------------------------------------------------------------
+	39.5- Formulacion Elementos segun especialidad ---------------------------------------------
+	39.6- Presupuesto --------------------------------------------------------------------------
+	39.7- Control de citas o proxima cita (agendarla si da lugar la especialidad)---------------
+40- Validacion datos del servicio clinico ------------------------------------------------------
+41- Registro informacion base de datos servicio clinico ----------------------------------------
+42- Edicion datos registrados servicio clinico por termino de un tiempo parametrizable ---------  
+43- Cancelar servicio clinico desde agenda -----------------------------------------------------
+44- Creacion de Tablas de Auditoria con sus respectivos disparadores ---------------------------
 
 Sugerencia
 * Tabla profesional salud ---------------------------------------------------------------------- .::[O.K]::.

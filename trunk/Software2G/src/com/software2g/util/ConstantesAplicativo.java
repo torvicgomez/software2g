@@ -147,5 +147,6 @@ public final class ConstantesAplicativo {
 	public static final String constanteTipoObjetoViewSelect = "select";
 	public static final String constanteTipoObjetoViewCalendar = "calendar";
 	
-	
+
+	public static final String constanteNombreSeccionDatosPersonales = "Datos Personales";
 }

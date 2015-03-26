@@ -7,7 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.software2g.util.ValidaString;
 import com.software2g.vo.Paciente;
+import com.software2g.vo.Persona;
 import com.software2g.historia_clinica.dao.IPacienteDao;
 
 import org.springframework.stereotype.Repository;
@@ -82,6 +84,14 @@ public class PacienteDAOImpl implements IPacienteDao {
 	public void persistPaciente(Paciente paciente) {
 		em.persist(em.merge(paciente));
 	}
+	
+	public long persistPacienteId(Paciente paciente) {
+		paciente.setPaciOcupacion((ValidaString.toUpperCase(paciente.getPaciOcupacion())));
+		Paciente obj = em.merge(paciente); 
+		em.persist(obj); 
+		return obj.getPaciId();
+	}
+	
 	/**
 	 * Remove the given persistent instance.
 	 */

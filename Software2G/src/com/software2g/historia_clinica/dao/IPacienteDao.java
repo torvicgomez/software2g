@@ -31,6 +31,7 @@ public interface IPacienteDao {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistPaciente(Paciente paciente);
+	public long persistPacienteId(Paciente paciente);
 	/**
 	 * Remove the given persistent instance.
 	 */

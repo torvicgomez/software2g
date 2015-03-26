@@ -177,6 +177,7 @@ public interface IGestionFacadeAgenda {
 	public Persona findPersonaById(java.lang.Long id) throws Exception;
 	public List<Persona> findAllPersonas() throws Exception;
 	public void persistPersona(Persona persona) throws Exception;
+	public long persistPersonaId(Persona persona) throws Exception;
 	public void removePersona(Persona persona) throws Exception;
 	//-----------------------------------------------------------------------
 	// FIN Persona

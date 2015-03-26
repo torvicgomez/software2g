@@ -984,6 +984,15 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 			throw new Exception("persistPaciente failed: " + e.getMessage());
 		}
 	}
+	
+	public long persistPacienteId(Paciente paciente) throws Exception {
+		try {
+			return getPacienteDao().persistPacienteId(paciente);
+		} catch (RuntimeException e) {
+			throw new Exception("persistPacienteId failed: " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Remove the given persistent instance.
 	 */

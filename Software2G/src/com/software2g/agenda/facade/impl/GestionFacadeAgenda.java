@@ -557,6 +557,15 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 			throw new Exception("persistPersona failed: " + e.getMessage());
 		}
 	}
+	
+	public long persistPersonaId(Persona persona) throws Exception {
+		try {
+			return getPersonaDao().persistPersonaId(persona);
+		} catch (RuntimeException e) {
+			throw new Exception("persistPersonaId failed: " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Remove the given persistent instance.
 	 */

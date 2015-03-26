@@ -188,6 +188,7 @@
 									<td>
 										<s:if test="persona.existePaciente==\"S\"">
 											<s:hidden name="persona.tipodocumento.idTidoc"></s:hidden>
+											<s:hidden name="persona.documentoPers"></s:hidden>
 											<s:property value="persona.documentoPers"/>&nbsp;<s:property value="persona.tipodocumento.abreviaturaTidoc"/>
 										</s:if>
 										<s:else>
@@ -198,8 +199,8 @@
 								</tr>
 								
 								<tr>
-									<td class="leftLabel"><s:text name="personal.fechaexpedicion"></s:text><s:text name="campo.requerido"></s:text></td>
-									<td><s:textfield name="persona.fechaexpdocPers" id="fechaexpdocPers" size="15" maxlength="10" cssClass="inputs"></s:textfield></td>
+									<td class="leftLabel"><s:text name="personal.fechaexpedicion"></s:text></td>
+									<td><s:textfield name="persona.fechaexpdocPers" id="fechaexpdocPers" size="15" maxlength="10" cssClass="inputs" placeholder="dd-mm-aaaa"></s:textfield></td>
 								</tr>
 								<tr>
 									<td class="leftLabel"><s:text name="personal.primernombre"></s:text><s:text name="campo.requerido"></s:text></td>
@@ -219,15 +220,15 @@
 								</tr>
 								<tr>
 									<td class="leftLabel"><s:text name="personal.sexo"></s:text><s:text name="campo.requerido"></s:text></td>
-									<td><s:select list="#{'F':'Femenino','M':'Masculino'}" name="persona.sexoPers" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs" /></td>
+									<td><s:select list="#{'F':'Femenino','M':'Masculino'}" name="persona.sexoPers" headerKey="" headerValue=".::Seleccione::." cssClass="inputs" /></td>
 								</tr>
 								<tr>
 									<td class="leftLabel"><s:text name="personal.estadocivil"></s:text><s:text name="campo.requerido"></s:text></td>
-									<td><s:select list="listEstadoCivil" name="persona.estadocivilPers" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs"/></td>
+									<td><s:select list="listEstadoCivil" name="persona.estadocivilPers" headerKey="" headerValue=".::Seleccione::." cssClass="inputs"/></td>
 								</tr>
 								<tr>
 									<td class="leftLabel"><s:text name="personal.fechanacimiento"></s:text><s:text name="campo.requerido"></s:text></td>
-									<td><s:textfield name="persona.fechanacimientoPers" id="fechanacimientoPers" size="15" maxlength="10" cssClass="inputs"></s:textfield></td>
+									<td><s:textfield name="persona.fechanacimientoPers" id="fechanacimientoPers" size="15" maxlength="10" cssClass="inputs" placeholder="dd-mm-aaaa"></s:textfield></td>
 								</tr>
 								<tr>
 									<td class="leftLabel"><s:text name="personal.telefono"></s:text><s:text name="campo.requerido"></s:text></td>
@@ -267,6 +268,10 @@
 								<tr>
 									<td class="leftLabel"><s:text name="personal.direccion"></s:text><s:text name="campo.requerido"></s:text></td>
 									<td><s:textfield name="persona.direccionPers" size="35" maxlength="100" cssClass="inputs"></s:textfield></td>
+								</tr>
+								<tr>
+									<td class="leftLabel"><s:text name="personal.ocupacion"></s:text><s:text name="campo.requerido"></s:text></td>
+									<td><s:textfield name="paciente.paciOcupacion" size="35" maxlength="100" cssClass="inputs"></s:textfield></td>
 								</tr>
 							</table>
 						</div>

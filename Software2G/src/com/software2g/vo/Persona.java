@@ -341,5 +341,11 @@ public class Persona implements Serializable {
 		this.paciente = paciente;
 	}
 
-	
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.registradopor=data.get(0);
+			this.fechacambio=data.get(1);
+			this.horacambio=data.get(2);
+		}
+	}
 }

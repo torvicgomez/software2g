@@ -30,6 +30,7 @@ import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Motivo;
 import com.software2g.vo.Municipio;
 import com.software2g.vo.Opcionrespuesta;
+import com.software2g.vo.Paciente;
 import com.software2g.vo.Pais;
 import com.software2g.vo.Parametroscalendario;
 import com.software2g.vo.Participante;
@@ -116,6 +117,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private List<Segmentoanamnesi> listSegmentoAnamnesis; 
 	private List<Respuesta> listRespuesta;
 	private Segmentoanamnesi segmentoAnamnesis;
+	private Paciente paciente;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -210,6 +212,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setListSegmentoAnamnesis(List<Segmentoanamnesi> listSegmentoAnamnesis) {this.listSegmentoAnamnesis = listSegmentoAnamnesis;}
 	public Segmentoanamnesi getSegmentoAnamnesis() {return segmentoAnamnesis;}
 	public void setSegmentoAnamnesis(Segmentoanamnesi segmentoAnamnesis) {this.segmentoAnamnesis = segmentoAnamnesis;}
+	public Paciente getPaciente() {return paciente;}
+	public void setPaciente(Paciente paciente) {this.paciente = paciente;}
 	
 	public List<Respuesta> getListRespuesta() {return listRespuesta;}
 	public void setListRespuesta(List<Respuesta> listRespuesta) {this.listRespuesta = listRespuesta;}
@@ -225,7 +229,6 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public String getConstanteTipoObjetoViewTextArea(){ return ConstantesAplicativo.constanteTipoObjetoViewTextArea;}
 	public String getConstanteTipoObjetoViewSelect(){ return ConstantesAplicativo.constanteTipoObjetoViewSelect;}
 	public String getConstanteTipoObjetoViewCalendar(){ return ConstantesAplicativo.constanteTipoObjetoViewCalendar;}
-	
 	
 	@SkipValidation
 	public String calendarioMethod(){
@@ -571,51 +574,122 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			System.out.println("Construccion!!!!!!!!!!");
+    			System.out.println("Validacion por secciones segun orden prioritario");
+    			System.out.println("-------------------------------------------------------");
+    			System.out.println("-------------------------------------------------------");
+    			System.out.println("Validacion Seccion 1 - Datos Personales");
+    			if(ValidaString.isNullOrEmptyString(persona.getDocumentoPers()))
+    				addActionError(getText("validacion.requeridoseccion","documentoPers",new ArrayList<String>(Arrays.asList("Número Documento", ConstantesAplicativo.constanteNombreSeccionDatosPersonales))));
+    			if(persona.getTipodocumento().getIdTidoc()<=0)
+    				addActionError(getText("validacion.requeridoseccion","documentoPers",new ArrayList<String>(Arrays.asList("Tipo Documento", ConstantesAplicativo.constanteNombreSeccionDatosPersonales))));
+    			if(ValidaString.isNullOrEmptyString(persona.getPnombrePers()))
+    				addActionError(getText("validacion.requeridoseccion","pnombrePers",new ArrayList<String>(Arrays.asList("Primer Nombre", ConstantesAplicativo.constanteNombreSeccionDatosPersonales))));
+    			if(ValidaString.isNullOrEmptyString(persona.getPapellidoPers()))
+    				addActionError(getText("validacion.requeridoseccion","papellidoPers",new ArrayList<String>(Arrays.asList("Primer Apellido", ConstantesAplicativo.constanteNombreSeccionDatosPersonales))));
+    			if(ValidaString.isNullOrEmptyString(persona.getSexoPers()))
+    				addActionError(getText("validacion.requeridoseccion","sexoPers",new ArrayList<String>(Arrays.asList("Sexo", ConstantesAplicativo.constanteNombreSeccionDatosPersonales))));
+    			if(ValidaString.isNullOrEmptyString(persona.getEstadocivilPers()))
+    				addActionError(getText("validacion.requeridoseccion","estadoCivilPers",new ArrayList<String>(Arrays.asList("Estado Civil", ConstantesAplicativo.constanteNombreSeccionDatosPersonales))));
+    			
+    			if(ValidaString.isNullOrEmptyString(persona.getFechanacimientoPers()))
+    				addActionError(getText("validacion.requeridoseccion","fechaNacimientoPers",new ArrayList<String>(Arrays.asList("Fecha Nacimiento", ConstantesAplicativo.constanteNombreSeccionDatosPersonales))));
+    			else if(!ValidaString.validarFecha(persona.getFechanacimientoPers()))
+    				addActionError(getText("validacion.requeridosecciontipodato","fechaNacimientoPers",new ArrayList<String>(Arrays.asList("Fecha Nacimiento", "Fecha", ConstantesAplicativo.constanteNombreSeccionDatosPersonales))));
+
+    			if(ValidaString.isNullOrEmptyString(persona.getTelefonoPers()))
+    				addActionError(getText("validacion.requeridoseccion","telefonoPers",new ArrayList<String>(Arrays.asList("Teléfono", ConstantesAplicativo.constanteNombreSeccionDatosPersonales))));
+    			if(!ValidaString.isEmail(persona.getEmailPers()))
+    				addActionError(getText("validacion.requeridoseccion","emailPers",new ArrayList<String>(Arrays.asList("Correo Eléctronico", ConstantesAplicativo.constanteNombreSeccionDatosPersonales))));
+    			if(persona.getMunicipio().getMcpoId()<=0)
+    				addActionError(getText("validacion.requeridoseccion","ubicacionPers",new ArrayList<String>(Arrays.asList("Ubicación Geográfica", ConstantesAplicativo.constanteNombreSeccionDatosPersonales))));
+    			if(ValidaString.isNullOrEmptyString(persona.getDireccionPers()))
+    				addActionError(getText("validacion.requeridoseccion","direccionPers",new ArrayList<String>(Arrays.asList("Dirección", ConstantesAplicativo.constanteNombreSeccionDatosPersonales))));
+    			if(ValidaString.isNullOrEmptyString(paciente.getPaciOcupacion()))
+    				addActionError(getText("validacion.requeridoseccion","paciOcupacion",new ArrayList<String>(Arrays.asList("Ocupación", ConstantesAplicativo.constanteNombreSeccionDatosPersonales))));
+    			System.out.println("-------------------------------------------------------");
+    			System.out.println("-------------------------------------------------------");
+    			
+    			
     			//listSegmentoAnamnesis = (List<Segmentoanamnesi>) request.getSession().getAttribute("listSegmentoAnamnesis");
-    			System.out.println("listSegmentoAnamnesis:["+listSegmentoAnamnesis+"]");
-    			if(listSegmentoAnamnesis!=null&&listSegmentoAnamnesis.size()>0){
-    				System.out.println("*******************************************");
-    				System.out.println("Entra evaluar resuestas segmentos!!!!!");
-    				System.out.println("listSegmentoAnamnesis.size():["+listSegmentoAnamnesis.size()+"]");
-    				System.out.println("*******************************************");
-    				for(Segmentoanamnesi elem:listSegmentoAnamnesis){
-    					if(elem.getPreguntas()!=null&&elem.getPreguntas().size()>0){
-    						System.out.println("*******************************************");
-							System.out.println("getSeanEtiqueta:["+elem.getSeanEtiqueta()+"]");
-    						for(Pregunta elem1:elem.getPreguntas()){
-    							System.out.println("getPregId:["+elem1.getPregId()+"]");
-    							System.out.println("getPregPregunta:["+elem1.getPregPregunta()+"]");
-    							System.out.println("getPregTipodato:["+elem1.getPregTipodato()+"]");
-    							System.out.println("getPregRespobligatoria:["+elem1.getPregRespobligatoria()+"]");
-    							if(elem1.getRespuestas()!=null&&elem1.getRespuestas().size()>0){
-    								for(Respuesta elem2:elem1.getRespuestas()){
-    									System.out.println("getRespRespuesta:["+elem2.getRespRespuesta()+"]");
-    									if(elem1.getPregRespobligatoria().equals(ConstantesAplicativo.constanteRespObligatoriaSI)){
-    										if(ValidaString.isNullOrEmptyString(elem2.getRespRespuesta()))
-    						    				addActionError(getText("validacion.pregrequerida","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),elem.getSeanEtiqueta()))));
-    									}
-    									if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoAlfanumerico)){
-    										if(!ValidaString.alfanumerico(elem2.getRespRespuesta()))
-    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Alfanumérico"))));
-    									}else if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoNumerico)){
-    										if(!ValidaString.isNumeric(elem2.getRespRespuesta()))
-    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Numérico"))));
-    									}else if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoFecha)){
-    										if(!ValidaString.validarFecha(elem2.getRespRespuesta()))
-    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Fecha"))));
-    									}else if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoEntero)){
-    										if(!ValidaString.isEntero(elem2.getRespRespuesta()))
-    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Entero"))));
-    									}
-    								}
-    							}
-    							System.out.println("*******************************************");
-    						}
-    					}
+//    			System.out.println("listSegmentoAnamnesis:["+listSegmentoAnamnesis+"]");
+//    			if(listSegmentoAnamnesis!=null&&listSegmentoAnamnesis.size()>0){
+//    				System.out.println("*******************************************");
+//    				System.out.println("Entra evaluar resuestas segmentos!!!!!");
+//    				System.out.println("listSegmentoAnamnesis.size():["+listSegmentoAnamnesis.size()+"]");
+//    				System.out.println("*******************************************");
+//    				for(Segmentoanamnesi elem:listSegmentoAnamnesis){
+//    					if(elem.getPreguntas()!=null&&elem.getPreguntas().size()>0){
+//    						System.out.println("*******************************************");
+//							System.out.println("getSeanEtiqueta:["+elem.getSeanEtiqueta()+"]");
+//    						for(Pregunta elem1:elem.getPreguntas()){
+//    							System.out.println("getPregId:["+elem1.getPregId()+"]");
+//    							System.out.println("getPregPregunta:["+elem1.getPregPregunta()+"]");
+//    							System.out.println("getPregTipodato:["+elem1.getPregTipodato()+"]");
+//    							System.out.println("getPregRespobligatoria:["+elem1.getPregRespobligatoria()+"]");
+//    							if(elem1.getRespuestas()!=null&&elem1.getRespuestas().size()>0){
+//    								for(Respuesta elem2:elem1.getRespuestas()){
+//    									System.out.println("getRespRespuesta:["+elem2.getRespRespuesta()+"]");
+//    									if(elem1.getPregRespobligatoria().equals(ConstantesAplicativo.constanteRespObligatoriaSI)){
+//    										if(ValidaString.isNullOrEmptyString(elem2.getRespRespuesta()))
+//    						    				addActionError(getText("validacion.pregrequerida","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),elem.getSeanEtiqueta()))));
+//    									}
+//    									if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoAlfanumerico)){
+//    										if(!ValidaString.alfanumerico(elem2.getRespRespuesta()))
+//    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Alfanumérico"))));
+//    									}else if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoNumerico)){
+//    										if(!ValidaString.isNumeric(elem2.getRespRespuesta()))
+//    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Numérico"))));
+//    									}else if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoFecha)){
+//    										if(!ValidaString.validarFecha(elem2.getRespRespuesta()))
+//    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Fecha"))));
+//    									}else if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoEntero)){
+//    										if(!ValidaString.isEntero(elem2.getRespRespuesta()))
+//    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Entero"))));
+//    									}
+//    								}
+//    							}
+//    							System.out.println("*******************************************");
+//    						}
+//    					}
+//    				}
+//    			}
+    			
+    			
+    			if(!hasActionErrors()){
+    				ValidaString.imprimirObject(persona);
+    				long idPersona = gestionFacadeAgenda.persistPersonaId(persona);
+    				System.out.println("****************************");
+    				System.out.println("idPersona:["+idPersona+"]");
+    				System.out.println("****************************");
+    				if(idPersona>0){
+    					persona.setIdPers(idPersona);
+    					paciente.setPersona(persona);
+    					paciente.setDatosAud(getDatosAud());
+    					ValidaString.imprimirObject(paciente);
+    					long idPaciente = gestionFacadeHistoriaClinica.persistPacienteId(paciente);
+    					System.out.println("****************************");
+        				System.out.println("idPaciente:["+idPaciente+"]");
+        				System.out.println("****************************");
+    					estado = ConstantesAplicativo.constanteEstadoAbstract;
+    					addActionMessage(getText("accion.satisfactoria"));
     				}
+    			}else{
+    				long idProfesional = request.getParameter("idProfesional")!=null?Long.parseLong(request.getParameter("idProfesional").toString()):0;
+        			long idEvento = request.getParameter("idEvento")!=null?Long.parseLong(request.getParameter("idEvento").toString()):0;
+        			profesional = idProfesional>0?gestionFacadeAgenda.findProfesionalById(idProfesional):new Profesional();
+        			persona = gestionFacadeAgenda.findPacienteAtencionServicio(idEvento);
+        			listProcedimiento = gestionFacadeAgenda.findAllProcedimientos();
+        			listTipoDoc = gestionFacadeAgenda.findAllTipodocumentos();
+        			listEstadoCivil = ConstantesAplicativo.constanteEstadoCivil;
+        			listPais = gestionFacadeAgenda.findAllPaiss();
+        			listDepartamento = gestionFacadeAgenda.findAllDepartamentos();
+        			if(persona!=null&&persona.getExistePaciente().equals(ConstantesAplicativo.constanteCheckSi))
+        				listMunicipio = gestionFacadeAgenda.findAllMunicipios();
+        			listFinalidad = gestionFacadeHistoriaClinica.findAllFinalidads();
+        			listMotivo = gestionFacadeHistoriaClinica.findAllMotivos();
+        			listSeguridadSocial = gestionFacadeHistoriaClinica.findAllSeguridadsocials();
+        			listSegmentoAnamnesis = gestionFacadeHistoriaClinica.findAllSegmentoanamnesis();
     			}
-    			
-    			
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			System.out.println("Construccion!!!!!!!!!!");
     		}

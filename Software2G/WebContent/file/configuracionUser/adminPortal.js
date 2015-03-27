@@ -16,6 +16,8 @@ var zNodes = [
 	{id:3007, pId:3000, name:"Procedimiento", file:"procedimiento.action?estado=all&funcPosicionado=Calendario/Procedimiento"},
 	{id:3008, pId:3000, name:"Servicio Clinico", file:"servicioclinico.action?estado=all&funcPosicionado=Calendario/Servicio Clinico"},
 	
+	{id:3014, pId:3000, name:"Servicio Clinico", file:"servicioclinico.action?estado=alltiposervicio&funcPosicionado=Calendario/Servicio Clinico"},
+	
 	{id:3009, pId:3000, name:"Tipo Segmento Anamnesis", file:"tiposeganamnesis.action?estado=all&funcPosicionado=Calendario/Tipo Segmento Anamnesis"},
 	{id:3010, pId:3000, name:"Tipo Pregunta", file:"tipopregunta.action?estado=all&funcPosicionado=Calendario/Tipo Pregunta"},
 	{id:3011, pId:3000, name:"Segmentos Anamnesis", file:"segmentoanamnesis.action?estado=all&funcPosicionado=Calendario/Segmentos Anamnesis"},

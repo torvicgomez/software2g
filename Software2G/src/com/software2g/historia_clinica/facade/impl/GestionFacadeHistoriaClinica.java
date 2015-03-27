@@ -977,6 +977,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistPaciente(Paciente paciente) throws Exception {
 		try {
 			getPacienteDao().persistPaciente(paciente);
@@ -985,6 +986,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 		}
 	}
 	
+	@Transactional
 	public long persistPacienteId(Paciente paciente) throws Exception {
 		try {
 			return getPacienteDao().persistPacienteId(paciente);

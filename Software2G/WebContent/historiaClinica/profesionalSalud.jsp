@@ -248,7 +248,7 @@
 						<tr>
 							<td class="leftLabel"><s:text name="profesionalsalud.profesion"></s:text></td>
 							<td colspan="3">
-								<s:textfield name="profesional.profEspecialidad" id="profEspecialidad" size="60" maxlength="30" cssClass="inputs"></s:textfield>
+								<s:select name="profesional.profEspecialidad" id="profEspecialidad" list="listTipoEspecialidad" listKey="tiesId" listValue="tiesEspecialidad" headerKey="" headerValue=".::Seleccion::." cssClass="inputs"/>
 							</td>
 						</tr>
 						<tr>
@@ -305,7 +305,7 @@
 						</tr>
 						<tr>
 							<td class="leftLabel" width="130"><s:text name="profesionalsalud.profesion"></s:text></td>
-							<td><s:property value="profesional.profEspecialidad"/></td>
+							<td><s:property value="profesional.profEspecialidadView"/></td>
 						</tr>
 						<tr>
 							<td class="leftLabel" width="130"><s:text name="profesionalsalud.nrotarjetaprof"></s:text></td>

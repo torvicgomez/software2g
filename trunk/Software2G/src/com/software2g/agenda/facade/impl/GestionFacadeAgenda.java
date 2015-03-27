@@ -535,6 +535,16 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 			throw new Exception("findPersonaById failed with the id " + id + ": " + e.getMessage());
 		}
 	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Persona findPersona(String documento, String abrevTidoc) throws Exception {
+		try {
+			return getPersonaDao().findPersona(documento, abrevTidoc);
+		} catch (RuntimeException e) {
+			throw new Exception("findPersona failed with the documento " + documento + " abrevTidoc " + abrevTidoc + " : " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Return all persistent instances of the <code>Persona</code> entity.
 	 */
@@ -751,6 +761,16 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 			throw new Exception("findTipodocumentoById failed with the id " + id + ": " + e.getMessage());
 		}
 	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Tipodocumento findTipodocumentoAbrev(String abrevTidoc) throws Exception {
+		try {
+			return getTipoDocumentoDao().findTipodocumentoAbrev(abrevTidoc);
+		} catch (RuntimeException e) {
+			throw new Exception("findTipodocumentoAbrev failed with the abrevTidoc " + abrevTidoc + ": " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Return all persistent instances of the <code>Tipodocumento</code> entity.
 	 */

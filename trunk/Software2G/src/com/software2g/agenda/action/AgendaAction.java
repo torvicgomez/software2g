@@ -46,7 +46,9 @@ import com.software2g.vo.Respuesta;
 import com.software2g.vo.Segmentoanamnesi;
 import com.software2g.vo.Seguridadsocial;
 import com.software2g.vo.Tipodocumento;
+import com.software2g.vo.Tipoespecialidad;
 import com.software2g.vo.Tipoprocedimiento;
+import com.software2g.vo.Tiposervicio;
 import com.software2g.vo.Usuario;
 import com.software2g.vo.UtilGenerico;
 import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
@@ -118,6 +120,9 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private List<Respuesta> listRespuesta;
 	private Segmentoanamnesi segmentoAnamnesis;
 	private Paciente paciente;
+	private Tiposervicio tipoServicio;
+	private List<Tiposervicio> listTipoServicio;
+	private List<Tipoespecialidad> listTipoEspecialidad;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -214,6 +219,13 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setSegmentoAnamnesis(Segmentoanamnesi segmentoAnamnesis) {this.segmentoAnamnesis = segmentoAnamnesis;}
 	public Paciente getPaciente() {return paciente;}
 	public void setPaciente(Paciente paciente) {this.paciente = paciente;}
+	public Tiposervicio getTipoServicio() {return tipoServicio;}
+	public void setTipoServicio(Tiposervicio tipoServicio) {this.tipoServicio = tipoServicio;}
+	public List<Tiposervicio> getListTipoServicio() {return listTipoServicio;}
+	public void setListTipoServicio(List<Tiposervicio> listTipoServicio) {this.listTipoServicio = listTipoServicio;}
+	public List<UtilGenerico> getListEspecialidadSoportadas() {return ConstantesAplicativo.listEspecialidadSoportadas;}
+	public List<Tipoespecialidad> getListTipoEspecialidad() {return listTipoEspecialidad;}
+	public void setListTipoEspecialidad(List<Tipoespecialidad> listTipoEspecialidad) {this.listTipoEspecialidad = listTipoEspecialidad;}
 	
 	public List<Respuesta> getListRespuesta() {return listRespuesta;}
 	public void setListRespuesta(List<Respuesta> listRespuesta) {this.listRespuesta = listRespuesta;}
@@ -229,6 +241,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public String getConstanteTipoObjetoViewTextArea(){ return ConstantesAplicativo.constanteTipoObjetoViewTextArea;}
 	public String getConstanteTipoObjetoViewSelect(){ return ConstantesAplicativo.constanteTipoObjetoViewSelect;}
 	public String getConstanteTipoObjetoViewCalendar(){ return ConstantesAplicativo.constanteTipoObjetoViewCalendar;}
+	
+	
 	
 	@SkipValidation
 	public String calendarioMethod(){
@@ -389,6 +403,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
     			listProfesional = gestionFacadeAgenda.findAllProfesionals();
     			bandEstadoFunc = ConstantesAplicativo.constanteEstadoAddSave;
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAdd)){
+    			listTipoEspecialidad = gestionFacadeHistoriaClinica.findAllTipoespecialidads();
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			if(profesional.getPersona().getIdPers()<=0)
     				addActionError(getText("validacion.requerido","prfsIdPers","Seleccione al Profesional de la Salud"));
@@ -407,6 +423,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			if(!hasActionErrors()){
     				profesional.setPersona(gestionFacadeAgenda.findPersonaById(profesional.getPersona().getIdPers()));
     				profesional.setDatosAud(this.getDatosAud());
+    				profesional.setProfEspecialidadView(((Tipoespecialidad)gestionFacadeHistoriaClinica.findTipoespecialidadById(Long.parseLong(profesional.getProfEspecialidad()))).getTiesEspecialidad());
     				ValidaString.imprimirObject(profesional);
     				gestionFacadeAgenda.persistProfesional(profesional);
     				estado = ConstantesAplicativo.constanteEstadoAbstract;
@@ -417,10 +434,13 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     							ConstantesAplicativo.constanteExtensionFileJS, 
     							ConstantesAplicativo.constanteTipoFileJSConstantesEventos,
     							ConstantesAplicativo.constanteCrearFileJSEventosAll);
-    			}
+    			}else
+    				listTipoEspecialidad = gestionFacadeHistoriaClinica.findAllTipoespecialidads();
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			profesional = gestionFacadeAgenda.findProfesionalById(getIdLong());
+    			profesional.setProfEspecialidadView(((Tipoespecialidad)gestionFacadeHistoriaClinica.findTipoespecialidadById(Long.parseLong(profesional.getProfEspecialidad()))).getTiesEspecialidad());
     			bandEstadoFunc = ConstantesAplicativo.constanteEstadoEditSave;
+    			listTipoEspecialidad = gestionFacadeHistoriaClinica.findAllTipoespecialidads();
     		}
     	} catch(Exception e){
     		e.printStackTrace();
@@ -532,54 +552,56 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
     			long idProfesional = request.getParameter("idProfesional")!=null?Long.parseLong(request.getParameter("idProfesional").toString()):0;
     			long idEvento = request.getParameter("idEvento")!=null?Long.parseLong(request.getParameter("idEvento").toString()):0;
-    			profesional = idProfesional>0?gestionFacadeAgenda.findProfesionalById(idProfesional):new Profesional();
-    			persona = gestionFacadeAgenda.findPacienteAtencionServicio(idEvento);
-    			listProcedimiento = gestionFacadeAgenda.findAllProcedimientos();
-    			listTipoDoc = gestionFacadeAgenda.findAllTipodocumentos();
-    			listEstadoCivil = ConstantesAplicativo.constanteEstadoCivil;
-    			listPais = gestionFacadeAgenda.findAllPaiss();
-    			listDepartamento = gestionFacadeAgenda.findAllDepartamentos();
-    			if(persona!=null&&persona.getExistePaciente().equals(ConstantesAplicativo.constanteCheckSi))
-    				listMunicipio = gestionFacadeAgenda.findAllMunicipios();
-    			
-    			
-    			listFinalidad = gestionFacadeHistoriaClinica.findAllFinalidads();
-    			listMotivo = gestionFacadeHistoriaClinica.findAllMotivos();
-    			listSeguridadSocial = gestionFacadeHistoriaClinica.findAllSeguridadsocials();
-    			
-    			
-    			listSegmentoAnamnesis = gestionFacadeHistoriaClinica.findAllSegmentoanamnesis();
-//    			listSegmentoAnamnesis = gestionFacadeHistoriaClinica.findAllSegmentoanamnesis(2);
-    			if(listSegmentoAnamnesis!=null&&listSegmentoAnamnesis.size()>0){
-    				for(Segmentoanamnesi elem:listSegmentoAnamnesis){
-    					System.out.println("getSeanId:["+elem.getSeanId()+"]");
-    					elem.setPreguntas(gestionFacadeHistoriaClinica.findAllPreguntasXSegmentoAna(elem.getSeanId()));
-    					Collections.sort(elem.getPreguntas());
-    					if(elem.getPreguntas()!=null&&elem.getPreguntas().size()>0){
-    						for(Pregunta elem1:elem.getPreguntas()){
-    							System.out.println("getPregId:["+elem1.getPregId()+"]");
-    							elem1.setRespuestas(new ArrayList<Respuesta>());
-    							elem1.setOpcionrespuestas(gestionFacadeHistoriaClinica.findAllOpcionrespuestas(elem1.getPregId()));
-    							if(elem1.getOpcionrespuestas()!=null&&elem1.getOpcionrespuestas().size()>0){
-    								Collections.sort(elem1.getOpcionrespuestas());
-    								for(Opcionrespuesta elem2:elem1.getOpcionrespuestas()){
-    									System.out.println("getOpreId:["+elem2.getOpreId()+"]");
-    								}
-    							}
-    						}
-    					}
-    				}
+    			if(idProfesional<=0){
+    				if(tipoServicio.getTiseId()<=0)
+    					addActionError(getText("validacion.requerido","tiposervicio","Servicio a Realizar"));
+    				if(ValidaString.isNullOrEmptyString(persona.getDocumentoPers()))
+        				addActionError(getText("validacion.requerido","documentoPers","Número Documento"));
+        			if(ValidaString.isNullOrEmptyString(persona.getTipodocumento().getAbreviaturaTidoc()))
+        				addActionError(getText("validacion.requerido","documentoPers","Tipo Documento"));
+        			if(!hasActionErrors()){
+        				profesional = gestionFacadeAgenda.findProfesionalById(profesional.getProfId());
+        				profesional.setProfEspecialidadView(((Tipoespecialidad)gestionFacadeHistoriaClinica.findTipoespecialidadById(Long.parseLong(profesional.getProfEspecialidad()))).getTiesEspecialidad());
+        				String abrevTipoDoc = persona.getTipodocumento().getAbreviaturaTidoc();
+        				String nroDocumento = persona.getDocumentoPers();
+        				persona = gestionFacadeAgenda.findPersona(persona.getDocumentoPers(), persona.getTipodocumento().getAbreviaturaTidoc());
+        				if(persona==null){
+        					persona = new Persona();
+        					Tipodocumento tipoDocumento = (Tipodocumento) gestionFacadeAgenda.findTipodocumentoAbrev(abrevTipoDoc); 
+        					ValidaString.imprimirObject(tipoDocumento);
+        					persona.setMunicipio(new Municipio());
+        					persona.setTipodocumento(tipoDocumento);
+        					persona.setDocumentoPers(nroDocumento);
+        					persona.setExistePaciente(ConstantesAplicativo.constanteCheckNo);
+        				}else
+        					persona.setExistePaciente(ConstantesAplicativo.constanteCheckSi);
+        				cargarDatosServicioClinico(profesional.getProfEspecialidad());
+        			}else{
+        				estado = ConstantesAplicativo.constanteEstadoAllTipoServicio;
+            			listTipoDoc = gestionFacadeAgenda.findAllTipodocumentos();
+            			listTipoServicio = gestionFacadeHistoriaClinica.findAllTiposervicios();
+            			Usuario usuario = (Usuario)request.getSession().getAttribute("usuarioVO");
+            			System.out.println("getIdPers:["+usuario.getPersona().getIdPers()+"]");
+            			profesional = gestionFacadeAgenda.findProfesionalIdPersona(usuario.getPersona().getIdPers());
+        			}
+    			}else{
+	    			profesional = idProfesional>0?gestionFacadeAgenda.findProfesionalById(idProfesional):new Profesional();
+	    			profesional.setProfEspecialidadView(((Tipoespecialidad)gestionFacadeHistoriaClinica.findTipoespecialidadById(Long.parseLong(profesional.getProfEspecialidad()))).getTiesEspecialidad());
+	    			persona = gestionFacadeAgenda.findPacienteAtencionServicio(idEvento);
+	    			cargarDatosServicioClinico(profesional.getProfEspecialidad());
     			}
-    			request.getSession().setAttribute("listSegmentoAnamnesis", listSegmentoAnamnesis);
-    			
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAllTipoServicio)){
+    			listTipoDoc = gestionFacadeAgenda.findAllTipodocumentos();
+    			listTipoServicio = gestionFacadeHistoriaClinica.findAllTiposervicios();
+    			Usuario usuario = (Usuario)request.getSession().getAttribute("usuarioVO");
+    			System.out.println("getIdPers:["+usuario.getPersona().getIdPers()+"]");
+    			profesional = gestionFacadeAgenda.findProfesionalIdPersona(usuario.getPersona().getIdPers());
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			System.out.println("Construccion!!!!!!!!!!");
     			System.out.println("Validacion por secciones segun orden prioritario");
     			System.out.println("-------------------------------------------------------");
     			System.out.println("-------------------------------------------------------");
     			System.out.println("Validacion Seccion 1 - Datos Personales");
-    			ValidaString.imprimirObject(persona);
-    			ValidaString.imprimirObject(persona.getMunicipio());
     			if(ValidaString.isNullOrEmptyString(persona.getDocumentoPers()))
     				addActionError(getText("validacion.requeridoseccion","documentoPers",new ArrayList<String>(Arrays.asList("Número Documento", ConstantesAplicativo.constanteNombreSeccionDatosPersonales))));
     			if(persona.getTipodocumento().getIdTidoc()<=0)
@@ -658,7 +680,10 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			
     			
     			if(!hasActionErrors()){
+    				persona.setDatosAud(getDatosAud());
     				ValidaString.imprimirObject(persona);
+    				ValidaString.imprimirObject(persona.getMunicipio());
+    				ValidaString.imprimirObject(persona.getTipodocumento());
     				long idPersona = gestionFacadeAgenda.persistPersonaId(persona);
     				System.out.println("****************************");
     				System.out.println("idPersona:["+idPersona+"]");
@@ -701,6 +726,54 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     	}
     	System.out.println("######>>>>>>>AgendaAction>>>>servicioClinicoMethod>>>>estado salida-->>"+estado);
     	return Action.SUCCESS;
+	}
+	
+	
+	private void cargarDatosServicioClinico(String especialidad) throws Exception {
+		//------------------------------------------------------//
+		//  Datos Genericos Para todo Tipo de Historia Clinica  //
+		//------------------------------------------------------//
+		listTipoDoc = gestionFacadeAgenda.findAllTipodocumentos();
+		listEstadoCivil = ConstantesAplicativo.constanteEstadoCivil;
+		listPais = gestionFacadeAgenda.findAllPaiss();
+		listDepartamento = gestionFacadeAgenda.findAllDepartamentos();
+		if(persona!=null&&persona.getExistePaciente().equals(ConstantesAplicativo.constanteCheckSi))
+			listMunicipio = gestionFacadeAgenda.findAllMunicipios();
+		listFinalidad = gestionFacadeHistoriaClinica.findAllFinalidads();
+		listMotivo = gestionFacadeHistoriaClinica.findAllMotivos();
+		listSeguridadSocial = gestionFacadeHistoriaClinica.findAllSeguridadsocials();
+		//----------------------------------------------------------------//
+		//  Datos Especificos segun especialidad desempenada profesional  //
+		//----------------------------------------------------------------//		
+		if(especialidad!=null){
+			if(especialidad.equals(ConstantesAplicativo.constanteEspecialidadMedicinaGeneral)){
+				System.out.println("en Construcción");
+			}else if(especialidad.equals(ConstantesAplicativo.constanteEspecialidadOdontologia)){
+				listProcedimiento = gestionFacadeAgenda.findAllProcedimientos();
+			}else if(especialidad.equals(ConstantesAplicativo.constanteEspecialidadOptometria)){
+				System.out.println("en Construcción");
+			}
+		}
+		//-------------------------------------------------------------------------//
+		//  Datos Especificos segun especialidad en realcion a los datos clinicos  //
+		//-------------------------------------------------------------------------//	
+    	listSegmentoAnamnesis = gestionFacadeHistoriaClinica.findAllSegmentoanamnesis(Long.parseLong(especialidad));
+		if(listSegmentoAnamnesis!=null&&listSegmentoAnamnesis.size()>0){
+			for(Segmentoanamnesi elem:listSegmentoAnamnesis){
+				elem.setPreguntas(gestionFacadeHistoriaClinica.findAllPreguntasXSegmentoAna(elem.getSeanId()));
+				Collections.sort(elem.getPreguntas());
+				if(elem.getPreguntas()!=null&&elem.getPreguntas().size()>0){
+					for(Pregunta elem1:elem.getPreguntas()){
+						elem1.setRespuestas(new ArrayList<Respuesta>());
+						elem1.setOpcionrespuestas(gestionFacadeHistoriaClinica.findAllOpcionrespuestas(elem1.getPregId()));
+						if(elem1.getOpcionrespuestas()!=null&&elem1.getOpcionrespuestas().size()>0){
+							Collections.sort(elem1.getOpcionrespuestas());
+						}
+					}
+				}
+			}
+		}
+		request.getSession().setAttribute("listSegmentoAnamnesis", listSegmentoAnamnesis);
 	}
 	
 	@SkipValidation

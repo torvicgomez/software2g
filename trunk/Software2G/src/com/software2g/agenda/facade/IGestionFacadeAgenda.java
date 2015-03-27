@@ -175,6 +175,7 @@ public interface IGestionFacadeAgenda {
 	//-----------------------------------------------------------------------
 	public List<Persona> findAllPersonasProfesionales(String datoFind) throws Exception;
 	public Persona findPersonaById(java.lang.Long id) throws Exception;
+	public Persona findPersona(String documento, String abrevTidoc) throws Exception;
 	public List<Persona> findAllPersonas() throws Exception;
 	public void persistPersona(Persona persona) throws Exception;
 	public long persistPersonaId(Persona persona) throws Exception;
@@ -251,6 +252,7 @@ public interface IGestionFacadeAgenda {
 	//--------------------------------------------------------------------------
 	//Metodos Entidad TipoDocumento
 	public Tipodocumento findTipodocumentoById(java.lang.Integer id) throws Exception;
+	public Tipodocumento findTipodocumentoAbrev(String abrevTidoc) throws Exception;
 	public List<Tipodocumento> findAllTipodocumentos() throws Exception;
 	public void persistTipodocumento(Tipodocumento tipodocumento) throws Exception;
 	public void removeTipodocumento(Tipodocumento tipodocumento) throws Exception;

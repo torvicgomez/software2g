@@ -136,12 +136,12 @@
 			}
 			
 			function registrar(){
-			   var mcpoId = document.getElementById("mcpoId");
-			   if(mcpoId!=null)
-			   		alert('prueba mcpoId:['+mcpoId.value+']');
-			   else
-			   		alert('objeto null o no existe!!!!!!!');
 				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoSave%>";
+				document.form.submit();
+			}
+			
+			function continuar(){
+				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoAll%>";
 				document.form.submit();
 			}
 			
@@ -158,32 +158,87 @@
 							<h1><s:text name="atencioservicio.titulo"></s:text></h1>
 						</td>
 					</tr>
+					<s:if test="estado=='all'">
+						<tr><td class="right">
+							<input type="button" value="<s:text name="labelbutton.volver"></s:text>" onclick="volver();" class="buttonSV"/>
+							<input type="button" value="<s:text name="labelbutton.registrar"></s:text>" onclick="registrar();" class="buttonSV"/>
+						</td></tr>
+					</s:if>
+					<s:elseif test="estado=='add'||estado=='edit'||estado=='save'">
+						<tr>
+							<td class="right">
+								<input type="button" value="<s:text name="labelbutton.volver"></s:text>" onclick="volver();" class="buttonSV"/>
+								<input type="button" value="<s:text name="labelbutton.registrar"></s:text>" onclick="registrar();" class="buttonSV"/>
+							</td>
+						</tr>
+					</s:elseif>
+					<s:elseif test="estado=='abstract'">
+						<tr>
+							<td class="right">
+								<input type="button" value="<s:text name="labelbutton.volver"></s:text>" onclick="volver();" class="buttonSV"/>
+							</td>
+						</tr>
+					</s:elseif>
+					<s:elseif test="estado=='alltiposervicio'">
+						<tr>
+							<td class="right">
+								<input type="button" value="<s:text name="labelbutton.continuar"></s:text>" onclick="continuar();" class="buttonSV"/>
+							</td>
+						</tr>
+					</s:elseif>
 				</table>
-				<s:if test="estado=='all'">
+				<table cellpadding="0" cellspacing="0" border="0" class="display">
+					<tr>
+						<s:hidden name="profesional.profId" id="profId"></s:hidden>
+						<td class="leftLabel" colspan="4"><s:text name="profesionalsalud.datosprofesional"></s:text></td>
+					</tr>
+					<tr>
+						<td class="leftLabel"><s:text name="personal.nombre"></s:text></td>
+						<td align="left">
+							<s:property value="profesional.persona.nombreCompleto"/>
+						</td>
+						<td class="leftLabel" width="130"><s:text name="profesionalsalud.profesion"></s:text></td>
+						<td align="left">
+							<s:property value="profesional.profEspecialidadView"/>
+						</td>
+					</tr>
+				</table> 
+				<s:if test="estado=='alltiposervicio'">
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<tr>
-							<s:hidden name="profesional.profId" id="profId"></s:hidden>
-							<td class="leftLabel" colspan="4"><s:text name="profesionalsalud.datosprofesional"></s:text></td>
+							<td class="leftLabel"><s:text name="tiposervicio.tiposervicio"></s:text></td>
+							<td align="left">
+								<s:select list="listTipoServicio" name="tipoServicio.tiseId" listKey="tiseId" listValue="tiseNombre" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs"/>
+							</td>
 						</tr>
 						<tr>
-							<td class="leftLabel"><s:text name="personal.nombre"></s:text></td>
-							<td align="left">
-								<s:property value="profesional.persona.nombreCompleto"/>
-							</td>
-							<td class="leftLabel" width="130"><s:text name="profesionalsalud.profesion"></s:text></td>
-							<td align="left">
-								<s:property value="profesional.profEspecialidad"/>
+							<td class="leftLabel"><s:text name="personal.numerodocumento"></s:text><s:text name="campo.requerido"></s:text></td>
+							<td>
+								<s:textfield name="persona.documentoPers" size="20" maxlength="15" cssClass="inputs"></s:textfield><%--nombreTidoc --%>
+								<s:select list="listTipoDoc" name="persona.tipodocumento.abreviaturaTidoc" listKey="abreviaturaTidoc" listValue="abreviaturaTidoc" headerKey="" headerValue=".::Seleccione::." cssClass="inputs"/>	
 							</td>
 						</tr>
 					</table> 
+					<table cellpadding="0" cellspacing="0" border="0" class="display">
+						<tr>
+							<td class="right">
+								<input type="button" value="<s:text name="labelbutton.continuar"></s:text>" onclick="continuar();" class="buttonSV"/>
+							</td>
+						</tr>
+					</table>
+				</s:if>
+				<s:elseif test="estado=='all'">
 					<div id="pestanas">
 						<ul>
 							<li><a href="#tabs-0"><s:text name="atencioservicio.datospersonales"></s:text></a></li>
 							<li><a href="#tabs-0-1"><s:text name="atencioservicio.anamnesis"></s:text></a></li>
-							<li><a href="#tabs-1"><s:text name="atencioservicio.odontogramapro"></s:text></a></li>
-							<li><a href="#tabs-2"><s:text name="atencioservicio.costotratamiento"></s:text></a></li>
-							<li><a href="#tabs-3">Estado Gral Vehiculo</a></li>
-							<li><a href="#tabs-4"><s:text name="atencioservicio.examenesopt"></s:text></a></li>
+							<s:if test="profesional.profEspecialidad==\"1\"">
+								<li><a href="#tabs-1"><s:text name="atencioservicio.odontogramapro"></s:text></a></li>
+								<li><a href="#tabs-2"><s:text name="atencioservicio.costotratamiento"></s:text></a></li>	
+							</s:if>
+							<s:elseif test="profesional.profEspecialidad==\"2\"">
+								<li><a href="#tabs-4"><s:text name="atencioservicio.examenesopt"></s:text></a></li>
+							</s:elseif>
 						</ul>
 						<div id="tabs-0">
 							<table cellpadding="0" cellspacing="0" border="0" class="display">
@@ -301,78 +356,75 @@
 								</tr>
 							</table>
 						</div>
-						<div id="tabs-1">
-<!-- 							<table cellpadding="0" cellspacing="0" border="0" class="display"> -->
-<!-- 								<tr> -->
-<!-- 									<td> -->
-										<jsp:include page="odontograma.jsp" flush="true"/>
-<%-- 								<jsp:param value="${idSolicitud.soviId}" name="soviId"/> --%>
-<%-- 								<jsp:param value="1" name="posibles_rutas"/>  --%>
-<%-- 										</jsp:include> --%>
-<!-- 									</td> -->
-<!-- 								</tr> -->
-<!-- 							</table> -->
-						</div>
-						<div id="tabs-2">
-							<table cellpadding="0" cellspacing="0" border="0" class="display">
-								<tr>
-									<td class="leftLabel">
-										Construccion!!!!
-									</td>
-								</tr>
-							</table>
-						</div>
-						<div id="tabs-3">
-							<table cellpadding="0" cellspacing="0" border="0" class="display">
-								<tr>
-									<td class="centerLabel" colspan="2">
-										Construccion!!!!
-									</td>
-								</tr>
-							</table>
-						</div>
-						<div id="tabs-4">
-							<table cellpadding="0" cellspacing="0" border="0" class="display">
-								<tr>
-									<td>
-										<jsp:include page="rxUso.jsp" flush="true"/>
-<%-- 											<jsp:param value="${idSolicitud.soviId}" name="soviId"/> --%>
-<%-- 											<jsp:param value="1" name="posibles_rutas"/>  --%>
-<%-- 										</jsp:include> --%>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<jsp:include page="avsc.jsp" flush="true"/>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<jsp:include page="coverTest.jsp" flush="true"/>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<jsp:include page="examenExterno.jsp" flush="true"/>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<jsp:include page="oftalmoscopia.jsp" flush="true"/>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<jsp:include page="keratometria.jsp" flush="true"/>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<jsp:include page="retinoscopia.jsp" flush="true"/>
-									</td>
-								</tr>
-							</table>
-						</div>
+						<s:if test="profesional.profEspecialidad==\"1\"">
+							<div id="tabs-1">
+	<!-- 							<table cellpadding="0" cellspacing="0" border="0" class="display"> -->
+	<!-- 								<tr> -->
+	<!-- 									<td> -->
+											<jsp:include page="odontograma.jsp" flush="true"/>
+	<%-- 								<jsp:param value="${idSolicitud.soviId}" name="soviId"/> --%>
+	<%-- 								<jsp:param value="1" name="posibles_rutas"/>  --%>
+	<%-- 										</jsp:include> --%>
+	<!-- 									</td> -->
+	<!-- 								</tr> -->
+	<!-- 							</table> -->
+							</div>
+						</s:if>
+						<s:if test="profesional.profEspecialidad==\"1\"">
+							<div id="tabs-2">
+								<table cellpadding="0" cellspacing="0" border="0" class="display">
+									<tr>
+										<td class="leftLabel">
+											Construccion!!!!
+										</td>
+									</tr>
+								</table>
+							</div>
+						</s:if>
+						<s:if test="profesional.profEspecialidad==\"2\"">
+							<div id="tabs-4">
+								<table cellpadding="0" cellspacing="0" border="0" class="display">
+									<tr>
+										<td>
+											<jsp:include page="rxUso.jsp" flush="true"/>
+	<%-- 											<jsp:param value="${idSolicitud.soviId}" name="soviId"/> --%>
+	<%-- 											<jsp:param value="1" name="posibles_rutas"/>  --%>
+	<%-- 										</jsp:include> --%>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<jsp:include page="avsc.jsp" flush="true"/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<jsp:include page="coverTest.jsp" flush="true"/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<jsp:include page="examenExterno.jsp" flush="true"/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<jsp:include page="oftalmoscopia.jsp" flush="true"/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<jsp:include page="keratometria.jsp" flush="true"/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<jsp:include page="retinoscopia.jsp" flush="true"/>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</s:if>
 					</div>
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<tr>
@@ -382,7 +434,7 @@
 							</td>
 						</tr>
 					</table>
-				</s:if>
+				</s:elseif>
 			</div>
 			<div class="spacer"></div>
 		</s:form>

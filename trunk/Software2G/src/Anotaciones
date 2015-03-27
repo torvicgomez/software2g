@@ -62,6 +62,9 @@ Tareas
 42- Edicion datos registrados servicio clinico por termino de un tiempo parametrizable ---------  
 43- Cancelar servicio clinico desde agenda -----------------------------------------------------
 44- Creacion de Tablas de Auditoria con sus respectivos disparadores ---------------------------
+45- Control de flujo servicio clinico segun tipo de servicio a realizar ------------------------
+46- Verificar la validacion de color al momento de modificar un profesional de la salud --------
+47- Flujo de atencion de servicios segun el tipo de servicio -----------------------------------
 
 Sugerencia
 * Tabla profesional salud ---------------------------------------------------------------------- .::[O.K]::.

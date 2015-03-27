@@ -20,7 +20,7 @@ public class Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="PERSONA_IDPERS_GENERATOR", sequenceName="PORTAL.SEQ_PERSONA")
+	@SequenceGenerator(name="PERSONA_IDPERS_GENERATOR", sequenceName="PORTAL.SEQ_PERSONA", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PERSONA_IDPERS_GENERATOR")
 	@Column(name="id_pers")
 	private long idPers;

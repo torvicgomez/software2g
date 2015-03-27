@@ -66,6 +66,9 @@ public class Profesional implements Serializable {
 	@Transient
 	private String selectProfesion;
 	
+	@Transient
+	private String profEspecialidadView;
+	
 	public Profesional() {
 	}
 
@@ -192,4 +195,13 @@ public class Profesional implements Serializable {
 	public String getViewProfesional(){
 		return this.getPersona().getNombreCompleto()+" - "+this.getProfEspecialidad();
 	}
+
+	public String getProfEspecialidadView() {
+		return profEspecialidadView;
+	}
+
+	public void setProfEspecialidadView(String profEspecialidadView) {
+		this.profEspecialidadView = profEspecialidadView;
+	}
+	
 }

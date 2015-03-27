@@ -22,6 +22,7 @@ public final class ConstantesAplicativo {
 	
 	public static final String urlFuncionalidades=".action?estado=all&funcPosicionado=";
 	
+	public static final String constanteEstadoAllTipoServicio = "alltiposervicio";
 	public static final String constanteEstadoAll = "all";
 	public static final String constanteEstadoAdd = "add";
 	public static final String constanteEstadoAddSave = "addsave";
@@ -127,6 +128,17 @@ public final class ConstantesAplicativo {
 					new UtilGenerico("Entero", "Entero"),
 					new UtilGenerico("Fecha", "Fecha"),
 					new UtilGenerico("Numerico", "Numérico")));
+	
+	public static final List<UtilGenerico> listEspecialidadSoportadas = new ArrayList<UtilGenerico>(
+			Arrays.asList(new UtilGenerico("MEDICINA GENERAL", "Medicina General"),
+					new UtilGenerico("ODONTOLOGIA", "Odontología"),
+					new UtilGenerico("OPTOMETRIA", "Optometría")));
+	
+	public static final String constanteEspecialidadMedicinaGeneral = "3";
+	public static final String constanteEspecialidadOdontologia = "1";
+	public static final String constanteEspecialidadOptometria = "2";
+	public static final String constanteEspecialidadBacteriologia = "4";
+	
 	
 	public static final String constanteTipoDatoAlfanumerico = "Alfanumerico";
 	public static final String constanteTipoDatoNumerico = "Numerico";

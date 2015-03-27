@@ -578,6 +578,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			System.out.println("-------------------------------------------------------");
     			System.out.println("-------------------------------------------------------");
     			System.out.println("Validacion Seccion 1 - Datos Personales");
+    			ValidaString.imprimirObject(persona);
+    			ValidaString.imprimirObject(persona.getMunicipio());
     			if(ValidaString.isNullOrEmptyString(persona.getDocumentoPers()))
     				addActionError(getText("validacion.requeridoseccion","documentoPers",new ArrayList<String>(Arrays.asList("Número Documento", ConstantesAplicativo.constanteNombreSeccionDatosPersonales))));
     			if(persona.getTipodocumento().getIdTidoc()<=0)

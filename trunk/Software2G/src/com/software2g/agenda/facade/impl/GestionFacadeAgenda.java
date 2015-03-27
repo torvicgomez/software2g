@@ -960,6 +960,7 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 					persona = new Persona();
 					Tipodocumento tipoDocumento = (Tipodocumento)getTipoDocumentoDao().findTipodocumentoAbrev(participante.getPartTipodocumento()); 
 					ValidaString.imprimirObject(tipoDocumento);
+					persona.setMunicipio(new Municipio());
 					persona.setTipodocumento(tipoDocumento);
 					persona.setDocumentoPers(participante.getPartDocumento());
 					persona.setPnombrePers(participante.getPartPnombre());

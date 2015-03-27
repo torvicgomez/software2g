@@ -136,6 +136,11 @@
 			}
 			
 			function registrar(){
+			   var mcpoId = document.getElementById("mcpoId");
+			   if(mcpoId!=null)
+			   		alert('prueba mcpoId:['+mcpoId.value+']');
+			   else
+			   		alert('objeto null o no existe!!!!!!!');
 				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoSave%>";
 				document.form.submit();
 			}
@@ -200,7 +205,7 @@
 								
 								<tr>
 									<td class="leftLabel"><s:text name="personal.fechaexpedicion"></s:text></td>
-									<td><s:textfield name="persona.fechaexpdocPers" id="fechaexpdocPers" size="15" maxlength="10" cssClass="inputs" placeholder="dd-mm-aaaa"></s:textfield></td>
+									<td><s:textfield name="persona.fechaexpdocPers" id="fechaexpdocPers" size="15" maxlength="10" cssClass="inputs" placeholder="aaaa-mm-dd"></s:textfield></td>
 								</tr>
 								<tr>
 									<td class="leftLabel"><s:text name="personal.primernombre"></s:text><s:text name="campo.requerido"></s:text></td>
@@ -228,7 +233,7 @@
 								</tr>
 								<tr>
 									<td class="leftLabel"><s:text name="personal.fechanacimiento"></s:text><s:text name="campo.requerido"></s:text></td>
-									<td><s:textfield name="persona.fechanacimientoPers" id="fechanacimientoPers" size="15" maxlength="10" cssClass="inputs" placeholder="dd-mm-aaaa"></s:textfield></td>
+									<td><s:textfield name="persona.fechanacimientoPers" id="fechanacimientoPers" size="15" maxlength="10" cssClass="inputs" placeholder="aaaa-mm-dd"></s:textfield></td>
 								</tr>
 								<tr>
 									<td class="leftLabel"><s:text name="personal.telefono"></s:text><s:text name="campo.requerido"></s:text></td>
@@ -257,7 +262,7 @@
 												<td align="left">
 													<div id="viewSelectMcpo">
 														<s:if test="listMunicipio!=null&&listMunicipio.size>0">
-															<s:select list="listMunicipio" name="persona.municipio.mcpoId" listKey="mcpoId" listValue="nommunicipio" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs"/>
+															<s:select list="listMunicipio" name="persona.municipio.mcpoId" id="mcpoId" listKey="mcpoId" listValue="nommunicipio" headerKey="-1" headerValue=".::Seleccione::." cssClass="inputs"/>
 														</s:if>
 													</div>
 												</td>

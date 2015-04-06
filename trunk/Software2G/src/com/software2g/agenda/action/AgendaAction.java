@@ -552,6 +552,12 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
     			long idProfesional = request.getParameter("idProfesional")!=null?Long.parseLong(request.getParameter("idProfesional").toString()):0;
     			long idEvento = request.getParameter("idEvento")!=null?Long.parseLong(request.getParameter("idEvento").toString()):0;
+    			System.out.println("********************************************");
+    			System.out.println("********************************************");
+    			System.out.println("idProfesional:["+idProfesional+"]");
+    			System.out.println("idEvento:["+idEvento+"]");
+    			System.out.println("********************************************");
+    			System.out.println("********************************************");
     			if(idProfesional<=0){
     				if(tipoServicio.getTiseId()<=0)
     					addActionError(getText("validacion.requerido","tiposervicio","Servicio a Realizar"));
@@ -634,50 +640,56 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			System.out.println("-------------------------------------------------------");
     			
     			
+    			System.out.println("-------------------------------------------------------");
+    			System.out.println("-------------------------------------------------------");
+    			System.out.println("Validacion Seccion 2 - Datos Clinicos");
     			//listSegmentoAnamnesis = (List<Segmentoanamnesi>) request.getSession().getAttribute("listSegmentoAnamnesis");
-//    			System.out.println("listSegmentoAnamnesis:["+listSegmentoAnamnesis+"]");
-//    			if(listSegmentoAnamnesis!=null&&listSegmentoAnamnesis.size()>0){
-//    				System.out.println("*******************************************");
-//    				System.out.println("Entra evaluar resuestas segmentos!!!!!");
-//    				System.out.println("listSegmentoAnamnesis.size():["+listSegmentoAnamnesis.size()+"]");
-//    				System.out.println("*******************************************");
-//    				for(Segmentoanamnesi elem:listSegmentoAnamnesis){
-//    					if(elem.getPreguntas()!=null&&elem.getPreguntas().size()>0){
-//    						System.out.println("*******************************************");
-//							System.out.println("getSeanEtiqueta:["+elem.getSeanEtiqueta()+"]");
-//    						for(Pregunta elem1:elem.getPreguntas()){
-//    							System.out.println("getPregId:["+elem1.getPregId()+"]");
-//    							System.out.println("getPregPregunta:["+elem1.getPregPregunta()+"]");
-//    							System.out.println("getPregTipodato:["+elem1.getPregTipodato()+"]");
-//    							System.out.println("getPregRespobligatoria:["+elem1.getPregRespobligatoria()+"]");
-//    							if(elem1.getRespuestas()!=null&&elem1.getRespuestas().size()>0){
-//    								for(Respuesta elem2:elem1.getRespuestas()){
-//    									System.out.println("getRespRespuesta:["+elem2.getRespRespuesta()+"]");
-//    									if(elem1.getPregRespobligatoria().equals(ConstantesAplicativo.constanteRespObligatoriaSI)){
-//    										if(ValidaString.isNullOrEmptyString(elem2.getRespRespuesta()))
-//    						    				addActionError(getText("validacion.pregrequerida","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),elem.getSeanEtiqueta()))));
-//    									}
-//    									if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoAlfanumerico)){
-//    										if(!ValidaString.alfanumerico(elem2.getRespRespuesta()))
-//    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Alfanumérico"))));
-//    									}else if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoNumerico)){
-//    										if(!ValidaString.isNumeric(elem2.getRespRespuesta()))
-//    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Numérico"))));
-//    									}else if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoFecha)){
-//    										if(!ValidaString.validarFecha(elem2.getRespRespuesta()))
-//    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Fecha"))));
-//    									}else if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoEntero)){
-//    										if(!ValidaString.isEntero(elem2.getRespRespuesta()))
-//    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Entero"))));
-//    									}
-//    								}
-//    							}
-//    							System.out.println("*******************************************");
-//    						}
-//    					}
-//    				}
-//    			}
-    			
+    			System.out.println("listSegmentoAnamnesis:["+listSegmentoAnamnesis+"]");
+    			if(listSegmentoAnamnesis!=null&&listSegmentoAnamnesis.size()>0){
+    				System.out.println("*******************************************");
+    				System.out.println("Entra evaluar resuestas segmentos!!!!!");
+    				System.out.println("listSegmentoAnamnesis.size():["+listSegmentoAnamnesis.size()+"]");
+    				System.out.println("*******************************************");
+    				for(Segmentoanamnesi elem:listSegmentoAnamnesis){
+    					if(elem.getPreguntas()!=null&&elem.getPreguntas().size()>0){
+    						System.out.println("*******************************************");
+							System.out.println("getSeanEtiqueta:["+elem.getSeanEtiqueta()+"]");
+    						for(Pregunta elem1:elem.getPreguntas()){
+    							System.out.println("getPregId:["+elem1.getPregId()+"]");
+    							System.out.println("getPregPregunta:["+elem1.getPregPregunta()+"]");
+    							System.out.println("getPregTipodato:["+elem1.getPregTipodato()+"]");
+    							System.out.println("getPregRespobligatoria:["+elem1.getPregRespobligatoria()+"]");
+    							System.out.println("elem1.getRespuestas():["+elem1.getRespuestas()+"]");
+    							System.out.println("elem1.getRespuestas().size():["+elem1.getRespuestas().size()+"]");
+    							if(elem1.getRespuestas()!=null&&elem1.getRespuestas().size()>0){
+    								for(Respuesta elem2:elem1.getRespuestas()){
+    									System.out.println("getRespRespuesta:["+elem2.getRespRespuesta()+"]");
+    									if(elem1.getPregRespobligatoria().equals(ConstantesAplicativo.constanteRespObligatoriaSI)){
+    										if(ValidaString.isNullOrEmptyString(elem2.getRespRespuesta()))
+    						    				addActionError(getText("validacion.pregrequerida","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),elem.getSeanEtiqueta()))));
+    									}
+    									if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoAlfanumerico)){
+    										if(!ValidaString.alfanumerico(elem2.getRespRespuesta()))
+    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Alfanumérico"))));
+    									}else if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoNumerico)){
+    										if(!ValidaString.isNumeric(elem2.getRespRespuesta()))
+    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Numérico"))));
+    									}else if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoFecha)){
+    										if(!ValidaString.validarFecha(elem2.getRespRespuesta()))
+    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Fecha"))));
+    									}else if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoEntero)){
+    										if(!ValidaString.isEntero(elem2.getRespRespuesta()))
+    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Entero"))));
+    									}
+    								}
+    							}
+    							System.out.println("*******************************************");
+    						}
+    					}
+    				}
+    			}
+    			System.out.println("-------------------------------------------------------");
+    			System.out.println("-------------------------------------------------------");
     			
     			if(!hasActionErrors()){
     				persona.setDatosAud(getDatosAud());
@@ -701,21 +713,27 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     					addActionMessage(getText("accion.satisfactoria"));
     				}
     			}else{
-    				long idProfesional = request.getParameter("idProfesional")!=null?Long.parseLong(request.getParameter("idProfesional").toString()):0;
+    				System.out.println("Se requiere algun tipo de dato!!!!!!!!!!!!!!!!!");
+    				long idProfesional = request.getParameter("idProfesional")!=null?Long.parseLong(request.getParameter("idProfesional").toString())
+    						:profesional!=null&&profesional.getProfId()>0?profesional.getProfId():0;
         			long idEvento = request.getParameter("idEvento")!=null?Long.parseLong(request.getParameter("idEvento").toString()):0;
+        			System.out.println("idProfesional:["+idProfesional+"]");
+        			System.out.println("idEvento:["+idEvento+"]");
         			profesional = idProfesional>0?gestionFacadeAgenda.findProfesionalById(idProfesional):new Profesional();
-        			persona = gestionFacadeAgenda.findPacienteAtencionServicio(idEvento);
-        			listProcedimiento = gestionFacadeAgenda.findAllProcedimientos();
-        			listTipoDoc = gestionFacadeAgenda.findAllTipodocumentos();
-        			listEstadoCivil = ConstantesAplicativo.constanteEstadoCivil;
-        			listPais = gestionFacadeAgenda.findAllPaiss();
-        			listDepartamento = gestionFacadeAgenda.findAllDepartamentos();
-        			if(persona!=null&&persona.getExistePaciente().equals(ConstantesAplicativo.constanteCheckSi))
-        				listMunicipio = gestionFacadeAgenda.findAllMunicipios();
-        			listFinalidad = gestionFacadeHistoriaClinica.findAllFinalidads();
-        			listMotivo = gestionFacadeHistoriaClinica.findAllMotivos();
-        			listSeguridadSocial = gestionFacadeHistoriaClinica.findAllSeguridadsocials();
-        			listSegmentoAnamnesis = gestionFacadeHistoriaClinica.findAllSegmentoanamnesis();
+        			persona = idEvento<=0?gestionFacadeAgenda.findPacienteAtencionServicio(idEvento):gestionFacadeAgenda.findPersona(persona.getDocumentoPers(), persona.getTipodocumento().getAbreviaturaTidoc());
+        			cargarDatosServicioClinico(profesional.getProfEspecialidad());
+        			
+//        			listProcedimiento = gestionFacadeAgenda.findAllProcedimientos();
+//        			listTipoDoc = gestionFacadeAgenda.findAllTipodocumentos();
+//        			listEstadoCivil = ConstantesAplicativo.constanteEstadoCivil;
+//        			listPais = gestionFacadeAgenda.findAllPaiss();
+//        			listDepartamento = gestionFacadeAgenda.findAllDepartamentos();
+//        			if(persona!=null&&persona.getExistePaciente().equals(ConstantesAplicativo.constanteCheckSi))
+//        				listMunicipio = gestionFacadeAgenda.findAllMunicipios();
+//        			listFinalidad = gestionFacadeHistoriaClinica.findAllFinalidads();
+//        			listMotivo = gestionFacadeHistoriaClinica.findAllMotivos();
+//        			listSeguridadSocial = gestionFacadeHistoriaClinica.findAllSeguridadsocials();
+//        			listSegmentoAnamnesis = gestionFacadeHistoriaClinica.findAllSegmentoanamnesis();
     			}
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			System.out.println("Construccion!!!!!!!!!!");

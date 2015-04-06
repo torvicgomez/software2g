@@ -161,4 +161,5 @@ public final class ConstantesAplicativo {
 	
 
 	public static final String constanteNombreSeccionDatosPersonales = "Datos Personales";
+	public static final String constanteNombreSeccionDatosClinicos = "Datos Clínicos";
 }

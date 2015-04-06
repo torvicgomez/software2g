@@ -666,20 +666,20 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     									System.out.println("getRespRespuesta:["+elem2.getRespRespuesta()+"]");
     									if(elem1.getPregRespobligatoria().equals(ConstantesAplicativo.constanteRespObligatoriaSI)){
     										if(ValidaString.isNullOrEmptyString(elem2.getRespRespuesta()))
-    						    				addActionError(getText("validacion.pregrequerida","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),elem.getSeanEtiqueta()))));
+    						    				addActionError(getText("validacion.pregrequerida","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),elem.getSeanEtiqueta(), ConstantesAplicativo.constanteNombreSeccionDatosClinicos))));
     									}
     									if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoAlfanumerico)){
     										if(!ValidaString.alfanumerico(elem2.getRespRespuesta()))
-    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Alfanumérico"))));
+    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Alfanumérico", ConstantesAplicativo.constanteNombreSeccionDatosClinicos))));
     									}else if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoNumerico)){
     										if(!ValidaString.isNumeric(elem2.getRespRespuesta()))
-    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Numérico"))));
+    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Numérico", ConstantesAplicativo.constanteNombreSeccionDatosClinicos))));
     									}else if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoFecha)){
     										if(!ValidaString.validarFecha(elem2.getRespRespuesta()))
-    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Fecha"))));
+    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Fecha", ConstantesAplicativo.constanteNombreSeccionDatosClinicos))));
     									}else if(elem1.getPregTipodato().equals(ConstantesAplicativo.constanteTipoDatoEntero)){
     										if(!ValidaString.isEntero(elem2.getRespRespuesta()))
-    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Entero"))));
+    											addActionError(getText("validacion.tipodato","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),"Entero", ConstantesAplicativo.constanteNombreSeccionDatosClinicos))));
     									}
     								}
     							}

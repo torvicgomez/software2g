@@ -227,7 +227,7 @@
 						</tr>
 					</table>
 				</s:if>
-				<s:elseif test="estado=='all'">
+				<s:elseif test="estado=='all'||estado=='edit'||estado=='save'">
 					<div id="pestanas">
 						<ul>
 							<li><a href="#tabs-0"><s:text name="atencioservicio.datospersonales"></s:text></a></li>

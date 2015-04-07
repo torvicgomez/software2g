@@ -74,6 +74,9 @@
         	<result name="success" type="tiles">historiaClinica.opcionrespuesta</result>
         </action>
         
+        <action name="examenespecialidad" method="examenEspecialidadMethod" class="HistoriaClinicaAction">
+        	<result name="success" type="tiles">historiaClinica.examenespecialidad</result>
+        </action>
         
     </package>
 </struts>

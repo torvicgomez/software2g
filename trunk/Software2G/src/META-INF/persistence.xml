@@ -84,6 +84,7 @@
 		<class>com.software2g.vo.Tipoexamenopt</class>
 		<class>com.software2g.vo.Tipoformulacion</class>
 		<class>com.software2g.vo.Tipopregunta</class>
-		<class>com.software2g.vo.Tiposegmento</class> 
+		<class>com.software2g.vo.Tiposegmento</class>
+		<class>com.software2g.vo.Examenespecialidad</class> 
 	</persistence-unit>
 </persistence>

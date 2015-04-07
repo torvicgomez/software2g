@@ -162,4 +162,14 @@ public final class ConstantesAplicativo {
 
 	public static final String constanteNombreSeccionDatosPersonales = "Datos Personales";
 	public static final String constanteNombreSeccionDatosClinicos = "Datos Clínicos";
+	public static final String constanteNombreSeccionExamenesOptometria = "Examenes Optometría";
+	
+	public static final String constanteNombreExamenOptometriaRXUSO = "Rx en Uso";
+	public static final String constanteNombreExamenOptometriaAVSC = "AVSC";
+	public static final String constanteNombreExamenOptometriaCoverTest = "Cover Test";
+	public static final String constanteNombreExamenOptometriaExamenExterno = "Examen Externo";
+	public static final String constanteNombreExamenOptometriaOftalmoscopia = "Oftalmoscopia";
+	public static final String constanteNombreExamenOptometriaKeratometria = "Keratometría";
+	public static final String constanteNombreExamenOptometriaRetinoscopia = "Retinoscopia";
+	
 }

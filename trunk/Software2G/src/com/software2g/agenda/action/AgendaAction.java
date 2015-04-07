@@ -639,31 +639,16 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			System.out.println("-------------------------------------------------------");
     			System.out.println("-------------------------------------------------------");
     			
-    			
     			System.out.println("-------------------------------------------------------");
     			System.out.println("-------------------------------------------------------");
     			System.out.println("Validacion Seccion 2 - Datos Clinicos");
-    			//listSegmentoAnamnesis = (List<Segmentoanamnesi>) request.getSession().getAttribute("listSegmentoAnamnesis");
     			System.out.println("listSegmentoAnamnesis:["+listSegmentoAnamnesis+"]");
     			if(listSegmentoAnamnesis!=null&&listSegmentoAnamnesis.size()>0){
-    				System.out.println("*******************************************");
-    				System.out.println("Entra evaluar resuestas segmentos!!!!!");
-    				System.out.println("listSegmentoAnamnesis.size():["+listSegmentoAnamnesis.size()+"]");
-    				System.out.println("*******************************************");
     				for(Segmentoanamnesi elem:listSegmentoAnamnesis){
     					if(elem.getPreguntas()!=null&&elem.getPreguntas().size()>0){
-    						System.out.println("*******************************************");
-							System.out.println("getSeanEtiqueta:["+elem.getSeanEtiqueta()+"]");
     						for(Pregunta elem1:elem.getPreguntas()){
-    							System.out.println("getPregId:["+elem1.getPregId()+"]");
-    							System.out.println("getPregPregunta:["+elem1.getPregPregunta()+"]");
-    							System.out.println("getPregTipodato:["+elem1.getPregTipodato()+"]");
-    							System.out.println("getPregRespobligatoria:["+elem1.getPregRespobligatoria()+"]");
-    							System.out.println("elem1.getRespuestas():["+elem1.getRespuestas()+"]");
-    							System.out.println("elem1.getRespuestas().size():["+elem1.getRespuestas().size()+"]");
     							if(elem1.getRespuestas()!=null&&elem1.getRespuestas().size()>0){
     								for(Respuesta elem2:elem1.getRespuestas()){
-    									System.out.println("getRespRespuesta:["+elem2.getRespRespuesta()+"]");
     									if(elem1.getPregRespobligatoria().equals(ConstantesAplicativo.constanteRespObligatoriaSI)){
     										if(ValidaString.isNullOrEmptyString(elem2.getRespRespuesta()))
     						    				addActionError(getText("validacion.pregrequerida","respRespuesta",new ArrayList<String>(Arrays.asList(elem1.getPregPregunta(),elem.getSeanEtiqueta(), ConstantesAplicativo.constanteNombreSeccionDatosClinicos))));
@@ -683,13 +668,117 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     									}
     								}
     							}
-    							System.out.println("*******************************************");
     						}
     					}
     				}
     			}
     			System.out.println("-------------------------------------------------------");
     			System.out.println("-------------------------------------------------------");
+    			
+    			System.out.println("----------------------------------------------------------------");
+    			System.out.println("----------------------------------------------------------------");
+    			System.out.println("Validacion Seccion 3 - Examenes especificos de cada especialidad");
+    			//----------------------------------------------------------------//
+    			//  Datos Especificos segun especialidad desempenada profesional  //
+    			//----------------------------------------------------------------//
+    			String especialidad = profesional.getProfEspecialidad();
+    			System.out.println("especialidad:["+especialidad+"]");
+    			if(especialidad!=null){
+    				if(especialidad.equals(ConstantesAplicativo.constanteEspecialidadMedicinaGeneral)){
+    					System.out.println("en Construcción");
+    				}else if(especialidad.equals(ConstantesAplicativo.constanteEspecialidadOdontologia)){
+    					System.out.println("en Construcción");
+    				}else if(especialidad.equals(ConstantesAplicativo.constanteEspecialidadOptometria)){
+    					// 1. Validacion Examen Rx en Uso
+    					//---Ojo Derecho -- OD -----
+    					if(ValidaString.isNullOrEmptyString(rxUsoOD.getReruEsfera()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","reruEsfera",new ArrayList<String>(Arrays.asList("Esfera OD", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					if(ValidaString.isNullOrEmptyString(rxUsoOD.getReruCilindro()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","reruCilindro",new ArrayList<String>(Arrays.asList("Cilindro OD", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					if(ValidaString.isNullOrEmptyString(rxUsoOD.getReruEje()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","reruEje",new ArrayList<String>(Arrays.asList("Eje OD", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					if(ValidaString.isNullOrEmptyString(rxUsoOD.getReruAvl()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","reruAvl",new ArrayList<String>(Arrays.asList("AVL OD", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					if(ValidaString.isNullOrEmptyString(rxUsoOD.getReruAvc()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","reruAvc",new ArrayList<String>(Arrays.asList("AVC OD", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					//---Ojo Izquierdo -- OI -----
+    					if(ValidaString.isNullOrEmptyString(rxUsoOI.getReruEsfera()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","reruEsfera",new ArrayList<String>(Arrays.asList("Esfera OI", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					if(ValidaString.isNullOrEmptyString(rxUsoOI.getReruCilindro()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","reruCilindro",new ArrayList<String>(Arrays.asList("Cilindro OI", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					if(ValidaString.isNullOrEmptyString(rxUsoOI.getReruEje()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","reruEje",new ArrayList<String>(Arrays.asList("Eje OI", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					if(ValidaString.isNullOrEmptyString(rxUsoOI.getReruAvl()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","reruAvl",new ArrayList<String>(Arrays.asList("AVL OI", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					if(ValidaString.isNullOrEmptyString(rxUsoOI.getReruAvc()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","reruAvc",new ArrayList<String>(Arrays.asList("AVC OI", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					// Ambos Ojos
+    					if(ValidaString.isNullOrEmptyString(rxUsoOI.getReruAdd()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","reruAdd",new ArrayList<String>(Arrays.asList("ADD", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					//------------------------------------------
+    					//------------------------------------------
+    					// 2. Validacion Examen AVSC
+    					//---Ojo Derecho -- OD -----
+    					if(ValidaString.isNullOrEmptyString(avscOD.getAvscAvl()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","avscAvl",new ArrayList<String>(Arrays.asList("AVL OD", ConstantesAplicativo.constanteNombreExamenOptometriaAVSC, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					if(ValidaString.isNullOrEmptyString(avscOD.getAvscAvc()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","avscAvc",new ArrayList<String>(Arrays.asList("AVC OD", ConstantesAplicativo.constanteNombreExamenOptometriaAVSC, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					//---Ojo Izquierdo -- OI -----
+    					if(ValidaString.isNullOrEmptyString(avscOI.getAvscAvl()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","avscAvl",new ArrayList<String>(Arrays.asList("AVL OI", ConstantesAplicativo.constanteNombreExamenOptometriaAVSC, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					if(ValidaString.isNullOrEmptyString(avscOI.getAvscAvc()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","avscAvc",new ArrayList<String>(Arrays.asList("AVC OI", ConstantesAplicativo.constanteNombreExamenOptometriaAVSC, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					//------------------------------------------
+    					//------------------------------------------
+    					// 3. Validacion Examen Cover Test
+    					System.out.println("En Construccion!!!!!!!");
+    					//------------------------------------------
+    					//------------------------------------------
+    					// 4. Validacion Examen Externo
+    					//---Ojo Derecho -- OD -----
+    					if(ValidaString.isNullOrEmptyString(examenExternoOD.getReesValor()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OD", ConstantesAplicativo.constanteNombreExamenOptometriaExamenExterno, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					//---Ojo Izquierdo -- OI -----
+    					//------------------------------------------
+    					if(ValidaString.isNullOrEmptyString(examenExternoOI.getReesValor()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OI", ConstantesAplicativo.constanteNombreExamenOptometriaExamenExterno, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					//------------------------------------------
+    					// 5. Validacion Examen Oftalmoscopia
+    					//---Ojo Derecho -- OD -----
+    					if(ValidaString.isNullOrEmptyString(oftalmoscopiaOD.getReesValor()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OD", ConstantesAplicativo.constanteNombreExamenOptometriaOftalmoscopia, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					//---Ojo Izquierdo -- OI -----
+    					//------------------------------------------
+    					if(ValidaString.isNullOrEmptyString(oftalmoscopiaOI.getReesValor()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OI", ConstantesAplicativo.constanteNombreExamenOptometriaOftalmoscopia, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					//------------------------------------------
+    					//------------------------------------------
+    					// 6. Validacion Examen Keratometria
+    					//---Ojo Derecho -- OD -----
+    					if(ValidaString.isNullOrEmptyString(keratometriaOD.getReesValor()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OD", ConstantesAplicativo.constanteNombreExamenOptometriaKeratometria, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					//---Ojo Izquierdo -- OI -----
+    					//------------------------------------------
+    					if(ValidaString.isNullOrEmptyString(keratometriaOI.getReesValor()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OI", ConstantesAplicativo.constanteNombreExamenOptometriaKeratometria, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					//------------------------------------------
+    					//------------------------------------------
+    					// 7. Validacion Examen Retinoscopia
+    					//---Ojo Derecho -- OD -----
+    					if(ValidaString.isNullOrEmptyString(retinoscopiaOD.getReesValor()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OD", ConstantesAplicativo.constanteNombreExamenOptometriaRetinoscopia, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					//---Ojo Izquierdo -- OI -----
+    					//------------------------------------------
+    					if(ValidaString.isNullOrEmptyString(retinoscopiaOI.getReesValor()))
+    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OI", ConstantesAplicativo.constanteNombreExamenOptometriaRetinoscopia, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    				}
+    			}
+    			//-------------------------------------------------------------------------//
+    			//  Datos Especificos segun especialidad en realcion a los datos clinicos  //
+    			//-------------------------------------------------------------------------//
+    			System.out.println("----------------------------------------------------------------");
+    			System.out.println("----------------------------------------------------------------");
+    			
     			
     			if(!hasActionErrors()){
     				persona.setDatosAud(getDatosAud());
@@ -722,18 +811,6 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
         			profesional = idProfesional>0?gestionFacadeAgenda.findProfesionalById(idProfesional):new Profesional();
         			persona = idEvento<=0?gestionFacadeAgenda.findPacienteAtencionServicio(idEvento):gestionFacadeAgenda.findPersona(persona.getDocumentoPers(), persona.getTipodocumento().getAbreviaturaTidoc());
         			cargarDatosServicioClinico(profesional.getProfEspecialidad());
-        			
-//        			listProcedimiento = gestionFacadeAgenda.findAllProcedimientos();
-//        			listTipoDoc = gestionFacadeAgenda.findAllTipodocumentos();
-//        			listEstadoCivil = ConstantesAplicativo.constanteEstadoCivil;
-//        			listPais = gestionFacadeAgenda.findAllPaiss();
-//        			listDepartamento = gestionFacadeAgenda.findAllDepartamentos();
-//        			if(persona!=null&&persona.getExistePaciente().equals(ConstantesAplicativo.constanteCheckSi))
-//        				listMunicipio = gestionFacadeAgenda.findAllMunicipios();
-//        			listFinalidad = gestionFacadeHistoriaClinica.findAllFinalidads();
-//        			listMotivo = gestionFacadeHistoriaClinica.findAllMotivos();
-//        			listSeguridadSocial = gestionFacadeHistoriaClinica.findAllSeguridadsocials();
-//        			listSegmentoAnamnesis = gestionFacadeHistoriaClinica.findAllSegmentoanamnesis();
     			}
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			System.out.println("Construccion!!!!!!!!!!");
@@ -760,6 +837,9 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 		listFinalidad = gestionFacadeHistoriaClinica.findAllFinalidads();
 		listMotivo = gestionFacadeHistoriaClinica.findAllMotivos();
 		listSeguridadSocial = gestionFacadeHistoriaClinica.findAllSeguridadsocials();
+		
+		
+		
 		//----------------------------------------------------------------//
 		//  Datos Especificos segun especialidad desempenada profesional  //
 		//----------------------------------------------------------------//		

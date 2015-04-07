@@ -2,6 +2,7 @@ package com.software2g.vo;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -40,6 +41,9 @@ public class Tipoespecialidad implements Serializable {
 	@OneToMany(mappedBy="tipoespecialidad")
 	private List<Segmentoanamnesi> segmentoanamnesis;
 
+	@OneToMany(mappedBy="tipoEspecialidad")
+	private List<Examenespecialidad> examenEspecialidad;
+	
 	public Tipoespecialidad() {
 	}
 
@@ -106,4 +110,13 @@ public class Tipoespecialidad implements Serializable {
 			this.tiesHoracambio=data.get(2);
 		}
 	}
+
+	public List<Examenespecialidad> getExamenEspecialidad() {
+		return examenEspecialidad;
+	}
+
+	public void setExamenEspecialidad(List<Examenespecialidad> examenEspecialidad) {
+		this.examenEspecialidad = examenEspecialidad;
+	}
+	
 }

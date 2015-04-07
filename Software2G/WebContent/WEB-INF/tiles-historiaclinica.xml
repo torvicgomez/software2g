@@ -35,4 +35,8 @@
 	<definition name="historiaClinica.opcionrespuesta" extends="baseLayoutPortal">
 		<put-attribute name="body" value="/historiaClinica/opcionRespuesta.jsp" />
 	</definition>
+	
+	<definition name="historiaClinica.examenespecialidad" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/historiaClinica/examenEspecialidad.jsp" />
+	</definition>
 </tiles-definitions>

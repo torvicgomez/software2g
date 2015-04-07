@@ -20,6 +20,7 @@ import com.software2g.historia_clinica.facade.IGestionFacadeHistoriaClinica;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Acudiente;
+import com.software2g.vo.Examenespecialidad;
 import com.software2g.vo.Finalidad;
 import com.software2g.vo.Motivo;
 import com.software2g.vo.Opcionrespuesta;
@@ -95,6 +96,8 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 	private List<Opcionrespuesta> listOpcionRespuesta;
 	private Opcionrespuesta opcionRespuesta;
 	private List<Tipoespecialidad> listTipoEspecialidad;
+	private Examenespecialidad examenEspecialidad;
+	private List<Examenespecialidad> listExamenEspecialidad;
 	
 	public List<Tiposegmento> getListTipoSegmento() {return listTipoSegmento;}
 	public void setListTipoSegmento(List<Tiposegmento> listTipoSegmento) {this.listTipoSegmento = listTipoSegmento;}
@@ -118,6 +121,10 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 	public void setOpcionRespuesta(Opcionrespuesta opcionRespuesta) {this.opcionRespuesta = opcionRespuesta;}
 	public List<Tipoespecialidad> getListTipoEspecialidad() {return listTipoEspecialidad;}
 	public void setListTipoEspecialidad(List<Tipoespecialidad> listTipoEspecialidad) {this.listTipoEspecialidad = listTipoEspecialidad;}
+	public Examenespecialidad getExamenEspecialidad() {return examenEspecialidad;}
+	public void setExamenEspecialidad(Examenespecialidad examenEspecialidad) {this.examenEspecialidad = examenEspecialidad;}
+	public List<Examenespecialidad> getListExamenEspecialidad() {return listExamenEspecialidad;}
+	public void setListExamenEspecialidad(List<Examenespecialidad> listExamenEspecialidad) {this.listExamenEspecialidad = listExamenEspecialidad;}
 	
 	public List<UtilGenerico> getListEstado() {return ConstantesAplicativo.listEstado;}
 	public List<UtilGenerico> getListObjetoView() {return ConstantesAplicativo.listObjetoView;}
@@ -377,6 +384,48 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     		addActionError(getText("error.aplicacion"));
     	}
     	System.out.println("######>>>>>>>HistoriaClinicaAction>>>>opcionRespuestaMethod>>>>estado salida-->>"+estado);
+    	return Action.SUCCESS;
+	}
+	
+	@SkipValidation
+	public String examenEspecialidadMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>HistoriaClinicaAction>>>>examenEspecialidadMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listExamenEspecialidad = gestionFacadeHistoriaClinica.findAllExamenespecialidads();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAdd)){
+    			listTipoEspecialidad = gestionFacadeHistoriaClinica.findAllTipoespecialidads();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			if(examenEspecialidad.getTipoEspecialidad().getTiesId()<=0)
+    				addActionError(getText("validacion.requerido","tiesId","Tipo Especialidad"));
+    			if(ValidaString.isNullOrEmptyString(examenEspecialidad.getExesNombre()))
+    				addActionError(getText("validacion.requerido","exesNombre","Nombre Examen"));
+    			if(ValidaString.isNullOrEmptyString(examenEspecialidad.getExesPaginajsp()))
+    				addActionError(getText("validacion.requerido","exesPaginaJSP","Pagina Examen"));
+    			if(ValidaString.isNullOrEmptyString(examenEspecialidad.getExesEstado()))
+    				addActionError(getText("validacion.requerido","exesEstado","Estado"));
+    			if(examenEspecialidad.getExesOrden()<=0)
+    				addActionError(getText("validacion.requerido","exesOrden","Orden"));
+    			if(!hasActionErrors()){
+    				examenEspecialidad.setDatosAud(this.getDatosAud());
+    				ValidaString.imprimirObject(examenEspecialidad);
+    				gestionFacadeHistoriaClinica.persistExamenespecialidad(examenEspecialidad);
+    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				addActionMessage(getText("accion.satisfactoria"));
+    				examenEspecialidad.setTipoEspecialidad(gestionFacadeHistoriaClinica.findTipoespecialidadById(examenEspecialidad.getTipoEspecialidad().getTiesId()));
+    			}else
+    				listTipoEspecialidad = gestionFacadeHistoriaClinica.findAllTipoespecialidads();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			examenEspecialidad = gestionFacadeHistoriaClinica.findExamenespecialidadById(getIdLong());
+    			listTipoEspecialidad = gestionFacadeHistoriaClinica.findAllTipoespecialidads();
+    		}
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>HistoriaClinicaAction>>>>examenEspecialidadMethod>>>>estado salida-->>"+estado);
     	return Action.SUCCESS;
 	}
 	

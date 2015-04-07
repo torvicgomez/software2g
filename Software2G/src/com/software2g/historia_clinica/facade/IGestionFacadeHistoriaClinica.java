@@ -8,6 +8,7 @@ import com.software2g.vo.Clasediagnostico;
 import com.software2g.vo.Codigoenfermedade;
 import com.software2g.vo.Diagnostico;
 import com.software2g.vo.Especificacionpartecuerpo;
+import com.software2g.vo.Examenespecialidad;
 import com.software2g.vo.Examenoptometria;
 import com.software2g.vo.Finalidad;
 import com.software2g.vo.Formulacion;
@@ -875,4 +876,29 @@ public interface IGestionFacadeHistoriaClinica {
 	// FIN Tipo Servicio
 	//******************************************************************
 
+	//******************************************************************
+	// Examen Especialidad
+	//******************************************************************
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Examenespecialidad findExamenespecialidadById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Examenespecialidad</code> entity.
+	 */
+	public List<Examenespecialidad> findAllExamenespecialidads() throws Exception;
+	public List<Examenespecialidad> findAllExamenespecialidads(long tipoEspecialidad) throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistExamenespecialidad(Examenespecialidad examenespecialidad) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeExamenespecialidad(Examenespecialidad examenespecialidad) throws Exception;
+	//******************************************************************
+	// FIN Examen Especialidad
+	//******************************************************************
+	
 }

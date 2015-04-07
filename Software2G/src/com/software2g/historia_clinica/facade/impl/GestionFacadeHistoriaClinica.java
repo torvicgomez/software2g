@@ -15,6 +15,7 @@ import com.software2g.historia_clinica.dao.IClaseDiagnosticoDao;
 import com.software2g.historia_clinica.dao.ICodigoEnfermedadDao;
 import com.software2g.historia_clinica.dao.IDiagnosticoDao;
 import com.software2g.historia_clinica.dao.IEspecificacionParteCuerpoDao;
+import com.software2g.historia_clinica.dao.IExamenEspecialidadDao;
 import com.software2g.historia_clinica.dao.IExamenOptometriaDao;
 import com.software2g.historia_clinica.dao.IFinalidadDao;
 import com.software2g.historia_clinica.dao.IFormulacionDao;
@@ -54,6 +55,7 @@ import com.software2g.vo.Clasediagnostico;
 import com.software2g.vo.Codigoenfermedade;
 import com.software2g.vo.Diagnostico;
 import com.software2g.vo.Especificacionpartecuerpo;
+import com.software2g.vo.Examenespecialidad;
 import com.software2g.vo.Examenoptometria;
 import com.software2g.vo.Finalidad;
 import com.software2g.vo.Formulacion;
@@ -160,6 +162,8 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	ITipoSegmentoDao tipoSegmentoDao;
 	@Autowired
 	ITipoServicioDao tipoServicioDao;
+	@Autowired
+	IExamenEspecialidadDao examenEspecialidadDao;
 	
 	public IAcudienteDao getAcudienteDao() {return acudienteDao;}
 	public void setAcudienteDao(IAcudienteDao acudienteDao) {this.acudienteDao = acudienteDao;}
@@ -233,6 +237,8 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	public void setTipoSegmentoDao(ITipoSegmentoDao tipoSegmentoDao) {this.tipoSegmentoDao = tipoSegmentoDao;}
 	public ITipoServicioDao getTipoServicioDao() {return tipoServicioDao;}
 	public void setTipoServicioDao(ITipoServicioDao tipoServicioDao) {this.tipoServicioDao = tipoServicioDao;}
+	public IExamenEspecialidadDao getExamenEspecialidadDao() {return examenEspecialidadDao;}
+	public void setExamenEspecialidadDao(IExamenEspecialidadDao examenEspecialidadDao) {this.examenEspecialidadDao = examenEspecialidadDao;}
 	
 	//******************************************************************
 	// Acudiente
@@ -2081,4 +2087,66 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	// Fin Tipo Servicio
 	//******************************************************************	
 
+	//******************************************************************
+	// Examen Especialidad
+	//******************************************************************	
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Examenespecialidad findExamenespecialidadById(long id) throws Exception {
+		try {
+			return getExamenEspecialidadDao().findExamenespecialidadById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findExamenespecialidadById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Examenespecialidad</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Examenespecialidad> findAllExamenespecialidads() throws Exception {
+		try {
+			return getExamenEspecialidadDao().findAllExamenespecialidads();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllExamenespecialidads failed: " + e.getMessage());
+		}
+	}
+
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Examenespecialidad> findAllExamenespecialidads(long tipoEspecialidad) throws Exception {
+		try {
+			return getExamenEspecialidadDao().findAllExamenespecialidads(tipoEspecialidad);
+		} catch (RuntimeException e) {
+			throw new Exception("findAllExamenespecialidads failed: " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	@Transactional
+	public void persistExamenespecialidad(Examenespecialidad examenespecialidad) throws Exception {
+		try {
+			getExamenEspecialidadDao().persistExamenespecialidad(examenespecialidad);
+		} catch (RuntimeException e) {
+			throw new Exception("persistExamenespecialidad failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	@Transactional
+	public void removeExamenespecialidad(Examenespecialidad examenespecialidad) throws Exception {
+		try {
+			getExamenEspecialidadDao().removeExamenespecialidad(examenespecialidad);
+		} catch (RuntimeException e) {
+			throw new Exception("removeExamenespecialidad failed: " + e.getMessage());
+		}
+	}
+	//******************************************************************
+	// Fin Examen Especialidad
+	//******************************************************************	
+	
 }

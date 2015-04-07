@@ -193,5 +193,6 @@
         <property name="tipoPreguntaDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoPreguntaDAOImpl"/></property>
         <property name="tipoSegmentoDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoSegmentoDAOImpl"/></property>
         <property name="tipoServicioDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoServicioDAOImpl"/></property>
+        <property name="examenEspecialidadDao"><bean class="com.software2g.historia_clinica.dao.impl.ExamenEspecialidadDAOImpl"/></property>
     </bean>
 </beans>

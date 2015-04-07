@@ -23,6 +23,8 @@ var zNodes = [
 	{id:3011, pId:3000, name:"Segmentos Anamnesis", file:"segmentoanamnesis.action?estado=all&funcPosicionado=Calendario/Segmentos Anamnesis"},
 	{id:3012, pId:3000, name:"Preguntas", file:"pregunta.action?estado=all&funcPosicionado=Calendario/Preguntas"},
 	{id:3013, pId:3000, name:"Opciones Respuestas", file:"opcionrespuesta.action?estado=all&funcPosicionado=Calendario/Opciones Respuestas"},
+	{id:3014, pId:3000, name:"Examenes Especialidad", file:"examenespecialidad.action?estado=all&funcPosicionado=Calendario/Examenes Especialidad"},
+	
 	
 	{id:4000, pId:0, name:"Personal", open:true},
 	{id:4001, pId:4000, name:"Administración Personal", file:"listPersonal.action?url=Personal::>Administración Personal"},

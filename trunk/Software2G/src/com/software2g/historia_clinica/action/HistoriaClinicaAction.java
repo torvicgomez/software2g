@@ -51,7 +51,6 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 //	private List<Profesionalsalud> listProfesionalSalud;
 //	private Profesionalsalud profesionalSalud;
 	private InputStream strDatosPersona;
-	private InputStream	strDatosDiagnostico;
 	
 //	public List<Profesionalsalud> getListProfesionalSalud() {return listProfesionalSalud;}
 //	public void setListProfesionalSalud(List<Profesionalsalud> listProfesionalSalud) {this.listProfesionalSalud = listProfesionalSalud;}
@@ -435,24 +434,6 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     	return Action.SUCCESS;
 	}
 
-	public InputStream getstrDatosDiagnostico() {
-		try{
-			String html = "";
-			long coenId = Long.parseLong(request.getParameter("coenId"));
-			Codigoenfermedade codigoEnfermedad = gestionFacadeHistoriaClinica.findCodigoenfermedadeById(coenId);
-			html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">"+
-					"	<tr> " +
-					"		<td>[" + codigoEnfermedad.getCoenCodigo() + "] " + codigoEnfermedad.getCoenNombre() + "</td> " +
-					"	</tr> " +
-					"</table>";
-			strDatosDiagnostico = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return strDatosDiagnostico;
-	}
-	
-	
 	public HistoriaClinicaAction(IGestionFacadeHistoriaClinica gestionFacadeHistoriaClinica) {
 		this.gestionFacadeHistoriaClinica = gestionFacadeHistoriaClinica;
 	}

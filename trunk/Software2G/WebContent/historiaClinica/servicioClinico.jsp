@@ -244,7 +244,6 @@
 						</ul>
 						<div id="tabs-0">
 							<table cellpadding="0" cellspacing="0" border="0" class="display">
-								
 								<tr>
 									<td class="leftLabel"><s:text name="personal.numerodocumento"></s:text><s:text name="campo.requerido"></s:text></td>
 									<td>

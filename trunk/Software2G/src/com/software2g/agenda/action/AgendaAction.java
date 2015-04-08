@@ -23,7 +23,9 @@ import com.software2g.historia_clinica.facade.IGestionFacadeHistoriaClinica;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Agenda;
+import com.software2g.vo.Codigoenfermedade;
 import com.software2g.vo.Departamento;
+import com.software2g.vo.Diagnostico;
 import com.software2g.vo.Evento;
 import com.software2g.vo.Examenespecialidad;
 import com.software2g.vo.Finalidad;
@@ -46,6 +48,7 @@ import com.software2g.vo.Registrorxuso;
 import com.software2g.vo.Respuesta;
 import com.software2g.vo.Segmentoanamnesi;
 import com.software2g.vo.Seguridadsocial;
+import com.software2g.vo.Tipodiagnostico;
 import com.software2g.vo.Tipodocumento;
 import com.software2g.vo.Tipoespecialidad;
 import com.software2g.vo.Tipoprocedimiento;
@@ -125,6 +128,10 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private List<Tiposervicio> listTipoServicio;
 	private List<Tipoespecialidad> listTipoEspecialidad;
 	private List<Examenespecialidad> listExamenEspecialidad;
+	private InputStream	strDatosDiagnostico;
+	private List<Diagnostico> listDiagnostico;
+	private List<Tipodiagnostico> listTipoDiagnostico;
+	private InputStream	strCambiarDatosDiagnostico;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -230,6 +237,10 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setListTipoEspecialidad(List<Tipoespecialidad> listTipoEspecialidad) {this.listTipoEspecialidad = listTipoEspecialidad;}
 	public List<Examenespecialidad> getListExamenEspecialidad() {return listExamenEspecialidad;}
 	public void setListExamenEspecialidad(List<Examenespecialidad> listExamenEspecialidad) {this.listExamenEspecialidad = listExamenEspecialidad;}
+	public List<Diagnostico> getListDiagnostico() {return listDiagnostico;}
+	public void setListDiagnostico(List<Diagnostico> listDiagnostico) {this.listDiagnostico = listDiagnostico;}
+	public List<Tipodiagnostico> getListTipoDiagnostico() {return listTipoDiagnostico;}
+	public void setListTipoDiagnostico(List<Tipodiagnostico> listTipoDiagnostico) {this.listTipoDiagnostico = listTipoDiagnostico;}
 	
 	public List<Respuesta> getListRespuesta() {return listRespuesta;}
 	public void setListRespuesta(List<Respuesta> listRespuesta) {this.listRespuesta = listRespuesta;}
@@ -600,12 +611,14 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	    			persona = gestionFacadeAgenda.findPacienteAtencionServicio(idEvento);
 	    			cargarDatosServicioClinico(profesional.getProfEspecialidad());
     			}
+    			request.getSession().removeAttribute("listDiagnostico");
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAllTipoServicio)){
     			listTipoDoc = gestionFacadeAgenda.findAllTipodocumentos();
     			listTipoServicio = gestionFacadeHistoriaClinica.findAllTiposervicios();
     			Usuario usuario = (Usuario)request.getSession().getAttribute("usuarioVO");
     			System.out.println("getIdPers:["+usuario.getPersona().getIdPers()+"]");
     			profesional = gestionFacadeAgenda.findProfesionalIdPersona(usuario.getPersona().getIdPers());
+    			request.getSession().removeAttribute("listDiagnostico");
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			System.out.println("Construccion!!!!!!!!!!");
     			System.out.println("Validacion por secciones segun orden prioritario");
@@ -794,6 +807,23 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			System.out.println("----------------------------------------------------------------");
     			
     			
+    			System.out.println("----------------------------------------------------------------");
+    			System.out.println("----------------------------------------------------------------");
+    			System.out.println("Validacion Seccion 4 - Diagnostico Principal y Relacional");
+    			listDiagnostico = (List<Diagnostico>) request.getSession().getAttribute("listDiagnostico");
+    			if(listDiagnostico==null)
+    				listDiagnostico = new ArrayList<Diagnostico>();
+    			else{
+    				for(Diagnostico elem:listDiagnostico){
+    					System.out.println("Codigo Enfermedad:["+elem.getCodigoenfermedade().getCoenId()+"-"+elem.getCodigoenfermedade().getCoenCodigo()+"]");
+    					System.out.println("Clase Diagnostico:["+elem.getClasediagnostico().getCldiId()+"-"+elem.getClasediagnostico().getCldiNombre()+"]");
+    					System.out.println("Tipo Diagnostico:["+elem.getTipodiagnostico().getTidiId()+"-"+elem.getTipodiagnostico().getTidiNombre()+"]");
+    					System.out.println("Orden Diagnostico:["+elem.getDiagOrden()+"]");
+    				}
+    			}
+    			System.out.println("----------------------------------------------------------------");
+    			System.out.println("----------------------------------------------------------------");	
+    			
     			if(!hasActionErrors()){
     				persona.setDatosAud(getDatosAud());
     				ValidaString.imprimirObject(persona);
@@ -823,7 +853,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
         			System.out.println("idProfesional:["+idProfesional+"]");
         			System.out.println("idEvento:["+idEvento+"]");
         			profesional = idProfesional>0?gestionFacadeAgenda.findProfesionalById(idProfesional):new Profesional();
-        			//persona = idEvento<=0?gestionFacadeAgenda.findPacienteAtencionServicio(idEvento):gestionFacadeAgenda.findPersona(persona.getDocumentoPers(), persona.getTipodocumento().getAbreviaturaTidoc());
+        			persona = idEvento<=0?gestionFacadeAgenda.findPacienteAtencionServicio(idEvento):gestionFacadeAgenda.findPersona(persona.getDocumentoPers(), persona.getTipodocumento().getAbreviaturaTidoc());
         			cargarDatosServicioClinico(profesional.getProfEspecialidad());
     			}
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
@@ -851,15 +881,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 		listFinalidad = gestionFacadeHistoriaClinica.findAllFinalidads();
 		listMotivo = gestionFacadeHistoriaClinica.findAllMotivos();
 		listSeguridadSocial = gestionFacadeHistoriaClinica.findAllSeguridadsocials();
-		
-		System.out.println("especialidad:"+especialidad); 
 		listExamenEspecialidad = gestionFacadeHistoriaClinica.findAllExamenespecialidads(Long.parseLong(especialidad));
-		if(listExamenEspecialidad!=null&&listExamenEspecialidad.size()>0){
-			for(Examenespecialidad elem: listExamenEspecialidad){
-				System.out.println(":["+elem.getExesPaginajsp()+"]");
-			}
-		}
-		
+		listTipoDiagnostico = gestionFacadeHistoriaClinica.findAllTipodiagnosticos();
 		
 		//----------------------------------------------------------------//
 		//  Datos Especificos segun especialidad desempenada profesional  //
@@ -1115,5 +1138,53 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 			e.printStackTrace();
 		}
 		return strCrearEvento;
+	}
+	
+	public InputStream getStrDatosDiagnostico() {
+		try{
+			String html = "";
+			long coenId = Long.parseLong(request.getParameter("coenId"));
+			String claseDiagnostico = request.getParameter("claseDiag");
+			String tipoDiagnostico = request.getParameter("tipoDiag");
+			Diagnostico diagnostico = new Diagnostico(); 
+			Codigoenfermedade codigoEnfermedad = gestionFacadeHistoriaClinica.findCodigoenfermedadeById(coenId);
+			diagnostico.setCodigoenfermedade(codigoEnfermedad);
+			diagnostico.setClasediagnostico(claseDiagnostico!=null?gestionFacadeHistoriaClinica.findClasediagnosticosXAbreviatura(Long.parseLong(claseDiagnostico)<=0?ConstantesAplicativo.constanteClaseDiagnosticoPP:ConstantesAplicativo.constanteClaseDiagnosticoRL):null);
+			diagnostico.setDiagOrden(claseDiagnostico!=null?Long.parseLong(claseDiagnostico):0);
+			diagnostico.setTipodiagnostico(claseDiagnostico!=null?gestionFacadeHistoriaClinica.findTipodiagnosticoById(Long.parseLong(tipoDiagnostico)):null);
+			listDiagnostico = (List<Diagnostico>) request.getSession().getAttribute("listDiagnostico");
+			if(listDiagnostico==null)
+				listDiagnostico = new ArrayList<Diagnostico>();
+			if(claseDiagnostico!=null)
+				listDiagnostico.add(Integer.parseInt(claseDiagnostico), diagnostico);
+			request.getSession().setAttribute("listDiagnostico", listDiagnostico);
+			html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">"+
+					"	<tr> " +
+					"		<td>[" + codigoEnfermedad.getCoenCodigo() + "] " + codigoEnfermedad.getCoenNombre() + "</td> " +
+					"		<td>" + (Long.parseLong(tipoDiagnostico)>0?diagnostico.getTipodiagnostico().getTidiNombre():"") + "</td> " +
+					"	</tr> " +
+					"</table>";
+			strDatosDiagnostico = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return strDatosDiagnostico;
+	}
+	
+	public InputStream getStrCambiarDatosDiagnostico() {
+		try{
+			String html = "";
+			long diagnosticoPos = Long.parseLong(request.getParameter("diagnostico"));
+			listDiagnostico = (List<Diagnostico>) request.getSession().getAttribute("listDiagnostico");
+			if(listDiagnostico==null)
+				listDiagnostico = new ArrayList<Diagnostico>();
+			else
+				listDiagnostico.remove(diagnosticoPos);
+			request.getSession().setAttribute("listDiagnostico", listDiagnostico);
+			strCambiarDatosDiagnostico = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return strCambiarDatosDiagnostico;
 	}
 }

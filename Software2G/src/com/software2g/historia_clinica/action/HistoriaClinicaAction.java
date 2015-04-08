@@ -1,6 +1,8 @@
 package com.software2g.historia_clinica.action;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -20,6 +22,7 @@ import com.software2g.historia_clinica.facade.IGestionFacadeHistoriaClinica;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Acudiente;
+import com.software2g.vo.Codigoenfermedade;
 import com.software2g.vo.Examenespecialidad;
 import com.software2g.vo.Finalidad;
 import com.software2g.vo.Motivo;
@@ -48,6 +51,7 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 //	private List<Profesionalsalud> listProfesionalSalud;
 //	private Profesionalsalud profesionalSalud;
 	private InputStream strDatosPersona;
+	private InputStream	strDatosDiagnostico;
 	
 //	public List<Profesionalsalud> getListProfesionalSalud() {return listProfesionalSalud;}
 //	public void setListProfesionalSalud(List<Profesionalsalud> listProfesionalSalud) {this.listProfesionalSalud = listProfesionalSalud;}
@@ -406,6 +410,8 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     				addActionError(getText("validacion.requerido","exesPaginaJSP","Pagina Examen"));
     			if(ValidaString.isNullOrEmptyString(examenEspecialidad.getExesEstado()))
     				addActionError(getText("validacion.requerido","exesEstado","Estado"));
+    			if(ValidaString.isNullOrEmptyString(examenEspecialidad.getExesPalabraclave()))
+    				addActionError(getText("validacion.requerido","exesPalabraClave","Palabra Clave"));
     			if(examenEspecialidad.getExesOrden()<=0)
     				addActionError(getText("validacion.requerido","exesOrden","Orden"));
     			if(!hasActionErrors()){
@@ -428,6 +434,24 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     	System.out.println("######>>>>>>>HistoriaClinicaAction>>>>examenEspecialidadMethod>>>>estado salida-->>"+estado);
     	return Action.SUCCESS;
 	}
+
+	public InputStream getstrDatosDiagnostico() {
+		try{
+			String html = "";
+			long coenId = Long.parseLong(request.getParameter("coenId"));
+			Codigoenfermedade codigoEnfermedad = gestionFacadeHistoriaClinica.findCodigoenfermedadeById(coenId);
+			html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">"+
+					"	<tr> " +
+					"		<td>[" + codigoEnfermedad.getCoenCodigo() + "] " + codigoEnfermedad.getCoenNombre() + "</td> " +
+					"	</tr> " +
+					"</table>";
+			strDatosDiagnostico = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return strDatosDiagnostico;
+	}
+	
 	
 	public HistoriaClinicaAction(IGestionFacadeHistoriaClinica gestionFacadeHistoriaClinica) {
 		this.gestionFacadeHistoriaClinica = gestionFacadeHistoriaClinica;
@@ -460,4 +484,7 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 	}
 	public String getDataAutoCompletado() {return dataAutoCompletado;}
 	public void setDataAutoCompletado(String dataAutoCompletado) {this.dataAutoCompletado = dataAutoCompletado;}
+	
+	
+	
 }

@@ -11,11 +11,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.software2g.historia_clinica.dao.ICodigoEnfermedadDao;
 import com.software2g.historia_clinica.dao.IPreguntaDao;
 import com.software2g.portal.dao.IPersonaDao;
 import com.software2g.service.facade.IGestionFacadeAutoCompletado;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.paintService.facade.IGestionFacadeExamenesConsulta;
+import com.software2g.vo.Codigoenfermedade;
 import com.software2g.vo.Persona;
 
 @Transactional(propagation=Propagation.REQUIRED)
@@ -27,11 +29,15 @@ public class GestionFacadeAutoCompletado implements IGestionFacadeAutoCompletado
 	IPersonaDao personaDao;
 	@Autowired
 	IPreguntaDao preguntaDao;
+	@Autowired
+	ICodigoEnfermedadDao codigoEnfermedadDao;
 	
 	public IPersonaDao getPersonaDao() {return personaDao;}
 	public void setPersonaDao(IPersonaDao personaDao) {this.personaDao = personaDao;}
 	public IPreguntaDao getPreguntaDao() {return preguntaDao;}
 	public void setPreguntaDao(IPreguntaDao preguntaDao) {this.preguntaDao = preguntaDao;}
+	public ICodigoEnfermedadDao getCodigoEnfermedadDao() {return codigoEnfermedadDao;}
+	public void setCodigoEnfermedadDao(ICodigoEnfermedadDao codigoEnfermedadDao) {this.codigoEnfermedadDao = codigoEnfermedadDao;}
 	
 	public GestionFacadeAutoCompletado() {
 		super();
@@ -42,7 +48,7 @@ public class GestionFacadeAutoCompletado implements IGestionFacadeAutoCompletado
 	}
 	
 	/**
-	 * Metodo que consulta los examenes aosiados a la institucion y especialidad corespondiente
+	 * Metodo que consulta los examenes asociados a la institucion y especialidad corespondiente
 	 * @return List<Object[]>
 	 * @throws Exception
 	 */
@@ -64,7 +70,7 @@ public class GestionFacadeAutoCompletado implements IGestionFacadeAutoCompletado
 	}
 	
 	/**
-	 * Metodo que consulta los examenes aosiados a la institucion y especialidad corespondiente
+	 * Metodo que consulta los examenes asociados a la institucion y especialidad corespondiente
 	 * @return List<Object[]>
 	 * @throws Exception
 	 */
@@ -81,6 +87,28 @@ public class GestionFacadeAutoCompletado implements IGestionFacadeAutoCompletado
 			return list;
 		} catch (Exception e) {
 			System.out.println("ERROR ::> GestionFacadeAutoCompletado ::> findPersonaPortal ::> " + e.getMessage());
+			return null;
+		}
+	}
+	
+	/**
+	 * Metodo que consulta los codigos de enfermedades segun estandares internacionales segun especialidad
+	 * @return List<Object[]>
+	 * @throws Exception
+	 */
+	public List<String> findAllCodigoEnfermedadEspecialidad(String datoFind, String especialidad, String diagnostico)  throws Exception {
+		try {
+			List<Codigoenfermedade> listCodigoEnfermedad = getCodigoEnfermedadDao().findAllCodigoenfermedadesEspecialidad(datoFind, Long.parseLong(especialidad));
+			List<String> list = new ArrayList<String>();
+			if(listCodigoEnfermedad!=null&&listCodigoEnfermedad.size()>0){
+				for(Codigoenfermedade elem:listCodigoEnfermedad){
+					list.add("["+elem.getCoenCodigo()+"] "+elem.getCoenNombre() 
+							+ConstantesAplicativo.constanteSplit+"onClick=\"javascript:cargarDatosDignostico(\'"+elem.getCoenId()+"\',\'"+diagnostico+"\')\"");
+				}
+			}
+			return list;
+		} catch (Exception e) {
+			System.out.println("ERROR ::> GestionFacadeAutoCompletado ::> findAllCodigoEnfermedadEspecialidad ::> " + e.getMessage());
 			return null;
 		}
 	}

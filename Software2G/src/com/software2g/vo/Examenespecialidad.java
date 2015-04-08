@@ -42,6 +42,9 @@ public class Examenespecialidad implements Serializable {
 	@Column(name="exes_orden")
 	private long exesOrden; 
 	
+	@Column(name="exes_palabraclave")
+	private String exesPalabraclave;
+	
 	@ManyToOne
 	@JoinColumn(name="ties_id")
 	private Tipoespecialidad tipoEspecialidad;
@@ -128,5 +131,13 @@ public class Examenespecialidad implements Serializable {
 	public void setExesOrden(long exesOrden) {
 		this.exesOrden = exesOrden;
 	}
-	
+
+	public String getExesPalabraclave() {
+		return exesPalabraclave;
+	}
+
+	public void setExesPalabraclave(String exesPalabraclave) {
+		this.exesPalabraclave = exesPalabraclave;
+	}
+
 }

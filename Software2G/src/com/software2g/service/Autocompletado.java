@@ -27,12 +27,16 @@ public class Autocompletado extends HttpServlet {
             try {
                     String term = request.getParameter("term");
                     String tipo = request.getParameter("tipo");
+                    String especialidad = request.getParameter("especialidad");
+                    String diagnostico =  request.getParameter("diagnostico");
                     ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {ApplicationContext.CLASSPATH_ALL_URL_PREFIX+"autocompletado.xml"});
             		IGestionFacadeAutoCompletado gestionFacadeAutoCompletado = GestionFacadeAutoCompletado.getInstance(context);
             		List<String> list = new ArrayList<String>();
             		
             		if(tipo!=null&&tipo.equals(ConstantesAplicativo.constanteTipoSearchAutoComplProf))
             			list = gestionFacadeAutoCompletado.findAllPersonasProfesional(term);
+            		else if (tipo!=null&&tipo.equals(ConstantesAplicativo.constanteTipoSearchAutoComplDiag))
+            			list = gestionFacadeAutoCompletado.findAllCodigoEnfermedadEspecialidad(term, especialidad, diagnostico);
             		else 
             			list = gestionFacadeAutoCompletado.findPersonaPortal(term);
                     

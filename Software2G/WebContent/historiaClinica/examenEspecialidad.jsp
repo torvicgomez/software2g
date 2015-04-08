@@ -152,6 +152,12 @@
 							</td>
 						</tr>
 						<tr>
+							<td class="leftLabel"><s:text name="examenespecialidad.palabraclave"></s:text></td>
+							<td colspan="3">
+								<s:textfield name="examenEspecialidad.exesPalabraclave" id="exesPalabraclave" size="20" maxlength="10" cssClass="inputs"></s:textfield>
+							</td>
+						</tr>
+						<tr>
 							<td class="leftLabel"><s:text name="examenespecialidad.orden"></s:text></td>
 							<td colspan="3">
 								<s:textfield name="examenEspecialidad.exesOrden" id="exesOrden" size="20" maxlength="10" cssClass="inputs"></s:textfield>
@@ -186,6 +192,10 @@
 						<tr>
 							<td class="leftLabel"><s:text name="examenespecialidad.paginajsp"></s:text></td>
 							<td colspan="3"><s:property value="examenEspecialidad.exesPaginajsp"/></td>
+						</tr>
+						<tr>
+							<td class="leftLabel"><s:text name="examenespecialidad.palabraclave"></s:text></td>
+							<td colspan="3"><s:property value="examenEspecialidad.exesPalabraclave"/></td>
 						</tr>
 						<tr>
 							<td class="leftLabel"><s:text name="examenespecialidad.orden"></s:text></td>

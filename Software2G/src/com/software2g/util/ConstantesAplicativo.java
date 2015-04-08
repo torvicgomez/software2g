@@ -63,6 +63,7 @@ public final class ConstantesAplicativo {
     public static final String constanteFormatoFecha5 = "yyyyMMdd";
 	
 	public static final String constanteTipoSearchAutoComplProf = "profesional";
+	public static final String constanteTipoSearchAutoComplDiag = "diagnostico";
 	
 	public static final String constanteCrearFileJSEventosAll = "allEventos";
 	public static final String constanteCrearFileJSEventosxAgenda = "allEventosxAgenda";
@@ -171,5 +172,13 @@ public final class ConstantesAplicativo {
 	public static final String constanteNombreExamenOptometriaOftalmoscopia = "Oftalmoscopia";
 	public static final String constanteNombreExamenOptometriaKeratometria = "Keratometría";
 	public static final String constanteNombreExamenOptometriaRetinoscopia = "Retinoscopia";
+
+	public static final String constantePalabraClaveRXUSO = "RXUSO";
+	public static final String constantePalabraClaveAVSC = "AVSC";
+	public static final String constantePalabraClaveCoverTest = "CVRT";
+	public static final String constantePalabraClaveExamenExterno = "EEXT";
+	public static final String constantePalabraClaveOftalmoscopia = "OFT";
+	public static final String constantePalabraClaveKeratometria = "KER";
+	public static final String constantePalabraClaveRetinoscopia = "RET";
 	
 }

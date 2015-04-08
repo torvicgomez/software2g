@@ -190,6 +190,7 @@
 				<table cellpadding="0" cellspacing="0" border="0" class="display">
 					<tr>
 						<s:hidden name="profesional.profId" id="profId"></s:hidden>
+						<s:hidden name="profesional.profEspecialidad" id="profEspecialidad"></s:hidden>
 						<td class="leftLabel" colspan="4"><s:text name="profesionalsalud.datosprofesional"></s:text></td>
 					</tr>
 					<tr>
@@ -239,6 +240,7 @@
 							<s:elseif test="profesional.profEspecialidad==\"2\"">
 								<li><a href="#tabs-4"><s:text name="atencioservicio.examenesopt"></s:text></a></li>
 							</s:elseif>
+							<li><a href="#tabs-5"><s:text name="atencioservicio.diagnosticos"></s:text></a></li>
 						</ul>
 						<div id="tabs-0">
 							<table cellpadding="0" cellspacing="0" border="0" class="display">
@@ -389,42 +391,20 @@
 											<s:iterator value="listExamenEspecialidad" id="data">
 												<jsp:include page="${data.exesPaginajsp}" flush="true"/>
 											</s:iterator>
-<%-- 											<jsp:include page="rxUso.jsp" flush="true"/> --%>
 										</td>
 									</tr>
-<!-- 									<tr> -->
-<!-- 										<td> -->
-<%-- 											<jsp:include page="avsc.jsp" flush="true"/> --%>
-<!-- 										</td> -->
-<!-- 									</tr> -->
-<!-- 									<tr> -->
-<!-- 										<td> -->
-<%-- 											<jsp:include page="coverTest.jsp" flush="true"/> --%>
-<!-- 										</td> -->
-<!-- 									</tr> -->
-<!-- 									<tr> -->
-<!-- 										<td> -->
-<%-- 											<jsp:include page="examenExterno.jsp" flush="true"/> --%>
-<!-- 										</td> -->
-<!-- 									</tr> -->
-<!-- 									<tr> -->
-<!-- 										<td> -->
-<%-- 											<jsp:include page="oftalmoscopia.jsp" flush="true"/> --%>
-<!-- 										</td> -->
-<!-- 									</tr> -->
-<!-- 									<tr> -->
-<!-- 										<td> -->
-<%-- 											<jsp:include page="keratometria.jsp" flush="true"/> --%>
-<!-- 										</td> -->
-<!-- 									</tr> -->
-<!-- 									<tr> -->
-<!-- 										<td> -->
-<%-- 											<jsp:include page="retinoscopia.jsp" flush="true"/> --%>
-<!-- 										</td> -->
-<!-- 									</tr> -->
 								</table>
 							</div>
 						</s:if>
+						<div id="tabs-5">
+							<table cellpadding="0" cellspacing="0" border="0" class="display">
+								<tr>
+									<td>
+										<jsp:include page="diagnosticos.jsp" flush="true"/>
+									</td>
+								</tr>
+							</table>
+						</div>
 					</div>
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<tr>

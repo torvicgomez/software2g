@@ -76,6 +76,26 @@ public class CodigoEnfermedadDAOImpl implements ICodigoEnfermedadDao {
             }
         }
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Codigoenfermedade> findAllCodigoenfermedadesEspecialidad(String datoFind, long especialidad) {
+        try {
+    		String jpqlString = "select codigoenfermedade from " + Codigoenfermedade.class.getSimpleName() + " codigoenfermedade" +
+    				" where codigoenfermedade.tipoespecialidad.tiesId =:especialidad and " +
+    				" ( upper(codigoenfermedade.coenNombre) like :datoFind or codigoenfermedade.coenCodigo like :datoFind ) " +
+    				" order by codigoenfermedade.coenCodigo asc ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("especialidad", especialidad);
+            query.setParameter("datoFind", "%"+datoFind.toUpperCase().trim()+"%");
+            return query.getResultList();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

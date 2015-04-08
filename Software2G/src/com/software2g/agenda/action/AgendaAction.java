@@ -686,95 +686,105 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			//  Datos Especificos segun especialidad desempenada profesional  //
     			//----------------------------------------------------------------//
     			String especialidad = profesional.getProfEspecialidad();
-    			System.out.println("especialidad:["+especialidad+"]");
     			if(especialidad!=null){
+    				listExamenEspecialidad = gestionFacadeHistoriaClinica.findAllExamenespecialidads(Long.parseLong(especialidad));
     				if(especialidad.equals(ConstantesAplicativo.constanteEspecialidadMedicinaGeneral)){
     					System.out.println("en Construcción");
     				}else if(especialidad.equals(ConstantesAplicativo.constanteEspecialidadOdontologia)){
     					System.out.println("en Construcción");
     				}else if(especialidad.equals(ConstantesAplicativo.constanteEspecialidadOptometria)){
-    					// 1. Validacion Examen Rx en Uso
-    					//---Ojo Derecho -- OD -----
-    					if(ValidaString.isNullOrEmptyString(rxUsoOD.getReruEsfera()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","reruEsfera",new ArrayList<String>(Arrays.asList("Esfera OD", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					if(ValidaString.isNullOrEmptyString(rxUsoOD.getReruCilindro()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","reruCilindro",new ArrayList<String>(Arrays.asList("Cilindro OD", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					if(ValidaString.isNullOrEmptyString(rxUsoOD.getReruEje()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","reruEje",new ArrayList<String>(Arrays.asList("Eje OD", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					if(ValidaString.isNullOrEmptyString(rxUsoOD.getReruAvl()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","reruAvl",new ArrayList<String>(Arrays.asList("AVL OD", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					if(ValidaString.isNullOrEmptyString(rxUsoOD.getReruAvc()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","reruAvc",new ArrayList<String>(Arrays.asList("AVC OD", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					//---Ojo Izquierdo -- OI -----
-    					if(ValidaString.isNullOrEmptyString(rxUsoOI.getReruEsfera()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","reruEsfera",new ArrayList<String>(Arrays.asList("Esfera OI", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					if(ValidaString.isNullOrEmptyString(rxUsoOI.getReruCilindro()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","reruCilindro",new ArrayList<String>(Arrays.asList("Cilindro OI", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					if(ValidaString.isNullOrEmptyString(rxUsoOI.getReruEje()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","reruEje",new ArrayList<String>(Arrays.asList("Eje OI", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					if(ValidaString.isNullOrEmptyString(rxUsoOI.getReruAvl()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","reruAvl",new ArrayList<String>(Arrays.asList("AVL OI", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					if(ValidaString.isNullOrEmptyString(rxUsoOI.getReruAvc()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","reruAvc",new ArrayList<String>(Arrays.asList("AVC OI", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					// Ambos Ojos
-    					if(ValidaString.isNullOrEmptyString(rxUsoOI.getReruAdd()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","reruAdd",new ArrayList<String>(Arrays.asList("ADD", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					//------------------------------------------
-    					//------------------------------------------
-    					// 2. Validacion Examen AVSC
-    					//---Ojo Derecho -- OD -----
-    					if(ValidaString.isNullOrEmptyString(avscOD.getAvscAvl()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","avscAvl",new ArrayList<String>(Arrays.asList("AVL OD", ConstantesAplicativo.constanteNombreExamenOptometriaAVSC, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					if(ValidaString.isNullOrEmptyString(avscOD.getAvscAvc()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","avscAvc",new ArrayList<String>(Arrays.asList("AVC OD", ConstantesAplicativo.constanteNombreExamenOptometriaAVSC, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					//---Ojo Izquierdo -- OI -----
-    					if(ValidaString.isNullOrEmptyString(avscOI.getAvscAvl()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","avscAvl",new ArrayList<String>(Arrays.asList("AVL OI", ConstantesAplicativo.constanteNombreExamenOptometriaAVSC, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					if(ValidaString.isNullOrEmptyString(avscOI.getAvscAvc()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","avscAvc",new ArrayList<String>(Arrays.asList("AVC OI", ConstantesAplicativo.constanteNombreExamenOptometriaAVSC, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					//------------------------------------------
-    					//------------------------------------------
-    					// 3. Validacion Examen Cover Test
-    					System.out.println("En Construccion!!!!!!!");
-    					//------------------------------------------
-    					//------------------------------------------
-    					// 4. Validacion Examen Externo
-    					//---Ojo Derecho -- OD -----
-    					if(ValidaString.isNullOrEmptyString(examenExternoOD.getReesValor()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OD", ConstantesAplicativo.constanteNombreExamenOptometriaExamenExterno, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					//---Ojo Izquierdo -- OI -----
-    					//------------------------------------------
-    					if(ValidaString.isNullOrEmptyString(examenExternoOI.getReesValor()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OI", ConstantesAplicativo.constanteNombreExamenOptometriaExamenExterno, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					//------------------------------------------
-    					// 5. Validacion Examen Oftalmoscopia
-    					//---Ojo Derecho -- OD -----
-    					if(ValidaString.isNullOrEmptyString(oftalmoscopiaOD.getReesValor()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OD", ConstantesAplicativo.constanteNombreExamenOptometriaOftalmoscopia, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					//---Ojo Izquierdo -- OI -----
-    					//------------------------------------------
-    					if(ValidaString.isNullOrEmptyString(oftalmoscopiaOI.getReesValor()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OI", ConstantesAplicativo.constanteNombreExamenOptometriaOftalmoscopia, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					//------------------------------------------
-    					//------------------------------------------
-    					// 6. Validacion Examen Keratometria
-    					//---Ojo Derecho -- OD -----
-    					if(ValidaString.isNullOrEmptyString(keratometriaOD.getReesValor()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OD", ConstantesAplicativo.constanteNombreExamenOptometriaKeratometria, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					//---Ojo Izquierdo -- OI -----
-    					//------------------------------------------
-    					if(ValidaString.isNullOrEmptyString(keratometriaOI.getReesValor()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OI", ConstantesAplicativo.constanteNombreExamenOptometriaKeratometria, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					//------------------------------------------
-    					//------------------------------------------
-    					// 7. Validacion Examen Retinoscopia
-    					//---Ojo Derecho -- OD -----
-    					if(ValidaString.isNullOrEmptyString(retinoscopiaOD.getReesValor()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OD", ConstantesAplicativo.constanteNombreExamenOptometriaRetinoscopia, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
-    					//---Ojo Izquierdo -- OI -----
-    					//------------------------------------------
-    					if(ValidaString.isNullOrEmptyString(retinoscopiaOI.getReesValor()))
-    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OI", ConstantesAplicativo.constanteNombreExamenOptometriaRetinoscopia, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    					for(Examenespecialidad elem:listExamenEspecialidad){
+    						if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveRXUSO)){
+		    					// 1. Validacion Examen Rx en Uso
+		    					//---Ojo Derecho -- OD -----
+		    					if(ValidaString.isNullOrEmptyString(rxUsoOD.getReruEsfera()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","reruEsfera",new ArrayList<String>(Arrays.asList("Esfera OD", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					if(ValidaString.isNullOrEmptyString(rxUsoOD.getReruCilindro()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","reruCilindro",new ArrayList<String>(Arrays.asList("Cilindro OD", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					if(ValidaString.isNullOrEmptyString(rxUsoOD.getReruEje()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","reruEje",new ArrayList<String>(Arrays.asList("Eje OD", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					if(ValidaString.isNullOrEmptyString(rxUsoOD.getReruAvl()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","reruAvl",new ArrayList<String>(Arrays.asList("AVL OD", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					if(ValidaString.isNullOrEmptyString(rxUsoOD.getReruAvc()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","reruAvc",new ArrayList<String>(Arrays.asList("AVC OD", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					//---Ojo Izquierdo -- OI -----
+		    					if(ValidaString.isNullOrEmptyString(rxUsoOI.getReruEsfera()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","reruEsfera",new ArrayList<String>(Arrays.asList("Esfera OI", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					if(ValidaString.isNullOrEmptyString(rxUsoOI.getReruCilindro()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","reruCilindro",new ArrayList<String>(Arrays.asList("Cilindro OI", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					if(ValidaString.isNullOrEmptyString(rxUsoOI.getReruEje()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","reruEje",new ArrayList<String>(Arrays.asList("Eje OI", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					if(ValidaString.isNullOrEmptyString(rxUsoOI.getReruAvl()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","reruAvl",new ArrayList<String>(Arrays.asList("AVL OI", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					if(ValidaString.isNullOrEmptyString(rxUsoOI.getReruAvc()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","reruAvc",new ArrayList<String>(Arrays.asList("AVC OI", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					// Ambos Ojos
+		    					if(ValidaString.isNullOrEmptyString(rxUsoOI.getReruAdd()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","reruAdd",new ArrayList<String>(Arrays.asList("ADD", ConstantesAplicativo.constanteNombreExamenOptometriaRXUSO, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					//------------------------------------------
+		    					//------------------------------------------
+    						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveAVSC)){
+		    					// 2. Validacion Examen AVSC
+		    					//---Ojo Derecho -- OD -----
+		    					if(ValidaString.isNullOrEmptyString(avscOD.getAvscAvl()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","avscAvl",new ArrayList<String>(Arrays.asList("AVL OD", ConstantesAplicativo.constanteNombreExamenOptometriaAVSC, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					if(ValidaString.isNullOrEmptyString(avscOD.getAvscAvc()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","avscAvc",new ArrayList<String>(Arrays.asList("AVC OD", ConstantesAplicativo.constanteNombreExamenOptometriaAVSC, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					//---Ojo Izquierdo -- OI -----
+		    					if(ValidaString.isNullOrEmptyString(avscOI.getAvscAvl()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","avscAvl",new ArrayList<String>(Arrays.asList("AVL OI", ConstantesAplicativo.constanteNombreExamenOptometriaAVSC, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					if(ValidaString.isNullOrEmptyString(avscOI.getAvscAvc()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","avscAvc",new ArrayList<String>(Arrays.asList("AVC OI", ConstantesAplicativo.constanteNombreExamenOptometriaAVSC, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					//------------------------------------------
+		    					//------------------------------------------
+    						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveCoverTest)){
+		    					// 3. Validacion Examen Cover Test
+		    					System.out.println("En Construccion!!!!!!!");
+		    					//------------------------------------------
+		    					//------------------------------------------
+    						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveExamenExterno)){
+		    					// 4. Validacion Examen Externo
+		    					//---Ojo Derecho -- OD -----
+		    					if(ValidaString.isNullOrEmptyString(examenExternoOD.getReesValor()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OD", ConstantesAplicativo.constanteNombreExamenOptometriaExamenExterno, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					//---Ojo Izquierdo -- OI -----
+		    					//------------------------------------------
+		    					if(ValidaString.isNullOrEmptyString(examenExternoOI.getReesValor()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OI", ConstantesAplicativo.constanteNombreExamenOptometriaExamenExterno, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					//------------------------------------------
+		    					//------------------------------------------
+    						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveOftalmoscopia)){
+		    					// 5. Validacion Examen Oftalmoscopia
+		    					//---Ojo Derecho -- OD -----
+		    					if(ValidaString.isNullOrEmptyString(oftalmoscopiaOD.getReesValor()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OD", ConstantesAplicativo.constanteNombreExamenOptometriaOftalmoscopia, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					//---Ojo Izquierdo -- OI -----
+		    					if(ValidaString.isNullOrEmptyString(oftalmoscopiaOI.getReesValor()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OI", ConstantesAplicativo.constanteNombreExamenOptometriaOftalmoscopia, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					//------------------------------------------
+		    					//------------------------------------------
+    						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveKeratometria)){
+		    					// 6. Validacion Examen Keratometria
+		    					//---Ojo Derecho -- OD -----
+		    					if(ValidaString.isNullOrEmptyString(keratometriaOD.getReesValor()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OD", ConstantesAplicativo.constanteNombreExamenOptometriaKeratometria, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					//---Ojo Izquierdo -- OI -----
+		    					//------------------------------------------
+		    					if(ValidaString.isNullOrEmptyString(keratometriaOI.getReesValor()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OI", ConstantesAplicativo.constanteNombreExamenOptometriaKeratometria, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					//------------------------------------------
+		    					//------------------------------------------
+    						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveRetinoscopia)){
+		    					// 7. Validacion Examen Retinoscopia
+		    					//---Ojo Derecho -- OD -----
+		    					if(ValidaString.isNullOrEmptyString(retinoscopiaOD.getReesValor()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OD", ConstantesAplicativo.constanteNombreExamenOptometriaRetinoscopia, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+		    					//---Ojo Izquierdo -- OI -----
+		    					//------------------------------------------
+		    					if(ValidaString.isNullOrEmptyString(retinoscopiaOI.getReesValor()))
+		    	    				addActionError(getText("validacion.requeridoseccionexamen","reesValor",new ArrayList<String>(Arrays.asList("OI", ConstantesAplicativo.constanteNombreExamenOptometriaRetinoscopia, ConstantesAplicativo.constanteNombreSeccionExamenesOptometria))));
+    						}
+    					}
     				}
     			}
     			//-------------------------------------------------------------------------//
@@ -813,7 +823,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
         			System.out.println("idProfesional:["+idProfesional+"]");
         			System.out.println("idEvento:["+idEvento+"]");
         			profesional = idProfesional>0?gestionFacadeAgenda.findProfesionalById(idProfesional):new Profesional();
-        			persona = idEvento<=0?gestionFacadeAgenda.findPacienteAtencionServicio(idEvento):gestionFacadeAgenda.findPersona(persona.getDocumentoPers(), persona.getTipodocumento().getAbreviaturaTidoc());
+        			//persona = idEvento<=0?gestionFacadeAgenda.findPacienteAtencionServicio(idEvento):gestionFacadeAgenda.findPersona(persona.getDocumentoPers(), persona.getTipodocumento().getAbreviaturaTidoc());
         			cargarDatosServicioClinico(profesional.getProfEspecialidad());
     			}
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){

@@ -578,7 +578,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
         				if(persona==null){
         					persona = new Persona();
         					Tipodocumento tipoDocumento = (Tipodocumento) gestionFacadeAgenda.findTipodocumentoAbrev(abrevTipoDoc); 
-        					ValidaString.imprimirObject(tipoDocumento);
+//        					ValidaString.imprimirObject(tipoDocumento);
         					persona.setMunicipio(new Municipio());
         					persona.setTipodocumento(tipoDocumento);
         					persona.setDocumentoPers(nroDocumento);

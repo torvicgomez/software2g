@@ -84,8 +84,9 @@ public class ExamenEspecialidadDAOImpl implements IExamenEspecialidadDao {
     		String jpqlString = "select examenespecialidad from " + Examenespecialidad.class.getSimpleName() + " examenespecialidad " +
     				" where examenespecialidad.tipoEspecialidad.tiesId =:tipoEspecialidad " +
     				" and examenespecialidad.exesEstado = '"+ConstantesAplicativo.constanteCheckSi+"' " +
-    				" order by examenespecialidad.exes_orden asc ";
+    				" order by examenespecialidad.exesOrden asc ";
             Query query = em.createQuery( jpqlString );
+            query.setParameter("tipoEspecialidad", tipoEspecialidad);
             return query.getResultList();
         }
         finally {

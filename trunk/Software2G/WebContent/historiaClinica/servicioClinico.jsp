@@ -387,7 +387,6 @@
 									<tr>
 										<td>
 											<s:iterator value="listExamenEspecialidad" id="data">
-												${data.exesPaginajsp}
 												<jsp:include page="${data.exesPaginajsp}" flush="true"/>
 											</s:iterator>
 <%-- 											<jsp:include page="rxUso.jsp" flush="true"/> --%>

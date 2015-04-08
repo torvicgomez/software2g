@@ -180,5 +180,8 @@ public final class ConstantesAplicativo {
 	public static final String constantePalabraClaveOftalmoscopia = "OFT";
 	public static final String constantePalabraClaveKeratometria = "KER";
 	public static final String constantePalabraClaveRetinoscopia = "RET";
+
+	public static final String constanteClaseDiagnosticoPP = "Dx Ppal";
+	public static final String constanteClaseDiagnosticoRL = "Dx Rnal";
 	
 }

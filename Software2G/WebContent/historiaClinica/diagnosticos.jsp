@@ -7,7 +7,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<script type="text/javascript" charset="utf-8">
 			$(function() {
-          		$("#search").autocomplete({
+          		$("#searchDP").autocomplete({
                		source : function(request, response) {
                 		$.ajax({
                         	url : "SearchController",
@@ -15,7 +15,7 @@
                         	data : {
                                 term : request.term,
                                 tipo : 'diagnostico',
-                                especialidad: '2',
+                                especialidad: document.getElementById('profEspecialidad').value,
                                 diagnostico: '0'
                         	},
                         	dataType : "json",
@@ -30,24 +30,23 @@
 			
 			function cargarDatosDignostico(id, diagnostico){
 				if(diagnostico=='0'){
-					$("#divDatosDiagnosticoPP").load('cargarDatosDiagnostico.action?coenId='+id);
-					var campoFind = document.getElementById('campoFind');
-					var repetirFind = document.getElementById('repetirFind');
+					var tipoDiag = document.getElementById('tidiIdDP').value;
+					$("#divDatosDiagnosticoPP").load('cargarDatosDiagnostico.action?coenId='+id+'&claseDiag=0&tipoDiag='+tipoDiag);
+					var campoFind = document.getElementById('campoFindDP');
+					var repetirFind = document.getElementById('repetirFindDP');
 					campoFind.style.display = 'none';
 					repetirFind.style.display = 'block';
 				} 
 			}
 				
-			function repetirBusqueda(){
-				var divDatosDiagnosticoPP = document.getElementById('divDatosDiagnosticoPP');
-				divDatosDiagnosticoPP.innerHTML = '';
-				
-				var campoFind = document.getElementById('campoFind');
-				var repetirFind = document.getElementById('repetirFind');
-				campoFind.style.display = 'block';
-				repetirFind.style.display = 'none';
-				var search = document.getElementById('search');
-				search.value = '';
+			function repetirBusqueda(diagnostico){
+				if(diagnostico=='0'){
+					var divDatosDiagnosticoPP = document.getElementById('divDatosDiagnosticoPP');divDatosDiagnosticoPP.innerHTML = '';
+					var campoFind = document.getElementById('campoFindDP');campoFind.style.display = 'block';
+					var repetirFind = document.getElementById('repetirFindDP');repetirFind.style.display = 'none';
+					var search = document.getElementById('searchDP');search.value = '';
+				}	
+				$("#cambiarDiagnostico").load('cambiarDiagnostico.action?diagnostico='+diagnostico);
 			}
 	</script>
 </head>
@@ -57,20 +56,19 @@
 			<tr>
 				<td class="leftLabel"><s:text name="diagnosticos.principal"></s:text></td>
 				<td>
-					
-					<div id="repetirFind" style="overflow:auto;width:auto;height:auto;display:none">
-						<input type="button" value="<s:text name="labelbutton.repetirfind"></s:text>" onclick="repetirBusqueda();" class="buttonSV"/>
+					<div id="repetirFindDP" style="overflow:auto;width:auto;height:auto;display:none">
+						<input type="button" value="<s:text name="labelbutton.cambiarDiagPP"></s:text>" onclick="repetirBusqueda(0);" class="buttonSV"/>
 					</div>
-					<div id="campoFind" style="overflow:auto;width:auto;height:auto;display:block">
-						<s:textfield name="dataAutoCompletado" id="search" size="60" maxlength="30" cssClass="inputs"></s:textfield>
+					<div id="campoFindDP" style="overflow:auto;width:auto;height:auto;display:block">
+						<s:textfield name="dataAutoCompletado" id="searchDP" size="60" maxlength="30" cssClass="inputs"></s:textfield>
+						<s:select list="listTipoDiagnostico" id="tidiIdDP" listKey="tidiId" listValue="tidiNombre" cssClass="inputs"/>
 					</div>
 				</td>
 			</tr>
 			<tr>
-				<td></td>
+				<td><div id="cambiarDiagnostico"></div></td>
 				<td>
 					<div id="divDatosDiagnosticoPP">
-						
 					</div>
 				</td>
 			</tr>

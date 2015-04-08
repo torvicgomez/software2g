@@ -35,4 +35,6 @@ public interface IClaseDiagnosticoDao {
 	 * Remove the given persistent instance.
 	 */
 	public void removeClasediagnostico(Clasediagnostico clasediagnostico);
+	
+	public Clasediagnostico findClasediagnosticosXAbreviatura(String abrevitura);
 }

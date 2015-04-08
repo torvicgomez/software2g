@@ -76,6 +76,22 @@ public class ClaseDiagnosticoDAOImpl implements IClaseDiagnosticoDao {
             }
         }
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Clasediagnostico findClasediagnosticosXAbreviatura(String abrevitura) {
+        try {
+    		String jpqlString = "select clasediagnostico from " + Clasediagnostico.class.getSimpleName() + " clasediagnostico" +
+    				" where clasediagnostico.cldiAbreviatura =:abrevitura ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("abrevitura", abrevitura);
+            return (Clasediagnostico) query.getSingleResult();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
 	/**
 	 * Make the given instance managed and persistent.
 	 */

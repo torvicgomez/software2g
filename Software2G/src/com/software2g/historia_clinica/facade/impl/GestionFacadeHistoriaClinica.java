@@ -367,6 +367,15 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 		}
 	}
 
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Clasediagnostico findClasediagnosticosXAbreviatura(String abrevitura) throws Exception {
+		try {
+			return getClaseDiagnosticoDao().findClasediagnosticosXAbreviatura(abrevitura);
+		} catch (RuntimeException e) {
+			throw new Exception("findClasediagnosticosXAbreviatura failed: " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */
@@ -1745,7 +1754,8 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 		try {
 			return getTipoDiagnosticoDao().findTipodiagnosticoById(id);
 		} catch (RuntimeException e) {
-			throw new Exception("findTipodiagnosticoById failed with the id " + id + ": " + e.getMessage());
+			//throw new Exception("findTipodiagnosticoById failed with the id " + id + ": " + e.getMessage());
+			return null;
 		}
 	}
 	/**

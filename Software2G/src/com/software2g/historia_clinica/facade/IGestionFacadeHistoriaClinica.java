@@ -109,6 +109,7 @@ public interface IGestionFacadeHistoriaClinica {
 	 * Remove the given persistent instance.
 	 */
 	public void removeClasediagnostico(Clasediagnostico clasediagnostico) throws Exception;
+	public Clasediagnostico findClasediagnosticosXAbreviatura(String abrevitura) throws Exception;
 	//******************************************************************
 	// FIN Clase Diagnostico
 	//******************************************************************

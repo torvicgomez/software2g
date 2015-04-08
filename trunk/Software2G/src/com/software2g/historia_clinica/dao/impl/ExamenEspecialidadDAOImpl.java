@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.software2g.util.ConstantesAplicativo;
 import com.software2g.vo.Examenespecialidad;
 import com.software2g.historia_clinica.dao.IExamenEspecialidadDao;
 
@@ -82,6 +83,7 @@ public class ExamenEspecialidadDAOImpl implements IExamenEspecialidadDao {
         try {
     		String jpqlString = "select examenespecialidad from " + Examenespecialidad.class.getSimpleName() + " examenespecialidad " +
     				" where examenespecialidad.tipoEspecialidad.tiesId =:tipoEspecialidad " +
+    				" and examenespecialidad.exesEstado = '"+ConstantesAplicativo.constanteCheckSi+"' " +
     				" order by examenespecialidad.exes_orden asc ";
             Query query = em.createQuery( jpqlString );
             return query.getResultList();

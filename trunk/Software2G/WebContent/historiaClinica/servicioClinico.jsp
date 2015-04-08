@@ -386,42 +386,43 @@
 								<table cellpadding="0" cellspacing="0" border="0" class="display">
 									<tr>
 										<td>
-											<jsp:include page="rxUso.jsp" flush="true"/>
-	<%-- 											<jsp:param value="${idSolicitud.soviId}" name="soviId"/> --%>
-	<%-- 											<jsp:param value="1" name="posibles_rutas"/>  --%>
-	<%-- 										</jsp:include> --%>
+											<s:iterator value="listExamenEspecialidad" id="data">
+												${data.exesPaginajsp}
+												<jsp:include page="${data.exesPaginajsp}" flush="true"/>
+											</s:iterator>
+<%-- 											<jsp:include page="rxUso.jsp" flush="true"/> --%>
 										</td>
 									</tr>
-									<tr>
-										<td>
-											<jsp:include page="avsc.jsp" flush="true"/>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<jsp:include page="coverTest.jsp" flush="true"/>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<jsp:include page="examenExterno.jsp" flush="true"/>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<jsp:include page="oftalmoscopia.jsp" flush="true"/>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<jsp:include page="keratometria.jsp" flush="true"/>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<jsp:include page="retinoscopia.jsp" flush="true"/>
-										</td>
-									</tr>
+<!-- 									<tr> -->
+<!-- 										<td> -->
+<%-- 											<jsp:include page="avsc.jsp" flush="true"/> --%>
+<!-- 										</td> -->
+<!-- 									</tr> -->
+<!-- 									<tr> -->
+<!-- 										<td> -->
+<%-- 											<jsp:include page="coverTest.jsp" flush="true"/> --%>
+<!-- 										</td> -->
+<!-- 									</tr> -->
+<!-- 									<tr> -->
+<!-- 										<td> -->
+<%-- 											<jsp:include page="examenExterno.jsp" flush="true"/> --%>
+<!-- 										</td> -->
+<!-- 									</tr> -->
+<!-- 									<tr> -->
+<!-- 										<td> -->
+<%-- 											<jsp:include page="oftalmoscopia.jsp" flush="true"/> --%>
+<!-- 										</td> -->
+<!-- 									</tr> -->
+<!-- 									<tr> -->
+<!-- 										<td> -->
+<%-- 											<jsp:include page="keratometria.jsp" flush="true"/> --%>
+<!-- 										</td> -->
+<!-- 									</tr> -->
+<!-- 									<tr> -->
+<!-- 										<td> -->
+<%-- 											<jsp:include page="retinoscopia.jsp" flush="true"/> --%>
+<!-- 										</td> -->
+<!-- 									</tr> -->
 								</table>
 							</div>
 						</s:if>

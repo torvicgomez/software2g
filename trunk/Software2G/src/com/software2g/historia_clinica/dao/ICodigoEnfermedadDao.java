@@ -27,6 +27,7 @@ public interface ICodigoEnfermedadDao {
 	 * Return all persistent instances of the <code>Codigoenfermedade</code> entity.
 	 */
 	public List<Codigoenfermedade> findAllCodigoenfermedades();
+	public List<Codigoenfermedade> findAllCodigoenfermedadesEspecialidad(String datoFind, long especialidad);
 	/**
 	 * Make the given instance managed and persistent.
 	 */

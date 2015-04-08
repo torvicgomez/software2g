@@ -25,6 +25,7 @@ import com.software2g.util.ValidaString;
 import com.software2g.vo.Agenda;
 import com.software2g.vo.Departamento;
 import com.software2g.vo.Evento;
+import com.software2g.vo.Examenespecialidad;
 import com.software2g.vo.Finalidad;
 import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Motivo;
@@ -123,6 +124,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private Tiposervicio tipoServicio;
 	private List<Tiposervicio> listTipoServicio;
 	private List<Tipoespecialidad> listTipoEspecialidad;
+	private List<Examenespecialidad> listExamenEspecialidad;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -226,6 +228,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public List<UtilGenerico> getListEspecialidadSoportadas() {return ConstantesAplicativo.listEspecialidadSoportadas;}
 	public List<Tipoespecialidad> getListTipoEspecialidad() {return listTipoEspecialidad;}
 	public void setListTipoEspecialidad(List<Tipoespecialidad> listTipoEspecialidad) {this.listTipoEspecialidad = listTipoEspecialidad;}
+	public List<Examenespecialidad> getListExamenEspecialidad() {return listExamenEspecialidad;}
+	public void setListExamenEspecialidad(List<Examenespecialidad> listExamenEspecialidad) {this.listExamenEspecialidad = listExamenEspecialidad;}
 	
 	public List<Respuesta> getListRespuesta() {return listRespuesta;}
 	public void setListRespuesta(List<Respuesta> listRespuesta) {this.listRespuesta = listRespuesta;}
@@ -838,6 +842,13 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 		listMotivo = gestionFacadeHistoriaClinica.findAllMotivos();
 		listSeguridadSocial = gestionFacadeHistoriaClinica.findAllSeguridadsocials();
 		
+		System.out.println("especialidad:"+especialidad); 
+		listExamenEspecialidad = gestionFacadeHistoriaClinica.findAllExamenespecialidads(Long.parseLong(especialidad));
+		if(listExamenEspecialidad!=null&&listExamenEspecialidad.size()>0){
+			for(Examenespecialidad elem: listExamenEspecialidad){
+				System.out.println(":["+elem.getExesPaginajsp()+"]");
+			}
+		}
 		
 		
 		//----------------------------------------------------------------//

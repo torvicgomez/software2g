@@ -2119,7 +2119,9 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 		try {
 			return getExamenEspecialidadDao().findAllExamenespecialidads(tipoEspecialidad);
 		} catch (RuntimeException e) {
-			throw new Exception("findAllExamenespecialidads failed: " + e.getMessage());
+			//throw new Exception("findAllExamenespecialidads failed: " + e.getMessage());
+			e.printStackTrace();
+			return null;
 		}
 	}
 	

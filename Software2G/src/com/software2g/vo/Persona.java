@@ -280,11 +280,10 @@ public class Persona implements Serializable {
 	}
 
 	public String getUbicacionPersona(){
-//		if(this.municipio!=null&&this.municipio.getDepartamento()!=null&&this.municipio.getDepartamento().getPais()!=null)
-//			return this.municipio.getDepartamento().getPais().getNompais().toUpperCase()+"-"+this.municipio.getDepartamento().getNomdpto().toUpperCase()+"-"+this.municipio.getNommunicipio().toUpperCase();
-//		else
-//			return "-";
-		return this.municipio.getMcpoId()+"";
+		if(this.municipio!=null&&this.municipio.getDepartamento()!=null&&this.municipio.getDepartamento().getPais()!=null)
+			return this.municipio.getDepartamento().getPais().getNompais().toUpperCase()+"-"+this.municipio.getDepartamento().getNomdpto().toUpperCase()+"-"+this.municipio.getNommunicipio().toUpperCase();
+		else
+			return "-";
 	}
 
 	public List<Profesional> getProfesional() {

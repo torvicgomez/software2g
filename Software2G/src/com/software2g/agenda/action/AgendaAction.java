@@ -30,6 +30,7 @@ import com.software2g.vo.Evento;
 import com.software2g.vo.Examenespecialidad;
 import com.software2g.vo.Finalidad;
 import com.software2g.vo.Jorandalaboral;
+import com.software2g.vo.Medicamento;
 import com.software2g.vo.Motivo;
 import com.software2g.vo.Municipio;
 import com.software2g.vo.Opcionrespuesta;
@@ -132,6 +133,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private List<Diagnostico> listDiagnostico;
 	private List<Tipodiagnostico> listTipoDiagnostico;
 	private InputStream	strCambiarDatosDiagnostico;
+	private Medicamento medicamento;
+	private List<Medicamento> listMedicamento;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -241,6 +244,11 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setListDiagnostico(List<Diagnostico> listDiagnostico) {this.listDiagnostico = listDiagnostico;}
 	public List<Tipodiagnostico> getListTipoDiagnostico() {return listTipoDiagnostico;}
 	public void setListTipoDiagnostico(List<Tipodiagnostico> listTipoDiagnostico) {this.listTipoDiagnostico = listTipoDiagnostico;}
+	public Medicamento getMedicamento() {return medicamento;}
+	public void setMedicamento(Medicamento medicamento) {this.medicamento = medicamento;}
+	public List<Medicamento> getListMedicamento() {return listMedicamento;}
+	public void setListMedicamento(List<Medicamento> listMedicamento) {this.listMedicamento = listMedicamento;}
+	
 	
 	public List<Respuesta> getListRespuesta() {return listRespuesta;}
 	public void setListRespuesta(List<Respuesta> listRespuesta) {this.listRespuesta = listRespuesta;}

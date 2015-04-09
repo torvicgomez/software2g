@@ -398,8 +398,19 @@
 						<div id="tabs-5">
 							<table cellpadding="0" cellspacing="0" border="0" class="display">
 								<tr>
+									<td><h1><s:text name="atencioservicio.diagnosticos"></s:text></h1></td>
+								</tr>
+								<tr> 
 									<td>
 										<jsp:include page="diagnosticos.jsp" flush="true"/>
+									</td>
+								</tr>
+								<tr>
+									<td><h1><s:text name="atencioservicio.medicamentos"></s:text></h1></td>
+								</tr>
+								<tr>
+									<td>
+										<jsp:include page="medicamentos.jsp" flush="true"/>
 									</td>
 								</tr>
 							</table>

@@ -815,9 +815,9 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     				listDiagnostico = new ArrayList<Diagnostico>();
     			else{
     				for(Diagnostico elem:listDiagnostico){
-    					System.out.println("Codigo Enfermedad:["+elem.getCodigoenfermedade().getCoenId()+"-"+elem.getCodigoenfermedade().getCoenCodigo()+"]");
-    					System.out.println("Clase Diagnostico:["+elem.getClasediagnostico().getCldiId()+"-"+elem.getClasediagnostico().getCldiNombre()+"]");
-    					System.out.println("Tipo Diagnostico:["+elem.getTipodiagnostico().getTidiId()+"-"+elem.getTipodiagnostico().getTidiNombre()+"]");
+    					System.out.println("Codigo Enfermedad:["+(elem.getCodigoenfermedade()!=null?(elem.getCodigoenfermedade().getCoenId()+"-"+elem.getCodigoenfermedade().getCoenCodigo()):"NULL")+"]");
+    					System.out.println("Clase Diagnostico:["+(elem.getClasediagnostico()!=null?(elem.getClasediagnostico().getCldiId()+"-"+elem.getClasediagnostico().getCldiNombre()):"NULL")+"]");
+    					System.out.println("Tipo Diagnostico:["+(elem.getTipodiagnostico()!=null?(elem.getTipodiagnostico().getTidiId()+"-"+elem.getTipodiagnostico().getTidiNombre()):"NULL")+"]");
     					System.out.println("Orden Diagnostico:["+elem.getDiagOrden()+"]");
     				}
     			}
@@ -1155,8 +1155,30 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 			listDiagnostico = (List<Diagnostico>) request.getSession().getAttribute("listDiagnostico");
 			if(listDiagnostico==null)
 				listDiagnostico = new ArrayList<Diagnostico>();
-			if(claseDiagnostico!=null)
+			if(claseDiagnostico!=null){
+				if(listDiagnostico.size()<Integer.parseInt(claseDiagnostico)){
+					for(int i=0;i<Integer.parseInt(claseDiagnostico);i++){
+						Diagnostico diagnosticoAux = null;
+						try{diagnosticoAux = (Diagnostico) listDiagnostico.get(i);}catch(Exception e){diagnosticoAux = null;}
+						if(diagnosticoAux==null||(diagnosticoAux!=null&&diagnosticoAux.getDiagOrden()!=i)){
+							Diagnostico diagnosticoAux1 = new Diagnostico();
+							diagnosticoAux1.setDiagOrden(i);
+							listDiagnostico.add(diagnosticoAux1);
+						}
+					}
+				}else{
+					int con=0;
+					for(Diagnostico elem:listDiagnostico){
+						if(elem.getCodigoenfermedade()==null){
+							listDiagnostico.remove(con);
+							break;
+						}
+						con++;
+					}
+				}
 				listDiagnostico.add(Integer.parseInt(claseDiagnostico), diagnostico);
+			}
+			Collections.sort(listDiagnostico);
 			request.getSession().setAttribute("listDiagnostico", listDiagnostico);
 			html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">"+
 					"	<tr> " +
@@ -1174,12 +1196,20 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public InputStream getStrCambiarDatosDiagnostico() {
 		try{
 			String html = "";
-			long diagnosticoPos = Long.parseLong(request.getParameter("diagnostico"));
+			int diagnosticoPos = Integer.parseInt(request.getParameter("diagnostico"));
 			listDiagnostico = (List<Diagnostico>) request.getSession().getAttribute("listDiagnostico");
-			if(listDiagnostico==null)
-				listDiagnostico = new ArrayList<Diagnostico>();
-			else
-				listDiagnostico.remove(diagnosticoPos);
+			listDiagnostico.remove(diagnosticoPos);
+			if(listDiagnostico.size()>0){
+				for(int i=0;i<(listDiagnostico.get(listDiagnostico.size()-1)).getDiagOrden();i++){
+					Diagnostico diagnosticoAux = listDiagnostico.size()==0?null:(Diagnostico) listDiagnostico.get(i);
+					if(diagnosticoAux.getDiagOrden()!=i){
+						Diagnostico diagnosticoAux1 = new Diagnostico();
+						diagnosticoAux1.setDiagOrden(i);
+						listDiagnostico.add(diagnosticoAux1);
+					}
+				}
+			}
+			Collections.sort(listDiagnostico);
 			request.getSession().setAttribute("listDiagnostico", listDiagnostico);
 			strCambiarDatosDiagnostico = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
 		}catch(Exception e){

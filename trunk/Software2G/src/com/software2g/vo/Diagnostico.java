@@ -12,7 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="\"DIAGNOSTICO\"", schema="\"HISCLINICA\"")
-public class Diagnostico implements Serializable {
+public class Diagnostico implements Serializable, Comparable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -134,5 +134,11 @@ public class Diagnostico implements Serializable {
 			this.diagFechacambio=data.get(1);
 			this.diagHoracambio=data.get(2);
 		}
+	}
+
+	@Override
+	public int compareTo(Object obj) {
+		Diagnostico diagnostico = (Diagnostico)obj;
+		return (int) (this.diagOrden - diagnostico.getDiagOrden());
 	}
 }

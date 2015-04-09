@@ -69,6 +69,12 @@
 				<td><div id="cambiarDiagnostico"></div></td>
 				<td>
 					<div id="divDatosDiagnosticoPP">
+						<table cellpadding="0" cellspacing="0" border="0" class="display">
+							<tr>
+								<td>[<s:property value="listDiagnostico[0].codigoenfermedade.coenCodigo"/>]&nbsp;<s:property value="listDiagnostico[0].codigoenfermedade.coenNombre"/></td>
+								<td><s:property value="listDiagnostico[0].tipodiagnostico.tidiNombre"/></td>
+							</tr>
+						</table>
 					</div>
 				</td>
 			</tr>

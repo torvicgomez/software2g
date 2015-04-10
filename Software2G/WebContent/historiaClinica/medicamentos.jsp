@@ -31,32 +31,30 @@
 					<td class="right" colspan="2"><input type="button" value="<s:text name="labelbutton.agregarMedicamento"></s:text>" onclick="agregarGrilla();" class="buttonSV"/></td>
 				</tr>
 				<tr>
-					<td colspan="2" class="text">
-						<s:if test="listLugarDestino!=null&&listLugarDestino.size()>0">
+					<td colspan="2">
+						<s:if test="listMedicamento!=null&&listMedicamento.size()>0">
 							<table cellpadding="0" cellspacing="0" border="1" class="display" id="paradasProgramadas"> 
 								<thead>
 									<tr>
-										<th><s:text name="lugarParada.orden"></s:text></th>
-										<th><s:text name="lugarParada.parada"></s:text></th>
-										<th><s:text name="lugarParada.tipoParada"></s:text></th>
+										<th><s:text name="columna.item"></s:text></th>
+										<th><s:text name="medicamentos.medicamento"></s:text></th>
+										<th><s:text name="medicamentos.presentacion"></s:text></th>
+										<th><s:text name="medicamentos.cantidad"></s:text></th>
+										<th><s:text name="medicamentos.dosis"></s:text></th>
+										<th><s:text name="medicamentos.intervalo"></s:text></th>
 										<th></th>
 									</tr>
 								</thead>
 								<tbody>
-									<s:iterator value="listLugarDestino" id="data" status="stat">
+									<s:iterator value="listMedicamento" id="data" status="stat">
 										<tr>
 											<td>${stat.index+1}</td>
-											<td>
-												<s:if test="ludeOrden==0"><s:property value="ludeOrigen"/></s:if>
-												<s:elseif test="ludeOrden==99"><s:property value="ludeFinviaje"/></s:elseif>
-												<s:else><s:property value="ludeParada"/></s:else>
-											</td>
-											<td>
-												<s:if test="ludeOrden==0"><s:text name="lugarParada.labelGridOrigen"></s:text></s:if>
-												<s:elseif test="ludeOrden==99"><s:text name="lugarParada.labelGridDestino"></s:text></s:elseif>
-												<s:else><s:text name="lugarParada.labelGridParada"></s:text></s:else>
-											</td>
-											<td class="right"><input type="button" value="<s:text name="labelbutton.eliminarGrilla"></s:text>" onclick="eliminarGrilla('${stat.index}');" class="buttonSV"/></td>
+											<td><s:property value="mediMedicamento"/></td>
+											<td><s:property value="mediPresentacion"/></td>
+											<td><s:property value="mediCantidad"/></td>
+											<td><s:property value="mediDosis"/></td>
+											<td><s:property value="mediIntervalo"/></td>
+											<td class="right"><input type="button" value="<s:text name="labelbutton.eliminarMedicamento"></s:text>" onclick="eliminarGrilla('${stat.index}');" class="buttonSV"/></td>
 										</tr>
 									</s:iterator>
 								</tbody>

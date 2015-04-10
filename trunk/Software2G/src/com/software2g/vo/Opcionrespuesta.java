@@ -44,6 +44,9 @@ public class Opcionrespuesta implements Serializable, Comparable {
 	@JoinColumn(name="preg_id")
 	private Pregunta pregunta;
 
+	@Transient
+	private String opcRespuestaCheck; 
+	
 	public Opcionrespuesta() {
 	}
 
@@ -124,4 +127,13 @@ public class Opcionrespuesta implements Serializable, Comparable {
 			this.opreHoracambio=data.get(2);
 		}
 	}
+
+	public String getOpcRespuestaCheck() {
+		return opcRespuestaCheck;
+	}
+
+	public void setOpcRespuestaCheck(String opcRespuestaCheck) {
+		this.opcRespuestaCheck = opcRespuestaCheck;
+	}
+	
 }

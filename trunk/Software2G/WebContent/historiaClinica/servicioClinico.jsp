@@ -146,13 +146,13 @@
 				document.form.submit();
 			}
 			
-			function agregarGrilla(){
-				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoAddGrid%>";
+			function agregarGrilla(tipoAdd){
+				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoAddGrid%>&tipo="+tipoAdd;
 				document.form.submit();
 			}
 			
-			function eliminarGrilla(param){
-				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoDeleteGrid%>&posList="+param;
+			function eliminarGrilla(param, tipoDel){
+				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoDeleteGrid%>&posList="+param+"&tipo="+tipoDel;
 				document.form.submit();
 			}
 		</script>
@@ -423,6 +423,16 @@
 										<jsp:include page="medicamentos.jsp" flush="true"/>
 									</td>
 								</tr>
+								<s:if test="profesional.profEspecialidad==\"2\"">
+									<tr>
+										<td><h1><s:text name="atencioservicio.elementos"></s:text></h1></td>
+									</tr>
+									<tr>
+										<td>
+											<jsp:include page="elementos.jsp" flush="true"/>
+										</td>
+									</tr>
+								</s:if>
 							</table>
 						</div>
 					</div>

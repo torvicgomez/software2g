@@ -34,14 +34,14 @@
 				<tr><td>
 					<h1>
 						<input type="checkbox" id="segana_${stat.index}" onchange="javascript:cambioView(${stat.index});"/>
-						<s:property value="	#segana.seanEtiqueta"/>
+						<s:property value="#segana.seanEtiqueta"/>
 					</h1>
 				</td></tr>
 			</table>
 			<div id="segmentoAnamnesis_${stat.index}" style="overflow:auto;width:auto;height:auto;display:none">
 				<s:if test="#segana.preguntas!=null&&#segana.preguntas.size()>0">
+					<s:hidden name="listSegmentoAnamnesis[%{#stat.index}].seanEtiqueta" value="%{#segana.seanEtiqueta}"/>
 					<s:iterator value="#segana.preguntas" id="dataPreg" var="preg" status="statPreg">
-						<s:hidden name="listSegmentoAnamnesis[%{#stat.index}].seanEtiqueta" value="%{#segana.seanEtiqueta}"/>
 						<s:hidden name="listSegmentoAnamnesis[%{#stat.index}].preguntas[%{#statPreg.index}].pregPregunta" value="%{#preg.pregPregunta}"/>
 						<s:hidden name="listSegmentoAnamnesis[%{#stat.index}].preguntas[%{#statPreg.index}].pregId" value="%{#preg.pregId}"/>
 						<s:hidden name="listSegmentoAnamnesis[%{#stat.index}].preguntas[%{#statPreg.index}].pregTipodato" value="%{#preg.pregTipodato}"/>
@@ -71,7 +71,7 @@
 										<td>
 											<s:hidden id="pregCheck_%{#preg.pregId}" name="listSegmentoAnamnesis[%{#stat.index}].preguntas[%{#statPreg.index}].respuestas[0].respRespuesta"/> 
 											<s:iterator value="#preg.opcionrespuestas" id="dataOpcres" var="resp" status="statOpcr">
-												<input type="checkbox" onchange="javascrip:registroCheck(this,${preg.pregId});" value="${resp.opreValor}"/><s:property value="#resp.opreEtiqueta"/>
+												<input type="checkbox" onchange="javascrip:registroCheck(this,${preg.pregId});" value="${resp.opreValor}" ${resp.opcRespuestaCheck}/><s:property value="#resp.opreEtiqueta"/>
 											</s:iterator>
 										</td>
 									</s:if>

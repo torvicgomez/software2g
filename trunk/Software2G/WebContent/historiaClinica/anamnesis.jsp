@@ -34,7 +34,7 @@
 				<tr><td>
 					<h1>
 						<input type="checkbox" id="segana_${stat.index}" onchange="javascript:cambioView(${stat.index});"/>
-						<s:property value="#segana.seanEtiqueta"/>
+						<s:property value="	#segana.seanEtiqueta"/>
 					</h1>
 				</td></tr>
 			</table>
@@ -46,6 +46,8 @@
 						<s:hidden name="listSegmentoAnamnesis[%{#stat.index}].preguntas[%{#statPreg.index}].pregId" value="%{#preg.pregId}"/>
 						<s:hidden name="listSegmentoAnamnesis[%{#stat.index}].preguntas[%{#statPreg.index}].pregTipodato" value="%{#preg.pregTipodato}"/>
 						<s:hidden name="listSegmentoAnamnesis[%{#stat.index}].preguntas[%{#statPreg.index}].pregRespobligatoria" value="%{#preg.pregRespobligatoria}"/>
+						<s:hidden name="listSegmentoAnamnesis[%{#stat.index}].preguntas[%{#statPreg.index}].tipopregunta.tiprEtiqueta" value="%{#preg.tipopregunta.tiprEtiqueta}"/>
+						<s:hidden name="listSegmentoAnamnesis[%{#stat.index}].preguntas[%{#statPreg.index}].pregObjetoview" value="%{#preg.pregObjetoview}"/>
 <!-- 						Creacion tipo pregunta abierta -->
 						<s:if test="#preg.tipopregunta.tiprEtiqueta!=null&&#preg.tipopregunta.tiprEtiqueta==constanteTipoPregAbierta">
 							<table cellpadding="0" cellspacing="0" border="0" class="display">

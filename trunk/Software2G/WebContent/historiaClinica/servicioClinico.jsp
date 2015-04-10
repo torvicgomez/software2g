@@ -147,12 +147,12 @@
 			}
 			
 			function agregarGrilla(){
-				document.form.action="jornadaLaboral.action?estado=<%=ConstantesAplicativo.constanteEstadoAddGrid%>";
+				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoAddGrid%>";
 				document.form.submit();
 			}
 			
 			function eliminarGrilla(param){
-				document.form.action="jornadaLaboral.action?estado=<%=ConstantesAplicativo.constanteEstadoDeleteGrid%>&posList="+param;
+				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoDeleteGrid%>&posList="+param;
 				document.form.submit();
 			}
 		</script>
@@ -174,7 +174,7 @@
 							<input type="button" value="<s:text name="labelbutton.registrar"></s:text>" onclick="registrar();" class="buttonSV"/>
 						</td></tr>
 					</s:if>
-					<s:elseif test="estado=='add'||estado=='edit'||estado=='save'">
+					<s:elseif test="estado=='add'||estado=='edit'||estado=='save'||estado=='addGrid'||estado=='delGrid'">
 						<tr>
 							<td class="right">
 								<input type="button" value="<s:text name="labelbutton.volver"></s:text>" onclick="volver();" class="buttonSV"/>
@@ -238,7 +238,7 @@
 						</tr>
 					</table>
 				</s:if>
-				<s:elseif test="estado=='all'||estado=='edit'||estado=='save'">
+				<s:elseif test="estado=='all'||estado=='edit'||estado=='save'||estado=='addGrid'||estado=='delGrid'">
 					<div id="pestanas">
 						<ul>
 							<li><a href="#tabs-0"><s:text name="atencioservicio.datospersonales"></s:text></a></li>

@@ -97,6 +97,7 @@
 					changeMonth: true
 				});
 				
+				
 			} );
 			
 			$(function() {
@@ -145,6 +146,15 @@
 				document.form.submit();
 			}
 			
+			function agregarGrilla(){
+				document.form.action="jornadaLaboral.action?estado=<%=ConstantesAplicativo.constanteEstadoAddGrid%>";
+				document.form.submit();
+			}
+			
+			function eliminarGrilla(param){
+				document.form.action="jornadaLaboral.action?estado=<%=ConstantesAplicativo.constanteEstadoDeleteGrid%>&posList="+param;
+				document.form.submit();
+			}
 		</script>
 	</head>
 	<body id="dt_example">

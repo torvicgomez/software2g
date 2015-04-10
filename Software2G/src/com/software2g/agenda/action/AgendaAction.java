@@ -29,6 +29,7 @@ import com.software2g.vo.Diagnostico;
 import com.software2g.vo.Evento;
 import com.software2g.vo.Examenespecialidad;
 import com.software2g.vo.Finalidad;
+import com.software2g.vo.Gafa;
 import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Medicamento;
 import com.software2g.vo.Motivo;
@@ -56,7 +57,6 @@ import com.software2g.vo.Tipoprocedimiento;
 import com.software2g.vo.Tiposervicio;
 import com.software2g.vo.Usuario;
 import com.software2g.vo.UtilGenerico;
-import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 public class AgendaAction extends ActionSupport implements ServletRequestAware,ServletResponseAware {
 	private static final long serialVersionUID = 1L;
@@ -135,6 +135,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private InputStream	strCambiarDatosDiagnostico;
 	private Medicamento medicamento;
 	private List<Medicamento> listMedicamento;
+	private Gafa gafaOD;
+	private Gafa gafaOI;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -248,7 +250,10 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setMedicamento(Medicamento medicamento) {this.medicamento = medicamento;}
 	public List<Medicamento> getListMedicamento() {return listMedicamento;}
 	public void setListMedicamento(List<Medicamento> listMedicamento) {this.listMedicamento = listMedicamento;}
-	
+	public Gafa getGafaOD() {return gafaOD;}
+	public void setGafaOD(Gafa gafaOD) {this.gafaOD = gafaOD;}
+	public Gafa getGafaOI() {return gafaOI;}
+	public void setGafaOI(Gafa gafaOI) {this.gafaOI = gafaOI;}
 	
 	public List<Respuesta> getListRespuesta() {return listRespuesta;}
 	public void setListRespuesta(List<Respuesta> listRespuesta) {this.listRespuesta = listRespuesta;}
@@ -879,34 +884,39 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			System.out.println("Construccion!!!!!!!!!!");
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAddGrid)||estado.equals(ConstantesAplicativo.constanteEstadoDeleteGrid)){
     			String posList = (String)request.getParameter("posList");
-    			listMedicamento = (ArrayList<Medicamento>)request.getSession().getAttribute("listMedicamento");
-    			if(listMedicamento==null)
-    				listMedicamento = new ArrayList<Medicamento>();
-    			if(posList==null){//Agregar en Grilla 
-    				if(ValidaString.isNullOrEmptyString(medicamento.getMediMedicamento()))
-        				addActionError(getText("validacion.requerido","mediMedicamento","Medicamento"));
-    				if(ValidaString.isNullOrEmptyString(medicamento.getMediPresentacion()))
-        				addActionError(getText("validacion.requerido","mediPresentacion","Presentación"));
-    				if(ValidaString.isNullOrEmptyString(medicamento.getMediCantidad()))
-        				addActionError(getText("validacion.requerido","mediCantidad","Cantidad"));
-    				if(ValidaString.isNullOrEmptyString(medicamento.getMediDosis()))
-        				addActionError(getText("validacion.requerido","mediDosis","Dosis"));
-    				if(ValidaString.isNullOrEmptyString(medicamento.getMediIntervalo()))
-        				addActionError(getText("validacion.requerido","mediIntervalo","Intervalo"));
-        			if(!hasActionErrors()){
-    					Medicamento obj = new Medicamento(); 
-	    				obj.setMediMedicamento(medicamento.getMediMedicamento());
-	    				obj.setMediPresentacion(medicamento.getMediPresentacion());
-	    				obj.setMediCantidad(medicamento.getMediCantidad());
-	    				obj.setMediDosis(medicamento.getMediDosis());
-	    				obj.setMediIntervalo(medicamento.getMediIntervalo());
-	    				listMedicamento.add(obj);
-	    				medicamento = new Medicamento(); 
-    				}
-    			}else{//Eliminar en Grilla
-    				listMedicamento.remove(Integer.parseInt(posList));
-    			}
-    			request.getSession().setAttribute("listMedicamento", listMedicamento);
+//    			String tipoGrid = (String)request.getParameter("tipo");
+//    			if(tipoGrid!=null&&!tipoGrid.equals("")){
+//    				if(tipoGrid.equals(ConstantesAplicativo.constanteTipoGridMedicamentos)){
+		    			listMedicamento = (ArrayList<Medicamento>)request.getSession().getAttribute("listMedicamento");
+		    			if(listMedicamento==null)
+		    				listMedicamento = new ArrayList<Medicamento>();
+		    			if(posList==null){//Agregar en Grilla 
+		    				if(ValidaString.isNullOrEmptyString(medicamento.getMediMedicamento()))
+		        				addActionError(getText("validacion.requerido","mediMedicamento","Medicamento"));
+		    				if(ValidaString.isNullOrEmptyString(medicamento.getMediPresentacion()))
+		        				addActionError(getText("validacion.requerido","mediPresentacion","Presentación"));
+		    				if(ValidaString.isNullOrEmptyString(medicamento.getMediCantidad()))
+		        				addActionError(getText("validacion.requerido","mediCantidad","Cantidad"));
+		    				if(ValidaString.isNullOrEmptyString(medicamento.getMediDosis()))
+		        				addActionError(getText("validacion.requerido","mediDosis","Dosis"));
+		    				if(ValidaString.isNullOrEmptyString(medicamento.getMediIntervalo()))
+		        				addActionError(getText("validacion.requerido","mediIntervalo","Intervalo"));
+		        			if(!hasActionErrors()){
+		    					Medicamento obj = new Medicamento(); 
+			    				obj.setMediMedicamento(medicamento.getMediMedicamento());
+			    				obj.setMediPresentacion(medicamento.getMediPresentacion());
+			    				obj.setMediCantidad(medicamento.getMediCantidad());
+			    				obj.setMediDosis(medicamento.getMediDosis());
+			    				obj.setMediIntervalo(medicamento.getMediIntervalo());
+			    				listMedicamento.add(obj);
+			    				medicamento = new Medicamento(); 
+		    				}
+		    			}else{//Eliminar en Grilla
+		    				listMedicamento.remove(Integer.parseInt(posList));
+		    			}
+		    			request.getSession().setAttribute("listMedicamento", listMedicamento);
+//    				}
+//    			}
 				long idProfesional = request.getParameter("idProfesional")!=null?Long.parseLong(request.getParameter("idProfesional").toString())
 						:profesional!=null&&profesional.getProfId()>0?profesional.getProfId():0;
     			long idEvento = request.getParameter("idEvento")!=null?Long.parseLong(request.getParameter("idEvento").toString()):0;
@@ -975,27 +985,29 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 					}
 				}
 			}
-			System.out.println("!!!!!!!!!");
 		}else{
-			System.out.println("Entra esta Parte!!!!!!!!!!!");
 			for(Segmentoanamnesi elem:listSegmentoAnamnesis){
-				System.out.println("elem.getPreguntas():["+elem.getPreguntas()+"]");
 				if(elem.getPreguntas()!=null&&elem.getPreguntas().size()>0){
-					System.out.println("elem.getPreguntas().size():["+elem.getPreguntas().size()+"]");
 					for(Pregunta elem1:elem.getPreguntas()){
-						System.out.println("elem1.getRespuestas():["+elem1.getRespuestas()+"]");
-						if(elem1.getRespuestas()!=null&&elem1.getRespuestas().size()>0){
-							System.out.println("elem1.getRespuestas().size():["+elem1.getRespuestas().size()+"]");
-							for(Respuesta elem2:elem1.getRespuestas()){
-								System.out.println("elem1.getPregRespobligatoria():["+elem1.getPregRespobligatoria()+"]");
-								System.out.println("elem1.getRespRespuesta():["+elem2.getRespRespuesta()+"]");
+						elem1.setOpcionrespuestas(gestionFacadeHistoriaClinica.findAllOpcionrespuestas(elem1.getPregId()));
+						if(elem1.getOpcionrespuestas()!=null&&elem1.getOpcionrespuestas().size()>0){
+							Collections.sort(elem1.getOpcionrespuestas());
+							String[] opcRespuestas = ((Respuesta)elem1.getRespuestas().get(0)).getRespRespuesta().split(ConstantesAplicativo.constanteSplit);
+							if(opcRespuestas!=null&&opcRespuestas.length>0){
+								for(String resp:opcRespuestas){
+									for(Opcionrespuesta elem2:elem1.getOpcionrespuestas()){
+										if(resp.equals(elem2.getOpreValor())){
+											elem2.setOpcRespuestaCheck(ConstantesAplicativo.constanteChecked);
+											break;
+										}
+									}
+								}
 							}
 						}
 					}
 				}
 			}
 		}
-		
 		request.getSession().setAttribute("listSegmentoAnamnesis", listSegmentoAnamnesis);
 	}
 	

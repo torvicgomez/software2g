@@ -39,6 +39,8 @@ public final class ConstantesAplicativo {
 	public static final String constanteEstadoAssociate = "associate";
 	public static final String constanteEstadoOperacionCita = "operacioncita";
 	public static final String constanteEstadoAccionRealizar = "accionrealizar";
+	public static final String constanteTipoGridMedicamentos = "GridMedicamentos";
+	public static final String constanteTipoGridElementos = "GridElementos";
 	
 	public static final String constanteTipoFileJSFuncRol = "functionrol";
 	public static final String constanteTipoFileJSTreeMenu = "treemenu";
@@ -72,6 +74,7 @@ public final class ConstantesAplicativo {
 	public static final List<String> constanteEstadoCivil = new ArrayList<String>(Arrays.asList("CASADO(A)","DIVORCIADO(A)", "SOLTERO(A)", "UNIÓN LIBRE"));
 	public static final String constanteCheckSi = "S"; 
     public static final String constanteCheckNo = "N";
+    public static final String constanteChecked = "checked";
 	
 	// Acciones a realizar con la cita
 	public static final String constanteNoAplica = "NA";

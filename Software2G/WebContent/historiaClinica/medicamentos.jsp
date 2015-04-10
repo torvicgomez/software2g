@@ -28,7 +28,7 @@
 					<td><s:textfield name="medicamento.mediIntervalo" size="10" cssClass="inputs"></s:textfield></td>
 				</tr>
 				<tr>
-					<td class="right" colspan="2"><input type="button" value="<s:text name="labelbutton.agregarMedicamento"></s:text>" onclick="agregarGrilla();" class="buttonSV"/></td>
+					<td class="right" colspan="2"><input type="button" value="<s:text name="labelbutton.agregarMedicamento"></s:text>" onclick="agregarGrilla('<%=ConstantesAplicativo.constanteTipoGridMedicamentos%>');" class="buttonSV"/></td>
 				</tr>
 				<tr>
 					<td colspan="2">
@@ -54,7 +54,7 @@
 											<td><s:property value="mediCantidad"/></td>
 											<td><s:property value="mediDosis"/></td>
 											<td><s:property value="mediIntervalo"/></td>
-											<td class="right"><input type="button" value="<s:text name="labelbutton.eliminarMedicamento"></s:text>" onclick="eliminarGrilla('${stat.index}');" class="buttonSV"/></td>
+											<td class="right"><input type="button" value="<s:text name="labelbutton.eliminarMedicamento"></s:text>" onclick="eliminarGrilla('${stat.index}','<%=ConstantesAplicativo.constanteTipoGridMedicamentos%>');" class="buttonSV"/></td>
 										</tr>
 									</s:iterator>
 								</tbody>

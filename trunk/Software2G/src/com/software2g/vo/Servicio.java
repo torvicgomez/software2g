@@ -20,9 +20,11 @@ public class Servicio implements Serializable {
 	@Column(name="serv_id")
 	private long servId;
 
-	@Column(name="prof_id")
-	private java.math.BigDecimal profId;
-
+	//bi-directional many-to-one association to Profesional
+	@ManyToOne
+	@JoinColumn(name="prof_id")
+	private Profesional profesional;
+	
 	@Column(name="serv_fechacambio")
 	private String servFechacambio;
 
@@ -97,14 +99,6 @@ public class Servicio implements Serializable {
 
 	public void setServId(long servId) {
 		this.servId = servId;
-	}
-
-	public java.math.BigDecimal getProfId() {
-		return this.profId;
-	}
-
-	public void setProfId(java.math.BigDecimal profId) {
-		this.profId = profId;
 	}
 
 	public String getServFechacambio() {
@@ -242,4 +236,13 @@ public class Servicio implements Serializable {
 			this.servHoracambio=data.get(2);
 		}
 	}
+
+	public Profesional getProfesional() {
+		return profesional;
+	}
+
+	public void setProfesional(Profesional profesional) {
+		this.profesional = profesional;
+	}
+	
 }

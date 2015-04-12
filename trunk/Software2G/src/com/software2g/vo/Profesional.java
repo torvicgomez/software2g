@@ -59,6 +59,10 @@ public class Profesional implements Serializable {
 	//bi-directional many-to-one association to Jorandalaboral
 	@OneToMany(mappedBy="profesional")
 	private List<Jorandalaboral> jorandalaborals;
+	
+	//bi-directional many-to-one association to Servicio
+	@OneToMany(mappedBy="profesional")
+	private List<Servicio> servicios;
 
 	@Transient
 	private String findProfesional;

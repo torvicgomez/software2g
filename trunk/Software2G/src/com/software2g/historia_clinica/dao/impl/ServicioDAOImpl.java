@@ -82,6 +82,12 @@ public class ServicioDAOImpl implements IServicioDao {
 	public void persistServicio(Servicio servicio) {
 		em.persist(em.merge(servicio));
 	}
+	
+	public long persistServicioId(Servicio servicio) {
+		Servicio obj = em.merge(servicio); 
+		em.persist(obj); 
+		return obj.getServId();
+	}
 	/**
 	 * Remove the given persistent instance.
 	 */

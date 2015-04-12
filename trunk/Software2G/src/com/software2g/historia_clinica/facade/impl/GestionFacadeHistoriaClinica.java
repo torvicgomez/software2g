@@ -2,13 +2,10 @@ package com.software2g.historia_clinica.facade.impl;
 
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.software2g.agenda.dao.IAgendaDao;
 import com.software2g.historia_clinica.dao.IAcudienteDao;
 import com.software2g.historia_clinica.dao.IArchivoServicioDao;
 import com.software2g.historia_clinica.dao.IClaseDiagnosticoDao;
@@ -1722,6 +1719,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistServicio(Servicio servicio) throws Exception {
 		try {
 			getServicioDao().persistServicio(servicio);
@@ -1729,6 +1727,19 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 			throw new Exception("persistServicio failed: " + e.getMessage());
 		}
 	}
+	
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	@Transactional
+	public long persistServicioId(Servicio servicio) throws Exception {
+		try {
+			return getServicioDao().persistServicioId(servicio);
+		} catch (RuntimeException e) {
+			throw new Exception("persistServicioId failed: " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Remove the given persistent instance.
 	 */

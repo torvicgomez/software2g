@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.software2g.vo.Examenoptometria;
+import com.software2g.vo.Servicio;
 import com.software2g.historia_clinica.dao.IExamenOptometriaDao;
 
 import org.springframework.stereotype.Repository;
@@ -81,6 +82,12 @@ public class ExamenOptometriaDAOImpl implements IExamenOptometriaDao {
 	 */
 	public void persistExamenoptometria(Examenoptometria examenoptometria) {
 		em.persist(em.merge(examenoptometria));
+	}
+	
+	public long persistExamenoptometriaId(Examenoptometria examenoptometria) {
+		Examenoptometria obj = em.merge(examenoptometria); 
+		em.persist(obj); 
+		return obj.getExopId();
 	}
 	/**
 	 * Remove the given persistent instance.

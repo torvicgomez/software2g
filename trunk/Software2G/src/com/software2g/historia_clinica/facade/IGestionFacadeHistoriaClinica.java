@@ -708,6 +708,7 @@ public interface IGestionFacadeHistoriaClinica {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistServicio(Servicio servicio) throws Exception;
+	public long persistServicioId(Servicio servicio) throws Exception;
 	/**
 	 * Remove the given persistent instance.
 	 */

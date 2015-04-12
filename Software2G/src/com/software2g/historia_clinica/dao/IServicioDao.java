@@ -31,6 +31,7 @@ public interface IServicioDao {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistServicio(Servicio servicio);
+	public long persistServicioId(Servicio servicio);
 	/**
 	 * Remove the given persistent instance.
 	 */

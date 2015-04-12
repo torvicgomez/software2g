@@ -31,6 +31,7 @@ public interface IExamenOptometriaDao {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistExamenoptometria(Examenoptometria examenoptometria);
+	public long persistExamenoptometriaId(Examenoptometria examenoptometria);
 	/**
 	 * Remove the given persistent instance.
 	 */

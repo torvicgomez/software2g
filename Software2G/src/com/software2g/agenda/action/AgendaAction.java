@@ -28,6 +28,7 @@ import com.software2g.vo.Departamento;
 import com.software2g.vo.Diagnostico;
 import com.software2g.vo.Evento;
 import com.software2g.vo.Examenespecialidad;
+import com.software2g.vo.Examenoptometria;
 import com.software2g.vo.Finalidad;
 import com.software2g.vo.Gafa;
 import com.software2g.vo.Jorandalaboral;
@@ -50,6 +51,7 @@ import com.software2g.vo.Registrorxuso;
 import com.software2g.vo.Respuesta;
 import com.software2g.vo.Segmentoanamnesi;
 import com.software2g.vo.Seguridadsocial;
+import com.software2g.vo.Servicio;
 import com.software2g.vo.Tipodiagnostico;
 import com.software2g.vo.Tipodocumento;
 import com.software2g.vo.Tipoespecialidad;
@@ -137,6 +139,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private List<Medicamento> listMedicamento;
 	private Gafa gafaOD;
 	private Gafa gafaOI;
+	private Servicio servicio;
+	private Examenoptometria examenOptometria;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -254,6 +258,10 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setGafaOD(Gafa gafaOD) {this.gafaOD = gafaOD;}
 	public Gafa getGafaOI() {return gafaOI;}
 	public void setGafaOI(Gafa gafaOI) {this.gafaOI = gafaOI;}
+	public Servicio getServicio() {return servicio;}
+	public void setServicio(Servicio servicio) {this.servicio = servicio;}
+	public Examenoptometria getExamenOptometria() {return examenOptometria;}
+	public void setExamenOptometria(Examenoptometria examenOptometria) {this.examenOptometria = examenOptometria;}
 	
 	public List<Respuesta> getListRespuesta() {return listRespuesta;}
 	public void setListRespuesta(List<Respuesta> listRespuesta) {this.listRespuesta = listRespuesta;}
@@ -866,6 +874,97 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     					System.out.println("****************************");
         				System.out.println("idPaciente:["+idPaciente+"]");
         				System.out.println("****************************");
+        				if(idPaciente>0){
+        					paciente.setPaciId(idPaciente);
+        					//1. Realizar la Insercion del Servicio
+        					servicio = new Servicio();
+        					servicio.setProfesional(profesional);
+        					servicio.setPaciente(paciente);
+        					servicio.setTiposervicio(tipoServicio);
+        					servicio.setMotivo(motivo);
+        					servicio.setFinalidad(finalidad);
+        					servicio.setServFechahoraingreso(ValidaString.fechaSystem()+" "+ValidaString.horaSystem());
+        					servicio.setServFechahorasalida(ValidaString.fechaSystem()+" "+ValidaString.horaSystem());
+        					servicio.setDatosAud(getDatosAud());
+        					ValidaString.imprimirObject(servicio);
+        					long idServicio = gestionFacadeHistoriaClinica.persistServicioId(servicio);
+        					System.out.println("****************************");
+            				System.out.println("idServicio:["+idServicio+"]");
+            				System.out.println("****************************");
+            				if(idServicio>0){
+            					servicio.setServId(idServicio);
+            					//2. Insercion Preguntas Historia Clinica
+            					for(Segmentoanamnesi elem:listSegmentoAnamnesis){
+            						if(elem.getPreguntas()!=null&&elem.getPreguntas().size()>0){
+            							for(Pregunta elem1:elem.getPreguntas()){
+            								gestionFacadeHistoriaClinica.persistRespuesta((Respuesta)elem1.getRespuestas().get(0));
+            							}
+            						}
+            					}
+            					//3. Inservion examenes segun especialidad
+                				if(especialidad.equals(ConstantesAplicativo.constanteEspecialidadMedicinaGeneral)){
+                					System.out.println("en Construcción");
+                				}else if(especialidad.equals(ConstantesAplicativo.constanteEspecialidadOdontologia)){
+                					System.out.println("en Construcción");
+                				}else if(especialidad.equals(ConstantesAplicativo.constanteEspecialidadOptometria)){
+                					for(Examenespecialidad elem:listExamenEspecialidad){
+                						if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveRXUSO)){
+                							examenOptometria = new Examenoptometria();
+                							
+            		    					// 1. Validacion Examen Rx en Uso
+            		    					//---Ojo Derecho -- OD -----
+                							rx
+            		    					//---Ojo Izquierdo -- OI -----
+            		    					// Ambos Ojos
+            		    					//------------------------------------------
+            		    					//------------------------------------------
+                						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveAVSC)){
+            		    					// 2. Validacion Examen AVSC
+            		    					//---Ojo Derecho -- OD -----
+            		    					//---Ojo Izquierdo -- OI -----
+            		    					//------------------------------------------
+            		    					//------------------------------------------
+                						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveCoverTest)){
+            		    					// 3. Validacion Examen Cover Test
+            		    					System.out.println("En Construccion!!!!!!!");
+            		    					//------------------------------------------
+            		    					//------------------------------------------
+                						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveExamenExterno)){
+            		    					// 4. Validacion Examen Externo
+            		    					//---Ojo Derecho -- OD -----
+            		    					//---Ojo Izquierdo -- OI -----
+            		    					//------------------------------------------
+            		    					//------------------------------------------
+                						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveOftalmoscopia)){
+            		    					// 5. Validacion Examen Oftalmoscopia
+            		    					//---Ojo Derecho -- OD -----
+            		    					//---Ojo Izquierdo -- OI -----
+            		    					//------------------------------------------
+            		    					//------------------------------------------
+                						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveKeratometria)){
+            		    					// 6. Validacion Examen Keratometria
+            		    					//---Ojo Derecho -- OD -----
+            		    					//---Ojo Izquierdo -- OI -----
+            		    					//------------------------------------------
+            		    					//------------------------------------------
+            		    					//------------------------------------------
+                						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveRetinoscopia)){
+            		    					// 7. Validacion Examen Retinoscopia
+            		    					//---Ojo Derecho -- OD -----
+            		    					//---Ojo Izquierdo -- OI -----
+            		    					//------------------------------------------
+                						}
+                					}
+                				}
+            					//4. Insercion Diagnosticos
+            					//5. Insercion Medicamentos
+            					//6. Insercion Elementos segun especialidad
+            				}
+        				}
+        				
+        				
+        				
+        				
     					estado = ConstantesAplicativo.constanteEstadoAbstract;
     					addActionMessage(getText("accion.satisfactoria"));
     				}

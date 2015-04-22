@@ -907,17 +907,24 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
                 				}else if(especialidad.equals(ConstantesAplicativo.constanteEspecialidadOdontologia)){
                 					System.out.println("en Construcción");
                 				}else if(especialidad.equals(ConstantesAplicativo.constanteEspecialidadOptometria)){
+                					long idExamOpt = 0;
                 					for(Examenespecialidad elem:listExamenEspecialidad){
                 						if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveRXUSO)){
                 							examenOptometria = new Examenoptometria();
-                							
-            		    					// 1. Validacion Examen Rx en Uso
-            		    					//---Ojo Derecho -- OD -----
-                							rx
-            		    					//---Ojo Izquierdo -- OI -----
-            		    					// Ambos Ojos
-            		    					//------------------------------------------
-            		    					//------------------------------------------
+                							examenOptometria.setServicio(servicio);
+                							examenOptometria.setDatosAud(getDatosAud());
+                							idExamOpt = gestionFacadeHistoriaClinica.persistExamenoptometriaId(examenOptometria);
+                							if(idExamOpt>0){
+	            		    					//---Ojo Derecho -- OD -----
+	                							rxUsoOD.setExamenoptometria(examenOptometria);
+	                							rxUsoOD.setDatosAud(getDatosAud());
+	                							gestionFacadeHistoriaClinica.persistRegistrorxuso(rxUsoOD);
+	            		    					//---Ojo Izquierdo -- OI -----
+	                							rxUsoOI.setExamenoptometria(examenOptometria);
+	                							rxUsoOI.setDatosAud(getDatosAud());
+	                							gestionFacadeHistoriaClinica.persistRegistrorxuso(rxUsoOI);
+	            		    					// Ambos Ojos
+                							}
                 						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveAVSC)){
             		    					// 2. Validacion Examen AVSC
             		    					//---Ojo Derecho -- OD -----

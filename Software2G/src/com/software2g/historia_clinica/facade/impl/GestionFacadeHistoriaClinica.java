@@ -576,6 +576,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistExamenoptometria(Examenoptometria examenoptometria) throws Exception {
 		try {
 			getExamenOptometriaDao().persistExamenoptometria(examenoptometria);
@@ -583,9 +584,22 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 			throw new Exception("persistExamenoptometria failed: " + e.getMessage());
 		}
 	}
+	
+	@Transactional
+	public long persistExamenoptometriaId(Examenoptometria examenoptometria) throws Exception {
+		try {
+			return getExamenOptometriaDao().persistExamenoptometriaId(examenoptometria);
+		} catch (RuntimeException e) {
+			//throw new Exception("persistExamenoptometria failed: " + e.getMessage());
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
 	/**
 	 * Remove the given persistent instance.
 	 */
+	@Transactional
 	public void removeExamenoptometria(Examenoptometria examenoptometria) throws Exception {
 		try {
 			getExamenOptometriaDao().removeExamenoptometria(examenoptometria);

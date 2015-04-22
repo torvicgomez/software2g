@@ -198,6 +198,7 @@ public interface IGestionFacadeHistoriaClinica {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistExamenoptometria(Examenoptometria examenoptometria) throws Exception;
+	public long persistExamenoptometriaId(Examenoptometria examenoptometria) throws Exception;
 	/**
 	 * Remove the given persistent instance.
 	 */

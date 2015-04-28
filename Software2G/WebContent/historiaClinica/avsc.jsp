@@ -25,7 +25,7 @@
 					<tr>
 						<td class="leftLabel"><s:text name="servicioexamenopt.ojoizquierdo"></s:text></td>
 						<td class="leftLabel"><s:text name="servicioexamenopt.avl"></s:text></td>
-						<td><s:textfield name="avscOI.reruAvl" id="avscAvl" size="10" cssClass="inputs"></s:textfield></td>
+						<td><s:textfield name="avscOI.avscAvl" id="avscAvl" size="10" cssClass="inputs"></s:textfield></td>
 						<td class="leftLabel"><s:text name="servicioexamenopt.avc"></s:text></td>
 						<td><s:select list="listAVC" name="avscOI.avscAvc" listKey="key" listValue="valor" headerKey="" headerValue=".::Selecione::." cssClass="inputs"/></td>
 					</tr>

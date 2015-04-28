@@ -1759,7 +1759,9 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 		try {
 			return getServicioDao().persistServicioId(servicio);
 		} catch (RuntimeException e) {
-			throw new Exception("persistServicioId failed: " + e.getMessage());
+			//throw new Exception("persistServicioId failed: " + e.getMessage());
+			e.printStackTrace();
+			return 0;
 		}
 	}
 	

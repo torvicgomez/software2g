@@ -858,9 +858,9 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			
     			if(!hasActionErrors()){
     				persona.setDatosAud(getDatosAud());
-    				ValidaString.imprimirObject(persona);
-    				ValidaString.imprimirObject(persona.getMunicipio());
-    				ValidaString.imprimirObject(persona.getTipodocumento());
+//    				ValidaString.imprimirObject(persona);
+//    				ValidaString.imprimirObject(persona.getMunicipio());
+//    				ValidaString.imprimirObject(persona.getTipodocumento());
     				long idPersona = gestionFacadeAgenda.persistPersonaId(persona);
     				System.out.println("****************************");
     				System.out.println("idPersona:["+idPersona+"]");
@@ -869,24 +869,40 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     					persona.setIdPers(idPersona);
     					paciente.setPersona(persona);
     					paciente.setDatosAud(getDatosAud());
-    					ValidaString.imprimirObject(paciente);
+//    					ValidaString.imprimirObject(paciente);
     					long idPaciente = gestionFacadeHistoriaClinica.persistPacienteId(paciente);
     					System.out.println("****************************");
         				System.out.println("idPaciente:["+idPaciente+"]");
         				System.out.println("****************************");
         				if(idPaciente>0){
+        					tipoServicio = gestionFacadeHistoriaClinica.findTiposervicioById(Long.parseLong(profesional.getProfEspecialidad()));
         					paciente.setPaciId(idPaciente);
         					//1. Realizar la Insercion del Servicio
+        					
+        					System.out.println("***************************************************");
+        					System.out.println("***************************************************");
+        					System.out.println("paciente.getPaciId():["+paciente.getPaciId()+"]");
+        					System.out.println("profesional.getProfId():["+profesional.getProfId()+"]");
+        					System.out.println("tipoServicio.getTiseId():["+tipoServicio.getTiseId()+"]");
+        					System.out.println("motivo.getMotiId():["+motivo.getMotiId()+"]");
+        					System.out.println("finalidad.getFinaId():["+finalidad.getFinaId()+"]");
+        					System.out.println("seguridadSocial.getSeguId():["+seguridadSocial.getSeguId()+"]");
+        					System.out.println("Fecha Hora Ingreso:["+ValidaString.fechaSystem()+" "+ValidaString.horaSystem()+"]");
+        					System.out.println("Fecha Hora Salida:["+ValidaString.fechaSystem()+" "+ValidaString.horaSystem()+"]");
+        					System.out.println("***************************************************");
+        					System.out.println("***************************************************");
+        					
         					servicio = new Servicio();
         					servicio.setProfesional(profesional);
         					servicio.setPaciente(paciente);
         					servicio.setTiposervicio(tipoServicio);
         					servicio.setMotivo(motivo);
         					servicio.setFinalidad(finalidad);
+        					servicio.setSeguridadsocial(seguridadSocial);
         					servicio.setServFechahoraingreso(ValidaString.fechaSystem()+" "+ValidaString.horaSystem());
         					servicio.setServFechahorasalida(ValidaString.fechaSystem()+" "+ValidaString.horaSystem());
         					servicio.setDatosAud(getDatosAud());
-        					ValidaString.imprimirObject(servicio);
+//        					ValidaString.imprimirObject(servicio);
         					long idServicio = gestionFacadeHistoriaClinica.persistServicioId(servicio);
         					System.out.println("****************************");
             				System.out.println("idServicio:["+idServicio+"]");
@@ -895,8 +911,18 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
             					servicio.setServId(idServicio);
             					//2. Insercion Preguntas Historia Clinica
             					for(Segmentoanamnesi elem:listSegmentoAnamnesis){
+            						System.out.println("Entra esta Parte!!!!!!");
+            						System.out.println("Segmentoanamnesi elem:["+elem+"]");
             						if(elem.getPreguntas()!=null&&elem.getPreguntas().size()>0){
+            							System.out.println("elem.getPreguntas().size():["+elem.getPreguntas().size()+"]");
             							for(Pregunta elem1:elem.getPreguntas()){
+            								Respuesta resp =  (Respuesta)elem1.getRespuestas().get(0);
+            								resp.setServicio(servicio);
+            								resp.setPregunta(elem1);
+            								resp.setDatosAud(getDatosAud());
+            								System.out.println("Respuesta:["+resp+"]");
+            								System.out.println("Pregunta: ["+resp.getPregunta().getPregId()+"]");
+            								System.out.println("Respuesta:["+resp.getRespRespuesta()+"]");
             								gestionFacadeHistoriaClinica.persistRespuesta((Respuesta)elem1.getRespuestas().get(0));
             							}
             						}

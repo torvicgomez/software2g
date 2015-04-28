@@ -171,6 +171,7 @@ public interface IGestionFacadeHistoriaClinica {
 	 * Return all persistent instances of the <code>Especificacionpartecuerpo</code> entity.
 	 */
 	public List<Especificacionpartecuerpo> findAllEspecificacionpartecuerpos() throws Exception;
+	public Especificacionpartecuerpo findEspecificacionpartecuerposXEtiqueta(String etiqueta) throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */

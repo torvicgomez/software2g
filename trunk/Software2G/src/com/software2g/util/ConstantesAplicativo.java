@@ -186,5 +186,8 @@ public final class ConstantesAplicativo {
 
 	public static final String constanteClaseDiagnosticoPP = "Dx Ppal";
 	public static final String constanteClaseDiagnosticoRL = "Dx Rnal";
-	
+
+	public static final String constanteEspParteCuerpoOD = "OD";
+	public static final String constanteEspParteCuerpoOI = "OI";
+	public static final String constanteEspParteCuerpoODI = "ODI";
 }

@@ -76,6 +76,24 @@ public class EspecificacionParteCuerpoDAOImpl implements IEspecificacionParteCue
             }
         }
 	}
+	
+	public Especificacionpartecuerpo findEspecificacionpartecuerposXEtiqueta(String etiqueta) {
+        try {
+    		String jpqlString = "select especificacionpartecuerpo from " + Especificacionpartecuerpo.class.getSimpleName() + " especificacionpartecuerpo" +
+    				" where especificacionpartecuerpo.espcEtiqueta =:etiqueta ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("etiqueta", etiqueta);
+            return (Especificacionpartecuerpo)query.getSingleResult();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
+	
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

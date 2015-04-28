@@ -913,57 +913,120 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
                 							examenOptometria = new Examenoptometria();
                 							examenOptometria.setServicio(servicio);
                 							examenOptometria.setDatosAud(getDatosAud());
-                							idExamOpt = gestionFacadeHistoriaClinica.persistExamenoptometriaId(examenOptometria);
-                							if(idExamOpt>0){
+                							long idExamenOpt = gestionFacadeHistoriaClinica.persistExamenoptometriaId(examenOptometria);
+            		    					if(idExamenOpt>0){
 	            		    					//---Ojo Derecho -- OD -----
 	                							rxUsoOD.setExamenoptometria(examenOptometria);
+	                							rxUsoOD.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOD));
 	                							rxUsoOD.setDatosAud(getDatosAud());
 	                							gestionFacadeHistoriaClinica.persistRegistrorxuso(rxUsoOD);
 	            		    					//---Ojo Izquierdo -- OI -----
 	                							rxUsoOI.setExamenoptometria(examenOptometria);
+	                							rxUsoOI.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOI));
 	                							rxUsoOI.setDatosAud(getDatosAud());
 	                							gestionFacadeHistoriaClinica.persistRegistrorxuso(rxUsoOI);
-	            		    					// Ambos Ojos
-                							}
+	                							// Ambos Ojos
+	                							rxUsoOI.cleanAmbosOjos();
+	                							rxUsoOI.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoODI));
+	                							gestionFacadeHistoriaClinica.persistRegistrorxuso(rxUsoOI);
+            		    					}
                 						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveAVSC)){
-            		    					// 2. Validacion Examen AVSC
-            		    					//---Ojo Derecho -- OD -----
-            		    					//---Ojo Izquierdo -- OI -----
-            		    					//------------------------------------------
-            		    					//------------------------------------------
+                							examenOptometria = new Examenoptometria();
+                							examenOptometria.setServicio(servicio);
+                							examenOptometria.setDatosAud(getDatosAud());
+                							long idExamenOpt = gestionFacadeHistoriaClinica.persistExamenoptometriaId(examenOptometria);
+            		    					if(idExamenOpt>0){
+            		    						//---Ojo Derecho -- OD -----
+            		    						avscOD.setExamenoptometria(examenOptometria);
+            		    						avscOD.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOD));
+            		    						avscOD.setDatosAud(getDatosAud());
+            		    						gestionFacadeHistoriaClinica.persistRegistroavsc(avscOD);
+            		    						//---Ojo Izquierdo -- OI -----
+            		    						avscOI.setExamenoptometria(examenOptometria);
+            		    						avscOI.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOI));
+            		    						avscOI.setDatosAud(getDatosAud());
+            		    						gestionFacadeHistoriaClinica.persistRegistroavsc(avscOI);
+            		    					}
                 						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveCoverTest)){
             		    					// 3. Validacion Examen Cover Test
             		    					System.out.println("En Construccion!!!!!!!");
             		    					//------------------------------------------
             		    					//------------------------------------------
                 						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveExamenExterno)){
-            		    					// 4. Validacion Examen Externo
-            		    					//---Ojo Derecho -- OD -----
-            		    					//---Ojo Izquierdo -- OI -----
-            		    					//------------------------------------------
-            		    					//------------------------------------------
+                							examenOptometria = new Examenoptometria();
+                							examenOptometria.setServicio(servicio);
+                							examenOptometria.setDatosAud(getDatosAud());
+                							long idExamenOpt = gestionFacadeHistoriaClinica.persistExamenoptometriaId(examenOptometria);
+            		    					if(idExamenOpt>0){
+	            		    					//---Ojo Derecho -- OD -----
+            		    						examenExternoOD.setExamenoptometria(examenOptometria);
+            		    						examenExternoOD.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOD));
+            		    						examenExternoOD.setDatosAud(getDatosAud());
+            		    						gestionFacadeHistoriaClinica.persistRegistroexamensimple(examenExternoOD);
+	            		    					//---Ojo Izquierdo -- OI -----
+            		    						examenExternoOI.setExamenoptometria(examenOptometria);
+            		    						examenExternoOI.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOI));
+            		    						examenExternoOI.setDatosAud(getDatosAud());
+            		    						gestionFacadeHistoriaClinica.persistRegistroexamensimple(examenExternoOI);
+            		    					}
                 						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveOftalmoscopia)){
-            		    					// 5. Validacion Examen Oftalmoscopia
-            		    					//---Ojo Derecho -- OD -----
-            		    					//---Ojo Izquierdo -- OI -----
-            		    					//------------------------------------------
-            		    					//------------------------------------------
+                							examenOptometria = new Examenoptometria();
+                							examenOptometria.setServicio(servicio);
+                							examenOptometria.setDatosAud(getDatosAud());
+                							long idExamenOpt = gestionFacadeHistoriaClinica.persistExamenoptometriaId(examenOptometria);
+            		    					if(idExamenOpt>0){
+	            		    					//---Ojo Derecho -- OD -----
+            		    						oftalmoscopiaOD.setExamenoptometria(examenOptometria);
+            		    						oftalmoscopiaOD.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOD));
+            		    						oftalmoscopiaOD.setDatosAud(getDatosAud());
+            		    						gestionFacadeHistoriaClinica.persistRegistroexamensimple(oftalmoscopiaOD);
+	            		    					//---Ojo Izquierdo -- OI -----
+            		    						oftalmoscopiaOI.setExamenoptometria(examenOptometria);
+            		    						oftalmoscopiaOI.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOI));
+            		    						oftalmoscopiaOI.setDatosAud(getDatosAud());
+            		    						gestionFacadeHistoriaClinica.persistRegistroexamensimple(oftalmoscopiaOI);
+            		    					}
                 						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveKeratometria)){
-            		    					// 6. Validacion Examen Keratometria
-            		    					//---Ojo Derecho -- OD -----
-            		    					//---Ojo Izquierdo -- OI -----
-            		    					//------------------------------------------
-            		    					//------------------------------------------
-            		    					//------------------------------------------
+                							examenOptometria = new Examenoptometria();
+                							examenOptometria.setServicio(servicio);
+                							examenOptometria.setDatosAud(getDatosAud());
+                							long idExamenOpt = gestionFacadeHistoriaClinica.persistExamenoptometriaId(examenOptometria);
+            		    					if(idExamenOpt>0){
+	            		    					//---Ojo Derecho -- OD -----
+            		    						keratometriaOD.setExamenoptometria(examenOptometria);
+            		    						keratometriaOD.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOD));
+            		    						keratometriaOD.setDatosAud(getDatosAud());
+            		    						gestionFacadeHistoriaClinica.persistRegistroexamensimple(keratometriaOD);
+	            		    					//---Ojo Izquierdo -- OI -----
+            		    						keratometriaOI.setExamenoptometria(examenOptometria);
+            		    						keratometriaOI.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOI));
+            		    						keratometriaOI.setDatosAud(getDatosAud());
+            		    						gestionFacadeHistoriaClinica.persistRegistroexamensimple(keratometriaOI);
+            		    					}
                 						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveRetinoscopia)){
-            		    					// 7. Validacion Examen Retinoscopia
-            		    					//---Ojo Derecho -- OD -----
-            		    					//---Ojo Izquierdo -- OI -----
-            		    					//------------------------------------------
+                							examenOptometria = new Examenoptometria();
+                							examenOptometria.setServicio(servicio);
+                							examenOptometria.setDatosAud(getDatosAud());
+                							long idExamenOpt = gestionFacadeHistoriaClinica.persistExamenoptometriaId(examenOptometria);
+            		    					if(idExamenOpt>0){
+	            		    					//---Ojo Derecho -- OD -----
+            		    						retinoscopiaOD.setExamenoptometria(examenOptometria);
+            		    						retinoscopiaOD.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOD));
+            		    						retinoscopiaOD.setDatosAud(getDatosAud());
+            		    						gestionFacadeHistoriaClinica.persistRegistroexamensimple(retinoscopiaOD);
+	            		    					//---Ojo Izquierdo -- OI -----
+            		    						retinoscopiaOI.setExamenoptometria(examenOptometria);
+            		    						retinoscopiaOI.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOI));
+            		    						retinoscopiaOI.setDatosAud(getDatosAud());
+            		    						gestionFacadeHistoriaClinica.persistRegistroexamensimple(retinoscopiaOI);
+            		    					}
                 						}
                 					}
                 				}
             					//4. Insercion Diagnosticos
+                				
+                				
+                				
             					//5. Insercion Medicamentos
             					//6. Insercion Elementos segun especialidad
             				}

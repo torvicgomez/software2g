@@ -27,6 +27,7 @@ public interface IEspecificacionParteCuerpoDao {
 	 * Return all persistent instances of the <code>Especificacionpartecuerpo</code> entity.
 	 */
 	public List<Especificacionpartecuerpo> findAllEspecificacionpartecuerpos();
+	public Especificacionpartecuerpo findEspecificacionpartecuerposXEtiqueta(String etiqueta);
 	/**
 	 * Make the given instance managed and persistent.
 	 */

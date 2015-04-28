@@ -164,4 +164,12 @@ public class Registrorxuso implements Serializable {
 			this.reruHoracambio=data.get(2);
 		}
 	}
+	
+	public void cleanAmbosOjos(){
+		this.reruAvc = "";
+		this.reruAvl = "";
+		this.reruCilindro = "";
+		this.reruEje = "";
+		this.reruEsfera = "";
+	}
 }

@@ -523,6 +523,15 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 		}
 	}
 
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Especificacionpartecuerpo findEspecificacionpartecuerposXEtiqueta(String etiqueta) throws Exception {
+		try {
+			return getEspecificacionParteCuerpoDao().findEspecificacionpartecuerposXEtiqueta(etiqueta);
+		} catch (RuntimeException e) {
+			throw new Exception("findEspecificacionpartecuerposXEtiqueta failed with the etiqueta " + etiqueta + ": " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

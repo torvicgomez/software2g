@@ -1283,6 +1283,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistRegistroavsc(Registroavsc registroavsc) throws Exception {
 		try {
 			getRegistroAVSCDao().persistRegistroavsc(registroavsc);
@@ -1293,6 +1294,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	/**
 	 * Remove the given persistent instance.
 	 */
+	@Transactional
 	public void removeRegistroavsc(Registroavsc registroavsc) throws Exception {
 		try {
 			getRegistroAVSCDao().removeRegistroavsc(registroavsc);
@@ -1383,6 +1385,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistRegistroexamensimple(Registroexamensimple registroexamensimple) throws Exception {
 		try {
 			getRegistroExamenSimpleDao().persistRegistroexamensimple(registroexamensimple);
@@ -1393,6 +1396,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	/**
 	 * Remove the given persistent instance.
 	 */
+	@Transactional
 	public void removeRegistroexamensimple(Registroexamensimple registroexamensimple) throws Exception {
 		try {
 			getRegistroExamenSimpleDao().removeRegistroexamensimple(registroexamensimple);
@@ -1483,6 +1487,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistRegistrorxuso(Registrorxuso registrorxuso) throws Exception {
 		try {
 			getRegistroRxUsoDao().persistRegistrorxuso(registrorxuso);
@@ -1493,6 +1498,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	/**
 	 * Remove the given persistent instance.
 	 */
+	@Transactional
 	public void removeRegistrorxuso(Registrorxuso registrorxuso) throws Exception {
 		try {
 			getRegistroRxUsoDao().removeRegistrorxuso(registrorxuso);
@@ -1533,6 +1539,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistRespuesta(Respuesta respuesta) throws Exception {
 		try {
 			getRespuestaDao().persistRespuesta(respuesta);
@@ -1543,6 +1550,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	/**
 	 * Remove the given persistent instance.
 	 */
+	@Transactional
 	public void removeRespuesta(Respuesta respuesta) throws Exception {
 		try {
 			getRespuestaDao().removeRespuesta(respuesta);
@@ -1906,6 +1914,15 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 		}
 	}
 
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Tipoexamenopt findTipoexamenoptAbreviatura(String abreviatura) throws Exception {
+		try {
+			return getTipoExamenOptDao().findTipoexamenoptAbreviatura(abreviatura);
+		} catch (RuntimeException e) {
+			throw new Exception("findTipoexamenoptAbreviatura failed: " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

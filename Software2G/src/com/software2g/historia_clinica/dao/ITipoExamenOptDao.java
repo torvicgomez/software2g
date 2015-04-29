@@ -27,6 +27,7 @@ public interface ITipoExamenOptDao {
 	 * Return all persistent instances of the <code>Tipoexamenopt</code> entity.
 	 */
 	public List<Tipoexamenopt> findAllTipoexamenopts();
+	public Tipoexamenopt findTipoexamenoptAbreviatura(String abreviatura);
 	/**
 	 * Make the given instance managed and persistent.
 	 */

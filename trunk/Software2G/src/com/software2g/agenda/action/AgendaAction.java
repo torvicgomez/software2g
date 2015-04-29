@@ -55,6 +55,7 @@ import com.software2g.vo.Servicio;
 import com.software2g.vo.Tipodiagnostico;
 import com.software2g.vo.Tipodocumento;
 import com.software2g.vo.Tipoespecialidad;
+import com.software2g.vo.Tipoexamenopt;
 import com.software2g.vo.Tipoprocedimiento;
 import com.software2g.vo.Tiposervicio;
 import com.software2g.vo.Usuario;
@@ -920,10 +921,12 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
             								resp.setServicio(servicio);
             								resp.setPregunta(elem1);
             								resp.setDatosAud(getDatosAud());
-            								System.out.println("Respuesta:["+resp+"]");
+            								System.out.println("Servicio:["+resp.getServicio().getServId()+"]");
             								System.out.println("Pregunta: ["+resp.getPregunta().getPregId()+"]");
             								System.out.println("Respuesta:["+resp.getRespRespuesta()+"]");
-            								gestionFacadeHistoriaClinica.persistRespuesta((Respuesta)elem1.getRespuestas().get(0));
+            								//gestionFacadeHistoriaClinica.persistRespuesta((Respuesta)elem1.getRespuestas().get(0));
+            								ValidaString.imprimirObject(resp);
+            								gestionFacadeHistoriaClinica.persistRespuesta(resp);
             							}
             						}
             					}
@@ -941,6 +944,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
                 							examenOptometria.setDatosAud(getDatosAud());
                 							long idExamenOpt = gestionFacadeHistoriaClinica.persistExamenoptometriaId(examenOptometria);
             		    					if(idExamenOpt>0){
+            		    						examenOptometria.setExopId(idExamenOpt);
 	            		    					//---Ojo Derecho -- OD -----
 	                							rxUsoOD.setExamenoptometria(examenOptometria);
 	                							rxUsoOD.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOD));
@@ -962,6 +966,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
                 							examenOptometria.setDatosAud(getDatosAud());
                 							long idExamenOpt = gestionFacadeHistoriaClinica.persistExamenoptometriaId(examenOptometria);
             		    					if(idExamenOpt>0){
+            		    						examenOptometria.setExopId(idExamenOpt);
             		    						//---Ojo Derecho -- OD -----
             		    						avscOD.setExamenoptometria(examenOptometria);
             		    						avscOD.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOD));
@@ -984,13 +989,17 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
                 							examenOptometria.setDatosAud(getDatosAud());
                 							long idExamenOpt = gestionFacadeHistoriaClinica.persistExamenoptometriaId(examenOptometria);
             		    					if(idExamenOpt>0){
+            		    						examenOptometria.setExopId(idExamenOpt);
+            		    						Tipoexamenopt tipoExOpt = gestionFacadeHistoriaClinica.findTipoexamenoptAbreviatura(ConstantesAplicativo.constantePalabraClaveExamenExterno);
 	            		    					//---Ojo Derecho -- OD -----
             		    						examenExternoOD.setExamenoptometria(examenOptometria);
+            		    						examenExternoOD.setTipoexamenopt(tipoExOpt);
             		    						examenExternoOD.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOD));
             		    						examenExternoOD.setDatosAud(getDatosAud());
             		    						gestionFacadeHistoriaClinica.persistRegistroexamensimple(examenExternoOD);
 	            		    					//---Ojo Izquierdo -- OI -----
             		    						examenExternoOI.setExamenoptometria(examenOptometria);
+            		    						examenExternoOI.setTipoexamenopt(tipoExOpt);
             		    						examenExternoOI.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOI));
             		    						examenExternoOI.setDatosAud(getDatosAud());
             		    						gestionFacadeHistoriaClinica.persistRegistroexamensimple(examenExternoOI);
@@ -1001,13 +1010,17 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
                 							examenOptometria.setDatosAud(getDatosAud());
                 							long idExamenOpt = gestionFacadeHistoriaClinica.persistExamenoptometriaId(examenOptometria);
             		    					if(idExamenOpt>0){
+            		    						examenOptometria.setExopId(idExamenOpt);
+            		    						Tipoexamenopt tipoExOpt = gestionFacadeHistoriaClinica.findTipoexamenoptAbreviatura(ConstantesAplicativo.constantePalabraClaveOftalmoscopia);
 	            		    					//---Ojo Derecho -- OD -----
             		    						oftalmoscopiaOD.setExamenoptometria(examenOptometria);
+            		    						oftalmoscopiaOD.setTipoexamenopt(tipoExOpt);
             		    						oftalmoscopiaOD.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOD));
             		    						oftalmoscopiaOD.setDatosAud(getDatosAud());
             		    						gestionFacadeHistoriaClinica.persistRegistroexamensimple(oftalmoscopiaOD);
 	            		    					//---Ojo Izquierdo -- OI -----
             		    						oftalmoscopiaOI.setExamenoptometria(examenOptometria);
+            		    						oftalmoscopiaOI.setTipoexamenopt(tipoExOpt);
             		    						oftalmoscopiaOI.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOI));
             		    						oftalmoscopiaOI.setDatosAud(getDatosAud());
             		    						gestionFacadeHistoriaClinica.persistRegistroexamensimple(oftalmoscopiaOI);
@@ -1018,13 +1031,17 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
                 							examenOptometria.setDatosAud(getDatosAud());
                 							long idExamenOpt = gestionFacadeHistoriaClinica.persistExamenoptometriaId(examenOptometria);
             		    					if(idExamenOpt>0){
+            		    						examenOptometria.setExopId(idExamenOpt);
+            		    						Tipoexamenopt tipoExOpt = gestionFacadeHistoriaClinica.findTipoexamenoptAbreviatura(ConstantesAplicativo.constantePalabraClaveKeratometria);
 	            		    					//---Ojo Derecho -- OD -----
             		    						keratometriaOD.setExamenoptometria(examenOptometria);
+            		    						keratometriaOD.setTipoexamenopt(tipoExOpt);
             		    						keratometriaOD.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOD));
             		    						keratometriaOD.setDatosAud(getDatosAud());
             		    						gestionFacadeHistoriaClinica.persistRegistroexamensimple(keratometriaOD);
 	            		    					//---Ojo Izquierdo -- OI -----
             		    						keratometriaOI.setExamenoptometria(examenOptometria);
+            		    						keratometriaOI.setTipoexamenopt(tipoExOpt);
             		    						keratometriaOI.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOI));
             		    						keratometriaOI.setDatosAud(getDatosAud());
             		    						gestionFacadeHistoriaClinica.persistRegistroexamensimple(keratometriaOI);
@@ -1035,13 +1052,17 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
                 							examenOptometria.setDatosAud(getDatosAud());
                 							long idExamenOpt = gestionFacadeHistoriaClinica.persistExamenoptometriaId(examenOptometria);
             		    					if(idExamenOpt>0){
+            		    						examenOptometria.setExopId(idExamenOpt);
+            		    						Tipoexamenopt tipoExOpt = gestionFacadeHistoriaClinica.findTipoexamenoptAbreviatura(ConstantesAplicativo.constantePalabraClaveRetinoscopia);
 	            		    					//---Ojo Derecho -- OD -----
             		    						retinoscopiaOD.setExamenoptometria(examenOptometria);
+            		    						retinoscopiaOD.setTipoexamenopt(tipoExOpt);
             		    						retinoscopiaOD.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOD));
             		    						retinoscopiaOD.setDatosAud(getDatosAud());
             		    						gestionFacadeHistoriaClinica.persistRegistroexamensimple(retinoscopiaOD);
 	            		    					//---Ojo Izquierdo -- OI -----
             		    						retinoscopiaOI.setExamenoptometria(examenOptometria);
+            		    						retinoscopiaOI.setTipoexamenopt(tipoExOpt);
             		    						retinoscopiaOI.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOI));
             		    						retinoscopiaOI.setDatosAud(getDatosAud());
             		    						gestionFacadeHistoriaClinica.persistRegistroexamensimple(retinoscopiaOI);

@@ -76,6 +76,24 @@ public class TipoExamenOptDAOImpl implements ITipoExamenOptDao {
             }
         }
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public Tipoexamenopt findTipoexamenoptAbreviatura(String abreviatura) {
+        try {
+    		String jpqlString = "select tipoexamenopt from " + Tipoexamenopt.class.getSimpleName() + " tipoexamenopt " +
+    				" where tipoexamenopt.tiexAbreviatura =:abreviatura ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("abreviatura", abreviatura);
+            return (Tipoexamenopt)query.getSingleResult();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

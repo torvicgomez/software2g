@@ -776,6 +776,7 @@ public interface IGestionFacadeHistoriaClinica {
 	 * Return all persistent instances of the <code>Tipoexamenopt</code> entity.
 	 */
 	public List<Tipoexamenopt> findAllTipoexamenopts() throws Exception;
+	public Tipoexamenopt findTipoexamenoptAbreviatura(String abreviatura) throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */

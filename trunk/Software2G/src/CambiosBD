@@ -1788,3 +1788,14 @@ ALTER TABLE "HISCLINICA"."EXAMENESPECIALIDAD" ADD COLUMN exes_palabraclave CHARA
 ----------------
 ALTER TABLE "HISCLINICA"."SERVICIO" ALTER COLUMN acud_id DROP NOT NULL;
 ALTER TABLE "HISCLINICA"."SERVICIO" ALTER COLUMN segu_id DROP NOT NULL;
+
+----------------
+-- 29-04-2015 --
+----------------
+insert into "HISCLINICA"."TIPOEXAMENOPT" (tiex_id, tiex_nombre, tiex_abreviatura, tiex_fechacambio, tiex_horacambio, tiex_registradopor) values (nextval('"HISCLINICA"."SEQ_TIEX_ID"'),'RxUso', 'RXUSO', '2015-04-29', '00:00:00', 'vhgomezl');
+insert into "HISCLINICA"."TIPOEXAMENOPT" (tiex_id, tiex_nombre, tiex_abreviatura, tiex_fechacambio, tiex_horacambio, tiex_registradopor) values (nextval('"HISCLINICA"."SEQ_TIEX_ID"'),'AVSC', 'AVSC', '2015-04-29', '00:00:00', 'vhgomezl');
+insert into "HISCLINICA"."TIPOEXAMENOPT" (tiex_id, tiex_nombre, tiex_abreviatura, tiex_fechacambio, tiex_horacambio, tiex_registradopor) values (nextval('"HISCLINICA"."SEQ_TIEX_ID"'),'CoverTest', 'CVRT', '2015-04-29', '00:00:00', 'vhgomezl');
+insert into "HISCLINICA"."TIPOEXAMENOPT" (tiex_id, tiex_nombre, tiex_abreviatura, tiex_fechacambio, tiex_horacambio, tiex_registradopor) values (nextval('"HISCLINICA"."SEQ_TIEX_ID"'),'ExamenExterno', 'EEXT', '2015-04-29', '00:00:00', 'vhgomezl');
+insert into "HISCLINICA"."TIPOEXAMENOPT" (tiex_id, tiex_nombre, tiex_abreviatura, tiex_fechacambio, tiex_horacambio, tiex_registradopor) values (nextval('"HISCLINICA"."SEQ_TIEX_ID"'),'Oftalmoscopia', 'OFT', '2015-04-29', '00:00:00', 'vhgomezl');
+insert into "HISCLINICA"."TIPOEXAMENOPT" (tiex_id, tiex_nombre, tiex_abreviatura, tiex_fechacambio, tiex_horacambio, tiex_registradopor) values (nextval('"HISCLINICA"."SEQ_TIEX_ID"'),'Keratometria', 'KER', '2015-04-29', '00:00:00', 'vhgomezl');
+insert into "HISCLINICA"."TIPOEXAMENOPT" (tiex_id, tiex_nombre, tiex_abreviatura, tiex_fechacambio, tiex_horacambio, tiex_registradopor) values (nextval('"HISCLINICA"."SEQ_TIEX_ID"'),'Retinoscopia', 'RET', '2015-04-29', '00:00:00', 'vhgomezl');

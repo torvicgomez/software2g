@@ -844,15 +844,26 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			System.out.println("----------------------------------------------------------------");
     			System.out.println("Validacion Seccion 4 - Diagnostico Principal y Relacional");
     			listDiagnostico = (List<Diagnostico>) request.getSession().getAttribute("listDiagnostico");
-    			if(listDiagnostico==null)
+    			System.out.println("listDiagnostico:["+listDiagnostico+"]");
+    			if(listDiagnostico==null){
     				listDiagnostico = new ArrayList<Diagnostico>();
-    			else{
+    				addActionError(getText("validacion.requeridoseccion","documentoPers",new ArrayList<String>(Arrays.asList("Diagnósticos", ConstantesAplicativo.constanteNombreSeccionDiagnostico))));
+    			}else{
+    				int bandDiagnostico = 0;
     				for(Diagnostico elem:listDiagnostico){
     					System.out.println("Codigo Enfermedad:["+(elem.getCodigoenfermedade()!=null?(elem.getCodigoenfermedade().getCoenId()+"-"+elem.getCodigoenfermedade().getCoenCodigo()):"NULL")+"]");
     					System.out.println("Clase Diagnostico:["+(elem.getClasediagnostico()!=null?(elem.getClasediagnostico().getCldiId()+"-"+elem.getClasediagnostico().getCldiNombre()):"NULL")+"]");
     					System.out.println("Tipo Diagnostico:["+(elem.getTipodiagnostico()!=null?(elem.getTipodiagnostico().getTidiId()+"-"+elem.getTipodiagnostico().getTidiNombre()):"NULL")+"]");
     					System.out.println("Orden Diagnostico:["+elem.getDiagOrden()+"]");
+    					System.out.println("bandDiagnostico:["+bandDiagnostico+"]");
+    					if(elem.getTipodiagnostico()!=null)
+    						bandDiagnostico=5;
+    					else
+    						bandDiagnostico--;
+    					System.out.println("bandDiagnostico:["+bandDiagnostico+"]");
     				}
+    				if(bandDiagnostico<=0)
+    					addActionError(getText("validacion.requeridoseccion","documentoPers",new ArrayList<String>(Arrays.asList("Diagnóstico Principal", ConstantesAplicativo.constanteNombreSeccionDiagnostico))));
     			}
     			System.out.println("----------------------------------------------------------------");
     			System.out.println("----------------------------------------------------------------");	

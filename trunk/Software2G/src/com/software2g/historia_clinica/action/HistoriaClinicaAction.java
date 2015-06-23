@@ -1,28 +1,27 @@
 package com.software2g.historia_clinica.action;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.bean.ManagedBean;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
-import com.software2g.agenda.facade.IGestionFacadeAgenda;
 import com.software2g.historia_clinica.facade.IGestionFacadeHistoriaClinica;
+import com.software2g.historia_clinica.facade.impl.GestionFacadeHistoriaClinica;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
-import com.software2g.vo.Acudiente;
-import com.software2g.vo.Codigoenfermedade;
 import com.software2g.vo.Examenespecialidad;
 import com.software2g.vo.Finalidad;
 import com.software2g.vo.Motivo;
@@ -38,6 +37,7 @@ import com.software2g.vo.Tiposegmento;
 import com.software2g.vo.Usuario;
 import com.software2g.vo.UtilGenerico;
 
+@ManagedBean(name="historiaClinica")
 public class HistoriaClinicaAction extends ActionSupport implements ServletRequestAware,ServletResponseAware{
 	private static final long serialVersionUID = 1L;
 	private HttpServletRequest request;
@@ -91,6 +91,7 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
 	private List<Tiposegmento> listTipoSegmento;
 	private Tiposegmento tipoSegmento;
 	private List<Tipopregunta> listTipoPregunta;
+	private List<Tipopregunta> listTipoPreguntaJSF;
 	private Tipopregunta tipoPregunta;
 	private List<Segmentoanamnesi> listSegmentoAnamnesis;
 	private Segmentoanamnesi segmentoAnamnesis;
@@ -251,6 +252,38 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     	System.out.println("######>>>>>>>HistoriaClinicaAction>>>>tipoPreguntaMethod>>>>estado salida-->>"+estado);
     	return Action.SUCCESS;
 	}
+	
+	public List<Tipopregunta> tipoPreguntaMethodJSF(){
+    	try {
+    		System.out.println("######>>>>>>>HistoriaClinicaAction>>>>tipoPreguntaMethodJSF>>>>estado entrada-->>"+estado);
+    		listTipoPregunta = gestionFacadeHistoriaClinica.findAllTipopreguntas();
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>HistoriaClinicaAction>>>>tipoPreguntaMethodJSF>>>>estado salida-->>"+estado);
+    	return listTipoPregunta;
+	}
+	
+	public List<Tipopregunta> getListTipoPreguntaJSF() {
+		try {
+			System.out.println("this.gestionFacadeHistoriaClinica:["+this.gestionFacadeHistoriaClinica+"]");
+    		System.out.println("######>>>>>>>HistoriaClinicaAction>>>>tipoPreguntaMethodJSF>>>>estado entrada-->>"+estado);
+    		System.out.println("gestionFacadeHistoriaClinica:["+gestionFacadeHistoriaClinica+"]");
+    		listTipoPreguntaJSF = gestionFacadeHistoriaClinica.findAllTipopreguntas();
+    		System.out.println("listTipoPreguntaJSF:["+listTipoPreguntaJSF+"]");
+    	} catch(Exception e){
+    		System.out.println("Entra esta parte catch!!!!!!!!!");
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>HistoriaClinicaAction>>>>tipoPreguntaMethodJSF>>>>estado salida-->>"+estado);
+		return listTipoPreguntaJSF;
+	}
+	public void setListTipoPreguntaJSF(List<Tipopregunta> listTipoPreguntaJSF) {
+		this.listTipoPreguntaJSF = listTipoPreguntaJSF;
+	}
+	
 	
 	@SkipValidation
 	public String segmentoAnamnesisMethod(){
@@ -434,6 +467,11 @@ public class HistoriaClinicaAction extends ActionSupport implements ServletReque
     	return Action.SUCCESS;
 	}
 
+	public HistoriaClinicaAction(){
+		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] {ApplicationContext.CLASSPATH_ALL_URL_PREFIX+"applicationContext.xml"});
+		this.gestionFacadeHistoriaClinica = GestionFacadeHistoriaClinica.getInstance(context);
+	}
+	
 	public HistoriaClinicaAction(IGestionFacadeHistoriaClinica gestionFacadeHistoriaClinica) {
 		this.gestionFacadeHistoriaClinica = gestionFacadeHistoriaClinica;
 	}

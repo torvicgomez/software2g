@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import com.software2g.vo.Acudiente;
 import com.software2g.historia_clinica.dao.IAcudienteDao;
 
+import org.hibernate.annotations.Loader;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -23,6 +24,7 @@ public class AcudienteDAOImpl implements IAcudienteDao {
 	public AcudienteDAOImpl() {
 		super();
 	}
+	
 	/**
 	 * Return the persistent entities returned from a named query.
 	 */

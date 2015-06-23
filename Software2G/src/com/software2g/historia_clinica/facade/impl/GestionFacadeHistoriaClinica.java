@@ -3,6 +3,7 @@ package com.software2g.historia_clinica.facade.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -236,6 +237,17 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	public void setTipoServicioDao(ITipoServicioDao tipoServicioDao) {this.tipoServicioDao = tipoServicioDao;}
 	public IExamenEspecialidadDao getExamenEspecialidadDao() {return examenEspecialidadDao;}
 	public void setExamenEspecialidadDao(IExamenEspecialidadDao examenEspecialidadDao) {this.examenEspecialidadDao = examenEspecialidadDao;}
+	
+	
+	private static final String SERVICE_BEAN_ID = "gestionFacadeHistoriaClinica";
+	
+	public GestionFacadeHistoriaClinica() {
+		super();
+	}
+	
+	public static IGestionFacadeHistoriaClinica getInstance(ApplicationContext context) {
+		return (IGestionFacadeHistoriaClinica)context.getBean(SERVICE_BEAN_ID);
+	}
 	
 	//******************************************************************
 	// Acudiente

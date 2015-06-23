@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<f:loadBundle basename="resources.application" var="msg"/>	
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+<title>Insert title here</title>
+</head>
+<body> 
+<h:form>
+		<h1><h:outputText value="#{msg.tipopregunta}"/></h1>
+		<h:dataTable id="dt1" value="#{historiaClinica.listTipoPreguntaJSF}" var="item"> 
+			<h:column >
+				<f:facet name="header"><h:outputText value="#{msg.edit}" /></f:facet>
+				<h:commandLink value="#{item.tiprId}" action="#{historiaClinica.initCity}">
+					<f:setPropertyActionListener target="#{cityList1.idPaciente}" value="#{item.tiprId}"></f:setPropertyActionListener>
+				</h:commandLink>
+			</h:column>
+			<h:column >
+				<f:facet name="header"><h:outputText value="#{msg.edit}" /></f:facet>
+				<h:commandLink value="#{item.tiprId}" action="#{historiaClinica.initCity}">
+					<f:setPropertyActionListener target="#{cityList1.idPaciente}" value="#{item.tiprId}"></f:setPropertyActionListener>
+				</h:commandLink>
+			</h:column> 
+			<h:column>
+				<f:facet name="header"><h:outputText value="#{msg.edit}" /></f:facet> 
+				<h:outputText value="#{item.tiprNombre}"></h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header"><h:outputText value="#{msg.edit}" /></f:facet>
+				<h:outputText value="#{item.tiprEtiqueta}"></h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header"><h:outputText value="#{msg.edit}" /></f:facet>
+				<h:outputText value="#{item.tiprFechacambio}"></h:outputText>-<h:outputText value="#{item.tiprHoracambio}"></h:outputText>
+			</h:column>
+		</h:dataTable><br/>
+	</h:form>
+</body>
+</html>

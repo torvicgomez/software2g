@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd          http://www.springframework.org/schema/tx           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd          http://www.springframework.org/schema/context          http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <!--bean post-processor for JPA annotations-->
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"></bean>
+    
+    <!--Transaction manager for a single JPA EntityManager (alternative to JTA)-->
+    <!-- Configuracion B.D. Gestion -->
+    <bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactoryPostgres">
+    	<property name="dataSource" ref="dataSourcePostgres"/>
+        <property name="jpaVendorAdapter"> 
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="database" value="POSTGRESQL"/>
+                <property name="showSql" value="true"/> 
+                <property name="databasePlatform" value="org.hibernate.dialect.PostgreSQLDialect"/>                
+            </bean>
+        </property>
+    </bean>
+    
+    <!-- Configuracion Recursos B.D. -->
+    <bean class="org.springframework.jndi.JndiObjectFactoryBean" id="dataSourcePostgres">
+		<property name="resourceRef">
+	       <value>false</value>
+	    </property> 
+    	<property name="jndiName">
+			<value>java:comp/env/jdbc/SISTEMAS2G</value>		
+		</property>
+    </bean>
+    
+    <bean class="org.springframework.orm.jpa.JpaTransactionManager" id="transactionManagerPostgres">
+        <property name="entityManagerFactory" ref="entityManagerFactoryPostgres"/> 
+    </bean>
+    
+    <!--  enable the configuration of transactional behavior based on annotations  -->
+    <tx:annotation-driven transaction-manager="transactionManagerPostgres"/>
+    
+   <!-- DECLARACION DE LOS FACADE -->
+	<bean class="com.software2g.historia_clinica.facade.impl.GestionFacadeHistoriaClinica" id="gestionFacadeHistoriaClinica">
+	    <property name="acudienteDao"><bean class="com.software2g.historia_clinica.dao.impl.AcudienteDAOImpl"/></property>
+        <property name="archivoServicioDao"><bean class="com.software2g.historia_clinica.dao.impl.ArchivoServicioDAOImpl"/></property>
+        <property name="claseDiagnosticoDao"><bean class="com.software2g.historia_clinica.dao.impl.ClaseDiagnosticoDAOImpl"/></property>
+        <property name="codigoEnfermedadDao"><bean class="com.software2g.historia_clinica.dao.impl.CodigoEnfermedadDAOImpl"/></property>
+        <property name="diagnosticoDao"><bean class="com.software2g.historia_clinica.dao.impl.DiagnosticoDAOImpl"/></property>
+        <property name="especificacionParteCuerpoDao"><bean class="com.software2g.historia_clinica.dao.impl.EspecificacionParteCuerpoDAOImpl"/></property>
+        <property name="examenOptometriaDao"><bean class="com.software2g.historia_clinica.dao.impl.ExamenOptometriaDAOImpl"/></property>
+        <property name="finalidadDao"><bean class="com.software2g.historia_clinica.dao.impl.FinalidadDAOImpl"/></property>
+        <property name="formulacionDao"><bean class="com.software2g.historia_clinica.dao.impl.FormulacionDAOImpl"/></property>
+        <property name="gafaDao"><bean class="com.software2g.historia_clinica.dao.impl.GafaDAOImpl"/></property>
+        <property name="medicamentoDao"><bean class="com.software2g.historia_clinica.dao.impl.MedicamentoDAOImpl"/></property>
+        <property name="motivoDao"><bean class="com.software2g.historia_clinica.dao.impl.MotivoDAOImpl"/></property>
+        <property name="odontogramaDao"><bean class="com.software2g.historia_clinica.dao.impl.OdontogramaDAOImpl"/></property>
+        <property name="opcionRespuestaDao"><bean class="com.software2g.historia_clinica.dao.impl.OpcionRespuestaDAOImpl"/></property>
+        <property name="pacienteDao"><bean class="com.software2g.historia_clinica.dao.impl.PacienteDAOImpl"/></property>
+        <property name="parentescoDao"><bean class="com.software2g.historia_clinica.dao.impl.ParentescoDAOImpl"/></property>
+        <property name="parteCuerpoDao"><bean class="com.software2g.historia_clinica.dao.impl.ParteCuerpoDAOImpl"/></property>
+        <property name="posicionDao"><bean class="com.software2g.historia_clinica.dao.impl.PosicionDAOImpl"/></property>
+        <property name="preguntaDao"><bean class="com.software2g.historia_clinica.dao.impl.PreguntaDAOImpl"/></property>
+        <property name="registroAVSCDao"><bean class="com.software2g.historia_clinica.dao.impl.RegistroAVSCDAOImpl"/></property>
+        <property name="registroCoverTestDao"><bean class="com.software2g.historia_clinica.dao.impl.RegistroCoverTestDAOImpl"/></property>
+        <property name="registroExamenSimpleDao"><bean class="com.software2g.historia_clinica.dao.impl.RegistroExamenSimpleDAOImpl"/></property>
+        <property name="registroOdontogramaDao"><bean class="com.software2g.historia_clinica.dao.impl.RegistroOdontogramaDAOImpl"/></property>
+        <property name="registroRxUsoDao"><bean class="com.software2g.historia_clinica.dao.impl.RegistroRxUsoDAOImpl"/></property>
+        <property name="respuestaDao"><bean class="com.software2g.historia_clinica.dao.impl.RespuestaDAOImpl"/></property>
+        <property name="seccionOdonDao"><bean class="com.software2g.historia_clinica.dao.impl.SeccionOdonDAOImpl"/></property>
+        <property name="segmentoAnamnesisDao"><bean class="com.software2g.historia_clinica.dao.impl.SegmentoAnamnesisDAOImpl"/></property>
+        <property name="seguridadSocialDao"><bean class="com.software2g.historia_clinica.dao.impl.SeguridadSocialDAOImpl"/></property>
+        <property name="servicioDao"><bean class="com.software2g.historia_clinica.dao.impl.ServicioDAOImpl"/></property>
+        <property name="tipoDiagnosticoDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoDiagnosticoDAOImpl"/></property>
+        <property name="tipoEspecialidadDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoEspecialidadDAOImpl"/></property>
+        <property name="tipoExamenOptDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoExamenOptDAOImpl"/></property>
+        <property name="tipoFormulacionDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoFormulacionDAOImpl"/></property>
+        <property name="tipoPreguntaDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoPreguntaDAOImpl"/></property>
+        <property name="tipoSegmentoDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoSegmentoDAOImpl"/></property>
+        <property name="tipoServicioDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoServicioDAOImpl"/></property>
+        <property name="examenEspecialidadDao"><bean class="com.software2g.historia_clinica.dao.impl.ExamenEspecialidadDAOImpl"/></property>
+    </bean>
+</beans>

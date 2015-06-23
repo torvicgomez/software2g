@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title><s:text name="titulo.header"></s:text></title>
-<link rel="icon" href="http://localhost:8080/Software2G/imagenes/acafeto.png" type="image/png" />
+<link rel="icon" href="<%=request.getRequestURL().toString().replace("portal/login.jsp", "imagenes/ingesoft2.jpg")%>" type="image/png" />
 <!--STYLESHEETS-->
 <link href="<s:url value='/css/style.css'/>" rel="stylesheet" type="text/css" />
 <!--SCRIPTS-->

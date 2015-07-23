@@ -199,8 +199,11 @@
 				</table>
 				<table cellpadding="0" cellspacing="0" border="0" class="display">
 					<tr>
+						<s:set name="estadoCheck" value="estado"></s:set>
 						<s:hidden name="profesional.profId" id="profId"></s:hidden>
 						<s:hidden name="profesional.profEspecialidad" id="profEspecialidad"></s:hidden>
+						<s:hidden name="persona.idPers"></s:hidden>
+						<s:hidden name="persona.existePaciente"></s:hidden>
 						<td class="leftLabel" colspan="4"><s:text name="profesionalsalud.datosprofesional"></s:text></td>
 					</tr>
 					<tr>
@@ -362,7 +365,9 @@
 								</tr>
 								<tr>
 									<td colspan="2">
-										<jsp:include page="anamnesis.jsp" flush="true"/>
+										<jsp:include page="anamnesis.jsp" flush="true">
+											<jsp:param value="${estadoCheck}" name="check"/>
+										</jsp:include>
 									</td>
 								</tr>
 							</table>
@@ -398,7 +403,9 @@
 									<tr>
 										<td>
 											<s:iterator value="listExamenEspecialidad" id="data">
-												<jsp:include page="${data.exesPaginajsp}" flush="true"/>
+												<jsp:include page="${data.exesPaginajsp}" flush="true">
+													<jsp:param value="${estadoCheck}" name="check"/>
+												</jsp:include>
 											</s:iterator>
 										</td>
 									</tr>

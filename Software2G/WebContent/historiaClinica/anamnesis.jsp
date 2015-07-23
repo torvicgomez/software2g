@@ -28,17 +28,18 @@
 	</script>
 </head>
 <body>
+	<%String check = request.getParameter("check");%>
 	<div id="demo">
 		<s:iterator value="listSegmentoAnamnesis" id="data" var="segana" status="stat">
 			<table cellpadding="0" cellspacing="0" border="0" class="display">
 				<tr><td>
 					<h1>
-						<input type="checkbox" id="segana_${stat.index}" onchange="javascript:cambioView(${stat.index});"/>
+						<input type="checkbox" id="segana_${stat.index}" onchange="javascript:cambioView(${stat.index});" <%=check!=null&&check.equals("save")?"checked=\"checked\"":""%>/>
 						<s:property value="#segana.seanEtiqueta"/>
 					</h1>
 				</td></tr>
 			</table>
-			<div id="segmentoAnamnesis_${stat.index}" style="overflow:auto;width:auto;height:auto;display:none">
+			<div id="segmentoAnamnesis_${stat.index}" style="overflow:auto;width:auto;height:auto;display:<%=check!=null&&check.equals("save")?"block":"none"%>">
 				<s:if test="#segana.preguntas!=null&&#segana.preguntas.size()>0">
 					<s:hidden name="listSegmentoAnamnesis[%{#stat.index}].seanEtiqueta" value="%{#segana.seanEtiqueta}"/>
 					<s:iterator value="#segana.preguntas" id="dataPreg" var="preg" status="statPreg">

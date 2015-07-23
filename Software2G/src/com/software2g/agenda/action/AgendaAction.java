@@ -597,9 +597,12 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			System.out.println("********************************************");
     			System.out.println("idProfesional:["+idProfesional+"]");
     			System.out.println("idEvento:["+idEvento+"]");
+    			System.out.println("Condicion:["+(idProfesional<=0)+"]");
     			System.out.println("********************************************");
     			System.out.println("********************************************");
     			if(idProfesional<=0){
+    				System.out.println("--------------------------------------");
+    				System.out.println("Entra Esta Parte!!!!!!!!!!!");
     				if(tipoServicio.getTiseId()<=0)
     					addActionError(getText("validacion.requerido","tiposervicio","Servicio a Realizar"));
     				if(ValidaString.isNullOrEmptyString(persona.getDocumentoPers()))
@@ -612,6 +615,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
         				String abrevTipoDoc = persona.getTipodocumento().getAbreviaturaTidoc();
         				String nroDocumento = persona.getDocumentoPers();
         				persona = gestionFacadeAgenda.findPersona(persona.getDocumentoPers(), persona.getTipodocumento().getAbreviaturaTidoc());
+        				System.out.println("persona:["+persona+"]");
         				if(persona==null){
         					persona = new Persona();
         					Tipodocumento tipoDocumento = (Tipodocumento) gestionFacadeAgenda.findTipodocumentoAbrev(abrevTipoDoc); 
@@ -631,11 +635,15 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
             			System.out.println("getIdPers:["+usuario.getPersona().getIdPers()+"]");
             			profesional = gestionFacadeAgenda.findProfesionalIdPersona(usuario.getPersona().getIdPers());
         			}
+        			System.out.println("--------------------------------------");
     			}else{
+    				System.out.println("--------------------------------------");
+    				System.out.println("Entra a la Parte del ELSE !!!!!!!!!!!!!!!!");
 	    			profesional = idProfesional>0?gestionFacadeAgenda.findProfesionalById(idProfesional):new Profesional();
 	    			profesional.setProfEspecialidadView(((Tipoespecialidad)gestionFacadeHistoriaClinica.findTipoespecialidadById(Long.parseLong(profesional.getProfEspecialidad()))).getTiesEspecialidad());
 	    			persona = gestionFacadeAgenda.findPacienteAtencionServicio(idEvento);
 	    			cargarDatosServicioClinico(profesional.getProfEspecialidad());
+	    			System.out.println("--------------------------------------");
     			}
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAllTipoServicio)){
     			listTipoDoc = gestionFacadeAgenda.findAllTipodocumentos();
@@ -686,6 +694,12 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			System.out.println("-------------------------------------------------------");
     			System.out.println("-------------------------------------------------------");
     			System.out.println("Validacion Seccion 2 - Datos Clinicos");
+    			if(finalidad.getFinaId()<=0)
+    				addActionError(getText("validacion.requeridoseccion","finaId",new ArrayList<String>(Arrays.asList("Finalidad", ConstantesAplicativo.constanteNombreSeccionDatosClinicos))));
+    			if(motivo.getMotiId()<=0)
+    				addActionError(getText("validacion.requeridoseccion","motiId",new ArrayList<String>(Arrays.asList("Motivo", ConstantesAplicativo.constanteNombreSeccionDatosClinicos))));
+    			if(seguridadSocial.getSeguId()<=0)
+    				addActionError(getText("validacion.requeridoseccion","seguId",new ArrayList<String>(Arrays.asList("Seguridad Social", ConstantesAplicativo.constanteNombreSeccionDatosClinicos))));
     			System.out.println("listSegmentoAnamnesis:["+listSegmentoAnamnesis+"]");
     			if(listSegmentoAnamnesis!=null&&listSegmentoAnamnesis.size()>0){
     				System.out.println("listSegmentoAnamnesis.size():["+listSegmentoAnamnesis.size()+"]");
@@ -726,6 +740,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			System.out.println("-------------------------------------------------------");
     			System.out.println("-------------------------------------------------------");
     			
+    			
+    			
     			System.out.println("----------------------------------------------------------------");
     			System.out.println("----------------------------------------------------------------");
     			System.out.println("Validacion Seccion 3 - Examenes especificos de cada especialidad");
@@ -740,7 +756,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     				}else if(especialidad.equals(ConstantesAplicativo.constanteEspecialidadOdontologia)){
     					System.out.println("en Construcción");
     				}else if(especialidad.equals(ConstantesAplicativo.constanteEspecialidadOptometria)){
-    					for(Examenespecialidad elem:listExamenEspecialidad){
+    					for(Examenespecialidad elem:listExamenEspecialidad){	
     						if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveRXUSO)){
 		    					// 1. Validacion Examen Rx en Uso
 		    					//---Ojo Derecho -- OD -----
@@ -942,7 +958,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
             							}
             						}
             					}
-            					//3. Inservion examenes segun especialidad
+            					//3. Insercion examenes segun especialidad
                 				if(especialidad.equals(ConstantesAplicativo.constanteEspecialidadMedicinaGeneral)){
                 					System.out.println("en Construcción");
                 				}else if(especialidad.equals(ConstantesAplicativo.constanteEspecialidadOdontologia)){
@@ -1102,10 +1118,16 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     				long idProfesional = request.getParameter("idProfesional")!=null?Long.parseLong(request.getParameter("idProfesional").toString())
     						:profesional!=null&&profesional.getProfId()>0?profesional.getProfId():0;
         			long idEvento = request.getParameter("idEvento")!=null?Long.parseLong(request.getParameter("idEvento").toString()):0;
+        			
+        			System.out.println("----------------------------------------------------------");
         			System.out.println("idProfesional:["+idProfesional+"]");
         			System.out.println("idEvento:["+idEvento+"]");
+        			System.out.println("getDocumentoPers:["+persona.getDocumentoPers()+"]");
+        			System.out.println("getAbreviaturaTidoc:["+persona.getTipodocumento().getAbreviaturaTidoc()+"]");
+        			System.out.println("----------------------------------------------------------");
+        			
         			profesional = idProfesional>0?gestionFacadeAgenda.findProfesionalById(idProfesional):new Profesional();
-        			persona = idEvento<=0?gestionFacadeAgenda.findPacienteAtencionServicio(idEvento):gestionFacadeAgenda.findPersona(persona.getDocumentoPers(), persona.getTipodocumento().getAbreviaturaTidoc());
+        			//persona = idEvento>0?gestionFacadeAgenda.findPacienteAtencionServicio(idEvento):gestionFacadeAgenda.findPersona(persona.getDocumentoPers(), persona.getTipodocumento().getAbreviaturaTidoc());
         			cargarDatosServicioClinico(profesional.getProfEspecialidad());
     			}
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){

@@ -5,13 +5,16 @@
 	<head>
 	</head>
 	<body id="dt_example">
+		<%String check = request.getParameter("check");%>
 		<div id="demo">
 			<table cellpadding="0" cellspacing="0" border="0" class="display">
 				<tr><td>
-					<h1><input type="checkbox" id="avsc"/><s:text name="servicioexamenopt.exaoptavsc"></s:text></h1>
+					<h1><input type="checkbox" id="avsc" <%=check!=null&&check.equals("save")?"checked=\"checked\"":""%>/>
+						<s:text name="servicioexamenopt.exaoptavsc"></s:text>
+					</h1>
 				</td></tr>
 			</table>
-			<div id="divAVSC" style="overflow:auto;width:auto;height:auto;display:none">
+			<div id="divAVSC" style="overflow:auto;width:auto;height:auto;display:<%=check!=null&&check.equals("save")?"block":"none"%>">
 				<table cellpadding="0" cellspacing="0" border="0" class="display">
 					<s:hidden name="avscOD.avscId" ></s:hidden>
 					<s:hidden name="avscOI.avscId" ></s:hidden>

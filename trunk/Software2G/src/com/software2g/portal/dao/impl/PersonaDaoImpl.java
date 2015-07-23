@@ -220,7 +220,8 @@ public class PersonaDaoImpl implements IPersonaDao {
     		Query query = em.createQuery( jpqlString );
             query.setParameter("documento", documento);
             query.setParameter("abrevTidoc", abrevTidoc);
-            return (Persona) query.getSingleResult();
+//            return (Persona) query.getSingleResult(); 
+            return (Persona) query.getResultList().get(0);
         }catch(Exception e){
         	return null;
 		}finally {

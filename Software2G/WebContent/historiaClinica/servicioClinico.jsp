@@ -101,7 +101,7 @@
 			} );
 			
 			$(function() {
-				$( "#pestanas" ).tabs();
+				$("#pestanas").tabs();
 			});
 			
 			jQuery(function($){
@@ -147,13 +147,15 @@
 			}
 			
 			function agregarGrilla(tipoAdd){
-				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoAddGrid%>&tipo="+tipoAdd;
+				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoAddGrid%>&tipo="+tipoAdd+"#tabs-5";
 				document.form.submit();
+				
 			}
 			
 			function eliminarGrilla(param, tipoDel){
-				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoDeleteGrid%>&posList="+param+"&tipo="+tipoDel;
+				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoDeleteGrid%>&posList="+param+"&tipo="+tipoDel+"#tabs-5";
 				document.form.submit();
+				
 			}
 		</script>
 	</head>
@@ -419,7 +421,7 @@
 								</tr>
 								<tr> 
 									<td>
-										<jsp:include page="diagnosticos.jsp" flush="true"/>
+										<jsp:include page="diagnosticoGrid.jsp" flush="true"/>
 									</td>
 								</tr>
 								<tr>

@@ -133,6 +133,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private List<Tiposervicio> listTipoServicio;
 	private List<Tipoespecialidad> listTipoEspecialidad;
 	private List<Examenespecialidad> listExamenEspecialidad;
+	private Diagnostico diagnostico;
 	private InputStream	strDatosDiagnostico;
 	private List<Diagnostico> listDiagnostico;
 	private List<Tipodiagnostico> listTipoDiagnostico;
@@ -248,6 +249,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setListTipoEspecialidad(List<Tipoespecialidad> listTipoEspecialidad) {this.listTipoEspecialidad = listTipoEspecialidad;}
 	public List<Examenespecialidad> getListExamenEspecialidad() {return listExamenEspecialidad;}
 	public void setListExamenEspecialidad(List<Examenespecialidad> listExamenEspecialidad) {this.listExamenEspecialidad = listExamenEspecialidad;}
+	public Diagnostico getDiagnostico() {return diagnostico;}
+	public void setDiagnostico(Diagnostico diagnostico) {this.diagnostico = diagnostico;}
 	public List<Diagnostico> getListDiagnostico() {return listDiagnostico;}
 	public void setListDiagnostico(List<Diagnostico> listDiagnostico) {this.listDiagnostico = listDiagnostico;}
 	public List<Tipodiagnostico> getListTipoDiagnostico() {return listTipoDiagnostico;}
@@ -890,6 +893,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 //    				ValidaString.imprimirObject(persona);
 //    				ValidaString.imprimirObject(persona.getMunicipio());
 //    				ValidaString.imprimirObject(persona.getTipodocumento());
+    				//0. Realizar la Insercion o Actualizacion si es el caso de la persona que actua como paciente
     				long idPersona = gestionFacadeAgenda.persistPersonaId(persona);
     				System.out.println("****************************");
     				System.out.println("idPersona:["+idPersona+"]");
@@ -1171,7 +1175,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 						:profesional!=null&&profesional.getProfId()>0?profesional.getProfId():0;
     			long idEvento = request.getParameter("idEvento")!=null?Long.parseLong(request.getParameter("idEvento").toString()):0;
     			profesional = idProfesional>0?gestionFacadeAgenda.findProfesionalById(idProfesional):new Profesional();
-    			persona = idEvento<=0?gestionFacadeAgenda.findPacienteAtencionServicio(idEvento):gestionFacadeAgenda.findPersona(persona.getDocumentoPers(), persona.getTipodocumento().getAbreviaturaTidoc());
+    			//persona = idEvento<=0?gestionFacadeAgenda.findPacienteAtencionServicio(idEvento):gestionFacadeAgenda.findPersona(persona.getDocumentoPers(), persona.getTipodocumento().getAbreviaturaTidoc());
     			cargarDatosServicioClinico(profesional.getProfEspecialidad());
     		}
     	} catch(Exception e){

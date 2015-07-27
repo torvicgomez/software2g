@@ -24,6 +24,19 @@
 	                		});
 	       				}
 					});
+					
+					$("#claseDiag").change(function(event){
+						var id = $("#claseDiag").find(':selected').val();
+						var tidiIdDP = document.getElementById('seccionTidiIdDP');
+						if(id=='P'){
+							tidiIdDP.style.display = 'block';
+						}else if(id=='R'){
+							tidiIdDP.style.display = 'none';
+						}
+					});
+					
+					
+					
 				});
 				
 				function cargarDatosDignostico(id, diagnostico){
@@ -35,12 +48,39 @@
 						//document.form.action="servicioclinico.action?estado=ConstantesAplicativo.constanteEstadoAddGrid%>&tipo="+tipoAdd+"#tabs-5";
 						//document.form.submit();
 					}else if(diagnostico=='R'){
-						$("#divDatosDiagnosticoRL1").load('cargarDatosDiagnostico.action?coenId='+id+'&claseDiag=1&tipoDiag=0');
+						$("#divDatosDiagnosticoPP").load('cargarDatosDiagnostico.action?coenId='+id+'&claseDiag=1&tipoDiag=0');
 						//var campoFind = document.getElementById('campoFindDR1');campoFind.style.display = 'none';
 						//var repetirFind = document.getElementById('repetirFindDR1');repetirFind.style.display = 'block';
 					}
-					var search = document.getElementById('searchDP');search.value = '';
+					//var search = document.getElementById('searchDP');search.value = ''; 
+					//alert('search:['+search.value+']');
+					
+					var campoFind = document.getElementById('campoFindDP');campoFind.style.display = 'none';
+					var seccionTidiIdDP = document.getElementById('seccionTidiIdDP');seccionTidiIdDP.style.display = 'none';
+					var repetirFind = document.getElementById('repetirFindDP');repetirFind.style.display = 'block';
+					
 				}
+				
+				function limpiar(obj){
+					obj.value='';
+				}
+				
+				function agregarDiagnostico(){
+					var search = document.getElementById('searchDP');search.value = ''; 
+					var campoFind = document.getElementById('campoFindDP');campoFind.style.display = 'block';
+					var seccionTidiIdDP = document.getElementById('seccionTidiIdDP');seccionTidiIdDP.style.display = 'block';
+					var repetirFind = document.getElementById('repetirFindDP');repetirFind.style.display = 'none';
+				}
+				
+				function cambiarDiagnostico(pos){
+					alert('posicion:['+pos+']');
+					$("#divDatosDiagnosticoPP").load('cargarDatosDiagnostico.action?posicion='+pos);
+					var search = document.getElementById('searchDP');search.value = ''; 
+					var campoFind = document.getElementById('campoFindDP');campoFind.style.display = 'block';
+					var seccionTidiIdDP = document.getElementById('seccionTidiIdDP');seccionTidiIdDP.style.display = 'block';
+					var repetirFind = document.getElementById('repetirFindDP');repetirFind.style.display = 'none';
+				}
+				
 		</script>
 		
 	</head>
@@ -50,14 +90,23 @@
 				<tr>
 					<td class="leftLabel"><s:text name="diagnosticos.principal"></s:text></td>
 					<td>
-						<s:textfield name="diagnostico." id="searchDP" size="60" maxlength="30" cssClass="inputs"></s:textfield>
-						<s:select list="#{'P':'Principla','R':'Relacionado'}" id="claseDiag" cssClass="inputs"/>
-						<s:select list="listTipoDiagnostico" id="tidiIdDP" listKey="tidiId" listValue="tidiNombre" cssClass="inputs"/>
+						<div id="campoFindDP" style="overflow:auto;width:auto;height:auto;display:block">
+							<s:textfield id="searchDP" size="60" maxlength="30" cssClass="inputs" onfocus="javascript:limpiar(this);"></s:textfield>
+							<s:select list="listClaseDiagnostico" listKey="key" listValue="valor" id="claseDiag" cssClass="inputs"/>
+						</div>	
+						<div id="repetirFindDP" style="overflow:auto;width:auto;height:auto;display:none">
+							<input type="button" value="<s:text name="labelbutton.agregarDiag"></s:text>" onclick="agregarDiagnostico();" class="buttonSV"/>
+						</div>
+					</td>
+					<td align="left">
+						<div id="seccionTidiIdDP" style="overflow:auto;width:auto;height:auto;display:block">
+							<s:select list="listTipoDiagnostico" id="tidiIdDP" listKey="tidiId" listValue="tidiNombre" cssClass="inputs"/>
+						</div>
 					</td>
 				</tr>
 				<tr>
 					<td><div id="cambiarDiagnostico"></div></td>
-					<td>
+					<td colspan="2">
 						<div id="divDatosDiagnosticoPP">
 							<table cellpadding="0" cellspacing="0" border="0" class="display">
 								<tr>

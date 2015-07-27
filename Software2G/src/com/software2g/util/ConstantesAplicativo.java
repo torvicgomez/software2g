@@ -138,6 +138,9 @@ public final class ConstantesAplicativo {
 					new UtilGenerico("ODONTOLOGIA", "Odontología"),
 					new UtilGenerico("OPTOMETRIA", "Optometría")));
 	
+	public static final List<UtilGenerico> listClaseDiagnostico = new ArrayList<UtilGenerico>(
+			Arrays.asList(new UtilGenerico("P", "Principal"),new UtilGenerico("R", "Relacionado")));
+	
 	public static final String constanteEspecialidadMedicinaGeneral = "3";
 	public static final String constanteEspecialidadOdontologia = "1";
 	public static final String constanteEspecialidadOptometria = "2";

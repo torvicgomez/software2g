@@ -137,6 +137,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private InputStream	strDatosDiagnostico;
 	private List<Diagnostico> listDiagnostico;
 	private List<Tipodiagnostico> listTipoDiagnostico;
+	private List<UtilGenerico> listClaseDiagnostico = ConstantesAplicativo.listClaseDiagnostico;
 	private InputStream	strCambiarDatosDiagnostico;
 	private Medicamento medicamento;
 	private List<Medicamento> listMedicamento;
@@ -255,6 +256,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setListDiagnostico(List<Diagnostico> listDiagnostico) {this.listDiagnostico = listDiagnostico;}
 	public List<Tipodiagnostico> getListTipoDiagnostico() {return listTipoDiagnostico;}
 	public void setListTipoDiagnostico(List<Tipodiagnostico> listTipoDiagnostico) {this.listTipoDiagnostico = listTipoDiagnostico;}
+	public List<UtilGenerico> getListClaseDiagnostico() {return listClaseDiagnostico;}
+	public void setListClaseDiagnostico(List<UtilGenerico> listClaseDiagnostico) {this.listClaseDiagnostico = listClaseDiagnostico;}
 	public Medicamento getMedicamento() {return medicamento;}
 	public void setMedicamento(Medicamento medicamento) {this.medicamento = medicamento;}
 	public List<Medicamento> getListMedicamento() {return listMedicamento;}
@@ -1490,49 +1493,77 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public InputStream getStrDatosDiagnostico() {
 		try{
 			String html = "";
-			long coenId = Long.parseLong(request.getParameter("coenId"));
+			int posicion = request.getParameter("posicion")!=null?Integer.parseInt(request.getParameter("posicion")):-1;
+			long coenId = request.getParameter("coenId")!=null?Long.parseLong(request.getParameter("coenId")):0;
 			String claseDiagnostico = request.getParameter("claseDiag");
 			String tipoDiagnostico = request.getParameter("tipoDiag");
-			Diagnostico diagnostico = new Diagnostico(); 
-			Codigoenfermedade codigoEnfermedad = gestionFacadeHistoriaClinica.findCodigoenfermedadeById(coenId);
-			diagnostico.setCodigoenfermedade(codigoEnfermedad);
-			diagnostico.setClasediagnostico(claseDiagnostico!=null?gestionFacadeHistoriaClinica.findClasediagnosticosXAbreviatura(Long.parseLong(claseDiagnostico)<=0?ConstantesAplicativo.constanteClaseDiagnosticoPP:ConstantesAplicativo.constanteClaseDiagnosticoRL):null);
-			diagnostico.setDiagOrden(claseDiagnostico!=null?Long.parseLong(claseDiagnostico):0);
-			diagnostico.setTipodiagnostico(claseDiagnostico!=null?gestionFacadeHistoriaClinica.findTipodiagnosticoById(Long.parseLong(tipoDiagnostico)):null);
-			listDiagnostico = (List<Diagnostico>) request.getSession().getAttribute("listDiagnostico");
-			if(listDiagnostico==null)
-				listDiagnostico = new ArrayList<Diagnostico>();
-			if(claseDiagnostico!=null){
-				if(listDiagnostico.size()<Integer.parseInt(claseDiagnostico)){
-					for(int i=0;i<Integer.parseInt(claseDiagnostico);i++){
-						Diagnostico diagnosticoAux = null;
-						try{diagnosticoAux = (Diagnostico) listDiagnostico.get(i);}catch(Exception e){diagnosticoAux = null;}
-						if(diagnosticoAux==null||(diagnosticoAux!=null&&diagnosticoAux.getDiagOrden()!=i)){
-							Diagnostico diagnosticoAux1 = new Diagnostico();
-							diagnosticoAux1.setDiagOrden(i);
-							listDiagnostico.add(diagnosticoAux1);
-						}
-					}
-				}else{
-					int con=0;
-					for(Diagnostico elem:listDiagnostico){
-						if(elem.getCodigoenfermedade()==null){
-							listDiagnostico.remove(con);
-							break;
-						}
-						con++;
-					}
-				}
-				listDiagnostico.add(Integer.parseInt(claseDiagnostico), diagnostico);
+			
+			System.out.println("*********************************************");
+			System.out.println("*********************************************");
+			System.out.println("posicion:["+posicion+"]");
+			System.out.println("*********************************************");
+			System.out.println("*********************************************");
+			
+			if(posicion<0){
+				Diagnostico diagnostico = new Diagnostico(); 
+				Codigoenfermedade codigoEnfermedad = gestionFacadeHistoriaClinica.findCodigoenfermedadeById(coenId);
+				diagnostico.setCodigoenfermedade(codigoEnfermedad);
+				diagnostico.setClasediagnostico(claseDiagnostico!=null?gestionFacadeHistoriaClinica.findClasediagnosticosXAbreviatura(Long.parseLong(claseDiagnostico)<=0?ConstantesAplicativo.constanteClaseDiagnosticoPP:ConstantesAplicativo.constanteClaseDiagnosticoRL):null);
+				diagnostico.setDiagOrden(claseDiagnostico!=null?Long.parseLong(claseDiagnostico):0);
+				diagnostico.setTipodiagnostico(claseDiagnostico!=null?gestionFacadeHistoriaClinica.findTipodiagnosticoById(Long.parseLong(tipoDiagnostico)):null);
+				listDiagnostico = (List<Diagnostico>) request.getSession().getAttribute("listDiagnostico");
+				if(listDiagnostico==null)
+					listDiagnostico = new ArrayList<Diagnostico>();
+//				if(claseDiagnostico!=null){
+//					if(listDiagnostico.size()<Integer.parseInt(claseDiagnostico)){
+//						for(int i=0;i<Integer.parseInt(claseDiagnostico);i++){
+//							Diagnostico diagnosticoAux = null;
+//							try{diagnosticoAux = (Diagnostico) listDiagnostico.get(i);}catch(Exception e){diagnosticoAux = null;}
+//							if(diagnosticoAux==null||(diagnosticoAux!=null&&diagnosticoAux.getDiagOrden()!=i)){
+//								Diagnostico diagnosticoAux1 = new Diagnostico();
+//								diagnosticoAux1.setDiagOrden(i);
+//								listDiagnostico.add(diagnosticoAux1);
+//							}
+//						}
+//					}else{
+//						int con=0;
+//						for(Diagnostico elem:listDiagnostico){
+//							if(elem.getCodigoenfermedade()==null){
+//								listDiagnostico.remove(con);
+//								break;
+//							}
+//							con++;
+//						}
+//					}
+//					listDiagnostico.add(Integer.parseInt(claseDiagnostico), diagnostico);
+//				}
+//				listDiagnostico.add(Integer.parseInt(claseDiagnostico), diagnostico);
+				listDiagnostico.add( diagnostico);
+			}else{
+				System.out.println("Entra esta Parte!!!!!!");
+				listDiagnostico = (List<Diagnostico>) request.getSession().getAttribute("listDiagnostico");
+				System.out.println("listDiagnostico:["+listDiagnostico+"]");
+				System.out.println("listDiagnostico.size():["+listDiagnostico.size()+"]");
+				listDiagnostico.remove(posicion);
+				System.out.println("listDiagnostico.size():["+listDiagnostico.size()+"]");
 			}
 			Collections.sort(listDiagnostico);
 			request.getSession().setAttribute("listDiagnostico", listDiagnostico);
-			html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">"+
-					"	<tr> " +
-					"		<td>[" + codigoEnfermedad.getCoenCodigo() + "] " + codigoEnfermedad.getCoenNombre() + "</td> " +
-					"		<td>" + (Long.parseLong(tipoDiagnostico)>0?diagnostico.getTipodiagnostico().getTidiNombre():"") + "</td> " +
-					"	</tr> " +
-					"</table>";
+			html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">";
+			int cont = 0;
+			for(Diagnostico elem: listDiagnostico){		
+				html += "	<tr> " +
+					"		<td>[" + elem.getCodigoenfermedade().getCoenCodigo() + "] " + elem.getCodigoenfermedade().getCoenNombre() + "</td> " +
+					"		<td>" + (elem.getClasediagnostico().getCldiNombre()) + "</td> " +
+					"		<td>" + (elem.getTipodiagnostico()!=null?elem.getTipodiagnostico().getTidiNombre():"") + "</td> " +
+					"		<td><input type=\"button\" value=\"Cambiar\" onClick=\"cambiarDiagnostico('"+cont+"');\" class=\"buttonSV\"/></td> " +
+					"	</tr> ";
+				cont++;
+			}
+			html += "</table>";
+			
+			System.out.println("html:["+html+"]");
+			
 			strDatosDiagnostico = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
 		}catch(Exception e){
 			e.printStackTrace();

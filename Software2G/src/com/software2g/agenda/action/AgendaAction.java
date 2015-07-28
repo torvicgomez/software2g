@@ -1492,18 +1492,12 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	
 	public InputStream getStrDatosDiagnostico() {
 		try{
+			boolean bandExistDxPP = false;
 			String html = "";
 			int posicion = request.getParameter("posicion")!=null?Integer.parseInt(request.getParameter("posicion")):-1;
 			long coenId = request.getParameter("coenId")!=null?Long.parseLong(request.getParameter("coenId")):0;
 			String claseDiagnostico = request.getParameter("claseDiag");
 			String tipoDiagnostico = request.getParameter("tipoDiag");
-			
-			System.out.println("*********************************************");
-			System.out.println("*********************************************");
-			System.out.println("posicion:["+posicion+"]");
-			System.out.println("*********************************************");
-			System.out.println("*********************************************");
-			
 			if(posicion<0){
 				Diagnostico diagnostico = new Diagnostico(); 
 				Codigoenfermedade codigoEnfermedad = gestionFacadeHistoriaClinica.findCodigoenfermedadeById(coenId);
@@ -1538,21 +1532,31 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 //					listDiagnostico.add(Integer.parseInt(claseDiagnostico), diagnostico);
 //				}
 //				listDiagnostico.add(Integer.parseInt(claseDiagnostico), diagnostico);
-				listDiagnostico.add( diagnostico);
+				if(diagnostico.getClasediagnostico().getCldiAbreviatura().equals(ConstantesAplicativo.constanteClaseDiagnosticoPP)){
+					if(listDiagnostico!=null&&listDiagnostico.size()>0){
+						for(Diagnostico elem:listDiagnostico){
+							if(elem.getClasediagnostico().getCldiAbreviatura().equals(ConstantesAplicativo.constanteClaseDiagnosticoPP)){
+								bandExistDxPP = true;
+								break;
+							}	
+						}
+						if(!bandExistDxPP)	
+							listDiagnostico.add(diagnostico);
+					}else
+						listDiagnostico.add(diagnostico);
+				}else
+					listDiagnostico.add(diagnostico);
 			}else{
-				System.out.println("Entra esta Parte!!!!!!");
 				listDiagnostico = (List<Diagnostico>) request.getSession().getAttribute("listDiagnostico");
-				System.out.println("listDiagnostico:["+listDiagnostico+"]");
-				System.out.println("listDiagnostico.size():["+listDiagnostico.size()+"]");
 				listDiagnostico.remove(posicion);
-				System.out.println("listDiagnostico.size():["+listDiagnostico.size()+"]");
 			}
 			Collections.sort(listDiagnostico);
 			request.getSession().setAttribute("listDiagnostico", listDiagnostico);
 			html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">";
 			int cont = 0;
+			html += bandExistDxPP?"<tr><td colspan=\"4\"><font size=\"2\" color=\"#FF0000\"><strong>Ya existe un Diagnóstico Principal Agregado lo puede cambiar</strong></font></td></tr>":"";
 			for(Diagnostico elem: listDiagnostico){		
-				html += "	<tr> " +
+				html += "<tr> " +
 					"		<td>[" + elem.getCodigoenfermedade().getCoenCodigo() + "] " + elem.getCodigoenfermedade().getCoenNombre() + "</td> " +
 					"		<td>" + (elem.getClasediagnostico().getCldiNombre()) + "</td> " +
 					"		<td>" + (elem.getTipodiagnostico()!=null?elem.getTipodiagnostico().getTidiNombre():"") + "</td> " +
@@ -1561,9 +1565,6 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 				cont++;
 			}
 			html += "</table>";
-			
-			System.out.println("html:["+html+"]");
-			
 			strDatosDiagnostico = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
 		}catch(Exception e){
 			e.printStackTrace();

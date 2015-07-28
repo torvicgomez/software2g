@@ -73,7 +73,6 @@
 				}
 				
 				function cambiarDiagnostico(pos){
-					alert('posicion:['+pos+']');
 					$("#divDatosDiagnosticoPP").load('cargarDatosDiagnostico.action?posicion='+pos);
 					var search = document.getElementById('searchDP');search.value = ''; 
 					var campoFind = document.getElementById('campoFindDP');campoFind.style.display = 'block';
@@ -112,31 +111,15 @@
 								<tr>
 									<td colspan="2">
 										<s:if test="listDiagnostico!=null&&listDiagnostico.size()>0">
-											<table cellpadding="0" cellspacing="0" border="1" class="display" id="paradasProgramadas"> 
-												<thead>
+											<table cellpadding="0" cellspacing="0" border="0" class="display">
+												<s:iterator value="listDiagnostico" id="data" status="stat">
 													<tr>
-														<th><s:text name="columna.item"></s:text></th>
-														<th><s:text name="medicamentos.medicamento"></s:text></th>
-														<th><s:text name="medicamentos.presentacion"></s:text></th>
-														<th><s:text name="medicamentos.cantidad"></s:text></th>
-														<th><s:text name="medicamentos.dosis"></s:text></th>
-														<th><s:text name="medicamentos.intervalo"></s:text></th>
-														<th></th>
+														<td>[<s:property value="codigoenfermedade.coenCodigo"/>]&nbsp;<s:property value="codigoenfermedade.coenNombre"/></td>
+														<td><s:property value="clasediagnostico.cldiNombre"/></td>
+														<td><s:property value="tipodiagnostico.tidiNombre"/></td>
+														<td><input type="button" value="Cambiar" onClick="cambiarDiagnostico('${stat.index}');" class="buttonSV"/></td>
 													</tr>
-												</thead>
-<!-- 												<tbody> -->
-<%-- 													<s:iterator value="listDiagnostico" id="data" status="stat"> --%>
-<!-- 														<tr> -->
-<%-- 															<td>${stat.index+1}</td> --%>
-<%-- 															<td><s:property value="mediMedicamento"/></td> --%>
-<%-- 															<td><s:property value="mediPresentacion"/></td> --%>
-<%-- 															<td><s:property value="mediCantidad"/></td> --%>
-<%-- 															<td><s:property value="mediDosis"/></td> --%>
-<%-- 															<td><s:property value="mediIntervalo"/></td> --%>
-<%-- 															<td class="right"><input type="button" value="<s:text name="labelbutton.eliminarMedicamento"></s:text>" onclick="eliminarGrilla('${stat.index}','<%=ConstantesAplicativo.constanteTipoGridMedicamentos%>');" class="buttonSV"/></td> --%>
-<!-- 														</tr> -->
-<%-- 													</s:iterator> --%>
-<!-- 												</tbody> -->
+												</s:iterator>
 											</table>	
 										</s:if>
 										<s:else><s:text name="advertencia.noregistros"></s:text></s:else>	

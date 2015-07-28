@@ -19,6 +19,8 @@
 					<td><s:textfield name="gafaOD.gafaEje" size="10" cssClass="inputs"></s:textfield></td>
 					<td class="leftLabel"><s:text name="servicioexamenopt.avl"></s:text></td>
 					<td><s:textfield name="gafaOD.gafaAvl" size="10" cssClass="inputs"></s:textfield></td>
+					<td class="leftLabel"><s:text name="servicioexamenopt.add"></s:text></td>
+					<td><s:textfield name="gafaOD.gafaAdd" size="10" cssClass="inputs"></s:textfield></td>
 				</tr>
 				<tr>
 					<td class="leftLabel"><s:text name="servicioexamenopt.ojoizquierdo"></s:text></td>
@@ -30,29 +32,26 @@
 					<td><s:textfield name="gafaOI.gafaEje" size="10" cssClass="inputs"></s:textfield></td>
 					<td class="leftLabel"><s:text name="servicioexamenopt.avl"></s:text></td>
 					<td><s:textfield name="gafaOI.gafaAvl" size="10" cssClass="inputs"></s:textfield></td>
-				</tr>
-				<tr>
-					<td></td>
 					<td class="leftLabel"><s:text name="servicioexamenopt.add"></s:text></td>
 					<td><s:textfield name="gafaOI.gafaAdd" size="10" cssClass="inputs"></s:textfield></td>
-					<td class="leftLabel"><s:text name="servicioexamenopt.progresivo"></s:text></td>
-					<td><s:textfield name="gafaOI.gafaProgresivo" size="10" cssClass="inputs"></s:textfield></td>
-					<td class="leftLabel"><s:text name="servicioexamenopt.distanciapupilar"></s:text></td>
-					<td><s:textfield name="gafaOI.gafaDistanciapupilar" size="10" cssClass="inputs"></s:textfield></td>
 				</tr>
 				<tr>
 					<td></td>
+					<td class="leftLabel"><s:text name="servicioexamenopt.progresivo"></s:text></td>
+					<td><s:textfield name="gafaAmbosOjos.gafaProgresivo" size="10" cssClass="inputs"></s:textfield></td>
+					<td class="leftLabel"><s:text name="servicioexamenopt.distanciapupilar"></s:text></td>
+					<td><s:textfield name="gafaAmbosOjos.gafaDistanciapupilar" size="10" cssClass="inputs"></s:textfield></td>
 					<td class="leftLabel"><s:text name="servicioexamenopt.materia"></s:text></td>
-					<td><s:textfield name="gafaOI.gafaMaterial" size="10" cssClass="inputs"></s:textfield></td>
+					<td><s:textfield name="gafaAmbosOjos.gafaMaterial" size="10" cssClass="inputs"></s:textfield></td>
 					<td class="leftLabel"><s:text name="servicioexamenopt.color"></s:text></td>
-					<td><s:textfield name="gafaOI.gafaColor" size="10" cssClass="inputs"></s:textfield></td>
+					<td><s:textfield name="gafaAmbosOjos.gafaColor" size="10" cssClass="inputs"></s:textfield></td>
 					<td class="leftLabel"><s:text name="servicioexamenopt.bifocal"></s:text></td>
-					<td><s:textfield name="gafaOI.gafaBifocal" size="10" cssClass="inputs"></s:textfield></td>
+					<td><s:textfield name="gafaAmbosOjos.gafaBifocal" size="10" cssClass="inputs"></s:textfield></td>
 				</tr>
 				<tr>
 					<td></td>
 					<td class="leftLabel"><s:text name="servicioexamenopt.observaciones"></s:text></td>
-					<td colspan="7"><s:textarea name="gafaOI.gafaObservaciones" cols="100" rows="3" cssClass="inputs"></s:textarea></td>
+					<td colspan="7"><s:textarea name="gafaAmbosOjos.gafaObservaciones" cols="100" rows="3" cssClass="inputs"></s:textarea></td>
 				</tr>
 			</table>
 	</div>

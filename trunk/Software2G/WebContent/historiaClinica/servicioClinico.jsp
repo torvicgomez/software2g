@@ -155,7 +155,6 @@
 			function eliminarGrilla(param, tipoDel){
 				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoDeleteGrid%>&posList="+param+"&tipo="+tipoDel+"#tabs-5";
 				document.form.submit();
-				
 			}
 		</script>
 	</head>

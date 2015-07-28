@@ -778,6 +778,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistGafa(Gafa gafa) throws Exception {
 		try {
 			getGafaDao().persistGafa(gafa);

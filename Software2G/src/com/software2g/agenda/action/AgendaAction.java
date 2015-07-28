@@ -144,6 +144,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private List<Medicamento> listMedicamento;
 	private Gafa gafaOD;
 	private Gafa gafaOI;
+	private Gafa gafaAmbosOjos;
 	private Servicio servicio;
 	private Examenoptometria examenOptometria;
 	
@@ -267,6 +268,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setGafaOD(Gafa gafaOD) {this.gafaOD = gafaOD;}
 	public Gafa getGafaOI() {return gafaOI;}
 	public void setGafaOI(Gafa gafaOI) {this.gafaOI = gafaOI;}
+	public Gafa getGafaAmbosOjos() {return gafaAmbosOjos;}
+	public void setGafaAmbosOjos(Gafa gafaAmbosOjos) {this.gafaAmbosOjos = gafaAmbosOjos;}
 	public Servicio getServicio() {return servicio;}
 	public void setServicio(Servicio servicio) {this.servicio = servicio;}
 	public Examenoptometria getExamenOptometria() {return examenOptometria;}
@@ -892,6 +895,14 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			System.out.println("----------------------------------------------------------------");
     			System.out.println("----------------------------------------------------------------");	
     			
+    			System.out.println("----------------------------------------------------------------");
+    			System.out.println("----------------------------------------------------------------");
+    			System.out.println("Validacion Seccion 4 - Elementos");
+    			
+    			System.out.println("----------------------------------------------------------------");
+    			System.out.println("----------------------------------------------------------------");	
+    			
+    			
     			if(!hasActionErrors()){
     				persona.setDatosAud(getDatosAud());
 //    				ValidaString.imprimirObject(persona);
@@ -1124,28 +1135,47 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
                 				listMedicamento = (ArrayList<Medicamento>)request.getSession().getAttribute("listMedicamento");
                 				if(listMedicamento!=null&&listMedicamento.size()>0){
                 					//Formulacion
-                					Formulacion formulacion = new Formulacion();
-                					formulacion.setServicio(servicio);
-                					formulacion.setTipoformulacion(gestionFacadeHistoriaClinica.findTipoformulacionById(ConstantesAplicativo.constanteIdTipoFormulacionMedi));
-                					formulacion.setDatosAud(getDatosAud());
-                					long idFormulacionMedi = gestionFacadeHistoriaClinica.persistFormulacionId(formulacion);
-                					System.out.println("*******************************************");
-                					System.out.println("*******************************************");
-                					System.out.println("idFormulacionMedi:["+idFormulacionMedi+"]");
-                					System.out.println("*******************************************");
-                					System.out.println("*******************************************");
+                					Formulacion formulacionMedi = new Formulacion();
+                					formulacionMedi.setServicio(servicio);
+                					formulacionMedi.setTipoformulacion(gestionFacadeHistoriaClinica.findTipoformulacionById(ConstantesAplicativo.constanteIdTipoFormulacionMedi));
+                					formulacionMedi.setDatosAud(getDatosAud());
+                					long idFormulacionMedi = gestionFacadeHistoriaClinica.persistFormulacionId(formulacionMedi);
                 					if(idFormulacionMedi>0){
-                						formulacion.setFormId(idFormulacionMedi);
+                						formulacionMedi.setFormId(idFormulacionMedi);
                 						//Insercion de Medicamentos
                 						for(Medicamento elem:listMedicamento){
-                							elem.setFormulacion(formulacion);
+                							elem.setFormulacion(formulacionMedi);
                 							elem.setDatosAud(getDatosAud());
                 							gestionFacadeHistoriaClinica.persistMedicamento(elem);
                 						}
                 					}
                 				}
                 				
-            					
+                				//Formulacion
+            					Formulacion formulacionElem = new Formulacion();
+            					formulacionElem.setServicio(servicio);
+            					formulacionElem.setTipoformulacion(gestionFacadeHistoriaClinica.findTipoformulacionById(ConstantesAplicativo.constanteIdTipoFormulacionElem));
+            					formulacionElem.setDatosAud(getDatosAud());
+            					long idFormulacionElem = gestionFacadeHistoriaClinica.persistFormulacionId(formulacionElem);
+            					if(idFormulacionElem>0){
+            						formulacionElem.setFormId(idFormulacionElem);
+            						//Insercion de Elemento Gafas
+            						//---Ojo Derecho -- OD -----
+        							gafaOD.setFormulacion(formulacionElem);
+        							gafaOD.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOD));
+        							gafaOD.setDatosAud(getDatosAud());
+        							gestionFacadeHistoriaClinica.persistGafa(gafaOD);
+        							//---Ojo Izquierdo -- OI -----
+        							gafaOI.setFormulacion(formulacionElem);
+        							gafaOI.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoOI));
+        							gafaOI.setDatosAud(getDatosAud());
+        							gestionFacadeHistoriaClinica.persistGafa(gafaOI);
+        							// Ambos Ojos
+        							gafaAmbosOjos.setFormulacion(formulacionElem);
+        							gafaAmbosOjos.setEspecificacionpartecuerpo(gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(ConstantesAplicativo.constanteEspParteCuerpoODI));
+        							gafaAmbosOjos.setDatosAud(getDatosAud());
+        							gestionFacadeHistoriaClinica.persistGafa(gafaAmbosOjos);
+            					}
                 				
             				}
         				}

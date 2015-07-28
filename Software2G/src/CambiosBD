@@ -1799,3 +1799,8 @@ insert into "HISCLINICA"."TIPOEXAMENOPT" (tiex_id, tiex_nombre, tiex_abreviatura
 insert into "HISCLINICA"."TIPOEXAMENOPT" (tiex_id, tiex_nombre, tiex_abreviatura, tiex_fechacambio, tiex_horacambio, tiex_registradopor) values (nextval('"HISCLINICA"."SEQ_TIEX_ID"'),'Oftalmoscopia', 'OFT', '2015-04-29', '00:00:00', 'vhgomezl');
 insert into "HISCLINICA"."TIPOEXAMENOPT" (tiex_id, tiex_nombre, tiex_abreviatura, tiex_fechacambio, tiex_horacambio, tiex_registradopor) values (nextval('"HISCLINICA"."SEQ_TIEX_ID"'),'Keratometria', 'KER', '2015-04-29', '00:00:00', 'vhgomezl');
 insert into "HISCLINICA"."TIPOEXAMENOPT" (tiex_id, tiex_nombre, tiex_abreviatura, tiex_fechacambio, tiex_horacambio, tiex_registradopor) values (nextval('"HISCLINICA"."SEQ_TIEX_ID"'),'Retinoscopia', 'RET', '2015-04-29', '00:00:00', 'vhgomezl');
+
+----------------
+-- 28-07-2015 --
+----------------
+ALTER TABLE "HISCLINICA"."DIAGNOSTICO" ALTER COLUMN tidi_id DROP NOT NULL;

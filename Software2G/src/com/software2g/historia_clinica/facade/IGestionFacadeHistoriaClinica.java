@@ -246,6 +246,7 @@ public interface IGestionFacadeHistoriaClinica {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistFormulacion(Formulacion formulacion) throws Exception;
+	public long persistFormulacionId(Formulacion formulacion) throws Exception;
 	/**
 	 * Remove the given persistent instance.
 	 */

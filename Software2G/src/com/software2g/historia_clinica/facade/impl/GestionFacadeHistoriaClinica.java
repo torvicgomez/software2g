@@ -712,6 +712,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistFormulacion(Formulacion formulacion) throws Exception {
 		try {
 			getFormulacionDao().persistFormulacion(formulacion);
@@ -719,6 +720,21 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 			throw new Exception("persistFormulacion failed: " + e.getMessage());
 		}
 	}
+	
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	@Transactional
+	public long persistFormulacionId(Formulacion formulacion) throws Exception {
+		try {
+			return getFormulacionDao().persistFormulacionId(formulacion);
+		} catch (RuntimeException e) {
+			//throw new Exception("persistServicioId failed: " + e.getMessage());
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
 	/**
 	 * Remove the given persistent instance.
 	 */
@@ -812,6 +828,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistMedicamento(Medicamento medicamento) throws Exception {
 		try {
 			getMedicamentoDao().persistMedicamento(medicamento);

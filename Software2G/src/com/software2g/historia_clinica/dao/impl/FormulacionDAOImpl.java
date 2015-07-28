@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.software2g.vo.Formulacion;
+import com.software2g.vo.Servicio;
 import com.software2g.historia_clinica.dao.IFormulacionDao;
 
 import org.springframework.stereotype.Repository;
@@ -81,6 +82,12 @@ public class FormulacionDAOImpl implements IFormulacionDao {
 	 */
 	public void persistFormulacion(Formulacion formulacion) {
 		em.persist(em.merge(formulacion));
+	}
+	
+	public long persistFormulacionId(Formulacion formulacion) {
+		Formulacion obj = em.merge(formulacion); 
+		em.persist(obj); 
+		return obj.getFormId();
 	}
 	/**
 	 * Remove the given persistent instance.

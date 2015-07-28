@@ -31,6 +31,7 @@ public interface IFormulacionDao {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistFormulacion(Formulacion formulacion);
+	public long persistFormulacionId(Formulacion formulacion);
 	/**
 	 * Remove the given persistent instance.
 	 */

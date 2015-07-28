@@ -31,6 +31,7 @@ import com.software2g.vo.Evento;
 import com.software2g.vo.Examenespecialidad;
 import com.software2g.vo.Examenoptometria;
 import com.software2g.vo.Finalidad;
+import com.software2g.vo.Formulacion;
 import com.software2g.vo.Gafa;
 import com.software2g.vo.Jorandalaboral;
 import com.software2g.vo.Medicamento;
@@ -1116,10 +1117,36 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
                 					orden++;
                 				}
                 				
-            					//5. Insercion Medicamentos
+            					//5. Insercion de Formulacion
+                				//5.0 Insercion Formulacion
+                				//5.1 Insercion Medicamentos
+                				//5.2 Insercion Elementos segun especialidad
+                				listMedicamento = (ArrayList<Medicamento>)request.getSession().getAttribute("listMedicamento");
+                				if(listMedicamento!=null&&listMedicamento.size()>0){
+                					//Formulacion
+                					Formulacion formulacion = new Formulacion();
+                					formulacion.setServicio(servicio);
+                					formulacion.setTipoformulacion(gestionFacadeHistoriaClinica.findTipoformulacionById(ConstantesAplicativo.constanteIdTipoFormulacionMedi));
+                					formulacion.setDatosAud(getDatosAud());
+                					long idFormulacionMedi = gestionFacadeHistoriaClinica.persistFormulacionId(formulacion);
+                					System.out.println("*******************************************");
+                					System.out.println("*******************************************");
+                					System.out.println("idFormulacionMedi:["+idFormulacionMedi+"]");
+                					System.out.println("*******************************************");
+                					System.out.println("*******************************************");
+                					if(idFormulacionMedi>0){
+                						formulacion.setFormId(idFormulacionMedi);
+                						//Insercion de Medicamentos
+                						for(Medicamento elem:listMedicamento){
+                							elem.setFormulacion(formulacion);
+                							elem.setDatosAud(getDatosAud());
+                							gestionFacadeHistoriaClinica.persistMedicamento(elem);
+                						}
+                					}
+                				}
                 				
             					
-                				//6. Insercion Elementos segun especialidad
+                				
             				}
         				}
         				

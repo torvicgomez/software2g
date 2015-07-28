@@ -194,4 +194,7 @@ public final class ConstantesAplicativo {
 	public static final String constanteEspParteCuerpoOD = "OD";
 	public static final String constanteEspParteCuerpoOI = "OI";
 	public static final String constanteEspParteCuerpoODI = "ODI";
+	
+	public static final long constanteIdTipoFormulacionElem = 1;
+	public static final long constanteIdTipoFormulacionMedi = 2;
 }

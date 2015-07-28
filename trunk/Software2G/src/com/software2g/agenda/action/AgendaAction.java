@@ -1105,12 +1105,21 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
                 						}
                 					}
                 				}
-            					//4. Insercion Diagnosticos
-                				
-                				
+            					
+                				//4. Insercion Diagnosticos
+                				long orden = 0;
+                				for(Diagnostico elem: listDiagnostico){
+                					elem.setServicio(servicio);
+                					elem.setDiagOrden(orden);
+                					elem.setDatosAud(getDatosAud());
+                					gestionFacadeHistoriaClinica.persistDiagnostico(elem);
+                					orden++;
+                				}
                 				
             					//5. Insercion Medicamentos
-            					//6. Insercion Elementos segun especialidad
+                				
+            					
+                				//6. Insercion Elementos segun especialidad
             				}
         				}
         				

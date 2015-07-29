@@ -1366,6 +1366,7 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistRegistrocovertest(Registrocovertest registrocovertest) throws Exception {
 		try {
 			getRegistroCoverTestDao().persistRegistrocovertest(registrocovertest);

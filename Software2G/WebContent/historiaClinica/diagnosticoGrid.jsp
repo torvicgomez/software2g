@@ -43,18 +43,9 @@
 					if(diagnostico=='P'){
 						var tipoDiag = document.getElementById('tidiIdDP').value;
 						$("#divDatosDiagnosticoPP").load('cargarDatosDiagnostico.action?coenId='+id+'&claseDiag=0&tipoDiag='+tipoDiag);
-						//var campoFind = document.getElementById('campoFindDP');campoFind.style.display = 'none';
-						//var repetirFind = document.getElementById('repetirFindDP');repetirFind.style.display = 'block';
-						//document.form.action="servicioclinico.action?estado=ConstantesAplicativo.constanteEstadoAddGrid%>&tipo="+tipoAdd+"#tabs-5";
-						//document.form.submit();
 					}else if(diagnostico=='R'){
 						$("#divDatosDiagnosticoPP").load('cargarDatosDiagnostico.action?coenId='+id+'&claseDiag=1&tipoDiag=0');
-						//var campoFind = document.getElementById('campoFindDR1');campoFind.style.display = 'none';
-						//var repetirFind = document.getElementById('repetirFindDR1');repetirFind.style.display = 'block';
 					}
-					//var search = document.getElementById('searchDP');search.value = ''; 
-					//alert('search:['+search.value+']');
-					
 					var campoFind = document.getElementById('campoFindDP');campoFind.style.display = 'none';
 					var seccionTidiIdDP = document.getElementById('seccionTidiIdDP');seccionTidiIdDP.style.display = 'none';
 					var repetirFind = document.getElementById('repetirFindDP');repetirFind.style.display = 'block';

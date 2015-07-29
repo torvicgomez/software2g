@@ -147,6 +147,9 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private Gafa gafaAmbosOjos;
 	private Servicio servicio;
 	private Examenoptometria examenOptometria;
+	private InputStream strDatosCoverTest;
+	private List<Registrocovertest> listRegistroCoverTestLejos;
+	private List<Registrocovertest> listRegistroCoverTestCerca;
 	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
@@ -274,9 +277,12 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setServicio(Servicio servicio) {this.servicio = servicio;}
 	public Examenoptometria getExamenOptometria() {return examenOptometria;}
 	public void setExamenOptometria(Examenoptometria examenOptometria) {this.examenOptometria = examenOptometria;}
-	
 	public List<Respuesta> getListRespuesta() {return listRespuesta;}
 	public void setListRespuesta(List<Respuesta> listRespuesta) {this.listRespuesta = listRespuesta;}
+	public List<Registrocovertest> getListRegistroCoverTestLejos() {return listRegistroCoverTestLejos;}
+	public void setListRegistroCoverTestLejos(List<Registrocovertest> listRegistroCoverTestLejos) {this.listRegistroCoverTestLejos = listRegistroCoverTestLejos;}
+	public List<Registrocovertest> getListRegistroCoverTestCerca() {return listRegistroCoverTestCerca;}
+	public void setListRegistroCoverTestCerca(List<Registrocovertest> listRegistroCoverTestCerca) {this.listRegistroCoverTestCerca = listRegistroCoverTestCerca;}
 	
 	public String getConstanteTipoPregAbierta(){ return ConstantesAplicativo.constanteTipoPregAbierta;}
 	public String getConstanteTipoPregMultipleMR(){ return ConstantesAplicativo.constanteTipoPregMultipleMR;}
@@ -601,6 +607,8 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     			request.getSession().removeAttribute("listDiagnostico");
     			request.getSession().removeAttribute("listMedicamento");
     			request.getSession().removeAttribute("listSegmentoAnamnesis");
+    			request.getSession().removeAttribute("listRegistroCoverTestLejos");
+    			request.getSession().removeAttribute("listRegistroCoverTestCerca");
     			long idProfesional = request.getParameter("idProfesional")!=null?Long.parseLong(request.getParameter("idProfesional").toString()):0;
     			long idEvento = request.getParameter("idEvento")!=null?Long.parseLong(request.getParameter("idEvento").toString()):0;
     			System.out.println("********************************************");
@@ -1026,8 +1034,31 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
             		    						gestionFacadeHistoriaClinica.persistRegistroavsc(avscOI);
             		    					}
                 						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveCoverTest)){
-            		    					// 3. Validacion Examen Cover Test
-            		    					System.out.println("En Construccion!!!!!!!");
+                							listRegistroCoverTestLejos = (List<Registrocovertest>) request.getSession().getAttribute("listRegistroCoverTestLejos");
+                							listRegistroCoverTestCerca = (List<Registrocovertest>) request.getSession().getAttribute("listRegistroCoverTestCerca");
+                							if((listRegistroCoverTestLejos!=null&&listRegistroCoverTestLejos.size()>0)||(listRegistroCoverTestCerca!=null&&listRegistroCoverTestCerca.size()>0)){
+	                							examenOptometria = new Examenoptometria();
+	                							examenOptometria.setServicio(servicio);
+	                							examenOptometria.setDatosAud(getDatosAud());
+	                							long idExamenOpt = gestionFacadeHistoriaClinica.persistExamenoptometriaId(examenOptometria);
+	            		    					if(idExamenOpt>0){
+	            		    						examenOptometria.setExopId(idExamenOpt);
+	            		    						if(listRegistroCoverTestLejos!=null&&listRegistroCoverTestLejos.size()>0){
+		            		    						for(Registrocovertest regCTLejos: listRegistroCoverTestLejos){
+		            		    							regCTLejos.setExamenoptometria(examenOptometria);
+		            		    							regCTLejos.setDatosAud(getDatosAud());
+		            		    							gestionFacadeHistoriaClinica.persistRegistrocovertest(regCTLejos);
+		            		    						}
+	            		    						}
+	            		    						if(listRegistroCoverTestCerca!=null&&listRegistroCoverTestCerca.size()>0){
+	            		    							for(Registrocovertest regCTCerca: listRegistroCoverTestCerca){
+	            		    								regCTCerca.setExamenoptometria(examenOptometria);
+	            		    								regCTCerca.setDatosAud(getDatosAud());
+		            		    							gestionFacadeHistoriaClinica.persistRegistrocovertest(regCTCerca);
+		            		    						}
+	            		    						}
+	            		    					}
+                							}
             		    					//------------------------------------------
             		    					//------------------------------------------
                 						}else if(elem.getExesPalabraclave().equals(ConstantesAplicativo.constantePalabraClaveExamenExterno)){
@@ -1179,10 +1210,6 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
                 				
             				}
         				}
-        				
-        				
-        				
-        				
     					estado = ConstantesAplicativo.constanteEstadoAbstract;
     					addActionMessage(getText("accion.satisfactoria"));
     				}
@@ -1661,5 +1688,119 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 			e.printStackTrace();
 		}
 		return strCambiarDatosDiagnostico;
+	}
+	
+	public InputStream getStrDatosCoverTest() {
+		try{
+			String html = "";
+			int posicion = request.getParameter("posicion")!=null?Integer.parseInt(request.getParameter("posicion")):-1;
+			String coverTest = request.getParameter("covertest");
+			boolean ojoDer = Boolean.parseBoolean(request.getParameter("od"));
+			boolean ojoIzq = Boolean.parseBoolean(request.getParameter("oi"));
+			String tipo = request.getParameter("tipo");
+//			System.out.println("**********************************************");
+//			System.out.println("**********************************************");
+//			System.out.println("posicion:["+posicion+"]");
+//			System.out.println("coverTest:["+coverTest+"]");
+//			System.out.println("ojoDer:["+ojoDer+"]");
+//			System.out.println("ojoIzq:["+ojoIzq+"]");
+//			System.out.println("tipo:["+tipo+"]");
+//			System.out.println("**********************************************");
+//			System.out.println("**********************************************");
+			if(tipo!=null&&!tipo.equals("")){
+				if(posicion<0){
+					Registrocovertest registroCoverTest = new Registrocovertest();
+					registroCoverTest.setEspecificacionpartecuerpo(
+							!ojoDer&&!ojoIzq?null:gestionFacadeHistoriaClinica.findEspecificacionpartecuerposXEtiqueta(
+									ojoDer&&!ojoIzq?ConstantesAplicativo.constanteEspParteCuerpoOD
+									:!ojoDer&&ojoIzq?ConstantesAplicativo.constanteEspParteCuerpoOI
+									:ojoDer&&ojoIzq?ConstantesAplicativo.constanteEspParteCuerpoODI:""));
+					if(tipo.equals(ConstantesAplicativo.constanteCoverTestLejosAbre)){
+						listRegistroCoverTestLejos = (List<Registrocovertest>) request.getSession().getAttribute("listRegistroCoverTestLejos");
+						if(listRegistroCoverTestLejos==null)
+							listRegistroCoverTestLejos = new ArrayList<Registrocovertest>();
+						if(ojoDer||ojoIzq){
+							registroCoverTest.setRectLejos(coverTest);
+							listRegistroCoverTestLejos.add(registroCoverTest);
+						}
+						html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">";
+						html += !ojoDer&&!ojoIzq?"<tr><td colspan=\"3\"><font size=\"2\" color=\"#FF0000\"><strong>Debe Seleccionar Un Ojo.</strong></font></td></tr>":"";
+						int cont = 0;
+						for(Registrocovertest elem: listRegistroCoverTestLejos){
+							html += "<tr> " +
+								"		<td>"+elem.getRectLejos()+"</td> " +
+								"		<td>"+elem.getEspecificacionpartecuerpo().getEspcNombre()+"</td> " +
+								"		<td><input type=\"button\" value=\"Desvincular Cover Test Lejos\" onClick=\"eliminarCoverTest('"+cont+"','"+tipo+"');\" class=\"buttonSV\"/></td> " +
+								"	</tr> ";
+							cont++;
+						}
+						html += "</table>";
+						request.getSession().setAttribute("listRegistroCoverTestLejos", listRegistroCoverTestLejos);
+					}else if(tipo.equals(ConstantesAplicativo.constanteCoverTestCercaAbre)){
+						listRegistroCoverTestCerca = (List<Registrocovertest>) request.getSession().getAttribute("listRegistroCoverTestCerca");
+						if(listRegistroCoverTestCerca==null)
+							listRegistroCoverTestCerca = new ArrayList<Registrocovertest>();
+						if(ojoDer||ojoIzq){
+							registroCoverTest.setRectCerca(coverTest);
+							listRegistroCoverTestCerca.add(registroCoverTest);
+						}
+						html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">";
+						html += !ojoDer&&!ojoIzq?"<tr><td colspan=\"3\"><font size=\"2\" color=\"#FF0000\"><strong>Debe Seleccionar Un Ojo.</strong></font></td></tr>":"";
+						int cont = 0;
+						for(Registrocovertest elem: listRegistroCoverTestCerca){
+							html += "<tr> " +
+								"		<td>"+elem.getRectCerca()+"</td> " +
+								"		<td>"+elem.getEspecificacionpartecuerpo().getEspcNombre()+"</td> " +
+								"		<td><input type=\"button\" value=\"Desvincular Cover Test Lejos\" onClick=\"eliminarCoverTest('"+cont+"','"+tipo+"');\" class=\"buttonSV\"/></td> " +
+								"	</tr> ";
+							cont++;
+						}
+						html += "</table>";
+						request.getSession().setAttribute("listRegistroCoverTestCerca", listRegistroCoverTestCerca);
+					}
+				}else{
+					if(tipo.equals(ConstantesAplicativo.constanteCoverTestLejosAbre)){
+						listRegistroCoverTestLejos = (List<Registrocovertest>) request.getSession().getAttribute("listRegistroCoverTestLejos");
+						listRegistroCoverTestLejos.remove(posicion);
+						html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">";
+						int cont = 0;
+						for(Registrocovertest elem: listRegistroCoverTestLejos){
+							html += "<tr> " +
+								"		<td>"+elem.getRectLejos()+"</td> " +
+								"		<td>"+elem.getEspecificacionpartecuerpo().getEspcNombre()+"</td> " +
+								"		<td><input type=\"button\" value=\"Desvincular Cover Test Lejos\" onClick=\"eliminarCoverTest('"+cont+"','"+tipo+"');\" class=\"buttonSV\"/></td> " +
+								"	</tr> ";
+							cont++;
+						}
+						html += "</table>";
+						request.getSession().setAttribute("listRegistroCoverTestLejos", listRegistroCoverTestLejos);
+					}else if(tipo.equals(ConstantesAplicativo.constanteCoverTestCercaAbre)){
+						listRegistroCoverTestCerca = (List<Registrocovertest>) request.getSession().getAttribute("listRegistroCoverTestCerca");
+						listRegistroCoverTestCerca.remove(posicion);
+						html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">";
+						int cont = 0;
+						for(Registrocovertest elem: listRegistroCoverTestCerca){
+							html += "<tr> " +
+								"		<td>"+elem.getRectCerca()+"</td> " +
+								"		<td>"+elem.getEspecificacionpartecuerpo().getEspcNombre()+"</td> " +
+								"		<td><input type=\"button\" value=\"Desvincular Cover Test Cerca\" onClick=\"eliminarCoverTest('"+cont+"','"+tipo+"');\" class=\"buttonSV\"/></td> " +
+								"	</tr> ";
+							cont++;
+						}
+						html += "</table>";
+						request.getSession().setAttribute("listRegistroCoverTestCerca", listRegistroCoverTestCerca);
+					}
+				}
+			}else{
+				html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">";
+				html += "<tr><td colspan=\"3\"><font size=\"2\" color=\"#FF0000\"><strong>Error. Comuniquese con el administrador.</strong></font></td></tr>";
+				html += "</table>";
+			}
+//			System.out.println("html:["+html+"]");
+			strDatosCoverTest = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return strDatosCoverTest;
 	}
 }

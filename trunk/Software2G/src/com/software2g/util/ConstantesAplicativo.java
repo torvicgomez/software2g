@@ -197,4 +197,7 @@ public final class ConstantesAplicativo {
 	
 	public static final long constanteIdTipoFormulacionElem = 1;
 	public static final long constanteIdTipoFormulacionMedi = 2;
+	
+	public static final String constanteCoverTestLejosAbre = "L";
+	public static final String constanteCoverTestCercaAbre = "C";
 }

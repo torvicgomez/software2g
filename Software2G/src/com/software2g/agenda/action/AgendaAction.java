@@ -642,8 +642,14 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
         					persona.setTipodocumento(tipoDocumento);
         					persona.setDocumentoPers(nroDocumento);
         					persona.setExistePaciente(ConstantesAplicativo.constanteCheckNo);
-        				}else
+        				}else{
         					persona.setExistePaciente(ConstantesAplicativo.constanteCheckSi);
+        					paciente = gestionFacadeHistoriaClinica.findPacienteByIdPersona(persona.getIdPers());
+//        					if(paciente!=null)
+//        						paciente.setExistePaciente(ConstantesAplicativo.constanteCheckSi);
+//        					else
+//        						paciente.setExistePaciente(ConstantesAplicativo.constanteCheckNo);
+        				}
         				cargarDatosServicioClinico(profesional.getProfEspecialidad());
         			}else{
         				estado = ConstantesAplicativo.constanteEstadoAllTipoServicio;
@@ -925,7 +931,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     					persona.setIdPers(idPersona);
     					paciente.setPersona(persona);
     					paciente.setDatosAud(getDatosAud());
-//    					ValidaString.imprimirObject(paciente);
+    					ValidaString.imprimirObject(paciente);
     					long idPaciente = gestionFacadeHistoriaClinica.persistPacienteId(paciente);
     					System.out.println("****************************");
         				System.out.println("idPaciente:["+idPaciente+"]");

@@ -378,6 +378,7 @@ public interface IGestionFacadeHistoriaClinica {
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
 	public Paciente findPacienteById(long id) throws Exception;
+	public Paciente findPacienteByIdPersona(long idPersona) throws Exception;
 	/**
 	 * Return all persistent instances of the <code>Paciente</code> entity.
 	 */

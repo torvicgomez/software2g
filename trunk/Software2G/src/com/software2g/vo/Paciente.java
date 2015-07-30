@@ -44,6 +44,9 @@ public class Paciente implements Serializable {
 	@OneToMany(mappedBy="paciente")
 	private List<Servicio> servicios;
 
+	@Transient
+	private String existePaciente;
+	
 	public Paciente() {
 	}
 
@@ -118,4 +121,13 @@ public class Paciente implements Serializable {
 			this.paciHoracambio=data.get(2);
 		}
 	}
+
+	public String getExistePaciente() {
+		return existePaciente;
+	}
+
+	public void setExistePaciente(String existePaciente) {
+		this.existePaciente = existePaciente;
+	}
+	
 }

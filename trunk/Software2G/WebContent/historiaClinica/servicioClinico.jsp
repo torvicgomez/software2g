@@ -207,6 +207,7 @@
 						<s:hidden name="profesional.profEspecialidad" id="profEspecialidad"></s:hidden>
 						<s:hidden name="persona.idPers"></s:hidden>
 						<s:hidden name="persona.existePaciente"></s:hidden>
+						<s:hidden name="paciente.paciId"></s:hidden>
 						<td class="leftLabel" colspan="4"><s:text name="profesionalsalud.datosprofesional"></s:text></td>
 					</tr>
 					<tr>

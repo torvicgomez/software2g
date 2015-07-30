@@ -23,6 +23,7 @@ public interface IPacienteDao {
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
 	public Paciente findPacienteById(long id);
+	public Paciente findPacienteByIdPersona(long idPersona);
 	/**
 	 * Return all persistent instances of the <code>Paciente</code> entity.
 	 */

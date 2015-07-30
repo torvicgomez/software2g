@@ -1028,6 +1028,16 @@ public class GestionFacadeHistoriaClinica implements IGestionFacadeHistoriaClini
 			throw new Exception("findPacienteById failed with the id " + id + ": " + e.getMessage());
 		}
 	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Paciente findPacienteByIdPersona(long idPersona) throws Exception {
+		try {
+			return getPacienteDao().findPacienteByIdPersona(idPersona);
+		} catch (RuntimeException e) {
+			throw new Exception("findPacienteByIdPersona failed with the id " + idPersona + ": " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Return all persistent instances of the <code>Paciente</code> entity.
 	 */

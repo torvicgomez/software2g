@@ -100,4 +100,22 @@ public class PacienteDAOImpl implements IPacienteDao {
 		 The merge method returns a managed copy of the given detached entity.*/
 		em.remove(em.merge(paciente));
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Paciente findPacienteByIdPersona(long idPersona) {
+        try {
+        	String jpqlString = "select paciente from " + Paciente.class.getSimpleName() + " paciente " +
+        			" where paciente.persona.idPers =:idPersona ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("idPersona", idPersona);
+            return (Paciente) query.getResultList().get(0);
+        }catch(Exception e){
+        	return null;
+		}finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
 }

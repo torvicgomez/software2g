@@ -2018,6 +2018,7 @@ CREATE TABLE niif.venta
   vent_id numeric(30,0) NOT NULL,
   copa_id numeric(30,0) NOT NULL,
   clie_id numeric(30,0) NOT NULL,
+  vend_id numeric(30,0) NOT NULL, 
   vent_consecutivo character varying(15) NOT NULL,
   vent_estado character varying(15) NOT NULL,
   vent_fecha character varying(10) NOT NULL,
@@ -2031,6 +2032,8 @@ CREATE TABLE niif.venta
   vent_registradopor character varying(30) NOT NULL,
   CONSTRAINT pk_vent PRIMARY KEY (vent_id),
   CONSTRAINT fk_vent_clie FOREIGN KEY (clie_id) REFERENCES niif.cliente (clie_id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_vent_vend FOREIGN KEY (vend_id) REFERENCES niif.vendedor (vend_id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_vent_copa FOREIGN KEY (copa_id) REFERENCES niif.condicionpago (copa_id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT ckc_estado_vent CHECK ((vent_estado::text = ANY (ARRAY['PAGADA'::character varying::text, 'PENDIENTE'::character varying::text, 'COTIZACION'::character varying::text, 'ANULADA'::character varying::text])) AND vent_estado::text = upper(vent_estado::text))
 );
 ALTER TABLE niif.venta OWNER TO postgres;

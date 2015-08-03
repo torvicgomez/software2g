@@ -101,6 +101,18 @@ public class Persona implements Serializable {
 	@OneToMany(mappedBy="persona")
 	private List<Paciente> paciente;
 		
+	//bi-directional many-to-one association to Cliente
+	@OneToMany(mappedBy="persona")
+	private List<Cliente> cliente;
+	
+	//bi-directional many-to-one association to Proveedor
+	@OneToMany(mappedBy="persona")
+	private List<Proveedor> proveedor;
+	
+	//bi-directional many-to-one association to Vendedor
+	@OneToMany(mappedBy="persona")
+	private List<Vendedor> vendedor;
+		
 	@Transient
 	private String existePaciente; 
 	
@@ -348,4 +360,29 @@ public class Persona implements Serializable {
 			this.horacambio=data.get(2);
 		}
 	}
+
+	public List<Cliente> getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(List<Cliente> cliente) {
+		this.cliente = cliente;
+	}
+
+	public List<Proveedor> getProveedor() {
+		return proveedor;
+	}
+
+	public void setProveedor(List<Proveedor> proveedor) {
+		this.proveedor = proveedor;
+	}
+
+	public List<Vendedor> getVendedor() {
+		return vendedor;
+	}
+
+	public void setVendedor(List<Vendedor> vendedor) {
+		this.vendedor = vendedor;
+	}
+
 }

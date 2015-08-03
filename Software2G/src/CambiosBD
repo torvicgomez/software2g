@@ -1804,3 +1804,315 @@ insert into "HISCLINICA"."TIPOEXAMENOPT" (tiex_id, tiex_nombre, tiex_abreviatura
 -- 28-07-2015 --
 ----------------
 ALTER TABLE "HISCLINICA"."DIAGNOSTICO" ALTER COLUMN tidi_id DROP NOT NULL;
+
+----------------
+-- 03-08-2015 --
+----------------
+CREATE SCHEMA niif AUTHORIZATION postgres;
+GRANT ALL ON SCHEMA niif TO postgres;
+
+CREATE TABLE niif.cliente
+(
+  clie_id numeric(30,0) NOT NULL,
+  pers_id numeric(30,0) NOT NULL,
+  clie_fechacambio character varying(10) NOT NULL,
+  clie_horacambio character varying(8) NOT NULL,
+  clie_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_clie PRIMARY KEY (clie_id ),
+  CONSTRAINT fk_clie_pers FOREIGN KEY (pers_id)
+      REFERENCES portal.persona (id_pers) MATCH SIMPLE
+      ON UPDATE RESTRICT ON DELETE RESTRICT
+);
+ALTER TABLE niif.cliente OWNER TO postgres;
+
+CREATE SEQUENCE niif.seq_clie_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 999999999
+  START 1
+  CACHE 1;
+ALTER TABLE niif.seq_clie_id OWNER TO postgres;
+
+
+CREATE TABLE niif.proveedor
+(
+  prov_id numeric(30,0) NOT NULL,
+  pers_id numeric(30,0),
+  prov_razonsocial character varying(50),
+  prov_fechacambio character varying(10) NOT NULL,
+  prov_horacambio character varying(8) NOT NULL,
+  prov_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_prov PRIMARY KEY (prov_id ),
+  CONSTRAINT fk_prov_pers FOREIGN KEY (pers_id)
+      REFERENCES portal.persona (id_pers) MATCH SIMPLE
+      ON UPDATE RESTRICT ON DELETE RESTRICT
+);
+ALTER TABLE niif.proveedor OWNER TO postgres;
+
+CREATE SEQUENCE niif.seq_prov_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 999999999
+  START 1
+  CACHE 1;
+ALTER TABLE niif.seq_prov_id OWNER TO postgres;
+
+
+CREATE TABLE niif.vendedor
+(
+  vend_id numeric(30,0) NOT NULL,
+  pers_id numeric(30,0) NOT NULL,
+  vend_codigo character varying(50) NOT NULL,
+  vend_fechacambio character varying(10) NOT NULL,
+  vend_horacambio character varying(8) NOT NULL,
+  vend_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_vend PRIMARY KEY (vend_id ),
+  CONSTRAINT fk_vend_pers FOREIGN KEY (pers_id)
+      REFERENCES portal.persona (id_pers) MATCH SIMPLE
+      ON UPDATE RESTRICT ON DELETE RESTRICT
+);
+ALTER TABLE niif.vendedor OWNER TO postgres;
+
+CREATE SEQUENCE niif.seq_vend_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 999999999
+  START 1
+  CACHE 1;
+ALTER TABLE niif.seq_vend_id OWNER TO postgres;
+
+
+CREATE TABLE niif.ordencompra
+(
+  orco_id numeric(30,0) NOT NULL,
+  prov_id numeric(30,0) NOT NULL,
+  orco_nrocomprobante character varying(20) NOT NULL,
+  orco_estado character varying(20) NOT NULL,
+  orco_fechacompra character varying(10) NOT NULL,
+  orco_totalpagado numeric NOT NULL,
+  orco_totaldescuento numeric NOT NULL,
+  orco_totalivaven numeric NOT NULL,
+  orco_fechacambio character varying(10) NOT NULL,
+  orco_horacambio character varying(8) NOT NULL,
+  orco_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_orco PRIMARY KEY (orco_id),
+  CONSTRAINT fk_orco_prov FOREIGN KEY (prov_id) REFERENCES niif.proveedor (prov_id) MATCH SIMPLE ON UPDATE RESTRICT ON DELETE RESTRICT
+);
+ALTER TABLE niif.ordencompra OWNER TO postgres;
+
+CREATE SEQUENCE niif.seq_orco_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 999999999
+  START 1
+  CACHE 1;
+ALTER TABLE niif.seq_orco_id OWNER TO postgres;
+
+
+CREATE TABLE niif.categoria
+(
+  cate_id numeric(30,0) NOT NULL,
+  cate_nombre character varying(50) NOT NULL,
+  cate_descripcion character varying(150),
+  cate_estado character varying(1) NOT NULL,
+  cate_fechacambio character varying(10) NOT NULL,
+  cate_horacambio character varying(8) NOT NULL,
+  cate_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_cate PRIMARY KEY (cate_id),
+  CONSTRAINT ckc_estado_cate CHECK ((cate_estado = ANY (ARRAY['S'::bpchar, 'N'::bpchar])) AND cate_estado::text = upper(cate_estado::text))
+);
+ALTER TABLE niif.categoria OWNER TO postgres;
+
+CREATE SEQUENCE niif.seq_cate_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 999999999
+  START 1
+  CACHE 1;
+ALTER TABLE niif.seq_cate_id OWNER TO postgres;
+
+CREATE TABLE niif.articulo
+(
+  arti_id numeric(30,0) NOT NULL,
+  cate_id numeric(30,0) NOT NULL,
+  arti_nombre character varying(30) NOT NULL,
+  arti_descripcion character varying(50),
+  arti_marca character varying(30),
+  arti_referencia character varying(20) NOT NULL,
+  arti_estado character varying(15) NOT NULL,
+  arti_stock integer NOT NULL,
+  arti_puntoequilibrio integer NOT NULL,
+  arti_preciobase numeric NOT NULL,
+  arti_precioventa numeric,
+  arti_porcentajeutilidad numeric,
+  arti_reqformula character varying(1) NOT NULL DEFAULT 'N'::character varying,
+  arti_reqesptecnica character varying(1) NOT NULL DEFAULT 'N'::character varying,
+  arti_fechacambio character varying(10) NOT NULL,
+  arti_horacambio character varying(8) NOT NULL,
+  arti_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_arti PRIMARY KEY (arti_id),
+  CONSTRAINT fk_arti_cate FOREIGN KEY (cate_id) REFERENCES niif.categoria (cate_id) MATCH SIMPLE ON UPDATE RESTRICT ON DELETE RESTRICT, 
+  CONSTRAINT ckc_estado_arti CHECK ((arti_estado::text = ANY (ARRAY['NORMAL'::character varying::text, 'INEXISTENTES'::character varying::text, 'POCA EXISTENCIA'::character varying::text])) AND arti_estado::text = upper(arti_estado::text)),
+  CONSTRAINT ckc_reqesptecnica_arti CHECK ((arti_reqesptecnica::text = ANY (ARRAY['N'::character varying::text, 'S'::character varying::text])) AND arti_reqesptecnica::text = upper(arti_reqesptecnica::text)),
+  CONSTRAINT ckc_reqformula_arti CHECK ((arti_reqformula::text = ANY (ARRAY['N'::character varying::text, 'S'::character varying::text])) AND arti_reqformula::text = upper(arti_reqformula::text))
+  
+);
+ALTER TABLE niif.articulo OWNER TO postgres;
+
+CREATE SEQUENCE niif.seq_arti_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 999999999
+  START 1
+  CACHE 1;
+ALTER TABLE niif.seq_arti_id OWNER TO postgres;
+
+CREATE TABLE niif.detallecompra
+(
+  arti_id numeric(30,0) NOT NULL,
+  orco_id numeric(30,0) NOT NULL,
+  deco_cantidad integer NOT NULL,
+  deco_valorunitario numeric NOT NULL,
+  deco_valortotal numeric NOT NULL,
+  deco_ivaarticulo numeric,
+  deco_descuento numeric,
+  deco_fechacambio character varying(10) NOT NULL,
+  deco_horacambio character varying(8) NOT NULL,
+  deco_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_deco PRIMARY KEY (arti_id , orco_id ),
+  CONSTRAINT fk_deco_arti FOREIGN KEY (arti_id) REFERENCES niif.articulo (arti_id) MATCH SIMPLE ON UPDATE RESTRICT ON DELETE RESTRICT,
+  CONSTRAINT fk_deco_orco FOREIGN KEY (orco_id) REFERENCES niif.ordencompra (orco_id) MATCH SIMPLE ON UPDATE RESTRICT ON DELETE RESTRICT
+);
+ALTER TABLE niif.detallecompra OWNER TO postgres;
+--CREATE INDEX deco_orco_fk ON niif.detallecompra USING btree (orco_id );
+--CREATE INDEX deco_arti_fk ON niif.detallecompra USING btree (arti_id );
+--CREATE UNIQUE INDEX deco_arti_orco_pk ON niif.detallecompra USING btree (arti_id , orco_id );
+
+
+CREATE TABLE niif.condicionpago
+(
+  copa_id numeric(30,0) NOT NULL,
+  copa_condicionpago character varying(15) NOT NULL,
+  copa_descripcion character varying(150),
+  copa_estado character varying(1) NOT NULL,
+  copa_fechacambio character varying(10) NOT NULL,
+  copa_horacambio character varying(8) NOT NULL,
+  copa_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_copa PRIMARY KEY (copa_id),
+  CONSTRAINT ckc_estado_copa CHECK ((copa_estado = ANY (ARRAY['S'::bpchar, 'N'::bpchar])) AND copa_estado::text = upper(copa_estado::text)),
+  CONSTRAINT ckc_condicionpago_copa CHECK ((copa_condicionpago::text = ANY (ARRAY['CONTADO'::character varying::text, 'CREDITO'::character varying::text])) AND copa_condicionpago::text = upper(copa_condicionpago::text))
+  
+);
+ALTER TABLE niif.condicionpago OWNER TO postgres;
+
+CREATE SEQUENCE niif.seq_copa_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 999999999
+  START 1
+  CACHE 1;
+ALTER TABLE niif.seq_copa_id OWNER TO postgres;
+
+CREATE TABLE niif.venta
+(
+  vent_id numeric(30,0) NOT NULL,
+  copa_id numeric(30,0) NOT NULL,
+  clie_id numeric(30,0) NOT NULL,
+  vent_consecutivo character varying(15) NOT NULL,
+  vent_estado character varying(15) NOT NULL,
+  vent_fecha character varying(10) NOT NULL,
+  vent_hora character varying(8) NOT NULL,
+  vent_total numeric NOT NULL,
+  vent_totaliva numeric NOT NULL,
+  vent_totaldes numeric NOT NULL,
+  vent_totalpag numeric NOT NULL,
+  vent_fechacambio character varying(10) NOT NULL,
+  vent_horacambio character varying(8) NOT NULL,
+  vent_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_vent PRIMARY KEY (vent_id),
+  CONSTRAINT fk_vent_clie FOREIGN KEY (clie_id) REFERENCES niif.cliente (clie_id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT ckc_estado_vent CHECK ((vent_estado::text = ANY (ARRAY['PAGADA'::character varying::text, 'PENDIENTE'::character varying::text, 'COTIZACION'::character varying::text, 'ANULADA'::character varying::text])) AND vent_estado::text = upper(vent_estado::text))
+);
+ALTER TABLE niif.venta OWNER TO postgres;
+
+CREATE SEQUENCE niif.seq_vent_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 999999999
+  START 1
+  CACHE 1;
+ALTER TABLE niif.seq_vent_id OWNER TO postgres;
+
+CREATE TABLE niif.detalleventa
+(
+  vent_id numeric(30,0) NOT NULL,
+  arti_id numeric(30,0) NOT NULL,
+  deve_cantidad integer NOT NULL,
+  deve_valorartven numeric NOT NULL,
+  deve_totalartven numeric NOT NULL,
+  deve_ivaartven numeric,
+  deve_estadoartven character varying(15) NOT NULL,
+  deve_fechacambio character varying(10) NOT NULL,
+  deve_horacambio character varying(8) NOT NULL,
+  deve_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_deve PRIMARY KEY (vent_id , arti_id),
+  CONSTRAINT fk_arti FOREIGN KEY (arti_id) REFERENCES niif.articulo (arti_id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_vent FOREIGN KEY (vent_id) REFERENCES niif.venta (vent_id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT ckc_estadoartven_deve CHECK ((deve_estadoartven::text = ANY (ARRAY['DEVUELTO'::character varying::text, 'PAGADO'::character varying::text, 'PENDIENTE'::character varying::text, 'POR_ENTREGAR'::character varying::text])) AND deve_estadoartven::text = upper(deve_estadoartven::text))
+);
+ALTER TABLE niif.detalleventa OWNER TO postgres;
+
+
+CREATE TABLE niif.formapago
+(
+  fopa_id numeric(30,0) NOT NULL,
+  fopa_formapago character varying(15) NOT NULL,
+  fopa_descripcion character varying(150),
+  fopa_estado character varying(1) NOT NULL,
+  fopa_fechacambio character varying(10) NOT NULL,
+  fopa_horacambio character varying(8) NOT NULL,
+  fopa_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_fopa PRIMARY KEY (fopa_id),
+  CONSTRAINT ckc_estado_fopa CHECK ((fopa_estado = ANY (ARRAY['S'::bpchar, 'N'::bpchar])) AND fopa_estado::text = upper(fopa_estado::text)),
+  CONSTRAINT ckc_formapago_copa CHECK ((fopa_formapago::text = ANY (ARRAY['EFECTIVO'::character varying::text, 'TARJETA'::character varying::text, 'CHEQUE'::character varying::text])) AND fopa_formapago::text = upper(fopa_formapago::text))
+  
+);
+ALTER TABLE niif.formapago OWNER TO postgres;
+
+CREATE SEQUENCE niif.seq_fopa_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 999999999
+  START 1
+  CACHE 1;
+ALTER TABLE niif.seq_fopa_id OWNER TO postgres;
+
+CREATE TABLE niif.pagos
+(
+  pago_id numeric(30,0) NOT NULL,
+  orco_id numeric(30,0),
+  vent_id numeric(30,0),
+  fopa_id numeric(30,0) NOT NULL,
+  pago_valor numeric NOT NULL,
+  pago_comprobante character varying(15),
+  pago_observacion character varying(100),
+  pago_fecha character varying(10) NOT NULL,
+  pago_hora character varying(8) NOT NULL,
+  pago_fechacambio character varying(10) NOT NULL,
+  pago_horacambio character varying(8) NOT NULL,
+  pago_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_pago PRIMARY KEY (pago_id),
+  CONSTRAINT fk_pago_orco FOREIGN KEY (orco_id) REFERENCES niif.ordencompra (orco_id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_pago_vent FOREIGN KEY (vent_id) REFERENCES niif.venta (vent_id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_pago_fopa FOREIGN KEY (fopa_id) REFERENCES niif.formapago (fopa_id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+ALTER TABLE niif.pagos OWNER TO postgres;
+
+CREATE SEQUENCE niif.seq_pago_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 999999999
+  START 1
+  CACHE 1;
+ALTER TABLE niif.seq_pago_id OWNER TO postgres;
+

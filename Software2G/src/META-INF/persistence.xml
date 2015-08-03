@@ -85,6 +85,20 @@
 		<class>com.software2g.vo.Tipoformulacion</class>
 		<class>com.software2g.vo.Tipopregunta</class>
 		<class>com.software2g.vo.Tiposegmento</class>
-		<class>com.software2g.vo.Examenespecialidad</class> 
+		<class>com.software2g.vo.Examenespecialidad</class>
+		<class>com.software2g.vo.Articulo</class>
+		<class>com.software2g.vo.Categoria</class>
+		<class>com.software2g.vo.Cliente</class>
+		<class>com.software2g.vo.Condicionpago</class>
+		<class>com.software2g.vo.Detallecompra</class>
+		<class>com.software2g.vo.DetallecompraPK</class>
+		<class>com.software2g.vo.Detalleventa</class>
+		<class>com.software2g.vo.DetalleventaPK</class>
+		<class>com.software2g.vo.Formapago</class>
+		<class>com.software2g.vo.Ordencompra</class>
+		<class>com.software2g.vo.Pago</class>
+		<class>com.software2g.vo.Proveedor</class>
+		<class>com.software2g.vo.Vendedor</class>
+		<class>com.software2g.vo.Venta</class> 
 	</persistence-unit>
 </persistence>

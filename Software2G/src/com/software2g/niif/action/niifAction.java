@@ -19,6 +19,7 @@ import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Articulo;
 import com.software2g.vo.Categoria;
+import com.software2g.vo.Ordencompra;
 import com.software2g.vo.Usuario;
 import com.software2g.vo.UtilGenerico;
 
@@ -37,6 +38,8 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	private List<Categoria> listCategoria;
 	private Articulo articulo;
 	private List<Articulo> listArticulo;
+	private Ordencompra ordenCompra;
+	private List<Ordencompra> listOrdenCompra;
 	
 	public Categoria getCategoria() {return categoria;}
 	public void setCategoria(Categoria categoria) {this.categoria = categoria;}
@@ -46,6 +49,10 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	public void setArticulo(Articulo articulo) {this.articulo = articulo;}
 	public List<Articulo> getListArticulo() {return listArticulo;}
 	public void setListArticulo(List<Articulo> listArticulo) {this.listArticulo = listArticulo;}
+	public Ordencompra getOrdenCompra() {return ordenCompra;}
+	public void setOrdenCompra(Ordencompra ordenCompra) {this.ordenCompra = ordenCompra;}
+	public List<Ordencompra> getListOrdenCompra() {return listOrdenCompra;}
+	public void setListOrdenCompra(List<Ordencompra> listOrdenCompra) {this.listOrdenCompra = listOrdenCompra;}
 	
 	
 	public List<UtilGenerico> getListEstado() {return ConstantesAplicativo.listEstadoSN;}
@@ -100,7 +107,7 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 		String  result = Action.SUCCESS; 
     	try { 
     		getFuncionPosicionado();
-    		System.out.println("######>>>>>>>niifAction>>>>categoriaArticuloMethod>>>>estado entrada-->>"+estado);
+    		System.out.println("######>>>>>>>niifAction>>>>articuloMethod>>>>estado entrada-->>"+estado);
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
     			listArticulo = gestionFacadeNIIF.findAllArticulos();
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAdd)){
@@ -132,12 +139,51 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     		e.printStackTrace();
     		addActionError(getText("error.aplicacion"));
     	}
-    	System.out.println("######>>>>>>>niifAction>>>>categoriaArticuloMethod>>>>estado entrada-->>"+estado);
+    	System.out.println("######>>>>>>>niifAction>>>>articuloMethod>>>>estado entrada-->>"+estado);
     	return Action.SUCCESS;
 	}
 	
-	
-	
+	@SkipValidation
+	public String ordenCompraMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>niifAction>>>>ordenCompraMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listOrdenCompra = gestionFacadeNIIF.findAllOrdencompras();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAdd)){
+    			//listCategoria = gestionFacadeNIIF.findAllCategoriasActivas();
+    			System.out.println("Construccion!!!!!!");
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			if(ValidaString.isNullOrEmptyString(articulo.getArtiNombre()))
+    				addActionError(getText("validacion.requerido","artinombre","Nombre"));
+    			if(categoria==null||categoria.getCateId()<=0)
+    				addActionError(getText("validacion.requerido","cateid","Categoria"));
+    			if(ValidaString.isNullOrEmptyString(articulo.getArtiReferencia()))
+    				addActionError(getText("validacion.requerido","artireferencia","Referencia"));
+    			if(ValidaString.isNullOrEmptyString(articulo.getArtiEstado()))
+    				addActionError(getText("validacion.requerido","artiestado","Estado"));
+    			if(!hasActionErrors()){
+    				articulo.setCategoria(gestionFacadeNIIF.findCategoriaById(categoria.getCateId()));
+    				articulo.setDatosAud(this.getDatosAud());
+    				ValidaString.imprimirObject(articulo);
+    				gestionFacadeNIIF.persistArticulo(articulo);
+    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				addActionMessage(getText("accion.satisfactoria"));
+    			}else
+    				listCategoria = gestionFacadeNIIF.findAllCategoriasActivas();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			ordenCompra = gestionFacadeNIIF.findOrdencompraById(getIdLong());
+    			categoria = gestionFacadeNIIF.findCategoriaById(articulo.getCategoria().getCateId());
+    			listCategoria = gestionFacadeNIIF.findAllCategoriasActivas();
+    		}
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>niifAction>>>>ordenCompraMethod>>>>estado entrada-->>"+estado);
+    	return Action.SUCCESS;
+	}
 	
 	public niifAction(IGestionFacadeNIIF gestionFacadeNIIF) {
 		this.gestionFacadeNIIF = gestionFacadeNIIF;

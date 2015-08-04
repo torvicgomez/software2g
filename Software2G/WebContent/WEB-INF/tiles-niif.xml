@@ -20,4 +20,8 @@
 		<put-attribute name="body" value="/niif/articulo.jsp" />
 	</definition>
 	
+	<definition name="niif.ordencompra" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/niif/ordenCompra.jsp" />
+	</definition>
+	
 </tiles-definitions>

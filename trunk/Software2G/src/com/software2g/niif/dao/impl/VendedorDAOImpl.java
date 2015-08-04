@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class VendedorDAOImpl implements IVendedorDao {
-    @PersistenceContext
+	@PersistenceContext(unitName="entityManagerFactoryPostgres")
     private EntityManager em;
 
 	public VendedorDAOImpl() {

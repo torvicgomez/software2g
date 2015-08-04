@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class DetalleCompraDAOImpl implements IDetalleCompraDao {
-    @PersistenceContext
+	@PersistenceContext(unitName="entityManagerFactoryPostgres")
     private EntityManager em;
 
 	public DetalleCompraDAOImpl() {

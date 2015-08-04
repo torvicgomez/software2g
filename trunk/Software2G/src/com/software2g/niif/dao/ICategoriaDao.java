@@ -27,6 +27,7 @@ public interface ICategoriaDao {
 	 * Return all persistent instances of the <code>Categoria</code> entity.
 	 */
 	public List<Categoria> findAllCategorias();
+	public List<Categoria> findAllCategoriasActivas();
 	/**
 	 * Make the given instance managed and persistent.
 	 */

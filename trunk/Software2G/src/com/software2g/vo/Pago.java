@@ -16,7 +16,7 @@ public class Pago implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="PAGOS_PAGOID_GENERATOR", sequenceName="NIIF.SEQ_PAGO_ID")
+	@SequenceGenerator(name="PAGOS_PAGOID_GENERATOR", sequenceName="NIIF.SEQ_PAGO_ID", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PAGOS_PAGOID_GENERATOR")
 	@Column(name="pago_id")
 	private long pagoId;

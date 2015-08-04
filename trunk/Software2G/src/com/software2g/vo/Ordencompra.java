@@ -15,7 +15,7 @@ public class Ordencompra implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="ORDENCOMPRA_ORCOID_GENERATOR", sequenceName="NIIF.SEQ_ORCO_ID")
+	@SequenceGenerator(name="ORDENCOMPRA_ORCOID_GENERATOR", sequenceName="NIIF.SEQ_ORCO_ID", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ORDENCOMPRA_ORCOID_GENERATOR")
 	@Column(name="orco_id")
 	private long orcoId;

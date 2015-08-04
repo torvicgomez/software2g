@@ -115,6 +115,7 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistArticulo(Articulo articulo) throws Exception {
 		try {
 			getArticuloDao().persistArticulo(articulo);
@@ -157,6 +158,15 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 		}
 	}
 
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Categoria> findAllCategoriasActivas() throws Exception {
+		try {
+			return getCategoriaDao().findAllCategoriasActivas();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllCategoriasActivas failed: " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

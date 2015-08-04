@@ -48,6 +48,7 @@ public interface IGestionFacadeNIIF {
 	 * Return all persistent instances of the <code>Categoria</code> entity.
 	 */
 	public List<Categoria> findAllCategorias() throws Exception;
+	public List<Categoria> findAllCategoriasActivas() throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */

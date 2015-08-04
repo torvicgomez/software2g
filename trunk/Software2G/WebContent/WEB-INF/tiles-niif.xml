@@ -16,4 +16,8 @@
 		<put-attribute name="body" value="/niif/categoriaArticulo.jsp" />
 	</definition>
 	
+	<definition name="niif.articulo" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/niif/articulo.jsp" />
+	</definition>
+	
 </tiles-definitions>

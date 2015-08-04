@@ -1,13 +1,13 @@
-package com.software2g.agenda.dao;
+package com.software2g.niif.dao;
 
 import java.util.List;
 
-import com.software2g.vo.Agenda;
+import com.software2g.vo.Ordencompra;
 
 /**
- * The DAO interface for the Agenda entity.
+ * The DAO interface for the Ordencompra entity.
  */
-public interface IAgendaDao  {
+public interface IOrdenCompraDao {
 	/**
 	 * Return the persistent entities returned from a named query.
 	 */
@@ -22,19 +22,17 @@ public interface IAgendaDao  {
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
-	public Agenda findAgendaById(long id);
+	public Ordencompra findOrdencompraById(long id);
 	/**
-	 * Return all persistent instances of the <code>Agenda</code> entity.
+	 * Return all persistent instances of the <code>Ordencompra</code> entity.
 	 */
-	public List<Agenda> findAllAgendas();
+	public List<Ordencompra> findAllOrdencompras();
 	/**
 	 * Make the given instance managed and persistent.
 	 */
-	public void persistAgenda(Agenda agenda);
-	public long persistAgendaId(Agenda agenda);
+	public void persistOrdencompra(Ordencompra ordencompra);
 	/**
 	 * Remove the given persistent instance.
 	 */
-	public void removeAgenda(Agenda agenda);
-	public Agenda findIdAgenda(String background);
+	public void removeOrdencompra(Ordencompra ordencompra);
 }

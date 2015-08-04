@@ -1,13 +1,13 @@
-package com.software2g.agenda.dao;
+package com.software2g.niif.dao;
 
 import java.util.List;
 
-import com.software2g.vo.Agenda;
+import com.software2g.vo.Articulo;
 
 /**
- * The DAO interface for the Agenda entity.
+ * The DAO interface for the Articulo entity.
  */
-public interface IAgendaDao  {
+public interface IArticuloDao {
 	/**
 	 * Return the persistent entities returned from a named query.
 	 */
@@ -22,19 +22,17 @@ public interface IAgendaDao  {
 	 * Find an entity by its id (primary key).
 	 * @return The found entity instance or null if the entity does not exist.
 	 */
-	public Agenda findAgendaById(long id);
+	public Articulo findArticuloById(long id);
 	/**
-	 * Return all persistent instances of the <code>Agenda</code> entity.
+	 * Return all persistent instances of the <code>Articulo</code> entity.
 	 */
-	public List<Agenda> findAllAgendas();
+	public List<Articulo> findAllArticulos();
 	/**
 	 * Make the given instance managed and persistent.
 	 */
-	public void persistAgenda(Agenda agenda);
-	public long persistAgendaId(Agenda agenda);
+	public void persistArticulo(Articulo articulo);
 	/**
 	 * Remove the given persistent instance.
 	 */
-	public void removeAgenda(Agenda agenda);
-	public Agenda findIdAgenda(String background);
+	public void removeArticulo(Articulo articulo);
 }

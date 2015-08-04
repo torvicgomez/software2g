@@ -44,12 +44,12 @@ public class Detallecompra implements Serializable {
 
 	//bi-directional many-to-one association to Articulo
 	@ManyToOne
-	@JoinColumn(name="arti_id")
+	@JoinColumn(name="arti_id", insertable=false, updatable=false)
 	private Articulo articulo;
 
 	//bi-directional many-to-one association to Ordencompra
 	@ManyToOne
-	@JoinColumn(name="orco_id")
+	@JoinColumn(name="orco_id", insertable=false, updatable=false)
 	private Ordencompra ordencompra;
 
 	public Detallecompra() {

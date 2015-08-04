@@ -160,6 +160,7 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistCategoria(Categoria categoria) throws Exception {
 		try {
 			getCategoriaDao().persistCategoria(categoria);

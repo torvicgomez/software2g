@@ -10,12 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 
+import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import com.software2g.niif.facade.IGestionFacadeNIIF;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
+import com.software2g.vo.Categoria;
 import com.software2g.vo.Usuario;
+import com.software2g.vo.UtilGenerico;
 
 public class niifAction extends ActionSupport implements ServletRequestAware,ServletResponseAware {
 	private static final long serialVersionUID = 1L;
@@ -26,6 +30,19 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	private String funcPosicionado;
 	private String bandEstadoFunc;
 	private String id;
+	
+	
+	private Categoria categoria;
+	private List<Categoria> listCategoria;
+	
+	public Categoria getCategoria() {return categoria;}
+	public void setCategoria(Categoria categoria) {this.categoria = categoria;}
+	public List<Categoria> getListCategoria() {return listCategoria;}
+	public void setListCategoria(List<Categoria> listCategoria) {this.listCategoria = listCategoria;}
+	
+
+	public List<UtilGenerico> getListEstado() {return ConstantesAplicativo.listEstadoSN;}
+	
 	
 	private void getFuncionPosicionado(){
 		if(request.getSession().getAttribute("funcPosicionado")==null){
@@ -38,6 +55,36 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 		System.out.println("######>>>>>>>funcPosicionado>>>>"+funcPosicionado);
 	}
 	
+	@SkipValidation
+	public String categoriaArticuloMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>niifAction>>>>categoriaArticuloMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listCategoria = gestionFacadeNIIF.findAllCategorias();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			if(ValidaString.isNullOrEmptyString(categoria.getCateNombre()))
+    				addActionError(getText("validacion.requerido","catenombre","Nombre"));
+    			if(ValidaString.isNullOrEmptyString(categoria.getCateDescripcion()))
+    				addActionError(getText("validacion.requerido","cateDescripcion","Descripcion"));
+    			if(!hasActionErrors()){
+    				categoria.setDatosAud(this.getDatosAud());
+    				ValidaString.imprimirObject(categoria);
+    				gestionFacadeNIIF.persistCategoria(categoria);
+    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				addActionMessage(getText("accion.satisfactoria"));
+    			}
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			categoria = gestionFacadeNIIF.findCategoriaById(getIdLong());
+    		}
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>niifAction>>>>categoriaArticuloMethod>>>>estado entrada-->>"+estado);
+    	return Action.SUCCESS;
+	}
 	
 	public niifAction(IGestionFacadeNIIF gestionFacadeNIIF) {
 		this.gestionFacadeNIIF = gestionFacadeNIIF;

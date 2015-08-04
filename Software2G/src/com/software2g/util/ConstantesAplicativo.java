@@ -117,6 +117,9 @@ public final class ConstantesAplicativo {
 	public static final List<UtilGenerico> listEstado = new ArrayList<UtilGenerico>(
 			Arrays.asList(new UtilGenerico("ACTIVO", "Activo"),new UtilGenerico("INACTIVO", "Inactivo")));
 	
+	public static final List<UtilGenerico> listEstadoSN = new ArrayList<UtilGenerico>(
+			Arrays.asList(new UtilGenerico("S", "Activo"),new UtilGenerico("N", "Inactivo")));
+	
 	public static final List<UtilGenerico> listRespObligatoria = new ArrayList<UtilGenerico>(
 			Arrays.asList(new UtilGenerico("SI", "Si"),new UtilGenerico("NO", "No")));
 	

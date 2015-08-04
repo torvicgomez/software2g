@@ -8,4 +8,5 @@
     <include file="struts-contable.xml"></include>
     <include file="struts-calendario.xml"></include>
     <include file="struts-historiaclinica.xml"></include>
+    <include file="struts-niif.xml"></include>
 </struts>

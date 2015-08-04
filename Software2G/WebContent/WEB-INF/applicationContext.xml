@@ -88,6 +88,7 @@
  				<value>/WEB-INF/tiles-adminPortal.xml</value>   
  				<value>/WEB-INF/tiles-calendario.xml</value>
  				<value>/WEB-INF/tiles-historiaclinica.xml</value>
+ 				<value>/WEB-INF/tiles-niif.xml</value>
  			</list> 
  		</property> 
  	</bean>

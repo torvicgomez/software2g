@@ -31,7 +31,12 @@ var zNodes = [
 	
 	{id:4000, pId:0, name:"Personal", open:true},
 	{id:4001, pId:4000, name:"Administración Personal", file:"listPersonal.action?url=Personal::>Administración Personal"},
-	{id:4002, pId:4000, name:"Cambiar Contraseña", file:"cambiarPassword.action?url=Personal::>Cambiar Contraseña"}
+	{id:4002, pId:4000, name:"Cambiar Contraseña", file:"cambiarPassword.action?url=Personal::>Cambiar Contraseña"},
+	
+	{id:5000, pId:0, name:"NIIF", open:true}, 
+	{id:5001, pId:5000, name:"Categoria Articulo", file:"categoriaart.action?estado=all&funcPosicionado=NIIF::>Categoria Articulos"},
+	{id:5002, pId:5000, name:"Articulos", file:"cambiarPassword.action?url=Personal::>Cambiar Contraseña"}
+	
 	
 //	{id:5000, pId:0, name:"Cartera", open:true},
 //	{id:5001, pId:5000, name:"Parametricas", open:true, file:"inicioParametrica.action?url=Cartera::>Parametricas"},

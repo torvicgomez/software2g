@@ -3,6 +3,8 @@ package com.software2g.vo;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.software2g.util.ConstantesAplicativo;
+
 import java.util.List;
 
 
@@ -16,7 +18,7 @@ public class Articulo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="ARTICULO_ARTIID_GENERATOR", sequenceName="NIIF.SEQ_ARTI_ID")
+	@SequenceGenerator(name="ARTICULO_ARTIID_GENERATOR", sequenceName="NIIF.SEQ_ARTI_ID", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ARTICULO_ARTIID_GENERATOR")
 	@Column(name="arti_id")
 	private long artiId;
@@ -58,10 +60,10 @@ public class Articulo implements Serializable {
 	private String artiRegistradopor;
 
 	@Column(name="arti_reqesptecnica")
-	private String artiReqesptecnica;
+	private String artiReqesptecnica = ConstantesAplicativo.constanteCheckNo;
 
 	@Column(name="arti_reqformula")
-	private String artiReqformula;
+	private String artiReqformula = ConstantesAplicativo.constanteCheckNo;
 
 	@Column(name="arti_stock")
 	private int artiStock;

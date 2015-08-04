@@ -15,7 +15,7 @@ public class Venta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="VENTA_VENTID_GENERATOR", sequenceName="NIIF.SEQ_VENT_ID")
+	@SequenceGenerator(name="VENTA_VENTID_GENERATOR", sequenceName="NIIF.SEQ_VENT_ID", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="VENTA_VENTID_GENERATOR")
 	@Column(name="vent_id")
 	private long ventId;

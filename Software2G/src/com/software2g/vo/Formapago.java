@@ -15,7 +15,7 @@ public class Formapago implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="FORMAPAGO_FOPAID_GENERATOR", sequenceName="NIIF.SEQ_FOPA_ID")
+	@SequenceGenerator(name="FORMAPAGO_FOPAID_GENERATOR", sequenceName="NIIF.SEQ_FOPA_ID", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="FORMAPAGO_FOPAID_GENERATOR")
 	@Column(name="fopa_id")
 	private long fopaId;

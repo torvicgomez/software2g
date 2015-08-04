@@ -16,7 +16,7 @@ public class Vendedor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="VENDEDOR_VENDID_GENERATOR", sequenceName="NIIF.SEQ_VEND_ID")
+	@SequenceGenerator(name="VENDEDOR_VENDID_GENERATOR", sequenceName="NIIF.SEQ_VEND_ID", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="VENDEDOR_VENDID_GENERATOR")
 	@Column(name="vend_id")
 	private long vendId;

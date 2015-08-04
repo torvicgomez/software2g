@@ -16,7 +16,7 @@ public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="CATEGORIA_CATEID_GENERATOR", sequenceName="NIIF.SEQ_CATE_ID")
+	@SequenceGenerator(name="CATEGORIA_CATEID_GENERATOR", sequenceName="NIIF.SEQ_CATE_ID", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CATEGORIA_CATEID_GENERATOR")
 	@Column(name="cate_id")
 	private long cateId;

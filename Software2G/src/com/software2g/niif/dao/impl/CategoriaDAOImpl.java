@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.software2g.util.ConstantesAplicativo;
 import com.software2g.vo.Categoria;
 import com.software2g.niif.dao.ICategoriaDao;
 
@@ -76,6 +77,23 @@ public class CategoriaDAOImpl implements ICategoriaDao {
             }
         }
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Categoria> findAllCategoriasActivas() {
+        try {
+    		String jpqlString = "select categoria from " + Categoria.class.getSimpleName() + " categoria " +
+    				" where categoria.cateEstado=:estado";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("estado", ConstantesAplicativo.constanteCheckSi);
+            return query.getResultList();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

@@ -54,5 +54,9 @@
         	<result name="success" type="tiles">niif.categoriaArticulo</result>
         </action>
         
+        <action name="articulo" method="articuloMethod" class="niifAction">
+        	<result name="success" type="tiles">niif.articulo</result>
+        	<result name="input" type="tiles">niif.articulo</result>
+        </action>
     </package>
 </struts>

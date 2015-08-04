@@ -76,7 +76,9 @@
     </bean>
     <bean class="com.software2g.util.action.FileUploadAction" id="FileUploadAction" scope="prototype"/>
     
-    
+    <bean class="com.software2g.niif.action.niifAction" id="niifAction" scope="prototype">
+    	<constructor-arg ref="gestionFacadeNIIF"/>
+    </bean>
 	 <!--  CONFIGURACION TILES -->
  	<bean class="com.software2g.web.tiles2.SpringTilesConfigurer" id="tilesConfigurer"> 
  		<property name="definitions"> 
@@ -195,4 +197,20 @@
         <property name="tipoServicioDao"><bean class="com.software2g.historia_clinica.dao.impl.TipoServicioDAOImpl"/></property>
         <property name="examenEspecialidadDao"><bean class="com.software2g.historia_clinica.dao.impl.ExamenEspecialidadDAOImpl"/></property>
     </bean>
+
+    <bean class="com.software2g.niif.facade.impl.GestionFacadeNIIF" id="gestionFacadeNIIF">
+        <property name="articuloDao"><bean class="com.software2g.niif.dao.impl.ArticuloDAOImpl"/></property>
+        <property name="categoriaDao"><bean class="com.software2g.niif.dao.impl.CategoriaDAOImpl"/></property>
+        <property name="clienteDao"><bean class="com.software2g.niif.dao.impl.ClienteDAOImpl"/></property>
+        <property name="condicionPagoDao"><bean class="com.software2g.niif.dao.impl.CondicionPagoDAOImpl"/></property>
+        <property name="detalleCompraDao"><bean class="com.software2g.niif.dao.impl.DetalleCompraDAOImpl"/></property>
+        <property name="detalleVentaDao"><bean class="com.software2g.niif.dao.impl.DetalleVentaDAOImpl"/></property>
+        <property name="formaPagoDao"><bean class="com.software2g.niif.dao.impl.FormaPagoDAOImpl"/></property>
+        <property name="ordenCompraDao"><bean class="com.software2g.niif.dao.impl.OrdenCompraDAOImpl"/></property>
+        <property name="pagosDao"><bean class="com.software2g.niif.dao.impl.PagosDAOImpl"/></property>
+        <property name="proveedorDao"><bean class="com.software2g.niif.dao.impl.ProveedorDAOImpl"/></property>
+        <property name="vendedorDao"><bean class="com.software2g.niif.dao.impl.VendedorDAOImpl"/></property>
+        <property name="ventaDao"><bean class="com.software2g.niif.dao.impl.VentaDAOImpl"/></property>
+    </bean>
+    
 </beans>

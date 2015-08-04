@@ -56,7 +56,10 @@
         
         <action name="articulo" method="articuloMethod" class="niifAction">
         	<result name="success" type="tiles">niif.articulo</result>
-        	<result name="input" type="tiles">niif.articulo</result>
+        </action>
+        
+        <action name="ordencompra" method="ordenCompraMethod" class="niifAction">
+        	<result name="success" type="tiles">niif.ordencompra</result>
         </action>
     </package>
 </struts>

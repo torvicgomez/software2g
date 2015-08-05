@@ -2119,3 +2119,8 @@ CREATE SEQUENCE niif.seq_pago_id
   CACHE 1;
 ALTER TABLE niif.seq_pago_id OWNER TO postgres;
 
+----------------
+-- 05-08-2015 --
+----------------
+ALTER TABLE niif.ordencompra ADD CONSTRAINT ckc_estado_comp CHECK ((orco_estado::text = ANY (ARRAY['PENDIENTE'::character varying::text, 'PAGADA'::character varying::text])) AND orco_estado::text = upper(orco_estado::text)) ;
+

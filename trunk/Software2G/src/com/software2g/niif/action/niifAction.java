@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -54,7 +55,7 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	private List<Detallecompra> listDetalleCompra;
 	private Detallecompra detalleCompra;
 	private InputStream strDatosArticulo;
-	
+	private InputStream strDatosDetalleCompra;
 	
 	public Categoria getCategoria() {return categoria;}
 	public void setCategoria(Categoria categoria) {this.categoria = categoria;}
@@ -178,6 +179,8 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     		System.out.println("######>>>>>>>niifAction>>>>ordenCompraMethod>>>>estado entrada-->>"+estado);
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
     			listOrdenCompra = gestionFacadeNIIF.findAllOrdencompras();
+    			request.getSession().removeAttribute("listDetalleCompra");
+    			request.getSession().removeAttribute("detalleCompra");
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAdd)){
     			//listCategoria = gestionFacadeNIIF.findAllCategoriasActivas();
     			System.out.println("Construccion!!!!!!");
@@ -222,25 +225,111 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 					"	<tr> " +
 					"		<td class=\"leftLabel\">Artículo</td> " +
 					"		<td>" + articulo.getArtiNombre() + "</td> " +
-					"	</tr> " +
-					"	<tr> " +
 					"		<td class=\"leftLabel\">Referencia</td> " +
 					"		<td>" + articulo.getArtiReferencia() + "</td> " +
 					"	</tr> " +
 					"	<tr> " +
 					"		<td class=\"leftLabel\">Categoria</td> " +
 					"		<td>" + articulo.getCategoria().getCateNombre() + "</td> " +
-					"	</tr> " +
-					"	<tr> " +
 					"		<td class=\"leftLabel\">Marca</td> " +
 					"		<td>" + articulo.getArtiMarca() + "</td> " +
 					"	</tr> " +
+					"	<tr> " +
+					"		<td class=\"leftLabel\">Cantidad</td> " +
+					"		<td><input type=\"text\" id=\"cantidadArti\" class=\"inputs\" onKeyPress=\"return soloNumeros(event)\" onpaste=\"return false\"/></td> " +
+					"		<td class=\"leftLabel\">Valor Unitario</td> " +
+					"		<td><input type=\"text\" id=\"valorUniArti\" class=\"inputs\" onKeyPress=\"return soloNumeros(event)\" onpaste=\"return false\"/></td> " +
+					"	</tr> " +
 					"</table>";
+			detalleCompra = new Detallecompra();
+			detalleCompra.setArticulo(articulo);
+			request.getSession().setAttribute("detalleCompra", detalleCompra);
 			strDatosArticulo = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return strDatosArticulo;
+	}
+	
+	public InputStream getStrDatosDetalleCompra() {
+		try{
+			boolean bandAdd = true;
+			String html = "";
+			int posicion = Integer.parseInt(request.getParameter("posicion"));
+			int cantidadArti = request.getParameter("cantidadArti")!=null?Integer.parseInt(request.getParameter("cantidadArti")):0;
+			double valorUniArti = request.getParameter("valorUniArti")!=null?Double.parseDouble(request.getParameter("valorUniArti")):0;
+			
+			listDetalleCompra = (List<Detallecompra>)request.getSession().getAttribute("listDetalleCompra");
+			if(listDetalleCompra==null)
+				listDetalleCompra = new ArrayList<Detallecompra>();
+			if(posicion<0){
+				if(cantidadArti>0&&valorUniArti>0){
+					detalleCompra = (Detallecompra) request.getSession().getAttribute("detalleCompra");
+					detalleCompra.setDecoCantidad(cantidadArti);
+					detalleCompra.setDecoValorunitario(valorUniArti);
+					//ValidaString.imprimirObject(detalleCompra);
+					//ValidaString.imprimirObject(detalleCompra.getArticulo());
+					listDetalleCompra.add(detalleCompra);
+				}else
+					bandAdd = false;
+			}else
+				listDetalleCompra.remove(posicion);
+			html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">";
+			html += !bandAdd?"<tr><td colspan=\"6\"><font size=\"2\" color=\"#FF0000\"><strong>Cantidad y Valor Unitario son requeridos.[E001]</strong></font></td></tr>":"";
+			if(listDetalleCompra!=null&&listDetalleCompra.size()>0){
+				html +=	" <tr> " +
+						" 	<td class=\"leftLabel\">#</td> " +
+						" 	<td class=\"leftLabel\">Referencia</td> " +
+						"	<td class=\"leftLabel\">Artículo</td> " +
+						"	<td class=\"leftLabel\">Cantidad</td> " +
+						" 	<td class=\"leftLabel\">Vr Unitario</td> " +
+						"	<td class=\"leftLabel\">Total</td>" +
+						" </tr> ";
+				int cont = 0;
+				double total = 0;
+				for(Detallecompra elem:listDetalleCompra){
+					double totalArti = elem.getDecoCantidad()*elem.getDecoValorunitario();
+					html +=	"	<tr> " +
+							"		<td align=\"center\"> " +
+							" 			<a onclick=\"agregarArticulo('" + cont + "');\">Remover</a> " +
+							"		</td>" +
+							"		<td>" + elem.getArticulo().getArtiReferencia() + "</td> " +
+							"		<td>" + elem.getArticulo().getArtiNombre() + "</td> " +
+							"		<td align=\"right\">" + elem.getDecoCantidad() + "</td> " +
+							"		<td align=\"right\">" + elem.getDecoValorunitario() + "</td> " +
+							"		<td align=\"right\">" + totalArti + "</td> " +
+							"	</tr> ";
+					total += totalArti;
+				}
+				html +=	" <tr> " +
+						" 	<td colspan=\"4\"></td> " +
+						"	<td align=\"right\" class=\"leftLabel\">Total</td> " +
+						"	<td align=\"right\"> " + total + " </td>" +
+						" </tr> ";
+				html +=	" <tr> " +
+						" 	<td colspan=\"4\"></td> " +
+						"	<td align=\"right\" class=\"leftLabel\">Total Descuento</td> " +
+						"	<td align=\"right\"><input type=\"text\"/></td>" +
+						" </tr> ";
+				html +=	" <tr> " +
+						" 	<td colspan=\"4\"></td> " +
+						"	<td align=\"right\" class=\"leftLabel\">Total Iva</td> " +
+						"	<td align=\"right\"><input type=\"text\"/></td>" +
+						" </tr> ";
+				html +=	" <tr> " +
+						" 	<td colspan=\"4\"></td> " +
+						"	<td align=\"right\" class=\"leftLabel\">Total a Pagar</td> " +
+						"	<td align=\"right\"><input type=\"text\"/></td>" +
+						" </tr> ";
+			}
+			html +=	"</table>";
+			request.getSession().setAttribute("listDetalleCompra",listDetalleCompra);
+			request.getSession().removeAttribute("detalleCompra");
+			strDatosDetalleCompra = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return strDatosDetalleCompra;
 	}
 	
 	

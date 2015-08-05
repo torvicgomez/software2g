@@ -62,6 +62,14 @@
         	<result name="success" type="tiles">niif.ordencompra</result>
         </action>
         
+        <action name="condicionpago" method="condicionPagoMethod" class="niifAction">
+        	<result name="success" type="tiles">niif.condicionPago</result>
+        </action>
+        
+        <action name="formapago" method="formaPagoMethod" class="niifAction">
+        	<result name="success" type="tiles">niif.Formapago</result>
+        </action>
+        
         <action name="cargarDatosArticulo" class="niifAction">
 			<result name="success" type="stream">
 				<param name="contentType">text/html</param>

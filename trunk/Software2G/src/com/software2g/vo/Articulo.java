@@ -81,6 +81,9 @@ public class Articulo implements Serializable {
 	@OneToMany(mappedBy="articulo")
 	private List<Detalleventa> detalleventas;
 
+	@Transient
+	private double totalArticulo;
+	
 	public Articulo() {
 	}
 
@@ -243,4 +246,13 @@ public class Articulo implements Serializable {
 			this.artiHoracambio=data.get(2);
 		}
 	}
+
+	public double getTotalArticulo() {
+		return totalArticulo;
+	}
+
+	public void setTotalArticulo(double totalArticulo) {
+		this.totalArticulo = totalArticulo;
+	}
+	
 }

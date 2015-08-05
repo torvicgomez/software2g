@@ -27,6 +27,7 @@ public interface IArticuloDao {
 	 * Return all persistent instances of the <code>Articulo</code> entity.
 	 */
 	public List<Articulo> findAllArticulos();
+	public List<Articulo> findAllArticulos(String datoFind);
 	/**
 	 * Make the given instance managed and persistent.
 	 */

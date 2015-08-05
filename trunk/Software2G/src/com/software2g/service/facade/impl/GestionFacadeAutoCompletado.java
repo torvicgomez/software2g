@@ -13,10 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.software2g.historia_clinica.dao.ICodigoEnfermedadDao;
 import com.software2g.historia_clinica.dao.IPreguntaDao;
+import com.software2g.niif.dao.IArticuloDao;
 import com.software2g.portal.dao.IPersonaDao;
 import com.software2g.service.facade.IGestionFacadeAutoCompletado;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.paintService.facade.IGestionFacadeExamenesConsulta;
+import com.software2g.vo.Articulo;
 import com.software2g.vo.Codigoenfermedade;
 import com.software2g.vo.Persona;
 
@@ -31,6 +33,8 @@ public class GestionFacadeAutoCompletado implements IGestionFacadeAutoCompletado
 	IPreguntaDao preguntaDao;
 	@Autowired
 	ICodigoEnfermedadDao codigoEnfermedadDao;
+	@Autowired
+	IArticuloDao articuloDao;
 	
 	public IPersonaDao getPersonaDao() {return personaDao;}
 	public void setPersonaDao(IPersonaDao personaDao) {this.personaDao = personaDao;}
@@ -38,6 +42,8 @@ public class GestionFacadeAutoCompletado implements IGestionFacadeAutoCompletado
 	public void setPreguntaDao(IPreguntaDao preguntaDao) {this.preguntaDao = preguntaDao;}
 	public ICodigoEnfermedadDao getCodigoEnfermedadDao() {return codigoEnfermedadDao;}
 	public void setCodigoEnfermedadDao(ICodigoEnfermedadDao codigoEnfermedadDao) {this.codigoEnfermedadDao = codigoEnfermedadDao;}
+	public IArticuloDao getArticuloDao() {return articuloDao;}
+	public void setArticuloDao(IArticuloDao articuloDao) {this.articuloDao = articuloDao;}
 	
 	public GestionFacadeAutoCompletado() {
 		super();
@@ -104,6 +110,28 @@ public class GestionFacadeAutoCompletado implements IGestionFacadeAutoCompletado
 				for(Codigoenfermedade elem:listCodigoEnfermedad){
 					list.add("["+elem.getCoenCodigo()+"] "+elem.getCoenNombre() 
 							+ConstantesAplicativo.constanteSplit+"onClick=\"javascript:cargarDatosDignostico(\'"+elem.getCoenId()+"\',\'"+diagnostico+"\')\"");
+				}
+			}
+			return list;
+		} catch (Exception e) {
+			System.out.println("ERROR ::> GestionFacadeAutoCompletado ::> findAllCodigoEnfermedadEspecialidad ::> " + e.getMessage());
+			return null;
+		}
+	}
+	
+	/**
+	 * Metodo que consulta los articulos existentes
+	 * @return List<Object[]>
+	 * @throws Exception
+	 */
+	public List<String> findAllArticulo(String datoFind)  throws Exception {
+		try {
+			List<Articulo> listArticulo = getArticuloDao().findAllArticulos(datoFind);
+			List<String> list = new ArrayList<String>();
+			if(listArticulo!=null&&listArticulo.size()>0){
+				for(Articulo elem:listArticulo){
+					list.add("["+elem.getArtiReferencia()+"] "+elem.getArtiNombre() 
+							+ConstantesAplicativo.constanteSplit+"onClick=\"javascript:cargarDatosArticulo(\'"+elem.getArtiId()+"\')\"");
 				}
 			}
 			return list;

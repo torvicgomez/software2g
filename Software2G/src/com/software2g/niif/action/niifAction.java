@@ -27,6 +27,8 @@ import com.software2g.vo.Ordencompra;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Usuario;
 import com.software2g.vo.UtilGenerico;
+import com.software2g.vo.Condicionpago;
+import com.software2g.vo.Formapago;
 
 public class niifAction extends ActionSupport implements ServletRequestAware,ServletResponseAware {
 	private static final long serialVersionUID = 1L;
@@ -45,6 +47,10 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	private List<Articulo> listArticulo;
 	private Ordencompra ordenCompra;
 	private List<Ordencompra> listOrdenCompra;
+	private Condicionpago condicionpago;
+	private List<Condicionpago> listCondicionpago;
+	private Formapago formapago;
+	private List<Formapago> listFormapago;
 	private List<Detallecompra> listDetalleCompra;
 	private Detallecompra detalleCompra;
 	private InputStream strDatosArticulo;
@@ -62,6 +68,14 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	public void setOrdenCompra(Ordencompra ordenCompra) {this.ordenCompra = ordenCompra;}
 	public List<Ordencompra> getListOrdenCompra() {return listOrdenCompra;}
 	public void setListOrdenCompra(List<Ordencompra> listOrdenCompra) {this.listOrdenCompra = listOrdenCompra;}
+	public Condicionpago getCondicionpago() {return condicionpago;}
+	public void setCondicionpago(Condicionpago condicionpago) {this.condicionpago = condicionpago;}
+	public List<Condicionpago> getListCondicionpago() {return listCondicionpago;}
+	public void setListCondicionpago(List<Condicionpago> listCondicionpago) {this.listCondicionpago = listCondicionpago;}
+	public Formapago getFormapago() {return formapago;}
+	public void setFormapago(Formapago formapago) {this.formapago = formapago;}
+	public List<Formapago> getListFormapago() {return listFormapago;}
+	public void setListFormapago(List<Formapago> listFormapago) {this.listFormapago = listFormapago;}
 	public List<Detallecompra> getListDetalleCompra() {return listDetalleCompra;}
 	public void setListDetalleCompra(List<Detallecompra> listDetalleCompra) {this.listDetalleCompra = listDetalleCompra;}
 	public Detallecompra getDetalleCompra() {return detalleCompra;}
@@ -229,6 +243,68 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 		return strDatosArticulo;
 	}
 	
+	
+	@SkipValidation
+	public String condicionPagoMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>niifAction>>>>condicionPagoMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listCondicionpago = gestionFacadeNIIF.findAllCondicionpagos();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			if(ValidaString.isNullOrEmptyString(condicionpago.getCopaCondicionpago()))
+    				addActionError(getText("validacion.requerido","copaCondicionPago","Condicion Pago"));
+    			if(ValidaString.isNullOrEmptyString(condicionpago.getCopaDescripcion()))
+    				addActionError(getText("validacion.requerido","copaDescripcion","Descripcion"));
+    			if(!hasActionErrors()){
+    				condicionpago.setDatosAud(this.getDatosAud());
+    				ValidaString.imprimirObject(condicionpago);
+    				gestionFacadeNIIF.persistCondicionpago(condicionpago);
+    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				addActionMessage(getText("accion.satisfactoria"));
+    			}
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			condicionpago = gestionFacadeNIIF.findCondicionpagoById(getIdLong());
+    		}
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>niifAction>>>>condicionPagoMethod>>>>estado entrada-->>"+estado);
+    	return Action.SUCCESS;
+	}
+	
+	@SkipValidation
+	public String formaPagoMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>niifAction>>>>formaPagoMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listFormapago = gestionFacadeNIIF.findAllFormapagos();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			if(ValidaString.isNullOrEmptyString(formapago.getFopaFormapago()))
+    				addActionError(getText("validacion.requerido","fopaFormaPago","Forma Pago"));
+    			if(ValidaString.isNullOrEmptyString(formapago.getFopaDescripcion()))
+    				addActionError(getText("validacion.requerido","fopaDescripcion","Descripcion"));
+    			if(!hasActionErrors()){
+    				formapago.setDatosAud(this.getDatosAud());
+    				ValidaString.imprimirObject(formapago);
+    				gestionFacadeNIIF.persistFormapago(formapago);
+    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				addActionMessage(getText("accion.satisfactoria"));
+    			}
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			formapago = gestionFacadeNIIF.findFormapagoById(getIdLong());
+    		}
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>niifAction>>>>formaPagoMethod>>>>estado entrada-->>"+estado);
+    	return Action.SUCCESS;
+	}
 	
 	public niifAction(IGestionFacadeNIIF gestionFacadeNIIF) {
 		this.gestionFacadeNIIF = gestionFacadeNIIF;

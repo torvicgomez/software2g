@@ -71,6 +71,20 @@ Tareas
 50- Subir foto de paciente, profesional y de cualquier persona ---------------------------------
 51- Creacion parametrica para definir que tipos de examenes de especialidad aplican ------------
 
+------------------------------------------------------------------------------------------------
+Proyecto NIIF - Normas Internacionales de Informacion Finaciera
+01- Modelo de Datos ---------------------------------------------------------------------------- .::[O.K]::.
+02- Crecion esquema, tablas, secuencias -------------------------------------------------------- .::[O.K]::.
+03- Montaje proyecto java ---------------------------------------------------------------------- .::[O.K]::.
+04- Creacion funcionalidad categoria articulos ------------------------------------------------- .::[O.K]::.
+05- Creacion funcionalidad articulos ----------------------------------------------------------- .::[O.K]::.
+	05.1- Creación campos diferenciadores y que requieran formula o especificacion tecnica -----
+06- Creacion funcionalidad Provedores ----------------------------------------------------------	
+07- Creacion funcionalidad Orden de Compra -----------------------------------------------------
+08- Crear Funcionalidad Condicion de Pago ------------------------------------------------------
+09- Creacion Funcionalidd Forma de Pago --------------------------------------------------------
+
+
 Sugerencia
 * Tabla profesional salud ---------------------------------------------------------------------- .::[O.K]::.
 	adicionar Campo: - profesion  -------------------------------------------------------------- .::[O.K]::.
@@ -79,6 +93,7 @@ Sugerencia
 * Validar el color al momento de insertar y modificar el profesional. -------------------------- .::[O.K]::.					 
 
 Informacion
+** Link Inicio Software2g ::> http://localhost:8080/Software2G/inicio.action
 ** Link SVN Goolge ::> https://software2g.googlecode.com/svn
 ** Link Odontograma ::> http://jsfiddle.net/yamidvo/quvp3/4/
 ** Link Demo Odontograma ::> https://www.youtube.com/watch?v=qJjOGzKnz9Q    					 

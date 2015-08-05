@@ -46,6 +46,7 @@
         <property name="personaDao"><bean class="com.software2g.portal.dao.impl.PersonaDaoImpl"/></property>
         <property name="preguntaDao"><bean class="com.software2g.historia_clinica.dao.impl.PreguntaDAOImpl"/></property>
         <property name="codigoEnfermedadDao"><bean class="com.software2g.historia_clinica.dao.impl.CodigoEnfermedadDAOImpl"/></property>
+        <property name="articuloDao"><bean class="com.software2g.niif.dao.impl.ArticuloDAOImpl"/></property>
     </bean>
     
 </beans>

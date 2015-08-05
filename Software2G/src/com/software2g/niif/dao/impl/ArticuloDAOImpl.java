@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.software2g.vo.Articulo;
+import com.software2g.vo.Codigoenfermedade;
 import com.software2g.niif.dao.IArticuloDao;
 
 import org.springframework.stereotype.Repository;
@@ -76,6 +77,25 @@ public class ArticuloDAOImpl implements IArticuloDao {
             }
         }
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Articulo> findAllArticulos(String datoFind) {
+        try {
+    		String jpqlString = "select articulo from " + Articulo.class.getSimpleName() + " articulo" +
+    				" where ( upper(articulo.artiNombre) like :datoFind or articulo.artiReferencia like :datoFind ) " +
+    				" order by articulo.artiReferencia asc ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("datoFind", "%"+datoFind.toUpperCase().trim()+"%");
+            return query.getResultList();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

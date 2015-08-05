@@ -66,6 +66,7 @@ public final class ConstantesAplicativo {
 	
 	public static final String constanteTipoSearchAutoComplProf = "profesional";
 	public static final String constanteTipoSearchAutoComplDiag = "diagnostico";
+	public static final String constanteTipoSearchAutoArticulo = "articulo";
 	
 	public static final String constanteCrearFileJSEventosAll = "allEventos";
 	public static final String constanteCrearFileJSEventosxAgenda = "allEventosxAgenda";

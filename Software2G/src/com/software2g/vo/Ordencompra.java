@@ -47,6 +47,12 @@ public class Ordencompra implements Serializable {
 	@Column(name="orco_totalpagado")
 	private double orcoTotalpagado;
 
+	@Column(name="orco_totalcompra")
+	private double orcoTotalcompra;
+	
+	@Column(name="orco_totalapagar")
+	private double orcoTotalapagar;
+	
 	//bi-directional many-to-one association to Detallecompra
 	@OneToMany(mappedBy="ordencompra")
 	private List<Detallecompra> detallecompras;
@@ -174,4 +180,21 @@ public class Ordencompra implements Serializable {
 			this.orcoHoracambio=data.get(2);
 		}
 	}
+
+	public double getOrcoTotalcompra() {
+		return orcoTotalcompra;
+	}
+
+	public void setOrcoTotalcompra(double orcoTotalcompra) {
+		this.orcoTotalcompra = orcoTotalcompra;
+	}
+
+	public double getOrcoTotalapagar() {
+		return orcoTotalapagar;
+	}
+
+	public void setOrcoTotalapagar(double orcoTotalapagar) {
+		this.orcoTotalapagar = orcoTotalapagar;
+	}
+	
 }

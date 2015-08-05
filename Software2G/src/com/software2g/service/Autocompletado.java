@@ -37,6 +37,8 @@ public class Autocompletado extends HttpServlet {
             			list = gestionFacadeAutoCompletado.findAllPersonasProfesional(term);
             		else if (tipo!=null&&tipo.equals(ConstantesAplicativo.constanteTipoSearchAutoComplDiag))
             			list = gestionFacadeAutoCompletado.findAllCodigoEnfermedadEspecialidad(term, especialidad, diagnostico);
+            		else if (tipo!=null&&tipo.equals(ConstantesAplicativo.constanteTipoSearchAutoArticulo))
+            			list = gestionFacadeAutoCompletado.findAllArticulo(term);
             		else 
             			list = gestionFacadeAutoCompletado.findPersonaPortal(term);
                     

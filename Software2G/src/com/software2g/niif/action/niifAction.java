@@ -1,5 +1,8 @@
 package com.software2g.niif.action;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -19,7 +22,9 @@ import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Articulo;
 import com.software2g.vo.Categoria;
+import com.software2g.vo.Detallecompra;
 import com.software2g.vo.Ordencompra;
+import com.software2g.vo.Persona;
 import com.software2g.vo.Usuario;
 import com.software2g.vo.UtilGenerico;
 
@@ -40,6 +45,10 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	private List<Articulo> listArticulo;
 	private Ordencompra ordenCompra;
 	private List<Ordencompra> listOrdenCompra;
+	private List<Detallecompra> listDetalleCompra;
+	private Detallecompra detalleCompra;
+	private InputStream strDatosArticulo;
+	
 	
 	public Categoria getCategoria() {return categoria;}
 	public void setCategoria(Categoria categoria) {this.categoria = categoria;}
@@ -53,11 +62,15 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	public void setOrdenCompra(Ordencompra ordenCompra) {this.ordenCompra = ordenCompra;}
 	public List<Ordencompra> getListOrdenCompra() {return listOrdenCompra;}
 	public void setListOrdenCompra(List<Ordencompra> listOrdenCompra) {this.listOrdenCompra = listOrdenCompra;}
+	public List<Detallecompra> getListDetalleCompra() {return listDetalleCompra;}
+	public void setListDetalleCompra(List<Detallecompra> listDetalleCompra) {this.listDetalleCompra = listDetalleCompra;}
+	public Detallecompra getDetalleCompra() {return detalleCompra;}
+	public void setDetalleCompra(Detallecompra detalleCompra) {this.detalleCompra = detalleCompra;}
 	
 	
 	public List<UtilGenerico> getListEstado() {return ConstantesAplicativo.listEstadoSN;}
 	public List<UtilGenerico> getListEstadoArticulo() {return ConstantesAplicativo.listEstadoArticulo;}
-	
+	public List<UtilGenerico> getListEstadoOrdenCompra() {return ConstantesAplicativo.listEstadoOrdenCompra;}
 	
 	
 	private void getFuncionPosicionado(){
@@ -184,6 +197,38 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     	System.out.println("######>>>>>>>niifAction>>>>ordenCompraMethod>>>>estado entrada-->>"+estado);
     	return Action.SUCCESS;
 	}
+
+	public InputStream getStrDatosArticulo() {
+		try{
+			String html = "";
+			long idArticulo = Long.parseLong(request.getParameter("idArticulo"));
+			Articulo articulo = gestionFacadeNIIF.findArticuloById(idArticulo);
+			html = "<s:textfield name=\"dataAutoCompletado\" id=\"search\" size=\"60\" maxlength=\"30\" cssClass=\"inputs\"></s:textfield><br>";
+			html += "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">"+
+					"	<tr> " +
+					"		<td class=\"leftLabel\">Artículo</td> " +
+					"		<td>" + articulo.getArtiNombre() + "</td> " +
+					"	</tr> " +
+					"	<tr> " +
+					"		<td class=\"leftLabel\">Referencia</td> " +
+					"		<td>" + articulo.getArtiReferencia() + "</td> " +
+					"	</tr> " +
+					"	<tr> " +
+					"		<td class=\"leftLabel\">Categoria</td> " +
+					"		<td>" + articulo.getCategoria().getCateNombre() + "</td> " +
+					"	</tr> " +
+					"	<tr> " +
+					"		<td class=\"leftLabel\">Marca</td> " +
+					"		<td>" + articulo.getArtiMarca() + "</td> " +
+					"	</tr> " +
+					"</table>";
+			strDatosArticulo = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return strDatosArticulo;
+	}
+	
 	
 	public niifAction(IGestionFacadeNIIF gestionFacadeNIIF) {
 		this.gestionFacadeNIIF = gestionFacadeNIIF;

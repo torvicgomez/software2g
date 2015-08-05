@@ -27,8 +27,69 @@
 						}
 				   }
 				} );
+				
+				
+				$(function() {
+                	$("#search").autocomplete({
+                		source : function(request, response) {
+	                		$.ajax({
+	                        	url : "SearchController",
+	                        	type : "GET",
+	                        	data : {
+	                                term : request.term,
+	                                tipo : 'articulo'
+	                        	},
+	                        	dataType : "json",
+	                        	success : function(data) {
+	                                	response(data);
+	                        	}
+	                		});
+        				}
+					});
+				});
+				
 			} );
 
+			function cargarDatosArticulo(id){
+				$("#divDatosArticulo").load('cargarDatosArticulo.action?idArticulo='+id);
+				var artiId = document.getElementById('artiId');
+				artiId.value = id;
+				var campoFind = document.getElementById('campoFind');
+				var repetirFind = document.getElementById('repetirFind');
+				campoFind.style.display = 'none';
+				repetirFind.style.display = 'block';
+			}				
+			
+			function validarView(){
+				var idAuxPersona = document.getElementById('idAuxArticulo').value;
+				if(idAuxPersona>0){
+					var campoFind = document.getElementById('campoFind');
+					var repetirFind = document.getElementById('repetirFind');
+					campoFind.style.display = 'none';
+					repetirFind.style.display = 'block';
+				}else{
+					var campoFind = document.getElementById('campoFind');
+					var repetirFind = document.getElementById('repetirFind');
+					campoFind.style.display = 'block';
+					repetirFind.style.display = 'none';
+					var search = document.getElementById('search');
+					search.value = '';
+				}
+			}
+			
+			function repetirBusqueda(){
+				var divDatosPersona = document.getElementById('divDatosArticulo');
+				divDatosPersona.innerHTML = '';
+				var artiId = document.getElementById('artiId');
+				artiId.value = 0;
+				var campoFind = document.getElementById('campoFind');
+				var repetirFind = document.getElementById('repetirFind');
+				campoFind.style.display = 'block';
+				repetirFind.style.display = 'none';
+				var search = document.getElementById('search');
+				search.value = '';
+			}
+			
 			function agregar(){
 				document.form.action="ordencompra.action?estado=<%=ConstantesAplicativo.constanteEstadoAdd%>";
 				document.form.submit();
@@ -134,24 +195,113 @@
 				<s:elseif test="estado=='add'||estado=='edit'||estado=='save'">
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<s:hidden name="ordenCompra.orcoId" id="orcoId"></s:hidden>
+						<s:hidden name="detalleCompra.articulo.artiId" id="artiId"></s:hidden>
 						<tr>
-							<td class="leftLabel"><s:text name="categoriaart.nombre"></s:text></td>
-							<td colspan="3">
-								<s:textfield name="categoria.cateNombre" id="cateNombre" size="60" maxlength="30" cssClass="inputs"></s:textfield>
+							<td class="leftLabel"><s:text name="ordencompra.nrocomprobante"></s:text></td>
+							<td>
+								<s:textfield name="ordenCompra.orcoNrocomprobante" id="orcoNrocomprobante" size="30" maxlength="30" cssClass="inputs"></s:textfield>
+							</td>
+							<td class="leftLabel"><s:text name="ordencompra.fechacompra"></s:text></td>
+							<td>
+								<s:textfield name="ordenCompra.orcoFechacompra" id="orcoFechacompra" size="15" maxlength="10" cssClass="inputs"></s:textfield>
+							</td>
+							<td class="leftLabel"><s:text name="ordencompra.estado"></s:text></td>
+							<td>
+								<s:select list="listEstadoOrdenCompra" id="orcoEstado" name="ordenCompra.orcoEstado" listKey="key" listValue="valor" cssClass="inputs"></s:select>
 							</td>
 						</tr>
 						<tr>
-							<td class="leftLabel"><s:text name="categoriaart.estado"></s:text></td>
-							<td colspan="3">
-								<s:select list="listEstado" id="cateEstado" name="categoria.cateEstado" listKey="key" listValue="valor" cssClass="inputs"></s:select>
+							<td colspan="6" class="leftLabel"><s:text name="titulo.articulos"></s:text></td>
+						</tr>
+						<tr>
+							<td colspan="6">
+								<table cellpadding="0" cellspacing="0" border="0" class="display">
+									<tr>
+										<td class="leftLabel"><s:text name="ordencompra.findarticulo"></s:text></td>
+										<td colspan="3">
+											<s:set name="idArticulo" value="detalleCompra.articulo.artiId"></s:set>
+											<input type="hidden" id="idAuxArticulo" value="${idArticulo}"/>
+											<div id="repetirFind" style="overflow:auto;width:auto;height:auto;display:none">
+												<input type="button" value="<s:text name="labelbutton.repetirfind"></s:text>" onclick="repetirBusqueda();" class="buttonSV"/>
+											</div>
+											<div id="campoFind" style="overflow:auto;width:auto;height:auto;display:block">
+												<s:textfield name="dataAutoCompletado" id="search" size="60" maxlength="30" cssClass="inputs"></s:textfield>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="4">
+											<div id="divDatosArticulo">
+												<s:if test="detalleCompra.articulo!=null&&detalleCompra.articulo.artiId>0">
+												<table cellpadding="0" cellspacing="0" border="0" class="display">
+													<tr><td class="leftLabel"><s:text name="ordencompra.articulo"></s:text></td>
+														<td><s:property value="detalleCompra.articulo.artiNombre"/></td>
+													</tr>
+													<tr><td class="leftLabel"><s:text name="articulos.referencia"></s:text></td>
+														<td><s:property value="detalleCompra.articulo.artiReferencia"/></td>
+													</tr>
+													<tr><td class="leftLabel"><s:text name="articulos.categoria"></s:text></td>
+														<td><s:property value="detalleCompra.articulo.categoria.cateNombre"/></td>
+													</tr>
+													<tr><td class="leftLabel"><s:text name="articulos.marca"></s:text></td>
+														<td><s:property value="detalleCompra.articulo.artiMarca"/></td>
+													</tr>
+												</table>
+												</s:if>
+											</div>
+										</td>
+									</tr>
+								</table>
 							</td>
 						</tr>
 						<tr>
-							<td class="leftLabel"><s:text name="categoriaart.descripcion"></s:text></td>
-							<td colspan="3">
-								<s:textarea name="categoria.cateDescripcion" id="cateDescripcion" cols="100"  rows="3" cssClass="inputs"></s:textarea>
+							<th></th>
+							<th><s:text name="articulos.referencia"></s:text></th>
+							<th><s:text name="ordencompra.articulo"></s:text></th>
+							<th><s:text name="ordencompra.cantidad"></s:text></th>
+							<th><s:text name="ordencompra.valorunitario"></s:text></th>
+							<th><s:text name="ordencompra.totalarticulo"></s:text></th>
+						</tr>
+						<tr>
+							<td colspan="6">
+								<div id="detalleCompra">
+									<s:iterator value="listDetalleCompra" id="data" status="stat">
+										<tr>
+											<td align="center">
+												<a onclick="eliminar('${data.orcoId}');">
+													<img align="middle" src="<s:url value="/imagenes/icon_edit.png"/>" alt="Editar" width="18" height="18">
+												</a>
+											</td>
+											<td><s:property value="articulo.artiReferencia"/></td>
+											<td><s:property value="articulo.artiNombre"/></td>
+											<td><s:property value="decoCantidad"/></td>
+											<td><s:property value="decoValorunitario"/></td>
+											<td><s:property value="decoValortotal"/></td>
+										</tr>
+									</s:iterator>
+								</div>
 							</td>
 						</tr>
+						<tr>
+							<td colspan="4"></td>
+							<td align="right" class="leftLabel"><s:text name="ordencompra.totalarticulo"></s:text></td>
+							<td><s:textfield name="ordenCompra.orcoTotalcompra" id="orcoTotalcompra" size="20" maxlength="30" cssClass="inputs"></s:textfield></td>
+						</tr>
+						<tr>
+							<td colspan="4"></td>
+							<td align="right" class="leftLabel"><s:text name="ordencompra.totaldescuento"></s:text></td>
+							<td><s:textfield name="ordenCompra.orcoTotaldescuento" id="orcoTotaldescuento" size="20" maxlength="30" cssClass="inputs"></s:textfield></td>
+						</tr>
+						<tr>
+							<td colspan="4"></td>
+							<td align="right" class="leftLabel"><s:text name="ordencompra.totaliva"></s:text></td>
+							<td><s:textfield name="ordenCompra.orcoTotalivaven" id="orcoTotalivaven" size="20" maxlength="30" cssClass="inputs"></s:textfield></td>
+						</tr>
+						<tr>
+							<td colspan="4"></td>
+							<td align="right" class="leftLabel"><s:text name="ordencompra.totalpagado"></s:text></td>
+							<td><s:textfield name="ordenCompra.orcoTotalapagar" id="orcoTotalapagar" size="20" maxlength="30" cssClass="inputs"></s:textfield></td>
+						</tr>	
 					</table>
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<tr>
@@ -190,3 +340,4 @@
 		</s:form>
 	</body>
 </html>
+<script type="text/javascript" charset="utf-8">validarView();</script>

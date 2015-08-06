@@ -258,7 +258,8 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 			int posicion = Integer.parseInt(request.getParameter("posicion"));
 			int cantidadArti = request.getParameter("cantidadArti")!=null?Integer.parseInt(request.getParameter("cantidadArti")):0;
 			double valorUniArti = request.getParameter("valorUniArti")!=null?Double.parseDouble(request.getParameter("valorUniArti")):0;
-			
+			double totalDes = Double.parseDouble(request.getParameter("totalDes"));
+			double totalIva = Double.parseDouble(request.getParameter("totalDes"));
 			listDetalleCompra = (List<Detallecompra>)request.getSession().getAttribute("listDetalleCompra");
 			if(listDetalleCompra==null)
 				listDetalleCompra = new ArrayList<Detallecompra>();
@@ -304,22 +305,22 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 				html +=	" <tr> " +
 						" 	<td colspan=\"4\"></td> " +
 						"	<td align=\"right\" class=\"leftLabel\">Total</td> " +
-						"	<td align=\"right\"> " + total + " </td>" +
+						"	<td align=\"right\"><input type=\"hidden\" id=\"total\" value=\""+total+"\"/>"+ total + " </td>" +
 						" </tr> ";
 				html +=	" <tr> " +
 						" 	<td colspan=\"4\"></td> " +
 						"	<td align=\"right\" class=\"leftLabel\">Total Descuento</td> " +
-						"	<td align=\"right\"><input type=\"text\"/></td>" +
+						"	<td align=\"right\"><input type=\"text\" id=\"totalDes\" value=\""+totalDes+"\"/></td>" +
 						" </tr> ";
-				html +=	" <tr> " +
+				html +=	" <tr> " + 
 						" 	<td colspan=\"4\"></td> " +
 						"	<td align=\"right\" class=\"leftLabel\">Total Iva</td> " +
-						"	<td align=\"right\"><input type=\"text\"/></td>" +
+						"	<td align=\"right\"><input type=\"text\" id=\"totalIva\" value=\""+totalIva+"\"/></td>" +
 						" </tr> ";
 				html +=	" <tr> " +
 						" 	<td colspan=\"4\"></td> " +
 						"	<td align=\"right\" class=\"leftLabel\">Total a Pagar</td> " +
-						"	<td align=\"right\"><input type=\"text\"/></td>" +
+						"	<td align=\"right\"><input type=\"hidden\" id=\"totalIva\" value=\""+((total+totalIva)-totalDes)+"\"/>"+((total+totalIva)-totalDes)+"</td>" +
 						" </tr> ";
 			}
 			html +=	"</table>";

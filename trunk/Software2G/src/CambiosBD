@@ -2125,3 +2125,9 @@ ALTER TABLE niif.seq_pago_id OWNER TO postgres;
 ALTER TABLE niif.ordencompra ADD CONSTRAINT ckc_estado_comp CHECK ((orco_estado::text = ANY (ARRAY['PENDIENTE'::character varying::text, 'PAGADA'::character varying::text])) AND orco_estado::text = upper(orco_estado::text)) ;
 ALTER TABLE niif.ordencompra ADD orco_totalcompra numeric NOT NULL;
 ALTER TABLE niif.ordencompra ADD orco_totalapagar numeric NOT NULL;
+
+----------------
+-- 06-08-2015 --
+----------------
+ALTER TABLE niif.ordencompra ADD orco_fechavence character varying(10) NOT NULL;
+insert into niif.proveedor (prov_id, pers_id, prov_razonsocial, prov_fechacambio, prov_horacambio, prov_registradopor) values ( nextval('niif.seq_prov_id') ,1,'Victor Hugo Gomez L. 75106199-1', '2015-08-06', '09:18:03', 'vhgomezl');

@@ -83,7 +83,10 @@ Proyecto NIIF - Normas Internacionales de Informacion Finaciera
 07- Creacion funcionalidad Orden de Compra -----------------------------------------------------
 08- Crear Funcionalidad Condicion de Pago ------------------------------------------------------ .::[O.K]::.
 09- Creacion Funcionalidad Forma de Pago ------------------------------------------------------- .::[O.K]::.
-
+10- Crecion de Funcionalidades Heredadas de Persona --------------------------------------------
+	10.1- Crear funcionalidad Cliente ----------------------------------------------------------
+	10.2- Crear funcionalidad Proveedor --------------------------------------------------------
+	10.3- Crear funcionalidad Vendedor ---------------------------------------------------------
 
 Sugerencia
 * Tabla profesional salud ---------------------------------------------------------------------- .::[O.K]::.

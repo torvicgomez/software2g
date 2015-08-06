@@ -86,6 +86,8 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	public List<UtilGenerico> getListEstado() {return ConstantesAplicativo.listEstadoSN;}
 	public List<UtilGenerico> getListEstadoArticulo() {return ConstantesAplicativo.listEstadoArticulo;}
 	public List<UtilGenerico> getListEstadoOrdenCompra() {return ConstantesAplicativo.listEstadoOrdenCompra;}
+	public List<UtilGenerico> getListCondicionPagoSelect() {return ConstantesAplicativo.listCondicionPagoSelect;}
+	public List<UtilGenerico> getListFormaPagoSelect() {return ConstantesAplicativo.listFormaPagoSelect;}
 	
 	
 	private void getFuncionPosicionado(){

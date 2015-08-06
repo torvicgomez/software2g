@@ -134,8 +134,10 @@
 				var posicion = pos;
 				var cantidadArti = document.getElementById("cantidadArti").value;
 				var valorUniArti = document.getElementById("valorUniArti").value;
-				$("#detalleCompra").load('cargarDetalleCompra.action?posicion='+posicion+'&cantidadArti='+cantidadArti+'&valorUniArti='+valorUniArti);
-				if(posicion<0 && cantidadArti>0 && valorUniArti>0){
+				var totalDes = document.getElementById("totalDes")==null?0:document.getElementById("totalDes").value!=''?document.getElementById("totalDes").value:0;
+				var totalIva = document.getElementById("totalIva")==null?0:document.getElementById("totalIva").value!=''?document.getElementById("totalIva").value:0;
+				$("#detalleCompra").load('cargarDetalleCompra.action?posicion='+posicion+'&cantidadArti='+cantidadArti+'&valorUniArti='+valorUniArti+'&totalDes='+totalDes+'&totalIva='+totalIva);
+				if(posicion<0 && cantidadArti>0 && cantidadArti!='' && valorUniArti>0 && valorUniArti!=null ){
 					var divDatosPersona = document.getElementById('divDatosArticulo');divDatosPersona.innerHTML = '';
 					var artiId = document.getElementById('artiId');artiId.value = 0;
 					var campoFind = document.getElementById('campoFind');campoFind.style.display = 'block';

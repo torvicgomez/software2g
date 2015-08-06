@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.software2g.util.ValidaString;
+
 
 /**
  * The persistent class for the detallecompra database table.
@@ -75,6 +77,10 @@ public class Detallecompra implements Serializable {
 		return this.decoDescuento;
 	}
 
+	public String getDecoDescuentoView() {
+		return ValidaString.formatToMoney(String.valueOf(decoDescuento));
+	}
+	
 	public void setDecoDescuento(double decoDescuento) {
 		this.decoDescuento = decoDescuento;
 	}
@@ -99,6 +105,10 @@ public class Detallecompra implements Serializable {
 		return this.decoIvaarticulo;
 	}
 
+	public String getDecoIvaarticuloView() {
+		return ValidaString.formatToMoney(String.valueOf(decoIvaarticulo));
+	}
+	
 	public void setDecoIvaarticulo(double decoIvaarticulo) {
 		this.decoIvaarticulo = decoIvaarticulo;
 	}
@@ -115,6 +125,10 @@ public class Detallecompra implements Serializable {
 		return this.decoValortotal;
 	}
 
+	public String getDecoValortotalView() {
+		return ValidaString.formatToMoney(String.valueOf(decoValortotal));
+	}
+	
 	public void setDecoValortotal(double decoValortotal) {
 		this.decoValortotal = decoValortotal;
 	}
@@ -123,6 +137,10 @@ public class Detallecompra implements Serializable {
 		return this.decoValorunitario;
 	}
 
+	public String getDecoValorunitarioView() {
+		return ValidaString.formatToMoney(String.valueOf(decoValorunitario));
+	}
+	
 	public void setDecoValorunitario(double decoValorunitario) {
 		this.decoValorunitario = decoValorunitario;
 	}

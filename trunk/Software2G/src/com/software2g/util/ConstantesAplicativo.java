@@ -220,4 +220,8 @@ public final class ConstantesAplicativo {
 	
 	public static final String constanteCoverTestLejosAbre = "L";
 	public static final String constanteCoverTestCercaAbre = "C";
+	
+	public static final String constanteEstadoOrdenCompraPendiente = "PENDIENTE";
+	public static final String constanteEstadoOrdenCompraPagada = "PAGADA";
+	
 }

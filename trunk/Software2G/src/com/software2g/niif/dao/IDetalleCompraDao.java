@@ -27,6 +27,7 @@ public interface IDetalleCompraDao {
 	 * Return all persistent instances of the <code>Detallecompra</code> entity.
 	 */
 	public List<Detallecompra> findAllDetallecompras();
+	public List<Detallecompra> findAllDetallecompras(long orcoId);
 	/**
 	 * Make the given instance managed and persistent.
 	 */

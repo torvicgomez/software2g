@@ -31,6 +31,7 @@ public interface IOrdenCompraDao {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistOrdencompra(Ordencompra ordencompra);
+	public long persistOrdencompraId(Ordencompra ordencompra);
 	/**
 	 * Remove the given persistent instance.
 	 */

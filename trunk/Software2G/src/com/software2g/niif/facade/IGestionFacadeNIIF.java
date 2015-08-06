@@ -103,6 +103,7 @@ public interface IGestionFacadeNIIF {
 	 * Return all persistent instances of the <code>Detallecompra</code> entity.
 	 */
 	public List<Detallecompra> findAllDetallecompras() throws Exception;
+	public List<Detallecompra> findAllDetallecompras(long orcoId) throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */
@@ -161,6 +162,7 @@ public interface IGestionFacadeNIIF {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistOrdencompra(Ordencompra ordencompra) throws Exception;
+	public long persistOrdencompraId(Ordencompra ordencompra) throws Exception;
 	/**
 	 * Remove the given persistent instance.
 	 */

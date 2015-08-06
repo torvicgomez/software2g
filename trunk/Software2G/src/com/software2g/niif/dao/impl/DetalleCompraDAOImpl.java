@@ -76,6 +76,23 @@ public class DetalleCompraDAOImpl implements IDetalleCompraDao {
             }
         }
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Detallecompra> findAllDetallecompras(long orcoId) {
+        try {
+    		String jpqlString = "select detallecompra from " + Detallecompra.class.getSimpleName() + " detallecompra " +
+    				" where detallecompra.ordencompra.orcoId =:orcoId ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("orcoId", orcoId);
+            return query.getResultList();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

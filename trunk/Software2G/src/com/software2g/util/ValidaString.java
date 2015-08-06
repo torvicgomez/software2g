@@ -160,7 +160,7 @@ public class ValidaString {
     }
     
     public static String formatToMoney(String str){
-        DecimalFormat fmt = new DecimalFormat("###,###,###,##0.00");
+        DecimalFormat fmt = new DecimalFormat("$ ###,###,###,##0.00");
         String res = "0,00";
         if(!ValidaString.isNullOrEmptyString(str)){
         	res=fmt.format(Double.parseDouble(str));

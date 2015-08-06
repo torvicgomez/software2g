@@ -306,9 +306,19 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 		}
 	}
 
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Detallecompra> findAllDetallecompras(long orcoId) throws Exception {
+		try {
+			return getDetalleCompraDao().findAllDetallecompras(orcoId);
+		} catch (RuntimeException e) {
+			throw new Exception("findAllDetallecompras failed: " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistDetallecompra(Detallecompra detallecompra) throws Exception {
 		try {
 			getDetalleCompraDao().persistDetallecompra(detallecompra);
@@ -444,11 +454,21 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistOrdencompra(Ordencompra ordencompra) throws Exception {
 		try {
 			getOrdenCompraDao().persistOrdencompra(ordencompra);
 		} catch (RuntimeException e) {
 			throw new Exception("persistOrdencompra failed: " + e.getMessage());
+		}
+	}
+	
+	@Transactional
+	public long persistOrdencompraId(Ordencompra ordencompra) throws Exception {
+		try {
+			return getOrdenCompraDao().persistOrdencompraId(ordencompra);
+		} catch (RuntimeException e) {
+			throw new Exception("persistOrdencompraId failed: " + e.getMessage());
 		}
 	}
 	/**

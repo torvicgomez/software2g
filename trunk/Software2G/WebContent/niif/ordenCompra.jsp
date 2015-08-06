@@ -48,6 +48,9 @@
 					});
 				});
 				
+				$("#orcoFechavence").datepicker({numberOfMonths: 1,showButtonPanel: false, dateFormat: 'yy-mm-dd'});
+				$("#orcoFechacompra").datepicker({numberOfMonths: 1,showButtonPanel: false, dateFormat: 'yy-mm-dd'});
+				
 			} );
 
 			function soloNumeros(e) {
@@ -64,6 +67,18 @@
 					return false;
 			}
 			
+			function calcularTotalaPagar(){
+				var totalaPagarDiv = document.getElementById('totalaPagarDiv');
+				var total = document.getElementById('total').value;
+				var descuento = document.getElementById('totalDes');
+				var iva = document.getElementById('totalIva');
+				var totalaPagar = 0.0;
+				if(descuento!=null && descuento!='' && iva!=null && iva!=''){
+					totalaPagar = ((parseFloat(total)+parseFloat(iva.value!=''?iva.value:0))-parseFloat(descuento.value!=''?descuento.value:0));
+					document.getElementById('totalaPagar').value = totalaPagar;
+				}
+				totalaPagarDiv.innerHTML = totalaPagar;
+			}
 			
 			function cargarDatosArticulo(id){
 				$("#divDatosArticulo").load('cargarDatosArticulo.action?idArticulo='+id);
@@ -111,6 +126,14 @@
 			}
 			
 			function registrar(){
+				var total = document.getElementById('total')==null||document.getElementById('total').value==''?'0':document.getElementById('total').value;
+				var descuento = document.getElementById('totalDes')==null||document.getElementById('totalDes').value==''?'0':document.getElementById('totalDes').value;
+				var iva = document.getElementById('totalIva')==null||document.getElementById('totalIva').value==''?'0':document.getElementById('totalIva').value;
+				var	totalaPagar = document.getElementById('totalaPagar')==null||document.getElementById('totalaPagar').value==''?'0':document.getElementById('totalaPagar').value;
+				document.getElementById('orcoTotalcompra').value = total;
+				document.getElementById('orcoTotaldescuento').value = descuento;
+				document.getElementById('orcoTotalivaven').value = iva;
+				document.getElementById('orcoTotalapagar').value = totalaPagar;
 				document.form.action="ordencompra.action?estado=<%=ConstantesAplicativo.constanteEstadoSave%>";
 				document.form.submit();
 			}
@@ -132,8 +155,8 @@
 			
 			function agregarArticulo(pos){
 				var posicion = pos;
-				var cantidadArti = document.getElementById("cantidadArti").value;
-				var valorUniArti = document.getElementById("valorUniArti").value;
+				var cantidadArti = document.getElementById("cantidadArti")!=null?document.getElementById("cantidadArti").value:'';
+				var valorUniArti = document.getElementById("valorUniArti")!=null?document.getElementById("valorUniArti").value:'';
 				var totalDes = document.getElementById("totalDes")==null?0:document.getElementById("totalDes").value!=''?document.getElementById("totalDes").value:0;
 				var totalIva = document.getElementById("totalIva")==null?0:document.getElementById("totalIva").value!=''?document.getElementById("totalIva").value:0;
 				$("#detalleCompra").load('cargarDetalleCompra.action?posicion='+posicion+'&cantidadArti='+cantidadArti+'&valorUniArti='+valorUniArti+'&totalDes='+totalDes+'&totalIva='+totalIva);
@@ -192,6 +215,7 @@
 								<th><s:text name="ordencompra.proveedor"></s:text></th>
 								<th><s:text name="ordencompra.estado"></s:text></th>
 								<th><s:text name="ordencompra.fechacompra"></s:text></th>
+								<th><s:text name="ordencompra.fechavence"></s:text></th>
 								<th><s:text name="ordencompra.totalpagado"></s:text></th>
 								<th><s:text name="global.fecharegistra"></s:text></th>
 							</tr>
@@ -215,7 +239,8 @@
 									<td><s:property value="proveedor.provRazonsocial"/></td>
 									<td><s:property value="orcoEstado"/></td>
 									<td><s:property value="orcoFechacompra"/></td>
-									<td><s:property value="orcoTotalpagado"/></td>
+									<td><s:property value="orcoFechavence"/></td>
+									<td><s:property value="orcoTotalapagarView"/></td>
 									<td><s:property value="orcoFechacambio"/>&nbsp;<s:property value="orcoHoracambio"/></td>
 								</tr>
 							</s:iterator>
@@ -226,23 +251,13 @@
 				<s:elseif test="estado=='add'||estado=='edit'||estado=='save'">
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<s:hidden name="ordenCompra.orcoId" id="orcoId"></s:hidden>
+						<s:hidden name="ordenCompra.orcoTotalcompra" id="orcoTotalcompra"></s:hidden>
+						<s:hidden name="ordenCompra.orcoTotaldescuento" id="orcoTotaldescuento"></s:hidden>
+						<s:hidden name="ordenCompra.orcoTotalivaven" id="orcoTotalivaven"></s:hidden>
+						<s:hidden name="ordenCompra.orcoTotalapagar" id="orcoTotalapagar"></s:hidden>
 						<s:hidden name="detalleCompra.articulo.artiId" id="artiId"></s:hidden>
 						<s:hidden name="detalleCompra.id.artiId"></s:hidden>
 						<s:hidden name="detalleCompra.id.orcoId"></s:hidden>
-						<tr>
-							<td class="leftLabel"><s:text name="ordencompra.nrocomprobante"></s:text></td>
-							<td>
-								<s:textfield name="ordenCompra.orcoNrocomprobante" id="orcoNrocomprobante" size="30" maxlength="30" cssClass="inputs"></s:textfield>
-							</td>
-							<td class="leftLabel"><s:text name="ordencompra.fechacompra"></s:text></td>
-							<td>
-								<s:textfield name="ordenCompra.orcoFechacompra" id="orcoFechacompra" size="15" maxlength="10" cssClass="inputs"></s:textfield>
-							</td>
-							<td class="leftLabel"><s:text name="ordencompra.estado"></s:text></td>
-							<td>
-								<s:select list="listEstadoOrdenCompra" id="orcoEstado" name="ordenCompra.orcoEstado" listKey="key" listValue="valor" cssClass="inputs"></s:select>
-							</td>
-						</tr>
 						<tr>
 							<td colspan="6" class="leftLabel"><s:text name="titulo.articulos"></s:text></td>
 						</tr>
@@ -289,26 +304,40 @@
 							</td>
 						</tr>
 						<tr>
+							<td colspan="6" class="leftLabel"><s:text name="ordencompra.datosfaccompra"></s:text></td>
+						</tr>
+						<tr>
+							<td class="leftLabel"><s:text name="ordencompra.nrocomprobante"></s:text></td>
+							<td>
+								<s:textfield name="ordenCompra.orcoNrocomprobante" id="orcoNrocomprobante" size="30" maxlength="30" cssClass="inputs"></s:textfield>
+							</td>
+							<td class="leftLabel"><s:text name="ordencompra.fechacompra"></s:text></td>
+							<td>
+								<s:textfield name="ordenCompra.orcoFechacompra" id="orcoFechacompra" size="15" maxlength="10" cssClass="inputs"></s:textfield>
+							</td>
+							<td class="leftLabel"><s:text name="ordencompra.fechavence"></s:text></td>
+							<td>
+								<s:textfield name="ordenCompra.orcoFechavence" id="orcoFechavence" size="15" maxlength="10" cssClass="inputs"></s:textfield>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="6" class="leftLabel"><s:text name="ordencompra.detallecompra"></s:text></td>
+						</tr>
+						<tr>
 							<td colspan="6">
 								<table cellpadding="0" cellspacing="0" border="0" class="display">
-<!-- 									<tr> -->
-<!-- 										<td colspan="6"> -->
-<!-- 											<table cellpadding="0" cellspacing="0" border="1" class="display"> -->
-<!-- 												<tr> -->
-<!-- 													<td>#</td> -->
-<%-- 													<td><s:text name="articulos.referencia"></s:text></td> --%>
-<%-- 													<td><s:text name="ordencompra.articulo"></s:text></td> --%>
-<%-- 													<td><s:text name="ordencompra.cantidad"></s:text></td> --%>
-<%-- 													<td><s:text name="ordencompra.valorunitario"></s:text></td> --%>
-<%-- 													<td><s:text name="ordencompra.totalarticulo"></s:text></td> --%>
-<!-- 												</tr> -->
-<!-- 											</table> -->
-<!-- 										</td> -->
-<!-- 									</tr>	 -->
 									<tr>
 										<td colspan="6">
 											<div id="detalleCompra">
 												<table cellpadding="0" cellspacing="0" border="0" class="display">
+													<tr>
+														<td class="leftLabel" style="width:5%"><s:text name="columna.item"></s:text></td>
+														<td class="leftLabel"><s:text name="articulos.referencia"></s:text></td>
+														<td class="leftLabel"><s:text name="ordencompra.articulo"></s:text></td>
+														<td class="leftLabel"><s:text name="ordencompra.cantidad"></s:text></td>
+														<td class="leftLabel"><s:text name="ordencompra.valorunitario"></s:text></td>
+														<td class="leftLabel"><s:text name="ordencompra.totalarticulo"></s:text></td>
+													</tr>
 													<s:iterator value="listDetalleCompra" id="data" status="stat">
 														<tr>
 															<td align="center"><a onclick="agregarArticulo('${stat.index}');"><s:text name="labelbutton.remover"></s:text></td>
@@ -319,31 +348,30 @@
 															<td align="right"><s:property value="decoValortotal"/></td>
 														</tr>
 													</s:iterator>
+													<tr>
+														<td colspan="4"></td>
+														<td align="right" class="leftLabel"><s:text name="ordencompra.totalarticulo"></s:text></td>
+														<td align="right"><input type="hidden" id="total" value="<s:property value="ordenCompra.orcoTotalcompra"/>"/><s:property value="ordenCompra.orcoTotalcompraView"/></td>
+													</tr>
+													<tr>
+														<td colspan="4"></td>
+														<td align="right" class="leftLabel"><s:text name="ordencompra.totaldescuento"></s:text></td>
+														<td align="right"><input type="text" id="totalDes" value="<s:property value="ordenCompra.orcoTotaldescuento"/>"  class="inputs"  style="text-align:right" onKeyPress="return soloNumeros(event)" onpaste="return false" onblur="javascript:calcularTotalaPagar();"/></td>
+													</tr>
+													<tr> 
+														<td colspan="4"></td>
+														<td align="right" class="leftLabel"><s:text name="ordencompra.totaliva"></s:text></td>
+														<td align="right"><input type="text" id="totalIva" value="<s:property value="ordenCompra.orcoTotalivaven"/>"  class="inputs"  style="text-align:right" onKeyPress="return soloNumeros(event)" onpaste="return false" onblur="javascript:calcularTotalaPagar();"/></td>
+													</tr>
+													<tr>
+														<td colspan="4"></td>
+														<td align="right" class="leftLabel"><s:text name="ordencompra.totalpagado"></s:text></td>
+														<td align="right"><input type="hidden" id="totalaPagar" value="<s:property value="ordenCompra.orcoTotalapagar"/>"/><div id="totalaPagarDiv"><s:property value="ordenCompra.orcoTotalapagar"/></div></td>
+													</tr>
 												</table>
 											</div>
 										</td>
 									</tr>
-<!-- 									<tr> -->
-<!-- 										<td colspan="4"></td> -->
-<%-- 										<td align="right" class="leftLabel"><s:text name="ordencompra.totalarticulo"></s:text></td> --%>
-<%-- 										<td><s:textfield name="ordenCompra.orcoTotalcompra" id="orcoTotalcompra" size="20" maxlength="30" cssClass="inputs"></s:textfield></td> --%>
-<!-- 									</tr> -->
-<!-- 									<tr> -->
-<!-- 										<td colspan="4"></td> -->
-<%-- 										<td align="right"><s:text name="ordencompra.totaldescuento"></s:text></td> --%>
-<%-- 										<td><s:textfield name="ordenCompra.orcoTotaldescuento" id="orcoTotaldescuento" size="20" maxlength="30" cssClass="inputs"></s:textfield></td> --%>
-<!-- 									</tr> -->
-<!-- 									<tr> -->
-<!-- 										<td colspan="4"></td> -->
-<%-- 										<td align="right"><s:text name="ordencompra.totaliva"></s:text></td> --%>
-<%-- 										<td><s:textfield name="ordenCompra.orcoTotalivaven" id="orcoTotalivaven" size="20" maxlength="30" cssClass="inputs"></s:textfield></td> --%>
-<!-- 									</tr> -->
-<!-- 									<tr> -->
-<!-- 										<td colspan="4"></td> -->
-<%-- 										<td align="right"><s:text name="ordencompra.totalpagado"></s:text></td> --%>
-<%-- 										<td><s:textfield name="ordenCompra.orcoTotalapagar" id="orcoTotalapagar" size="20" maxlength="30" cssClass="inputs"></s:textfield></td> --%>
-<!-- 									</tr>	 -->
-
 								</table>
 							</td>
 						</tr>
@@ -360,16 +388,82 @@
 				<s:elseif test="estado=='abstract'">
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<tr>
-							<td class="leftLabel"><s:text name="categoriaart.nombre"></s:text></td>
-							<td><s:property value="categoria.cateNombre"/></td>
+							<td colspan="6" class="leftLabel"><s:text name="ordencompra.proveedor"></s:text></td>
 						</tr>
 						<tr>
-							<td class="leftLabel"><s:text name="categoriaart.estado"></s:text></td>
-							<td><s:if test="categoria.cateEstado==\"S\"">Activo</s:if><s:else>Inactivo</s:else></td>
+							<td class="leftLabel"><s:text name="ordencompra.proveedor"></s:text></td>
+							<td colspan="5"><s:property value="ordenCompra.proveedor.provRazonsocial"/></td>
 						</tr>
 						<tr>
-							<td class="leftLabel"><s:text name="categoriaart.descripcion"></s:text></td>
-							<td><s:property value="categoria.cateDescripcion"/></td>
+							<td class="leftLabel"><s:text name="ordencompra.contactoproveedor"></s:text></td>
+							<td><s:property value="ordenCompra.proveedor.persona.nombreCompleto"/></td>
+							<td class="leftLabel"><s:text name="personal.email"></s:text></td>
+							<td><s:property value="ordenCompra.proveedor.persona.emailPers"/></td>
+							<td class="leftLabel"><s:text name="personal.telefono"></s:text></td>
+							<td><s:property value="ordenCompra.proveedor.persona.telefonoPers"/></td>
+						</tr>
+						<tr>
+							<td colspan="6" class="leftLabel"><s:text name="ordencompra.datosfaccompra"></s:text></td>
+						</tr>
+						<tr>
+							<td class="leftLabel"><s:text name="ordencompra.nrocomprobante"></s:text></td>
+							<td><s:property value="ordenCompra.orcoNrocomprobante"/></td>
+							<td class="leftLabel"><s:text name="ordencompra.fechacompra"></s:text></td>
+							<td><s:property value="ordenCompra.orcoFechacompra"/></td>
+							<td class="leftLabel"><s:text name="ordencompra.fechavence"></s:text></td>
+							<td><s:property value="ordenCompra.orcoFechavence"/></td>
+						</tr>
+						<tr>	
+							<td class="leftLabel"><s:text name="ordencompra.estado"></s:text></td>
+							<td><s:property value="ordenCompra.orcoEstado"/></td>
+							<td class="leftLabel"><s:text name="ordencompra.totalpagado"></s:text></td>
+							<td><s:property value="ordenCompra.orcoTotalapagarView"/></td>
+							<td class="leftLabel"><s:text name="ordencompra.saldo"></s:text></td>
+							<td><font size="2" color="#FF0000"><strong><s:property value="ordenCompra.orcoSaldoView"/></strong></font></td>
+						</tr>
+						<tr>
+							<td colspan="6">
+								<table cellpadding="0" cellspacing="0" border="0" class="display">
+									<tr>
+										<td class="leftLabel" style="width:5%"><s:text name="columna.item"></s:text></td>
+										<td class="leftLabel"><s:text name="articulos.referencia"></s:text></td>
+										<td class="leftLabel"><s:text name="ordencompra.articulo"></s:text></td>
+										<td class="leftLabel"><s:text name="ordencompra.cantidad"></s:text></td>
+										<td class="leftLabel"><s:text name="ordencompra.valorunitario"></s:text></td>
+										<td class="leftLabel"><s:text name="ordencompra.totalarticulo"></s:text></td>
+									</tr>
+									<s:iterator value="listDetalleCompra" id="data" status="stat">
+										<tr>
+											<td align="center">${stat.index+1}</td>
+											<td><s:property value="articulo.artiReferencia"/></td>
+											<td><s:property value="articulo.artiNombre"/></td>
+											<td align="right"><s:property value="decoCantidad"/></td>
+											<td align="right"><s:property value="decoValorunitarioView"/></td>
+											<td align="right"><s:property value="decoValortotalView"/></td>
+										</tr>
+									</s:iterator>
+									<tr>
+										<td colspan="4"></td>
+										<td align="right" class="leftLabel"><s:text name="ordencompra.totalarticulo"></s:text></td>
+										<td align="right"><s:property value="ordenCompra.orcoTotalcompraView"/></td>
+									</tr>
+									<tr>
+										<td colspan="4"></td>
+										<td align="right" class="leftLabel"><s:text name="ordencompra.totaldescuento"></s:text></td>
+										<td align="right"><s:property value="ordenCompra.orcoTotaldescuentoView"/></td>
+									</tr>
+									<tr>
+										<td colspan="4"></td>
+										<td align="right" class="leftLabel"><s:text name="ordencompra.totaliva"></s:text></td>
+										<td align="right"><s:property value="ordenCompra.orcoTotalivavenView"/></td>
+									</tr>
+									<tr>
+										<td colspan="4"></td>
+										<td align="right" class="leftLabel"><s:text name="ordencompra.totalpagado"></s:text></td>
+										<td align="right"><s:property value="ordenCompra.orcoTotalapagarView"/></td>
+									</tr>
+								</table>
+							</td>
 						</tr>
 					</table>
 					<table cellpadding="0" cellspacing="0" border="0" class="display">

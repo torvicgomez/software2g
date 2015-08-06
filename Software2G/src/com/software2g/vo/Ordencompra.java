@@ -2,6 +2,9 @@ package com.software2g.vo;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.software2g.util.ValidaString;
+
 import java.util.List;
 
 
@@ -29,6 +32,9 @@ public class Ordencompra implements Serializable {
 	@Column(name="orco_fechacompra")
 	private String orcoFechacompra;
 
+	@Column(name="orco_fechavence")
+	private String orcoFechavence;
+	
 	@Column(name="orco_horacambio")
 	private String orcoHoracambio;
 
@@ -129,6 +135,10 @@ public class Ordencompra implements Serializable {
 		return this.orcoTotaldescuento;
 	}
 
+	public String getOrcoTotaldescuentoView() {
+		return ValidaString.formatToMoney(String.valueOf(orcoTotaldescuento));
+	}
+	
 	public void setOrcoTotaldescuento(double orcoTotaldescuento) {
 		this.orcoTotaldescuento = orcoTotaldescuento;
 	}
@@ -137,6 +147,10 @@ public class Ordencompra implements Serializable {
 		return this.orcoTotalivaven;
 	}
 
+	public String getOrcoTotalivavenView() {
+		return ValidaString.formatToMoney(String.valueOf(orcoTotalivaven));
+	}
+	
 	public void setOrcoTotalivaven(double orcoTotalivaven) {
 		this.orcoTotalivaven = orcoTotalivaven;
 	}
@@ -145,6 +159,10 @@ public class Ordencompra implements Serializable {
 		return this.orcoTotalpagado;
 	}
 
+	public String getOrcoTotalpagadoView() {
+		return ValidaString.formatToMoney(String.valueOf(orcoTotalpagado));
+	}
+	
 	public void setOrcoTotalpagado(double orcoTotalpagado) {
 		this.orcoTotalpagado = orcoTotalpagado;
 	}
@@ -185,6 +203,10 @@ public class Ordencompra implements Serializable {
 		return orcoTotalcompra;
 	}
 
+	public String getOrcoTotalcompraView() {
+		return ValidaString.formatToMoney(String.valueOf(orcoTotalcompra));
+	}
+	
 	public void setOrcoTotalcompra(double orcoTotalcompra) {
 		this.orcoTotalcompra = orcoTotalcompra;
 	}
@@ -193,8 +215,23 @@ public class Ordencompra implements Serializable {
 		return orcoTotalapagar;
 	}
 
+	public String getOrcoTotalapagarView() {
+		return ValidaString.formatToMoney(String.valueOf(orcoTotalapagar));
+	}
+	
 	public void setOrcoTotalapagar(double orcoTotalapagar) {
 		this.orcoTotalapagar = orcoTotalapagar;
 	}
-	
+
+	public String getOrcoFechavence() {
+		return orcoFechavence;
+	}
+
+	public void setOrcoFechavence(String orcoFechavence) {
+		this.orcoFechavence = orcoFechavence;
+	}
+
+	public String getOrcoSaldoView(){
+		return ValidaString.formatToMoney(String.valueOf(this.orcoTotalapagar-this.orcoTotalpagado));
+	}
 }

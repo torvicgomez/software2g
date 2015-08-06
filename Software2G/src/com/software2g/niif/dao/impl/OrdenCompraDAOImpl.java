@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.software2g.vo.Ordencompra;
+import com.software2g.vo.Servicio;
 import com.software2g.niif.dao.IOrdenCompraDao;
 
 import org.springframework.stereotype.Repository;
@@ -82,6 +83,13 @@ public class OrdenCompraDAOImpl implements IOrdenCompraDao {
 	public void persistOrdencompra(Ordencompra ordencompra) {
 		em.persist(em.merge(ordencompra));
 	}
+	
+	public long persistOrdencompraId(Ordencompra ordencompra) {
+		Ordencompra obj = em.merge(ordencompra); 
+		em.persist(obj); 
+		return obj.getOrcoId();
+	}
+	
 	/**
 	 * Remove the given persistent instance.
 	 */

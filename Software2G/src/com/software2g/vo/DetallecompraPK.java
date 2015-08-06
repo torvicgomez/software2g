@@ -18,8 +18,14 @@ public class DetallecompraPK implements Serializable {
 	@Column(name="orco_id")
 	private long orcoId;
 
+	public DetallecompraPK(long artiId, long orcoId) {
+		this.artiId = artiId;
+		this.orcoId = orcoId;
+	}
+	
 	public DetallecompraPK() {
 	}
+	
 	public long getArtiId() {
 		return this.artiId;
 	}

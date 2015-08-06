@@ -24,8 +24,8 @@ import com.software2g.util.ValidaString;
 import com.software2g.vo.Articulo;
 import com.software2g.vo.Categoria;
 import com.software2g.vo.Detallecompra;
+import com.software2g.vo.DetallecompraPK;
 import com.software2g.vo.Ordencompra;
-import com.software2g.vo.Persona;
 import com.software2g.vo.Usuario;
 import com.software2g.vo.UtilGenerico;
 import com.software2g.vo.Condicionpago;
@@ -81,6 +81,11 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	public void setListDetalleCompra(List<Detallecompra> listDetalleCompra) {this.listDetalleCompra = listDetalleCompra;}
 	public Detallecompra getDetalleCompra() {return detalleCompra;}
 	public void setDetalleCompra(Detallecompra detalleCompra) {this.detalleCompra = detalleCompra;}
+	
+	public void setOrcoTotalCompra(double totalCompra){this.ordenCompra.setOrcoTotalcompra(totalCompra);}
+	public void setOrcoDescuento(double descuento){this.ordenCompra.setOrcoTotaldescuento(descuento);}
+	public void setOrcoIva(double iva){this.ordenCompra.setOrcoTotalivaven(iva);}
+	public void setOrcoTotalaPagar(double totalaPagar){this.ordenCompra.setOrcoTotalapagar(totalaPagar);}
 	
 	
 	public List<UtilGenerico> getListEstado() {return ConstantesAplicativo.listEstadoSN;}
@@ -187,27 +192,38 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     			//listCategoria = gestionFacadeNIIF.findAllCategoriasActivas();
     			System.out.println("Construccion!!!!!!");
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
-    			if(ValidaString.isNullOrEmptyString(articulo.getArtiNombre()))
-    				addActionError(getText("validacion.requerido","artinombre","Nombre"));
-    			if(categoria==null||categoria.getCateId()<=0)
-    				addActionError(getText("validacion.requerido","cateid","Categoria"));
-    			if(ValidaString.isNullOrEmptyString(articulo.getArtiReferencia()))
-    				addActionError(getText("validacion.requerido","artireferencia","Referencia"));
-    			if(ValidaString.isNullOrEmptyString(articulo.getArtiEstado()))
-    				addActionError(getText("validacion.requerido","artiestado","Estado"));
+    			listDetalleCompra = (List<Detallecompra>)request.getSession().getAttribute("listDetalleCompra");
+    			if(ValidaString.isNullOrEmptyString(ordenCompra.getOrcoNrocomprobante()))
+    				addActionError(getText("validacion.requerido","orconrocomprobante","Nro Comprobante"));
+    			if(ValidaString.isNullOrEmptyString(ordenCompra.getOrcoFechacompra()))
+    				addActionError(getText("validacion.requerido","orcofechacompra","Fecha de Compra"));
+    			if(ValidaString.isNullOrEmptyString(ordenCompra.getOrcoFechavence()))
+    				addActionError(getText("validacion.requerido","orcofechavence","Fecha de Vencimiento"));
+    			if(listDetalleCompra==null||listDetalleCompra.size()<=0)
+    				addActionError(getText("validacion.requeridosec","detallecompra","Detalle de Compra"));
+    			//ValidaString.imprimirObject(ordenCompra);
     			if(!hasActionErrors()){
-    				articulo.setCategoria(gestionFacadeNIIF.findCategoriaById(categoria.getCateId()));
-    				articulo.setDatosAud(this.getDatosAud());
-    				ValidaString.imprimirObject(articulo);
-    				gestionFacadeNIIF.persistArticulo(articulo);
+    				ordenCompra.setProveedor(gestionFacadeNIIF.findProveedorById(1));//Construccion Proveedor
+    				ordenCompra.setOrcoEstado(ConstantesAplicativo.constanteEstadoOrdenCompraPendiente);
+    				ordenCompra.setDatosAud(getDatosAud());
+    				long orcoId = gestionFacadeNIIF.persistOrdencompraId(ordenCompra);
+    				if(orcoId>0){
+    					ordenCompra.setOrcoId(orcoId);
+    					for(Detallecompra elem:listDetalleCompra){
+    						elem.setOrdencompra(ordenCompra);
+    						elem.setId(new DetallecompraPK(elem.getArticulo().getArtiId(), elem.getOrdencompra().getOrcoId()));
+    						elem.setDatosAud(getDatosAud());
+    						gestionFacadeNIIF.persistDetallecompra(elem);
+    					}
+    				}
     				estado = ConstantesAplicativo.constanteEstadoAbstract;
     				addActionMessage(getText("accion.satisfactoria"));
     			}else
     				listCategoria = gestionFacadeNIIF.findAllCategoriasActivas();
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			ordenCompra = gestionFacadeNIIF.findOrdencompraById(getIdLong());
-    			categoria = gestionFacadeNIIF.findCategoriaById(articulo.getCategoria().getCateId());
-    			listCategoria = gestionFacadeNIIF.findAllCategoriasActivas();
+    			listDetalleCompra = gestionFacadeNIIF.findAllDetallecompras(getIdLong());
+    			request.getSession().setAttribute("listDetalleCompra", listDetalleCompra);
     		}
     	} catch(Exception e){
     		e.printStackTrace();
@@ -258,21 +274,25 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 			boolean bandAdd = true;
 			String html = "";
 			int posicion = Integer.parseInt(request.getParameter("posicion"));
-			int cantidadArti = request.getParameter("cantidadArti")!=null?Integer.parseInt(request.getParameter("cantidadArti")):0;
-			double valorUniArti = request.getParameter("valorUniArti")!=null?Double.parseDouble(request.getParameter("valorUniArti")):0;
+			int cantidadArti = request.getParameter("cantidadArti")!=null&&!request.getParameter("cantidadArti").toString().equals("")?Integer.parseInt(request.getParameter("cantidadArti")):0;
+			double valorUniArti = request.getParameter("valorUniArti")!=null&&!request.getParameter("valorUniArti").toString().equals("")?Double.parseDouble(request.getParameter("valorUniArti")):0;
 			double totalDes = Double.parseDouble(request.getParameter("totalDes"));
-			double totalIva = Double.parseDouble(request.getParameter("totalDes"));
+			double totalIva = Double.parseDouble(request.getParameter("totalIva"));
 			listDetalleCompra = (List<Detallecompra>)request.getSession().getAttribute("listDetalleCompra");
 			if(listDetalleCompra==null)
 				listDetalleCompra = new ArrayList<Detallecompra>();
 			if(posicion<0){
 				if(cantidadArti>0&&valorUniArti>0){
 					detalleCompra = (Detallecompra) request.getSession().getAttribute("detalleCompra");
-					detalleCompra.setDecoCantidad(cantidadArti);
-					detalleCompra.setDecoValorunitario(valorUniArti);
-					//ValidaString.imprimirObject(detalleCompra);
-					//ValidaString.imprimirObject(detalleCompra.getArticulo());
-					listDetalleCompra.add(detalleCompra);
+					if(detalleCompra!=null){
+						detalleCompra.setDecoCantidad(cantidadArti);
+						detalleCompra.setDecoValorunitario(valorUniArti);
+						detalleCompra.setDecoValortotal(cantidadArti*valorUniArti);
+						//ValidaString.imprimirObject(detalleCompra);
+						//ValidaString.imprimirObject(detalleCompra.getArticulo());
+						listDetalleCompra.add(detalleCompra);
+						request.getSession().removeAttribute("detalleCompra");
+					}
 				}else
 					bandAdd = false;
 			}else
@@ -281,7 +301,7 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 			html += !bandAdd?"<tr><td colspan=\"6\"><font size=\"2\" color=\"#FF0000\"><strong>Cantidad y Valor Unitario son requeridos.[E001]</strong></font></td></tr>":"";
 			if(listDetalleCompra!=null&&listDetalleCompra.size()>0){
 				html +=	" <tr> " +
-						" 	<td class=\"leftLabel\">#</td> " +
+						" 	<td class=\"leftLabel\" style=\"width:5%\">#</td> " +
 						" 	<td class=\"leftLabel\">Referencia</td> " +
 						"	<td class=\"leftLabel\">Artículo</td> " +
 						"	<td class=\"leftLabel\">Cantidad</td> " +
@@ -312,22 +332,21 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 				html +=	" <tr> " +
 						" 	<td colspan=\"4\"></td> " +
 						"	<td align=\"right\" class=\"leftLabel\">Total Descuento</td> " +
-						"	<td align=\"right\"><input type=\"text\" id=\"totalDes\" value=\""+totalDes+"\"/></td>" +
+						"	<td align=\"right\"><input type=\"text\" id=\"totalDes\" value=\""+totalDes+"\"  class=\"inputs\"  style=\"text-align:right\" onKeyPress=\"return soloNumeros(event)\" onpaste=\"return false\" onblur=\"javascript:calcularTotalaPagar();\"/></td>" +
 						" </tr> ";
 				html +=	" <tr> " + 
 						" 	<td colspan=\"4\"></td> " +
 						"	<td align=\"right\" class=\"leftLabel\">Total Iva</td> " +
-						"	<td align=\"right\"><input type=\"text\" id=\"totalIva\" value=\""+totalIva+"\"/></td>" +
+						"	<td align=\"right\"><input type=\"text\" id=\"totalIva\" value=\""+totalIva+"\"  class=\"inputs\"  style=\"text-align:right\" onKeyPress=\"return soloNumeros(event)\" onpaste=\"return false\" onblur=\"javascript:calcularTotalaPagar();\"/></td>" +
 						" </tr> ";
 				html +=	" <tr> " +
 						" 	<td colspan=\"4\"></td> " +
 						"	<td align=\"right\" class=\"leftLabel\">Total a Pagar</td> " +
-						"	<td align=\"right\"><input type=\"hidden\" id=\"totalIva\" value=\""+((total+totalIva)-totalDes)+"\"/>"+((total+totalIva)-totalDes)+"</td>" +
+						"	<td align=\"right\"><input type=\"hidden\" id=\"totalaPagar\" value=\""+((total+totalIva)-totalDes)+"\"/><div id=\"totalaPagarDiv\">"+((total+totalIva)-totalDes)+"</div></td>" +
 						" </tr> ";
 			}
 			html +=	"</table>";
 			request.getSession().setAttribute("listDetalleCompra",listDetalleCompra);
-			request.getSession().removeAttribute("detalleCompra");
 			strDatosDetalleCompra = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
 		}catch(Exception e){
 			e.printStackTrace();

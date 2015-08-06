@@ -24,4 +24,11 @@
 		<put-attribute name="body" value="/niif/ordenCompra.jsp" />
 	</definition>
 	
+	<definition name="niif.condicionPago" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/niif/condicionPago.jsp" />
+	</definition>
+	
+	<definition name="niif.Formapago" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/niif/Formapago.jsp" />
+	</definition>
 </tiles-definitions>

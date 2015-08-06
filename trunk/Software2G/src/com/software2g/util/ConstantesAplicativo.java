@@ -154,6 +154,13 @@ public final class ConstantesAplicativo {
 	public static final List<UtilGenerico> listClaseDiagnostico = new ArrayList<UtilGenerico>(
 			Arrays.asList(new UtilGenerico("P", "Principal"),new UtilGenerico("R", "Relacionado")));
 	
+	public static final List<UtilGenerico> listCondicionPagoSelect = new ArrayList<UtilGenerico>(
+			Arrays.asList(new UtilGenerico("CREDITO", "Crédito"),new UtilGenerico("CONTADO", "Contado")));
+	
+	public static final List<UtilGenerico> listFormaPagoSelect = new ArrayList<UtilGenerico>(
+			Arrays.asList(new UtilGenerico("EFECTIVO", "Efectivo"),new UtilGenerico("TARJETA", "Tarjeta"),new UtilGenerico("CHEQUE", "Cheque")));
+	
+	
 	public static final String constanteEspecialidadMedicinaGeneral = "3";
 	public static final String constanteEspecialidadOdontologia = "1";
 	public static final String constanteEspecialidadOptometria = "2";

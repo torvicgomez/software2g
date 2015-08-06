@@ -107,12 +107,12 @@
 								<tr>
 									<s:if test="estado=='all'">
 										<td align="center">
-											<a onclick="modificar('${data.cateId}');">
+											<a onclick="modificar('${data.copaId}');">
 												<img align="middle" src="<s:url value="/imagenes/icon_edit.png"/>" alt="Editar" width="18" height="18">
 											</a>
 										</td>
 										<td align="center">
-											<a onclick="detalle('${data.cateId}');">
+											<a onclick="detalle('${data.copaId}');">
 												<img align="middle" src="<s:url value="/imagenes/icon_detalle.png"/>" alt="Detalle" width="18" height="18">
 											</a>
 										</td>
@@ -131,9 +131,9 @@
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<s:hidden name="condicionpago.copaId" id="copaId"></s:hidden>
 						<tr>
-							<td class="leftLabel"><s:text name="categoriaart.nombre"></s:text></td>
+							<td class="leftLabel"><s:text name="condicionpago.condicionpago"></s:text></td>
 							<td colspan="3">
-								<s:textfield name="condicionpago.copaCondicionpago" id="copaCondicionpago" size="60" maxlength="30" cssClass="inputs"></s:textfield>
+								<s:select list="listCondicionPagoSelect" id="copaCondicionpago" name="condicionpago.copaCondicionpago" listKey="key" listValue="valor" cssClass="inputs"></s:select>
 							</td>
 						</tr>
 						<tr>

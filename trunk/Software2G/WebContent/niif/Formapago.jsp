@@ -108,12 +108,12 @@
 									<tr>
 										<s:if test="estado=='all'">
 											<td align="center">
-												<a onclick="modificar('${data.cateId}');">
+												<a onclick="modificar('${data.fopaId}');">
 													<img align="middle" src="<s:url value="/imagenes/icon_edit.png"/>" alt="Editar" width="18" height="18">
 												</a>
 											</td>
 											<td align="center">
-												<a onclick="detalle('${data.cateId}');">
+												<a onclick="detalle('${data.fopaId}');">
 													<img align="middle" src="<s:url value="/imagenes/icon_detalle.png"/>" alt="Detalle" width="18" height="18">
 												</a>
 											</td>
@@ -132,9 +132,10 @@
 						<table cellpadding="0" cellspacing="0" border="0" class="display">
 							<s:hidden name="formapago.fopaId" id="fopaId"></s:hidden>
 							<tr>
-								<td class="leftLabel"><s:text name="formapago.fopaFormapago"></s:text></td>
+								<td class="leftLabel"><s:text name="formapago.formapago"></s:text></td>
 								<td colspan="3">
-									<s:textfield name="formapago.fopaFormapago" id="fopaFormapago" size="60" maxlength="30" cssClass="inputs"></s:textfield>
+									<s:select list="listFormaPagoSelect" id="fopaFormapago" name="formapago.fopaFormapago" listKey="key" listValue="valor" cssClass="inputs"></s:select>
+<%-- 									<s:textfield name="formapago.fopaFormapago" id="fopaFormapago" size="60" maxlength="30" cssClass="inputs"></s:textfield> --%>
 								</td>
 							</tr>
 							<tr>
@@ -162,7 +163,7 @@
 					<s:elseif test="estado=='abstract'">
 						<table cellpadding="0" cellspacing="0" border="0" class="display">
 							<tr>
-								<td class="leftLabel"><s:text name="formapago.nombre"></s:text></td>
+								<td class="leftLabel"><s:text name="formapago.formapago"></s:text></td>
 								<td><s:property value="formapago.fopaFormapago"/></td>
 							</tr>
 							<tr>

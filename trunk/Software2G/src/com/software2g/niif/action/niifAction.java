@@ -306,7 +306,7 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 						"	<td class=\"leftLabel\">Artículo</td> " +
 						"	<td class=\"leftLabel\">Cantidad</td> " +
 						" 	<td class=\"leftLabel\">Vr Unitario</td> " +
-						"	<td class=\"leftLabel\">Total</td>" +
+						"	<td class=\"leftLabel\">Vr Total</td>" +
 						" </tr> ";
 				int cont = 0;
 				double total = 0;
@@ -326,22 +326,22 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 				}
 				html +=	" <tr> " +
 						" 	<td colspan=\"4\"></td> " +
-						"	<td align=\"right\" class=\"leftLabel\">Total</td> " +
+						"	<td align=\"right\" class=\"leftLabel\">Subtotal</td> " +
 						"	<td align=\"right\"><input type=\"hidden\" id=\"total\" value=\""+total+"\"/>"+ total + " </td>" +
 						" </tr> ";
 				html +=	" <tr> " +
 						" 	<td colspan=\"4\"></td> " +
-						"	<td align=\"right\" class=\"leftLabel\">Total Descuento</td> " +
+						"	<td align=\"right\" class=\"leftLabel\">Descuento</td> " +
 						"	<td align=\"right\"><input type=\"text\" id=\"totalDes\" value=\""+totalDes+"\"  class=\"inputs\"  style=\"text-align:right\" onKeyPress=\"return soloNumeros(event)\" onpaste=\"return false\" onblur=\"javascript:calcularTotalaPagar();\"/></td>" +
 						" </tr> ";
 				html +=	" <tr> " + 
 						" 	<td colspan=\"4\"></td> " +
-						"	<td align=\"right\" class=\"leftLabel\">Total Iva</td> " +
+						"	<td align=\"right\" class=\"leftLabel\">Iva</td> " +
 						"	<td align=\"right\"><input type=\"text\" id=\"totalIva\" value=\""+totalIva+"\"  class=\"inputs\"  style=\"text-align:right\" onKeyPress=\"return soloNumeros(event)\" onpaste=\"return false\" onblur=\"javascript:calcularTotalaPagar();\"/></td>" +
 						" </tr> ";
 				html +=	" <tr> " +
 						" 	<td colspan=\"4\"></td> " +
-						"	<td align=\"right\" class=\"leftLabel\">Total a Pagar</td> " +
+						"	<td align=\"right\" class=\"leftLabel\">Total</td> " +
 						"	<td align=\"right\"><input type=\"hidden\" id=\"totalaPagar\" value=\""+((total+totalIva)-totalDes)+"\"/><div id=\"totalaPagarDiv\">"+((total+totalIva)-totalDes)+"</div></td>" +
 						" </tr> ";
 			}

@@ -350,7 +350,7 @@
 													</s:iterator>
 													<tr>
 														<td colspan="4"></td>
-														<td align="right" class="leftLabel"><s:text name="ordencompra.totalarticulo"></s:text></td>
+														<td align="right" class="leftLabel"><s:text name="ordencompra.subtotal"></s:text></td>
 														<td align="right"><input type="hidden" id="total" value="<s:property value="ordenCompra.orcoTotalcompra"/>"/><s:property value="ordenCompra.orcoTotalcompraView"/></td>
 													</tr>
 													<tr>
@@ -444,7 +444,7 @@
 									</s:iterator>
 									<tr>
 										<td colspan="4"></td>
-										<td align="right" class="leftLabel"><s:text name="ordencompra.totalarticulo"></s:text></td>
+										<td align="right" class="leftLabel"><s:text name="ordencompra.subtotal"></s:text></td>
 										<td align="right"><s:property value="ordenCompra.orcoTotalcompraView"/></td>
 									</tr>
 									<tr>

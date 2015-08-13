@@ -139,15 +139,7 @@
 		</script>
 	</head>
 	<body id="dt_example">
-		<s:form id="form">
-			<s:hidden name="funcPosicionado"></s:hidden>
-			<s:hidden name="bandEstadoFunc"></s:hidden>
-			<div id="demo">
-				<table cellpadding="0" cellspacing="0" border="0" class="display">
-					<tr><td>
-						<h1><s:text name="ventas.vincularproductos"></s:text></h1>
-					</td></tr>
-				</table>
+				
 				<s:if test="estado=='all'||estado=='add'||estado=='edit'||estado=='save'">
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<s:hidden name="venta.ventId" id="ventId"></s:hidden>
@@ -360,9 +352,6 @@
 						</tr>
 					</table>
 				</s:elseif>
-			</div>
-			<div class="spacer"></div>
-		</s:form>
 	</body>
 </html>
 <script type="text/javascript" charset="utf-8">validarView();</script>

@@ -116,6 +116,9 @@ public class Persona implements Serializable {
 	@Transient
 	private String existePaciente; 
 	
+	@Transient
+	private String existeCliente;
+	
 	public Persona() {
 	}
 
@@ -383,6 +386,14 @@ public class Persona implements Serializable {
 
 	public void setVendedor(List<Vendedor> vendedor) {
 		this.vendedor = vendedor;
+	}
+
+	public String getExisteCliente() {
+		return existeCliente;
+	}
+
+	public void setExisteCliente(String existeCliente) {
+		this.existeCliente = existeCliente;
 	}
 
 }

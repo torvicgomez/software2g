@@ -38,7 +38,8 @@ var zNodes = [
 	{id:5002, pId:5000, name:"Articulos", file:"articulo.action?estado=all&funcPosicionado=NIIF::>Artículos"},
 	{id:5003, pId:5000, name:"Orden de Compra", file:"ordencompra.action?estado=all&funcPosicionado=NIIF::>Orden de Compra"},
 	{id:5004, pId:5000, name:"Condicion de Pago", file:"condicionpago.action?estado=all&funcPosicionado=NIIF::>Condicion de Pago"},
-	{id:5005, pId:5000, name:"Forma de Pago", file:"formapago.action?estado=all&funcPosicionado=NIIF::>Forma de Pago"}
+	{id:5005, pId:5000, name:"Forma de Pago", file:"formapago.action?estado=all&funcPosicionado=NIIF::>Forma de Pago"},
+	{id:5006, pId:5000, name:"Ventas", file:"venta.action?estado=alltiposervicio&funcPosicionado=NIIF::>Ventas"} 
 	
 	
 //	{id:5000, pId:0, name:"Cartera", open:true},

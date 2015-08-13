@@ -2,6 +2,9 @@ package com.software2g.vo;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.software2g.util.ValidaString;
+
 import java.util.List;
 
 
@@ -147,6 +150,10 @@ public class Venta implements Serializable {
 		return this.ventTotal;
 	}
 
+	public String getVentTotalView() {
+		return ValidaString.formatToMoney(String.valueOf(ventTotal));
+	}
+	
 	public void setVentTotal(double ventTotal) {
 		this.ventTotal = ventTotal;
 	}
@@ -155,6 +162,10 @@ public class Venta implements Serializable {
 		return this.ventTotaldes;
 	}
 
+	public String getVentTotaldesView() {
+		return ValidaString.formatToMoney(String.valueOf(ventTotaldes));
+	}
+	
 	public void setVentTotaldes(double ventTotaldes) {
 		this.ventTotaldes = ventTotaldes;
 	}
@@ -163,6 +174,10 @@ public class Venta implements Serializable {
 		return this.ventTotaliva;
 	}
 
+	public String getVentTotalivaView() {
+		return ValidaString.formatToMoney(String.valueOf(ventTotaliva));
+	}
+	
 	public void setVentTotaliva(double ventTotaliva) {
 		this.ventTotaliva = ventTotaliva;
 	}
@@ -171,6 +186,10 @@ public class Venta implements Serializable {
 		return this.ventTotalpag;
 	}
 
+	public String getVentTotalpagView() {
+		return ValidaString.formatToMoney(String.valueOf(ventTotalpag));
+	}
+	
 	public void setVentTotalpag(double ventTotalpag) {
 		this.ventTotalpag = ventTotalpag;
 	}

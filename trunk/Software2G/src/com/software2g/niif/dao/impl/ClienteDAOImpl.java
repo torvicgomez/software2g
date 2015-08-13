@@ -76,6 +76,23 @@ public class ClienteDAOImpl implements IClienteDao {
             }
         }
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Cliente findAllClienteIdPers(long idPers) {
+        try {
+    		String jpqlString = "select cliente from " + Cliente.class.getSimpleName() + " cliente " +
+    				" where cliente.persona.idPers =:idPers ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("idPers", idPers);
+            return (Cliente)query.getSingleResult();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

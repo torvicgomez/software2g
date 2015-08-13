@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.software2g.util.ValidaString;
+
 
 /**
  * The persistent class for the detalleventa database table.
@@ -99,6 +101,10 @@ public class Detalleventa implements Serializable {
 		return this.deveIvaartven;
 	}
 
+	public String getDeveIvaartvenView() {
+		return ValidaString.formatToMoney(String.valueOf(deveIvaartven));
+	}
+	
 	public void setDeveIvaartven(double deveIvaartven) {
 		this.deveIvaartven = deveIvaartven;
 	}
@@ -115,6 +121,10 @@ public class Detalleventa implements Serializable {
 		return this.deveTotalartven;
 	}
 
+	public String getDeveTotalartvenView() {
+		return ValidaString.formatToMoney(String.valueOf(deveTotalartven));
+	}
+	
 	public void setDeveTotalartven(double deveTotalartven) {
 		this.deveTotalartven = deveTotalartven;
 	}
@@ -123,6 +133,10 @@ public class Detalleventa implements Serializable {
 		return this.deveValorartven;
 	}
 
+	public String getDeveValorartvenView() {
+		return ValidaString.formatToMoney(String.valueOf(deveValorartven));
+	}
+	
 	public void setDeveValorartven(double deveValorartven) {
 		this.deveValorartven = deveValorartven;
 	}

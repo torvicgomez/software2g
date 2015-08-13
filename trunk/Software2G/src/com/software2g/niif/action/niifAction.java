@@ -6,9 +6,11 @@ import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,13 +25,18 @@ import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Articulo;
 import com.software2g.vo.Categoria;
+import com.software2g.vo.Cliente;
 import com.software2g.vo.Detallecompra;
 import com.software2g.vo.DetallecompraPK;
+import com.software2g.vo.Detalleventa;
 import com.software2g.vo.Ordencompra;
+import com.software2g.vo.Persona;
+import com.software2g.vo.Tipodocumento;
 import com.software2g.vo.Usuario;
 import com.software2g.vo.UtilGenerico;
 import com.software2g.vo.Condicionpago;
 import com.software2g.vo.Formapago;
+import com.software2g.vo.Venta;
 
 public class niifAction extends ActionSupport implements ServletRequestAware,ServletResponseAware {
 	private static final long serialVersionUID = 1L;
@@ -52,10 +59,20 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	private List<Condicionpago> listCondicionpago;
 	private Formapago formapago;
 	private List<Formapago> listFormapago;
+	
 	private List<Detallecompra> listDetalleCompra;
 	private Detallecompra detalleCompra;
 	private InputStream strDatosArticulo;
 	private InputStream strDatosDetalleCompra;
+	private List<Tipodocumento> listTipoDoc;
+	private Persona persona;
+	private Cliente cliente;
+	private List<Detalleventa> listDetalleVenta;
+	private Detalleventa detalleVenta;
+	private InputStream strDatosDetalleVenta;
+	private Venta venta;
+	private List<Venta> listVenta;
+	
 	
 	public Categoria getCategoria() {return categoria;}
 	public void setCategoria(Categoria categoria) {this.categoria = categoria;}
@@ -81,11 +98,20 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	public void setListDetalleCompra(List<Detallecompra> listDetalleCompra) {this.listDetalleCompra = listDetalleCompra;}
 	public Detallecompra getDetalleCompra() {return detalleCompra;}
 	public void setDetalleCompra(Detallecompra detalleCompra) {this.detalleCompra = detalleCompra;}
-	
-	public void setOrcoTotalCompra(double totalCompra){this.ordenCompra.setOrcoTotalcompra(totalCompra);}
-	public void setOrcoDescuento(double descuento){this.ordenCompra.setOrcoTotaldescuento(descuento);}
-	public void setOrcoIva(double iva){this.ordenCompra.setOrcoTotalivaven(iva);}
-	public void setOrcoTotalaPagar(double totalaPagar){this.ordenCompra.setOrcoTotalapagar(totalaPagar);}
+	public List<Tipodocumento> getListTipoDoc() {return listTipoDoc;}
+	public void setListTipoDoc(List<Tipodocumento> listTipoDoc) {this.listTipoDoc = listTipoDoc;}
+	public Persona getPersona() {return persona;}
+	public void setPersona(Persona persona) {this.persona = persona;}
+	public Cliente getCliente() {return cliente;}
+	public void setCliente(Cliente cliente) {this.cliente = cliente;}
+	public List<Detalleventa> getListDetalleVenta() {return listDetalleVenta;}
+	public void setListDetalleVenta(List<Detalleventa> listDetalleVenta) {this.listDetalleVenta = listDetalleVenta;}
+	public Detalleventa getDetalleVenta() {return detalleVenta;}
+	public void setDetalleVenta(Detalleventa detalleVenta) {this.detalleVenta = detalleVenta;}
+	public Venta getVenta() {return venta;}
+	public void setVenta(Venta venta) {this.venta = venta;}
+	public List<Venta> getListVenta() {return listVenta;}
+	public void setListVenta(List<Venta> listVenta) {this.listVenta = listVenta;}
 	
 	
 	public List<UtilGenerico> getListEstado() {return ConstantesAplicativo.listEstadoSN;}
@@ -237,6 +263,7 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 		try{
 			String html = "";
 			long idArticulo = Long.parseLong(request.getParameter("idArticulo"));
+			String bandVenta = request.getParameter("tipo")!=null&&request.getParameter("tipo").equals("venta")?ConstantesAplicativo.constanteCheckSi:ConstantesAplicativo.constanteCheckNo; 
 			Articulo articulo = gestionFacadeNIIF.findArticuloById(idArticulo);
 			html = "<s:textfield name=\"dataAutoCompletado\" id=\"search\" size=\"60\" maxlength=\"30\" cssClass=\"inputs\"></s:textfield><br>";
 			html += "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">"+
@@ -255,13 +282,22 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 					"	<tr> " +
 					"		<td class=\"leftLabel\">Cantidad</td> " +
 					"		<td><input type=\"text\" id=\"cantidadArti\" class=\"inputs\" onKeyPress=\"return soloNumeros(event)\" onpaste=\"return false\"/></td> " +
-					"		<td class=\"leftLabel\">Valor Unitario</td> " +
-					"		<td><input type=\"text\" id=\"valorUniArti\" class=\"inputs\" onKeyPress=\"return soloNumeros(event)\" onpaste=\"return false\"/></td> " +
-					"	</tr> " +
+					"		<td class=\"leftLabel\">Valor Unitario</td> ";
+			html +=	bandVenta!=null&&bandVenta.equals(ConstantesAplicativo.constanteCheckNo)?
+					"		<td><input type=\"text\" id=\"valorUniArti\" class=\"inputs\" onKeyPress=\"return soloNumeros(event)\" onpaste=\"return false\"/></td> ":
+					"		<td><input type=\"hidden\" id=\"valorUniArti\" value=\""+articulo.getArtiPrecioventa()+"\"/>" + articulo.getArtiPrecioventaView() + "</td> ";
+			html +=	"	</tr> " +
 					"</table>";
-			detalleCompra = new Detallecompra();
-			detalleCompra.setArticulo(articulo);
-			request.getSession().setAttribute("detalleCompra", detalleCompra);
+			if(bandVenta!=null&&bandVenta.equals(ConstantesAplicativo.constanteCheckNo)){
+				detalleCompra = new Detallecompra();
+				detalleCompra.setArticulo(articulo);
+				request.getSession().setAttribute("detalleCompra", detalleCompra);
+			}else{
+				System.out.println("Entra esta parte!!!!!!!!");
+				detalleVenta = new Detalleventa();
+				detalleVenta.setArticulo(articulo);
+				request.getSession().setAttribute("detalleVenta", detalleVenta);
+			}
 			strDatosArticulo = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
 		}catch(Exception e){
 			e.printStackTrace();
@@ -273,33 +309,58 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 		try{
 			boolean bandAdd = true;
 			String html = "";
+			String bandVenta = request.getParameter("tipo")!=null&&request.getParameter("tipo").equals("venta")?ConstantesAplicativo.constanteCheckSi:ConstantesAplicativo.constanteCheckNo;
 			int posicion = Integer.parseInt(request.getParameter("posicion"));
 			int cantidadArti = request.getParameter("cantidadArti")!=null&&!request.getParameter("cantidadArti").toString().equals("")?Integer.parseInt(request.getParameter("cantidadArti")):0;
 			double valorUniArti = request.getParameter("valorUniArti")!=null&&!request.getParameter("valorUniArti").toString().equals("")?Double.parseDouble(request.getParameter("valorUniArti")):0;
 			double totalDes = Double.parseDouble(request.getParameter("totalDes"));
 			double totalIva = Double.parseDouble(request.getParameter("totalIva"));
-			listDetalleCompra = (List<Detallecompra>)request.getSession().getAttribute("listDetalleCompra");
-			if(listDetalleCompra==null)
-				listDetalleCompra = new ArrayList<Detallecompra>();
-			if(posicion<0){
-				if(cantidadArti>0&&valorUniArti>0){
-					detalleCompra = (Detallecompra) request.getSession().getAttribute("detalleCompra");
-					if(detalleCompra!=null){
-						detalleCompra.setDecoCantidad(cantidadArti);
-						detalleCompra.setDecoValorunitario(valorUniArti);
-						detalleCompra.setDecoValortotal(cantidadArti*valorUniArti);
-						//ValidaString.imprimirObject(detalleCompra);
-						//ValidaString.imprimirObject(detalleCompra.getArticulo());
-						listDetalleCompra.add(detalleCompra);
-						request.getSession().removeAttribute("detalleCompra");
-					}
+			if(bandVenta!=null&&bandVenta.equals(ConstantesAplicativo.constanteCheckSi)){
+				listDetalleVenta = (List<Detalleventa>)request.getSession().getAttribute("listDetalleVenta");
+				if(listDetalleVenta==null)
+					listDetalleVenta = new ArrayList<Detalleventa>();
+				if(posicion<0){
+					if(cantidadArti>0&&valorUniArti>0){
+						detalleVenta = (Detalleventa) request.getSession().getAttribute("detalleVenta");
+						if(detalleVenta!=null){
+							detalleVenta.setDeveCantidad(cantidadArti);
+							detalleVenta.setDeveValorartven(valorUniArti);
+							detalleVenta.setDeveTotalartven(cantidadArti*valorUniArti);
+							//ValidaString.imprimirObject(detalleCompra);
+							//ValidaString.imprimirObject(detalleCompra.getArticulo());
+							listDetalleVenta.add(detalleVenta);
+							request.getSession().removeAttribute("detalleVenta");
+						}
+					}else
+						bandAdd = false;
 				}else
-					bandAdd = false;
-			}else
-				listDetalleCompra.remove(posicion);
+					listDetalleVenta.remove(posicion);
+			}else{
+				listDetalleCompra = (List<Detallecompra>)request.getSession().getAttribute("listDetalleCompra");
+				if(listDetalleCompra==null)
+					listDetalleCompra = new ArrayList<Detallecompra>();
+				if(posicion<0){
+					if(cantidadArti>0&&valorUniArti>0){
+						detalleCompra = (Detallecompra) request.getSession().getAttribute("detalleCompra");
+						if(detalleCompra!=null){
+							detalleCompra.setDecoCantidad(cantidadArti);
+							detalleCompra.setDecoValorunitario(valorUniArti);
+							detalleCompra.setDecoValortotal(cantidadArti*valorUniArti);
+							//ValidaString.imprimirObject(detalleCompra);
+							//ValidaString.imprimirObject(detalleCompra.getArticulo());
+							listDetalleCompra.add(detalleCompra);
+							request.getSession().removeAttribute("detalleCompra");
+						}
+					}else
+						bandAdd = false;
+				}else
+					listDetalleCompra.remove(posicion);
+			}
 			html = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" class=\"display\">";
-			html += !bandAdd?"<tr><td colspan=\"6\"><font size=\"2\" color=\"#FF0000\"><strong>Cantidad y Valor Unitario son requeridos.[E001]</strong></font></td></tr>":"";
-			if(listDetalleCompra!=null&&listDetalleCompra.size()>0){
+			html += !bandAdd?"<tr><td colspan=\"6\"><font size=\"2\" color=\"#FF0000\"><strong>Cantidad " +
+					((bandVenta!=null&&bandVenta.equals(ConstantesAplicativo.constanteCheckSi))?"es requerido":"y Valor Unitario son requeridos") +
+					".[E001]</strong></font></td></tr>":"";
+			if((listDetalleCompra!=null&&listDetalleCompra.size()>0) || (listDetalleVenta!=null&&listDetalleVenta.size()>0) ){
 				html +=	" <tr> " +
 						" 	<td class=\"leftLabel\" style=\"width:5%\">#</td> " +
 						" 	<td class=\"leftLabel\">Referencia</td> " +
@@ -310,24 +371,41 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 						" </tr> ";
 				int cont = 0;
 				double total = 0;
-				for(Detallecompra elem:listDetalleCompra){
-					double totalArti = elem.getDecoCantidad()*elem.getDecoValorunitario();
-					html +=	"	<tr> " +
-							"		<td align=\"center\"> " +
-							" 			<a onclick=\"agregarArticulo('" + cont + "');\">Remover</a> " +
-							"		</td>" +
-							"		<td>" + elem.getArticulo().getArtiReferencia() + "</td> " +
-							"		<td>" + elem.getArticulo().getArtiNombre() + "</td> " +
-							"		<td align=\"right\">" + elem.getDecoCantidad() + "</td> " +
-							"		<td align=\"right\">" + elem.getDecoValorunitario() + "</td> " +
-							"		<td align=\"right\">" + totalArti + "</td> " +
-							"	</tr> ";
-					total += totalArti;
+				if(bandVenta!=null&&bandVenta.equals(ConstantesAplicativo.constanteCheckSi)){
+					for(Detalleventa elem:listDetalleVenta){
+						double totalArti = elem.getDeveCantidad()*elem.getDeveValorartven();
+						html +=	"	<tr> " +
+								"		<td align=\"center\"> " +
+								" 			<a onclick=\"agregarArticulo('" + cont + "');\">Remover</a> " +
+								"		</td>" +
+								"		<td>" + elem.getArticulo().getArtiReferencia() + "</td> " +
+								"		<td>" + elem.getArticulo().getArtiNombre() + "</td> " +
+								"		<td align=\"right\">" + elem.getDeveCantidad() + "</td> " +
+								"		<td align=\"right\">" + elem.getDeveValorartvenView()  + "</td> " +
+								"		<td align=\"right\">" + ValidaString.formatToMoney(String.valueOf(totalArti)) + "</td> " +
+								"	</tr> ";
+						total += totalArti;
+					}
+				}else{
+					for(Detallecompra elem:listDetalleCompra){
+						double totalArti = elem.getDecoCantidad()*elem.getDecoValorunitario();
+						html +=	"	<tr> " +
+								"		<td align=\"center\"> " +
+								" 			<a onclick=\"agregarArticulo('" + cont + "');\">Remover</a> " +
+								"		</td>" +
+								"		<td>" + elem.getArticulo().getArtiReferencia() + "</td> " +
+								"		<td>" + elem.getArticulo().getArtiNombre() + "</td> " +
+								"		<td align=\"right\">" + elem.getDecoCantidad() + "</td> " +
+								"		<td align=\"right\">" + elem.getDecoValorunitarioView() + "</td> " +
+								"		<td align=\"right\">" + ValidaString.formatToMoney(String.valueOf(totalArti))  + "</td> " +
+								"	</tr> ";
+						total += totalArti;
+					}
 				}
 				html +=	" <tr> " +
 						" 	<td colspan=\"4\"></td> " +
 						"	<td align=\"right\" class=\"leftLabel\">Subtotal</td> " +
-						"	<td align=\"right\"><input type=\"hidden\" id=\"total\" value=\""+total+"\"/>"+ total + " </td>" +
+						"	<td align=\"right\"><input type=\"hidden\" id=\"total\" value=\""+total+"\"/>"+ ValidaString.formatToMoney(String.valueOf(total)) + " </td>" +
 						" </tr> ";
 				html +=	" <tr> " +
 						" 	<td colspan=\"4\"></td> " +
@@ -342,11 +420,14 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 				html +=	" <tr> " +
 						" 	<td colspan=\"4\"></td> " +
 						"	<td align=\"right\" class=\"leftLabel\">Total</td> " +
-						"	<td align=\"right\"><input type=\"hidden\" id=\"totalaPagar\" value=\""+((total+totalIva)-totalDes)+"\"/><div id=\"totalaPagarDiv\">"+((total+totalIva)-totalDes)+"</div></td>" +
+						"	<td align=\"right\"><input type=\"hidden\" id=\"totalaPagar\" value=\""+((total+totalIva)-totalDes)+"\"/><div id=\"totalaPagarDiv\">"+ValidaString.formatToMoney(String.valueOf(((total+totalIva)-totalDes)))+"</div></td>" +
 						" </tr> ";
 			}
 			html +=	"</table>";
-			request.getSession().setAttribute("listDetalleCompra",listDetalleCompra);
+			if(bandVenta!=null&&bandVenta.equals(ConstantesAplicativo.constanteCheckSi)){
+				request.getSession().setAttribute("listDetalleVenta",listDetalleVenta);
+			}else
+				request.getSession().setAttribute("listDetalleCompra",listDetalleCompra);
 			strDatosDetalleCompra = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
 		}catch(Exception e){
 			e.printStackTrace();
@@ -416,6 +497,62 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     	System.out.println("######>>>>>>>niifAction>>>>formaPagoMethod>>>>estado entrada-->>"+estado);
     	return Action.SUCCESS;
 	}
+	
+	@SkipValidation
+	public String ventaMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>niifAction>>>>ventaMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			request.getSession().removeAttribute("listDetalleVenta");
+    			request.getSession().removeAttribute("detalleVenta");
+    			listFormapago = gestionFacadeNIIF.findAllFormapagos();
+    			listTipoDoc = gestionFacadeNIIF.findAllTipodocumentos();
+    			//Validar si existe el cliente o no
+    			if(!ValidaString.isNullOrEmptyString(persona.getDocumentoPers())&&!ValidaString.isNullOrEmptyString(persona.getTipodocumento().getAbreviaturaTidoc())){
+    				Persona personaFind = gestionFacadeNIIF.findPersona(persona.getDocumentoPers(), persona.getTipodocumento().getAbreviaturaTidoc());
+    				if(personaFind!=null&&personaFind.getIdPers()>0){
+    					cliente = gestionFacadeNIIF.findAllClienteIdPers(personaFind.getIdPers());
+    					persona = personaFind;
+    					persona.setExisteCliente(ConstantesAplicativo.constanteCheckSi);
+    				}
+    			}else{
+    				cliente = gestionFacadeNIIF.findAllClienteIdPers(ConstantesAplicativo.constanteIdClienteComodin);
+    				persona = cliente.getPersona();
+    				persona.setExisteCliente(ConstantesAplicativo.constanteCheckSi);
+    			}
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAllTipoServicio)){
+    			listTipoDoc = gestionFacadeNIIF.findAllTipodocumentos();
+    			Usuario usuario = (Usuario)request.getSession().getAttribute("usuarioVO");
+    			System.out.println("getIdPers:["+usuario.getPersona().getIdPers()+"]");
+    			//vendedor = gestionFacadeAgenda.findProfesionalIdPersona(usuario.getPersona().getIdPers());
+    			//request.getSession().removeAttribute("listDetalleVenta");
+    			//request.getSession().removeAttribute("detalleVenta");
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			if(ValidaString.isNullOrEmptyString(formapago.getFopaFormapago()))
+    				addActionError(getText("validacion.requerido","fopaFormaPago","Forma Pago"));
+    			if(ValidaString.isNullOrEmptyString(formapago.getFopaDescripcion()))
+    				addActionError(getText("validacion.requerido","fopaDescripcion","Descripcion"));
+    			if(!hasActionErrors()){
+    				formapago.setDatosAud(this.getDatosAud());
+    				ValidaString.imprimirObject(formapago);
+    				gestionFacadeNIIF.persistFormapago(formapago);
+    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				addActionMessage(getText("accion.satisfactoria"));
+    			}
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			formapago = gestionFacadeNIIF.findFormapagoById(getIdLong());
+    		}
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>niifAction>>>>ventaMethod>>>>estado entrada-->>"+estado);
+    	return Action.SUCCESS;
+	}
+	
+	
 	
 	public niifAction(IGestionFacadeNIIF gestionFacadeNIIF) {
 		this.gestionFacadeNIIF = gestionFacadeNIIF;

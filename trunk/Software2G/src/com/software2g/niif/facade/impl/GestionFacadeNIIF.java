@@ -15,7 +15,9 @@ import com.software2g.vo.Detalleventa;
 import com.software2g.vo.Formapago;
 import com.software2g.vo.Ordencompra;
 import com.software2g.vo.Pago;
+import com.software2g.vo.Persona;
 import com.software2g.vo.Proveedor;
+import com.software2g.vo.Tipodocumento;
 import com.software2g.vo.Vendedor;
 import com.software2g.vo.Venta;
 import com.software2g.niif.facade.IGestionFacadeNIIF;
@@ -31,6 +33,8 @@ import com.software2g.niif.dao.IPagosDao;
 import com.software2g.niif.dao.IProveedorDao;
 import com.software2g.niif.dao.IVendedorDao;
 import com.software2g.niif.dao.IVentaDao;
+import com.software2g.portal.dao.IPersonaDao;
+import com.software2g.portal.dao.ITipoDocumentoDao;
 
 /**
  * The service class for the Articulo entity.
@@ -62,6 +66,10 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 	IVendedorDao vendedorDao;
 	@Autowired
 	IVentaDao ventaDao;
+	@Autowired
+	ITipoDocumentoDao tipoDocumentoDao;
+	@Autowired
+	IPersonaDao personaDao;
 	
 	public IArticuloDao getArticuloDao() {return articuloDao;}
 	public void setArticuloDao(IArticuloDao articuloDao) {this.articuloDao = articuloDao;}
@@ -87,6 +95,11 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 	public void setVendedorDao(IVendedorDao vendedorDao) {this.vendedorDao = vendedorDao;}
 	public IVentaDao getVentaDao() {return ventaDao;}
 	public void setVentaDao(IVentaDao ventaDao) {this.ventaDao = ventaDao;}
+	public ITipoDocumentoDao getTipoDocumentoDao() {return tipoDocumentoDao;}
+	public void setTipoDocumentoDao(ITipoDocumentoDao tipoDocumentoDao) {this.tipoDocumentoDao = tipoDocumentoDao;}
+	public IPersonaDao getPersonaDao() {return personaDao;}
+	public void setPersonaDao(IPersonaDao personaDao) {this.personaDao = personaDao;}
+	
 	
 	/**
 	 * Find an entity by its id (primary key).
@@ -216,6 +229,16 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 		}
 	}
 
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Cliente findAllClienteIdPers(long idPers) throws Exception {
+		try {
+			return getClienteDao().findAllClienteIdPers(idPers);
+		} catch (RuntimeException e) {
+			//throw new Exception("findAllClienteIdPers failed: " + e.getMessage());
+			return null;
+		}
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */
@@ -661,5 +684,134 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 			throw new Exception("removeVenta failed: " + e.getMessage());
 		}
 	}
+
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Tipodocumento findTipodocumentoById(java.lang.Integer id) throws Exception {
+		try {
+			return getTipoDocumentoDao().findTipodocumentoById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findTipodocumentoById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Tipodocumento</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Tipodocumento> findAllTipodocumentos() throws Exception {
+		try {
+//			System.out.println("Entra esta parte de implementacion del mentodo: [List<Tipodocumento> findAllTipodocumentos()]!!!!!!!!!!!");
+			List<Tipodocumento> lista = getTipoDocumentoDao().findAllTipodocumentos();
+			return lista;
+		} catch (Exception ee){
+			System.out.println("metod de la GestionFacadePortalSpringService !!!!!!!!!!!!!");
+			ee.printStackTrace();
+		}/* catch (RuntimeException e) {
+			throw new Exception("findAllTipodocumentos failed: " + e.getMessage());
+		}*/
+		return null;
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistTipodocumento(Tipodocumento tipodocumento) throws Exception {
+		try {
+			getTipoDocumentoDao().persistTipodocumento(tipodocumento);
+		} catch (RuntimeException e) {
+			throw new Exception("persistTipodocumento failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeTipodocumento(Tipodocumento tipodocumento) throws Exception {
+		try {
+			getTipoDocumentoDao().removeTipodocumento(tipodocumento);
+		} catch (RuntimeException e) {
+			throw new Exception("removeTipodocumento failed: " + e.getMessage());
+		}
+	}
+	
+	//-----------------------------------------------------------------------
+	// Persona
+	//-----------------------------------------------------------------------
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Persona> findAllPersonasProfesionales(String datoFind) throws Exception {
+		try {
+			return getPersonaDao().findAllPersonasProfesionales(datoFind);
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			return null;
+			//throw new Exception("findAllPersonasProfesionales failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Persona findPersonaById(java.lang.Long id) throws Exception {
+		try {
+			return getPersonaDao().findPersonaById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findPersonaById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Persona findPersona(String documento, String abrevTidoc) throws Exception {
+		try {
+			return getPersonaDao().findPersona(documento, abrevTidoc);
+		} catch (RuntimeException e) {
+			//throw new Exception("findPersona failed with the documento " + documento + " abrevTidoc " + abrevTidoc + " : " + e.getMessage());
+			return null;
+		}
+	}
+	
+	/**
+	 * Return all persistent instances of the <code>Persona</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Persona> findAllPersonas() throws Exception {
+		try {
+			return getPersonaDao().findAllPersonas();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllPersonas failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistPersona(Persona persona) throws Exception {
+		try {
+			getPersonaDao().persistPersona(persona);
+		} catch (RuntimeException e) {
+			throw new Exception("persistPersona failed: " + e.getMessage());
+		}
+	}
+	
+	public long persistPersonaId(Persona persona) throws Exception {
+		try {
+			return getPersonaDao().persistPersonaId(persona);
+		} catch (RuntimeException e) {
+			throw new Exception("persistPersonaId failed: " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removePersona(Persona persona) throws Exception {
+		try {
+			getPersonaDao().removePersona(persona);
+		} catch (RuntimeException e) {
+			throw new Exception("removePersona failed: " + e.getMessage());
+		}
+	}
+	//-----------------------------------------------------------------------
+	// FIN Persona
+	//-----------------------------------------------------------------------
+	
 	
 }

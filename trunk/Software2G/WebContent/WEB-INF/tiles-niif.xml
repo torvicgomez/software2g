@@ -31,4 +31,9 @@
 	<definition name="niif.Formapago" extends="baseLayoutPortal">
 		<put-attribute name="body" value="/niif/Formapago.jsp" />
 	</definition>
+	
+	<definition name="niif.ventas" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/niif/ventas.jsp" />
+	</definition>
+	
 </tiles-definitions>

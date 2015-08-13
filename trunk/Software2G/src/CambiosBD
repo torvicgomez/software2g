@@ -2138,3 +2138,68 @@ insert into niif.proveedor (prov_id, pers_id, prov_razonsocial, prov_fechacambio
 ----------------
 ALTER TABLE niif.ordencompra ADD orco_fechavence character varying(10) NOT NULL;
 insert into niif.proveedor (prov_id, pers_id, prov_razonsocial, prov_fechacambio, prov_horacambio, prov_registradopor) values ( nextval('niif.seq_prov_id') ,1,'Victor Hugo Gomez L. 75106199-1', '2015-08-06', '09:18:03', 'vhgomezl');
+
+----------------
+-- 12-08-2015 --
+----------------
+ALTER TABLE niif.vendedor ADD COLUMN vend_estado character varying(1);
+ALTER TABLE niif.vendedor ALTER COLUMN vend_estado SET NOT NULL;
+ALTER TABLE niif.vendedor ADD CONSTRAINT ckc_estado_vend CHECK ((vend_estado::bpchar = ANY (ARRAY['S'::bpchar, 'N'::bpchar])) AND vend_estado::text = upper(vend_estado::text))
+
+----------------
+-- 13-08-2015 --
+----------------
+CREATE TABLE niif.portafolio
+(
+  port_id numeric(30,0) NOT NULL,
+  port_descripcion character varying(80),
+  port_referencia character varying(15),
+  port_valor numeric NOT NULL,
+  port_vervalor character varying(1) NOT NULL,
+  port_fechacambio character varying(10) NOT NULL,
+  port_horacambio character varying(8) NOT NULL,
+  port_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_port PRIMARY KEY (port_id ),
+  CONSTRAINT ckc_vervalor_port CHECK ((port_vervalor::bpchar = ANY (ARRAY['S'::bpchar, 'N'::bpchar])) AND port_vervalor::text = upper(port_vervalor::text))
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE niif.portafolio OWNER TO postgres;
+  
+CREATE SEQUENCE niif.seq_port_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 999999999
+  START 1
+  CACHE 1;
+ALTER TABLE niif.seq_port_id OWNER TO postgres;
+
+CREATE TABLE niif.archivotabla
+(
+  arta_id numeric(30,0) NOT NULL,
+  arta_tabla character varying(100),
+  arta_idtabla character varying(30),
+  arta_archoriginal character varying(100) NOT NULL,
+  arta_archguardado character varying(100) NOT NULL,
+  arta_ruta character varying(200),
+  arta_estado character varying(1) NOT NULL,
+  arta_fechacambio character varying(10) NOT NULL,
+  arta_horacambio character varying(8) NOT NULL,
+  arta_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_arta PRIMARY KEY (arta_id),
+  CONSTRAINT ckc_estado_arta CHECK ((arta_estado::bpchar = ANY (ARRAY['S'::bpchar, 'N'::bpchar])) AND arta_estado::text = upper(arta_estado::text))
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE niif.archivotabla OWNER TO postgres;
+  
+CREATE SEQUENCE niif.seq_arta_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 999999999
+  START 1
+  CACHE 1;
+ALTER TABLE niif.seq_arta_id OWNER TO postgres;  
+  

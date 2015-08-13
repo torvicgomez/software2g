@@ -42,6 +42,9 @@ public class Vendedor implements Serializable {
 	//bi-directional many-to-one association to Venta
 	@OneToMany(mappedBy="vendedor")
 	private List<Venta> ventas;
+	
+	@Column(name="vend_estado")
+	private String vendEstado;
 
 	public Vendedor() {
 	}
@@ -117,5 +120,14 @@ public class Vendedor implements Serializable {
 	public void setPersona(Persona persona) {
 		this.persona = persona;
 	}
+
+	public String getVendEstado() {
+		return vendEstado;
+	}
+
+	public void setVendEstado(String vendEstado) {
+		this.vendEstado = vendEstado;
+	}
+	
 	
 }

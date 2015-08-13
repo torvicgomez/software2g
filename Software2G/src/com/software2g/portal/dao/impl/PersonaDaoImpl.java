@@ -12,6 +12,7 @@ import com.software2g.util.ValidaString;
 import com.software2g.vo.Agenda;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Profesional;
+import com.software2g.vo.Tipodocumento;
 
 import org.springframework.stereotype.Repository;
 
@@ -215,14 +216,18 @@ public class PersonaDaoImpl implements IPersonaDao {
 	public Persona findPersona(String documento, String abrevTidoc) {
         try {
     		String jpqlString = "select persona from " + Persona.class.getSimpleName() + " persona " +
+    				" join persona.tipodocumento tipo " +
     				" where persona.documentoPers =:documento " +
-    				" and persona.tipodocumento.abreviaturaTidoc =:abrevTidoc ";
+    				" and persona.tipodocumento.abreviaturaTidoc =:abrevTidoc " +
+    				" order by persona.idPers asc ";
     		Query query = em.createQuery( jpqlString );
             query.setParameter("documento", documento);
             query.setParameter("abrevTidoc", abrevTidoc);
-//            return (Persona) query.getSingleResult(); 
-            return (Persona) query.getResultList().get(0);
+//            return (Persona) query.getSingleResult();
+            List<Persona> list = query.getResultList();
+            return list!=null&&list.size()>0?(Persona) list.get(0):null;
         }catch(Exception e){
+        	System.out.println("Excepcion!!!!!!!!!!!!!!!!");
         	return null;
 		}finally {
             if (em != null) {

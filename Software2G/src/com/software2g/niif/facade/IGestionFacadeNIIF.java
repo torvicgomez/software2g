@@ -11,7 +11,9 @@ import com.software2g.vo.Detalleventa;
 import com.software2g.vo.Formapago;
 import com.software2g.vo.Ordencompra;
 import com.software2g.vo.Pago;
+import com.software2g.vo.Persona;
 import com.software2g.vo.Proveedor;
+import com.software2g.vo.Tipodocumento;
 import com.software2g.vo.Vendedor;
 import com.software2g.vo.Venta;
 
@@ -67,6 +69,7 @@ public interface IGestionFacadeNIIF {
 	 * Return all persistent instances of the <code>Cliente</code> entity.
 	 */
 	public List<Cliente> findAllClientes() throws Exception;
+	public Cliente findAllClienteIdPers(long idPers) throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */
@@ -239,5 +242,24 @@ public interface IGestionFacadeNIIF {
 	 * Remove the given persistent instance.
 	 */
 	public void removeVenta(Venta venta) throws Exception;
+
+	public Tipodocumento findTipodocumentoById(java.lang.Integer id) throws Exception;
+	public List<Tipodocumento> findAllTipodocumentos() throws Exception;
+	public void persistTipodocumento(Tipodocumento tipodocumento) throws Exception;
+	public void removeTipodocumento(Tipodocumento tipodocumento) throws Exception;
+
+	//-----------------------------------------------------------------------
+	// Persona
+	//-----------------------------------------------------------------------
+	public List<Persona> findAllPersonasProfesionales(String datoFind) throws Exception;
+	public Persona findPersonaById(java.lang.Long id) throws Exception;
+	public Persona findPersona(String documento, String abrevTidoc) throws Exception;
+	public List<Persona> findAllPersonas() throws Exception;
+	public void persistPersona(Persona persona) throws Exception;
+	public long persistPersonaId(Persona persona) throws Exception;
+	public void removePersona(Persona persona) throws Exception;
+	//-----------------------------------------------------------------------
+	// FIN Persona
+	//-----------------------------------------------------------------------	
 	
 }

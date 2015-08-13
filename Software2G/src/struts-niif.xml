@@ -85,5 +85,9 @@
     			<param name="charSet">iso-8859-1</param>
 			</result>
 		</action>
+		
+		<action name="venta" method="ventaMethod" class="niifAction">
+        	<result name="success" type="tiles">niif.ventas</result>
+        </action>
     </package>
 </struts>

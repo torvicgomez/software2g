@@ -27,6 +27,7 @@ public interface IClienteDao {
 	 * Return all persistent instances of the <code>Cliente</code> entity.
 	 */
 	public List<Cliente> findAllClientes();
+	public Cliente findAllClienteIdPers(long idPers);
 	/**
 	 * Make the given instance managed and persistent.
 	 */

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import com.software2g.util.ConstantesAplicativo;
+import com.software2g.util.ValidaString;
 
 import java.util.List;
 
@@ -155,6 +156,10 @@ public class Articulo implements Serializable {
 		return this.artiPreciobase;
 	}
 
+	public String getArtiPreciobaseView() {
+		return ValidaString.formatToMoney(String.valueOf(artiPreciobase));
+	}
+	
 	public void setArtiPreciobase(double artiPreciobase) {
 		this.artiPreciobase = artiPreciobase;
 	}
@@ -163,6 +168,10 @@ public class Articulo implements Serializable {
 		return this.artiPrecioventa;
 	}
 
+	public String getArtiPrecioventaView() {
+		return ValidaString.formatToMoney(String.valueOf(artiPrecioventa));
+	}
+	
 	public void setArtiPrecioventa(double artiPrecioventa) {
 		this.artiPrecioventa = artiPrecioventa;
 	}
@@ -251,6 +260,10 @@ public class Articulo implements Serializable {
 		return totalArticulo;
 	}
 
+	public String getTotalArticuloView() {
+		return ValidaString.formatToMoney(String.valueOf(totalArticulo));
+	}
+	
 	public void setTotalArticulo(double totalArticulo) {
 		this.totalArticulo = totalArticulo;
 	}

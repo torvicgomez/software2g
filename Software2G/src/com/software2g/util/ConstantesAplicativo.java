@@ -223,5 +223,5 @@ public final class ConstantesAplicativo {
 	
 	public static final String constanteEstadoOrdenCompraPendiente = "PENDIENTE";
 	public static final String constanteEstadoOrdenCompraPagada = "PAGADA";
-	
+	public static final long constanteIdClienteComodin = 2; //Crear un verdadero cliente comodin para ventas.
 }

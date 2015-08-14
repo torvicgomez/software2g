@@ -679,6 +679,15 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 			throw new Exception("persistVenta failed: " + e.getMessage());
 		}
 	}
+	
+	@Transactional
+	public long persistOrdencompraId(Ordencompra ordencompra) throws Exception {
+		try {
+			return getOrdenCompraDao().persistOrdencompraId(ordencompra);
+		} catch (RuntimeException e) {
+			throw new Exception("persistOrdencompraId failed: " + e.getMessage());
+		}
+	}s
 	/**
 	 * Remove the given persistent instance.
 	 */
@@ -845,6 +854,7 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistConsecutivo(Consecutivo consecutivo) throws Exception {
 		try {
 			getConsecutivoDao().persistConsecutivo(consecutivo);

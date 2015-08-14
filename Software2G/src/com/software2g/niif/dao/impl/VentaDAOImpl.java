@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.software2g.vo.Ordencompra;
 import com.software2g.vo.Venta;
 import com.software2g.niif.dao.IVentaDao;
 
@@ -82,6 +83,13 @@ public class VentaDAOImpl implements IVentaDao {
 	public void persistVenta(Venta venta) {
 		em.persist(em.merge(venta));
 	}
+	
+	public long persistVentaId(Venta venta) {
+		Venta obj = em.merge(venta); 
+		em.persist(obj); 
+		return obj.getVentId();
+	}
+	
 	/**
 	 * Remove the given persistent instance.
 	 */

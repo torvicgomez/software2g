@@ -57,7 +57,7 @@
 				var key = e.keyCode || e.which;
 				teclado = String.fromCharCode(key);
 				numeros="0123456789.";
-				especiales = ["8","37","39","46"];//array
+				especiales = ["9", "8","37","39","46"];//array 
 				teclado_especial = false;
 				for(var i=0;i<especiales.length;i++){
 					if(key==especiales[i])

@@ -1,6 +1,8 @@
 package com.software2g.vo;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 
@@ -9,11 +11,12 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="consecutivo", schema="niif") 
 public class Consecutivo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="CONSECUTIVO_CONSID_GENERATOR", sequenceName="NIIF.SEQ_CONS_ID")
+	@SequenceGenerator(name="CONSECUTIVO_CONSID_GENERATOR", sequenceName="NIIF.SEQ_CONS_ID", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CONSECUTIVO_CONSID_GENERATOR")
 	@Column(name="cons_id")
 	private long consId;
@@ -106,4 +109,11 @@ public class Consecutivo implements Serializable {
 		this.consVigencia = consVigencia;
 	}
 
+	public void setDatosAud(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.consRegistradopor=data.get(0);
+			this.consFechacambio=data.get(1);
+			this.consHoracambio=data.get(2);
+		}
+	}
 }

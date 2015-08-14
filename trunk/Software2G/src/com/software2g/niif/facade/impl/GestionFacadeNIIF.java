@@ -10,6 +10,7 @@ import com.software2g.vo.Articulo;
 import com.software2g.vo.Categoria;
 import com.software2g.vo.Cliente;
 import com.software2g.vo.Condicionpago;
+import com.software2g.vo.Consecutivo;
 import com.software2g.vo.Detallecompra;
 import com.software2g.vo.Detalleventa;
 import com.software2g.vo.Formapago;
@@ -25,6 +26,7 @@ import com.software2g.niif.dao.IArticuloDao;
 import com.software2g.niif.dao.ICategoriaDao;
 import com.software2g.niif.dao.IClienteDao;
 import com.software2g.niif.dao.ICondicionPagoDao;
+import com.software2g.niif.dao.IConsecutivoDao;
 import com.software2g.niif.dao.IDetalleCompraDao;
 import com.software2g.niif.dao.IDetalleVentaDao;
 import com.software2g.niif.dao.IFormaPagoDao;
@@ -70,6 +72,8 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 	ITipoDocumentoDao tipoDocumentoDao;
 	@Autowired
 	IPersonaDao personaDao;
+	@Autowired
+	IConsecutivoDao consecutivoDao;
 	
 	public IArticuloDao getArticuloDao() {return articuloDao;}
 	public void setArticuloDao(IArticuloDao articuloDao) {this.articuloDao = articuloDao;}
@@ -99,7 +103,8 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 	public void setTipoDocumentoDao(ITipoDocumentoDao tipoDocumentoDao) {this.tipoDocumentoDao = tipoDocumentoDao;}
 	public IPersonaDao getPersonaDao() {return personaDao;}
 	public void setPersonaDao(IPersonaDao personaDao) {this.personaDao = personaDao;}
-	
+	public IConsecutivoDao getConsecutivoDao() {return consecutivoDao;}
+	public void setConsecutivoDao(IConsecutivoDao consecutivoDao) {this.consecutivoDao = consecutivoDao;}
 	
 	/**
 	 * Find an entity by its id (primary key).
@@ -813,5 +818,48 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 	// FIN Persona
 	//-----------------------------------------------------------------------
 	
-	
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Consecutivo findConsecutivoById(long id) throws Exception {
+		try {
+			return getConsecutivoDao().findConsecutivoById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findConsecutivoById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Consecutivo</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Consecutivo> findAllConsecutivos() throws Exception {
+		try {
+			return getConsecutivoDao().findAllConsecutivos();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllConsecutivos failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistConsecutivo(Consecutivo consecutivo) throws Exception {
+		try {
+			getConsecutivoDao().persistConsecutivo(consecutivo);
+		} catch (RuntimeException e) {
+			throw new Exception("persistConsecutivo failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeConsecutivo(Consecutivo consecutivo) throws Exception {
+		try {
+			getConsecutivoDao().removeConsecutivo(consecutivo);
+		} catch (RuntimeException e) {
+			throw new Exception("removeConsecutivo failed: " + e.getMessage());
+		}
+	}
 }

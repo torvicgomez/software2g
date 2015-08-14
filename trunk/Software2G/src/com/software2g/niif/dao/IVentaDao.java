@@ -31,6 +31,7 @@ public interface IVentaDao {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistVenta(Venta venta);
+	public long persistVentaId(Venta venta);
 	/**
 	 * Remove the given persistent instance.
 	 */

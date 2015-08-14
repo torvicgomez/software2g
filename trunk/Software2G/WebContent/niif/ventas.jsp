@@ -50,7 +50,7 @@
 				var key = e.keyCode || e.which;
 				teclado = String.fromCharCode(key);
 				numeros="0123456789.";
-				especiales = ["8","37","39","46"];//array
+				especiales = ["9", "8","37","39","46"];//array 
 				teclado_especial = false;
 				for(var i=0;i<especiales.length;i++){
 					if(key==especiales[i])
@@ -222,13 +222,30 @@
 					</s:elseif>
 				</table>
 				<table cellpadding="0" cellspacing="0" border="0" class="display">
-					<tr>
-<%-- 						<s:set name="estadoCheck" value="estado"></s:set> --%>
+<%-- 					<s:set name="estadoCheck" value="estado"></s:set>  --%>
 <%-- 						<s:hidden name="profesional.profId" id="profId"></s:hidden> --%>
 <%-- 						<s:hidden name="profesional.profEspecialidad" id="profEspecialidad"></s:hidden> --%>
+						<s:hidden name="venta.ventId"></s:hidden>
+						<s:hidden name="venta.ventConsecutivo"></s:hidden>
+						<s:hidden name="venta.ventFecha"></s:hidden>
+						<s:hidden name="venta.ventHora"></s:hidden>
 						<s:hidden name="persona.idPers"></s:hidden>
 <%-- 						<s:hidden name="persona.existePaciente"></s:hidden> --%>
 <%-- 						<s:hidden name="paciente.paciId"></s:hidden> --%>
+					<tr>
+						<td colspan="4" class="leftLabel"><s:text name="ventas.datosfacventa"></s:text></td>
+					</tr>
+					<tr>
+						<td class="leftLabel"><s:text name="ventas.consecutivo"></s:text></td>
+						<td>
+							<s:property value="venta.ventConsecutivo"/>
+						</td>
+						<td class="leftLabel"><s:text name="ventas.fechahora"></s:text></td>
+						<td>
+							<s:property value="venta.ventFecha"/>/<s:property value="venta.ventHora"/>
+						</td>
+					</tr>
+					<tr>
 						<td class="leftLabel" colspan="4"><s:text name="ventas.datosvendedor"></s:text></td>
 					</tr>
 					<tr>

@@ -75,19 +75,6 @@
 						<s:hidden name="detalleVenta.id.artiId"></s:hidden>
 						<s:hidden name="detalleVenta.id.ventId"></s:hidden>
 						<tr>
-							<td colspan="6" class="leftLabel"><s:text name="ventas.datosfacventa"></s:text></td>
-						</tr>
-						<tr>
-							<td class="leftLabel"><s:text name="ventas.consecutivo"></s:text></td>
-							<td>
-								<s:property value="venta.ventConsecutivo"/>
-							</td>
-							<td class="leftLabel"><s:text name="ventas.fechahora"></s:text></td>
-							<td colspan="3">
-								<s:property value="venta.ventFecha"/>/<s:property value="venta.ventHora"/>
-							</td>
-						</tr>
-						<tr>
 							<td colspan="6" class="leftLabel"><s:text name="titulo.articulos"></s:text></td>
 						</tr>
 						<tr>
@@ -133,7 +120,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="6" class="leftLabel"><s:text name="ordencompra.detallecompra"></s:text></td>
+							<td colspan="6" class="leftLabel"><s:text name="ventas.detalleventa"></s:text></td>
 						</tr>
 						<tr>
 							<td colspan="6">

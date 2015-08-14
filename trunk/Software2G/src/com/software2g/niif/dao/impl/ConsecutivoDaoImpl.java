@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class ConsecutivoDaoImpl implements IConsecutivoDao {
-    @PersistenceContext
+	@PersistenceContext(unitName="entityManagerFactoryPostgres")
     private EntityManager em;
 
 	public ConsecutivoDaoImpl() {

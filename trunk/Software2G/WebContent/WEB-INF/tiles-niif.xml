@@ -36,4 +36,7 @@
 		<put-attribute name="body" value="/niif/ventas.jsp" />
 	</definition>
 	
+	<definition name="niif.consecutivo" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/niif/consecutivo.jsp" />
+	</definition>
 </tiles-definitions>

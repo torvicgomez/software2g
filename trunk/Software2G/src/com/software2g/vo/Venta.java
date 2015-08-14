@@ -241,4 +241,12 @@ public class Venta implements Serializable {
 			this.ventHoracambio=data.get(2);
 		}
 	}
+	
+	public void setConsecutivoFechaHora(List<String> data){
+		if(data!=null&&data.size()==3){
+			this.ventConsecutivo=data.get(0);
+			this.ventFecha=data.get(1);
+			this.ventHora=data.get(2);
+		}
+	}
 }

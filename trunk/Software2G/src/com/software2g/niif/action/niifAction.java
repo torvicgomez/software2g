@@ -27,6 +27,7 @@ import com.software2g.util.ValidaString;
 import com.software2g.vo.Articulo;
 import com.software2g.vo.Categoria;
 import com.software2g.vo.Cliente;
+import com.software2g.vo.Consecutivo;
 import com.software2g.vo.Detallecompra;
 import com.software2g.vo.DetallecompraPK;
 import com.software2g.vo.Detalleventa;
@@ -75,6 +76,8 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	private List<Venta> listVenta;
 	private Pago pago;
 	private List<Pago> listPago;
+	private Consecutivo consecutivo;
+	private List<Consecutivo> listConsecutivo;
 	
 	
 	public Categoria getCategoria() {return categoria;}
@@ -119,8 +122,12 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	public void setPago(Pago pago) {this.pago = pago;}
 	public List<Pago> getListPago() {return listPago;}
 	public void setListPago(List<Pago> listPago) {this.listPago = listPago;}
+	public Consecutivo getConsecutivo() {return consecutivo;}
+	public void setConsecutivo(Consecutivo consecutivo) {this.consecutivo = consecutivo;}
+	public List<Consecutivo> getListConsecutivo() {return listConsecutivo;}
+	public void setListConsecutivo(List<Consecutivo> listConsecutivo) {this.listConsecutivo = listConsecutivo;}
 	
-		
+	
 	public List<UtilGenerico> getListEstado() {return ConstantesAplicativo.listEstadoSN;}
 	public List<UtilGenerico> getListEstadoArticulo() {return ConstantesAplicativo.listEstadoArticulo;}
 	public List<UtilGenerico> getListEstadoOrdenCompra() {return ConstantesAplicativo.listEstadoOrdenCompra;}
@@ -540,23 +547,56 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     			}
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAllTipoServicio)){
     			listTipoDoc = gestionFacadeNIIF.findAllTipodocumentos();
+    			if(venta==null)
+    				venta = new Venta();
+    			venta.setConsecutivoFechaHora(getConsecutivoVentaFechaHora());
     			Usuario usuario = (Usuario)request.getSession().getAttribute("usuarioVO");
     			System.out.println("getIdPers:["+usuario.getPersona().getIdPers()+"]");
     			//vendedor = gestionFacadeAgenda.findProfesionalIdPersona(usuario.getPersona().getIdPers());
     			//request.getSession().removeAttribute("listDetalleVenta");
     			//request.getSession().removeAttribute("detalleVenta");
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
-    			if(ValidaString.isNullOrEmptyString(formapago.getFopaFormapago()))
-    				addActionError(getText("validacion.requerido","fopaFormaPago","Forma Pago"));
-    			if(ValidaString.isNullOrEmptyString(formapago.getFopaDescripcion()))
-    				addActionError(getText("validacion.requerido","fopaDescripcion","Descripcion"));
+    			listDetalleVenta = (List<Detalleventa>)request.getSession().getAttribute("listDetalleVenta");
+    			if(listDetalleVenta==null||listDetalleVenta.size()<=0)
+    				addActionError(getText("validacion.requeridosec","detalleventa","Detalle Venta"));
+    			
     			if(!hasActionErrors()){
+    				
+    				
     				formapago.setDatosAud(this.getDatosAud());
     				ValidaString.imprimirObject(formapago);
     				gestionFacadeNIIF.persistFormapago(formapago);
     				estado = ConstantesAplicativo.constanteEstadoAbstract;
     				addActionMessage(getText("accion.satisfactoria"));
+    			}else{
+    				listTipoDoc = gestionFacadeNIIF.findAllTipodocumentos();
+    				listFormapago = gestionFacadeNIIF.findAllFormapagos();
     			}
+    			
+    			
+    			
+    			
+    			//ValidaString.imprimirObject(ordenCompra);
+    			if(!hasActionErrors()){
+    				ordenCompra.setProveedor(gestionFacadeNIIF.findProveedorById(1));//Construccion Proveedor
+    				ordenCompra.setOrcoEstado(ConstantesAplicativo.constanteEstadoOrdenCompraPendiente);
+    				ordenCompra.setDatosAud(getDatosAud());
+    				long orcoId = gestionFacadeNIIF.persistOrdencompraId(ordenCompra);
+    				if(orcoId>0){
+    					ordenCompra.setOrcoId(orcoId);
+    					for(Detallecompra elem:listDetalleCompra){
+    						elem.setOrdencompra(ordenCompra);
+    						elem.setId(new DetallecompraPK(elem.getArticulo().getArtiId(), elem.getOrdencompra().getOrcoId()));
+    						elem.setDatosAud(getDatosAud());
+    						gestionFacadeNIIF.persistDetallecompra(elem);
+    					}
+    				}
+    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				addActionMessage(getText("accion.satisfactoria"));
+    			}
+    			
+    			
+    			
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			formapago = gestionFacadeNIIF.findFormapagoById(getIdLong());
     		}
@@ -567,7 +607,39 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     	System.out.println("######>>>>>>>niifAction>>>>ventaMethod>>>>estado entrada-->>"+estado);
     	return Action.SUCCESS;
 	}
-	
+
+	@SkipValidation
+	public String consecutivoMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>niifAction>>>>consecutivoMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listConsecutivo = gestionFacadeNIIF.findAllConsecutivos();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			ValidaString.imprimirObject(consecutivo);
+    			if(consecutivo.getConsIniconsecutivo()<=0)
+    				addActionError(getText("validacion.requerido","consIniconsecutivo","Consecutivo Inicial"));
+    			if(ValidaString.isNullOrEmptyString(consecutivo.getConsVigencia()))
+    				addActionError(getText("validacion.requerido","consVigencia","Vigencia Consecutivos"));
+    			if(!hasActionErrors()){
+    				consecutivo.setDatosAud(this.getDatosAud());
+    				consecutivo.setConsConsecutivodis(consecutivo.getConsIniconsecutivo());
+    				ValidaString.imprimirObject(consecutivo);
+    				gestionFacadeNIIF.persistConsecutivo(consecutivo);
+    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				addActionMessage(getText("accion.satisfactoria"));
+    			}
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			consecutivo = gestionFacadeNIIF.findConsecutivoById(getIdLong());
+    		}
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>niifAction>>>>consecutivoMethod>>>>estado entrada-->>"+estado);
+    	return Action.SUCCESS;
+	}
 	
 	
 	public niifAction(IGestionFacadeNIIF gestionFacadeNIIF) {
@@ -600,5 +672,15 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 		SimpleDateFormat sdf = new SimpleDateFormat(ConstantesAplicativo.constanteFormatoFechaHora1);
 		System.out.println("Fecha y Hora Servicio: ["+sdf.format(new Date())+"]");
 		return sdf.format(new Date());
+	}
+	
+	public List<String> getConsecutivoVentaFechaHora(){
+		try {
+			return Arrays.asList(((Consecutivo)gestionFacadeNIIF.findConsecutivoById(ConstantesAplicativo.constanteIdConsecutivoVenta)).getConsConsecutivodis()+"",
+					ValidaString.fechaSystem(),
+					ValidaString.horaSystem());
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

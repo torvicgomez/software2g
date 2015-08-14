@@ -2207,3 +2207,28 @@ ALTER TABLE niif.seq_arta_id OWNER TO postgres;
 -- Opcional este registro mientras funcionalidad cliente esta
 insert into niif.cliente (clie_id, pers_id, clie_fechacambio, clie_horacambio, clie_registradopor) values (nextval('niif.seq_clie_id'), 1, '2015-08-13','15:49:56', 'vhgomezl');
 insert into niif.cliente (clie_id, pers_id, clie_fechacambio, clie_horacambio, clie_registradopor) values (nextval('niif.seq_clie_id'), 2, '2015-08-13','15:49:56', 'vhgomezl');
+
+----------------
+-- 14-08-2015 --
+----------------
+CREATE TABLE niif.consecutivo
+(
+  cons_id numeric(30,0) NOT NULL,
+  cons_iniconsecutivo numeric(30,0),
+  cons_finconsecutivo numeric(30,0),
+  cons_vigencia character varying(10) NOT NULL,
+  cons_consecutivodis numeric(30,0) NOT NULL,
+  cons_fechacambio character varying(10) NOT NULL,
+  cons_horacambio character varying(8) NOT NULL,
+  cons_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_consecutivo PRIMARY KEY (cons_id)
+);
+ALTER TABLE niif.consecutivo OWNER TO postgres;
+
+CREATE SEQUENCE niif.seq_cons_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 999999999
+  START 1
+  CACHE 1;
+ALTER TABLE niif.seq_cons_id OWNER TO postgres;

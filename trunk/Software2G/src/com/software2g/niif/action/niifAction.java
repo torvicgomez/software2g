@@ -20,6 +20,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
+import com.software2g.niif.dao.impl.PagosDAOImpl;
 import com.software2g.niif.facade.IGestionFacadeNIIF;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
@@ -30,6 +31,7 @@ import com.software2g.vo.Detallecompra;
 import com.software2g.vo.DetallecompraPK;
 import com.software2g.vo.Detalleventa;
 import com.software2g.vo.Ordencompra;
+import com.software2g.vo.Pago;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Tipodocumento;
 import com.software2g.vo.Usuario;
@@ -69,9 +71,10 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	private Cliente cliente;
 	private List<Detalleventa> listDetalleVenta;
 	private Detalleventa detalleVenta;
-	private InputStream strDatosDetalleVenta;
 	private Venta venta;
 	private List<Venta> listVenta;
+	private Pago pago;
+	private List<Pago> listPago;
 	
 	
 	public Categoria getCategoria() {return categoria;}
@@ -112,8 +115,12 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	public void setVenta(Venta venta) {this.venta = venta;}
 	public List<Venta> getListVenta() {return listVenta;}
 	public void setListVenta(List<Venta> listVenta) {this.listVenta = listVenta;}
+	public Pago getPago() {return pago;}
+	public void setPago(Pago pago) {this.pago = pago;}
+	public List<Pago> getListPago() {return listPago;}
+	public void setListPago(List<Pago> listPago) {this.listPago = listPago;}
 	
-	
+		
 	public List<UtilGenerico> getListEstado() {return ConstantesAplicativo.listEstadoSN;}
 	public List<UtilGenerico> getListEstadoArticulo() {return ConstantesAplicativo.listEstadoArticulo;}
 	public List<UtilGenerico> getListEstadoOrdenCompra() {return ConstantesAplicativo.listEstadoOrdenCompra;}
@@ -422,6 +429,15 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 						"	<td align=\"right\" class=\"leftLabel\">Total</td> " +
 						"	<td align=\"right\"><input type=\"hidden\" id=\"totalaPagar\" value=\""+((total+totalIva)-totalDes)+"\"/><div id=\"totalaPagarDiv\">"+ValidaString.formatToMoney(String.valueOf(((total+totalIva)-totalDes)))+"</div></td>" +
 						" </tr> ";
+				
+//				if(bandVenta!=null&&bandVenta.equals(ConstantesAplicativo.constanteCheckSi)){
+//					if(venta==null)
+//						venta = new Venta();
+//					venta.setVentTotal(total);
+//					venta.setVentTotaldes(totalDes);
+//					venta.setVentTotaliva(totalIva);
+//					venta.setVentTotalpag(((total+totalIva)-totalDes));
+//				}
 			}
 			html +=	"</table>";
 			if(bandVenta!=null&&bandVenta.equals(ConstantesAplicativo.constanteCheckSi)){

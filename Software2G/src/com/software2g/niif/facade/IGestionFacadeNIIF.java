@@ -6,6 +6,7 @@ import com.software2g.vo.Articulo;
 import com.software2g.vo.Categoria;
 import com.software2g.vo.Cliente;
 import com.software2g.vo.Condicionpago;
+import com.software2g.vo.Consecutivo;
 import com.software2g.vo.Detallecompra;
 import com.software2g.vo.Detalleventa;
 import com.software2g.vo.Formapago;
@@ -261,5 +262,22 @@ public interface IGestionFacadeNIIF {
 	//-----------------------------------------------------------------------
 	// FIN Persona
 	//-----------------------------------------------------------------------	
-	
+
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Consecutivo findConsecutivoById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Consecutivo</code> entity.
+	 */
+	public List<Consecutivo> findAllConsecutivos() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistConsecutivo(Consecutivo consecutivo) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeConsecutivo(Consecutivo consecutivo) throws Exception;
 }

@@ -214,6 +214,6 @@
         <property name="ventaDao"><bean class="com.software2g.niif.dao.impl.VentaDAOImpl"/></property>
         <property name="tipoDocumentoDao"><bean class="com.software2g.portal.dao.impl.TipoDocumentoDaoImpl"/></property>
         <property name="personaDao"><bean class="com.software2g.portal.dao.impl.PersonaDaoImpl"/></property>
+        <property name="consecutivoDao"><bean class="com.software2g.niif.dao.impl.ConsecutivoDaoImpl"/></property>
     </bean>
-    
 </beans>

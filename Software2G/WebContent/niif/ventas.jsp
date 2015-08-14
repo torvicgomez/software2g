@@ -46,6 +46,93 @@
 				}
 			);
 			
+			function soloNumeros(e) {
+				var key = e.keyCode || e.which;
+				teclado = String.fromCharCode(key);
+				numeros="0123456789.";
+				especiales = ["8","37","39","46"];//array
+				teclado_especial = false;
+				for(var i=0;i<especiales.length;i++){
+					if(key==especiales[i])
+						teclado_especial = true;
+				}
+				if(numeros.indexOf(teclado)==-1 && !teclado_especial)
+					return false;
+			}
+			
+			function calcularTotalaPagar(){
+				var totalaPagarDiv = document.getElementById('totalaPagarDiv');
+				var total = document.getElementById('total').value;
+				var descuento = document.getElementById('totalDes');
+				var iva = document.getElementById('totalIva');
+				var totalaPagar = 0.0;
+				if(descuento!=null && descuento!='' && iva!=null && iva!=''){
+					totalaPagar = ((parseFloat(total)+parseFloat(iva.value!=''?iva.value:0))-parseFloat(descuento.value!=''?descuento.value:0));
+					document.getElementById('totalaPagar').value = totalaPagar;
+					var divPagoTotal = document.getElementById('pagoTotal');divPagoTotal.innerHTML = '<font size="4"><strong>'+formatNumber.formato(total, '$ ')+'</strong></font>';
+					var divPagoTotalDes = document.getElementById('pagoTotalDes');divPagoTotalDes.innerHTML = '<font size="4"><strong>'+formatNumber.formato(descuento.value, '$ ')+'</strong></font>';				
+					var divPagoTotalIva = document.getElementById('pagoTotalIVa');divPagoTotalIva.innerHTML = '<font size="4"><strong>'+formatNumber.formato(iva.value, '$ ')+'</strong></font>';
+					var divPagoTotalPag = document.getElementById('pagoTotalPag');divPagoTotalPag.innerHTML = '<font size="4"><strong>'+formatNumber.formato(totalaPagar, '$ ')+'</strong></font>';
+				}
+				totalaPagarDiv.innerHTML = formatNumber.formato(totalaPagar, '$ ');
+			}
+			
+			function repetirBusqueda(){
+				var divDatosPersona = document.getElementById('divDatosArticulo');
+				divDatosPersona.innerHTML = '';
+				var artiId = document.getElementById('artiId');
+				artiId.value = 0;
+				var campoFind = document.getElementById('campoFind');
+				var repetirFind = document.getElementById('repetirFind');
+				campoFind.style.display = 'block';
+				repetirFind.style.display = 'none';
+				var search = document.getElementById('search');
+				search.value = '';
+			}
+			
+			function agregarArticulo(pos){
+				var posicion = pos;
+				var cantidadArti = document.getElementById("cantidadArti")!=null?document.getElementById("cantidadArti").value:'';
+				var valorUniArti = document.getElementById("valorUniArti")!=null?document.getElementById("valorUniArti").value:'';
+				var totalDes = document.getElementById("totalDes")==null?0:document.getElementById("totalDes").value!=''?document.getElementById("totalDes").value:0;
+				var totalIva = document.getElementById("totalIva")==null?0:document.getElementById("totalIva").value!=''?document.getElementById("totalIva").value:0;
+				$("#detalleVenta").load('cargarDetalleCompra.action?posicion='+posicion+'&cantidadArti='+cantidadArti+'&valorUniArti='+valorUniArti+'&totalDes='+totalDes+'&totalIva='+totalIva+'&tipo=venta');
+				if(posicion<0 && cantidadArti>0 && cantidadArti!='' && valorUniArti>0 && valorUniArti!=null ){
+					var divDatosPersona = document.getElementById('divDatosArticulo');divDatosPersona.innerHTML = '';
+					var artiId = document.getElementById('artiId');artiId.value = 0;
+					var campoFind = document.getElementById('campoFind');campoFind.style.display = 'block';
+					var repetirFind = document.getElementById('repetirFind');repetirFind.style.display = 'none';
+					var search = document.getElementById('search');search.value = '';
+					setTimeout(function () {cargarDatosPago(totalDes,totalIva);}, 3000);
+				}
+			}
+			
+			function cargarDatosPago(totalDes,totalIva){
+				var divPagoTotal = document.getElementById('pagoTotal');divPagoTotal.innerHTML = '<font size="4"><strong>'+formatNumber.formato(document.getElementById("total").value, '$ ')+'</strong></font>';
+				var divPagoTotalDes = document.getElementById('pagoTotalDes');divPagoTotalDes.innerHTML = '<font size="4"><strong>'+formatNumber.formato(totalDes, '$ ')+'</strong></font>';				
+				var divPagoTotalIva = document.getElementById('pagoTotalIVa');divPagoTotalIva.innerHTML = '<font size="4"><strong>'+formatNumber.formato(totalIva, '$ ')+'</strong></font>';
+				var divPagoTotalPag = document.getElementById('pagoTotalPag');divPagoTotalPag.innerHTML = '<font size="4"><strong>'+formatNumber.formato(document.getElementById("totalaPagar").value, '$ ')+'</strong></font>';
+			}  
+			
+			var formatNumber = {
+				 separador: ".", // separador para los miles
+				 sepDecimal: ',', // separador para los decimales
+				 formatear:function (num){
+				  	num +='';
+				  	var splitStr = num.split('.');
+				  	var splitLeft = splitStr[0];
+				  	var splitRight = splitStr.length > 1 ? this.sepDecimal + splitStr[1] : '';
+				  	var regx = /(\d+)(\d{3})/;
+				  	while (regx.test(splitLeft)) {
+				  		splitLeft = splitLeft.replace(regx, '$1' + this.separador + '$2');
+				  	}
+				  	return this.simbol + splitLeft  +splitRight;
+				 },
+				 formato:function(num, simbol){
+				  	this.simbol = simbol ||'';
+				  	return this.formatear(num);
+				 }
+			}
 		
 			function buscar(){
 				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoSearch%>";
@@ -230,19 +317,7 @@
 							<jsp:include page="ordenVenta.jsp" flush="true"></jsp:include>
 						</div>
 						<div id="tabs-2">
-							<table cellpadding="0" cellspacing="0" border="0" class="display">
-								<tr>
-									<td><h1><s:text name="atencioservicio.diagnosticos"></s:text></h1></td>
-									<td><s:textfield name="persona.fechanacimientoPers" id="fechanacimientoPers" size="15" maxlength="10" cssClass="inputs" placeholder="aaaa-mm-dd"></s:textfield></td>
-								</tr>
-								
-								<tr>
-									<td><h1><s:text name="atencioservicio.medicamentos"></s:text></h1></td>
-									<td><s:textfield name="persona.fechaexpdocPers" id="fechaexpdocPers" size="15" maxlength="10" cssClass="inputs" placeholder="aaaa-mm-dd"></s:textfield></td>
-								</tr>
-								
-								
-							</table>
+							<jsp:include page="pago.jsp" flush="true"></jsp:include>
 						</div>
 					</div>
 					<table cellpadding="0" cellspacing="0" border="0" class="display">

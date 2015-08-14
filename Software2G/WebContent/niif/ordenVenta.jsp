@@ -5,30 +5,6 @@
 	<head>
 		<script type="text/javascript" charset="utf-8">
 			$(document).ready(function() {
-				$('#ordenCompra').dataTable( {
-					"sPaginationType": "full_numbers",
-					"bLengthChange": true,
-					"bFilter": true,
-					"bSort": true,
-					"bInfo": true,
-					"bAutoWidth": true,
-					"oLanguage": {
-						//"sLengthMenu": "Mostrar MENU Registros por pagina",
-						"sZeroRecords": "No se encontraron registros",
-						//"sInfo": "Mostrando START a END de TOTAL registros",
-						"sInfoEmpty": "Mostrando 0 a 0 de 0 registros",
-						"sInfoFiltered": "(Filtrado desde MAX registros totales)",
-						"sSearch": "Buscar: ",
-						"oPaginate": {
-							"sFirst": "Primero",
-							"sLast": "Ultimo",
-							"sNext": "Siguiente",
-							"sPrevious": "Anterior"
-						}
-				   }
-				} );
-				
-				
 				$(function() {
                 	$("#search").autocomplete({
                 		source : function(request, response) {
@@ -53,33 +29,6 @@
 				
 			} );
 
-			function soloNumeros(e) {
-				var key = e.keyCode || e.which;
-				teclado = String.fromCharCode(key);
-				numeros="0123456789.";
-				especiales = ["8","37","39","46"];//array
-				teclado_especial = false;
-				for(var i=0;i<especiales.length;i++){
-					if(key==especiales[i])
-						teclado_especial = true;
-				}
-				if(numeros.indexOf(teclado)==-1 && !teclado_especial)
-					return false;
-			}
-			
-			function calcularTotalaPagar(){
-				var totalaPagarDiv = document.getElementById('totalaPagarDiv');
-				var total = document.getElementById('total').value;
-				var descuento = document.getElementById('totalDes');
-				var iva = document.getElementById('totalIva');
-				var totalaPagar = 0.0;
-				if(descuento!=null && descuento!='' && iva!=null && iva!=''){
-					totalaPagar = ((parseFloat(total)+parseFloat(iva.value!=''?iva.value:0))-parseFloat(descuento.value!=''?descuento.value:0));
-					document.getElementById('totalaPagar').value = totalaPagar;
-				}
-				totalaPagarDiv.innerHTML = totalaPagar;
-			}
-			
 			function cargarDatosArticulo(id){
 				$("#divDatosArticulo").load('cargarDatosArticulo.action?idArticulo='+id+'&tipo=venta');
 				var artiId = document.getElementById('artiId');
@@ -107,35 +56,6 @@
 				}
 			}
 			
-			function repetirBusqueda(){
-				var divDatosPersona = document.getElementById('divDatosArticulo');
-				divDatosPersona.innerHTML = '';
-				var artiId = document.getElementById('artiId');
-				artiId.value = 0;
-				var campoFind = document.getElementById('campoFind');
-				var repetirFind = document.getElementById('repetirFind');
-				campoFind.style.display = 'block';
-				repetirFind.style.display = 'none';
-				var search = document.getElementById('search');
-				search.value = '';
-			}
-			
-			function agregarArticulo(pos){
-				var posicion = pos;
-				var cantidadArti = document.getElementById("cantidadArti")!=null?document.getElementById("cantidadArti").value:'';
-				var valorUniArti = document.getElementById("valorUniArti")!=null?document.getElementById("valorUniArti").value:'';
-				var totalDes = document.getElementById("totalDes")==null?0:document.getElementById("totalDes").value!=''?document.getElementById("totalDes").value:0;
-				var totalIva = document.getElementById("totalIva")==null?0:document.getElementById("totalIva").value!=''?document.getElementById("totalIva").value:0;
-				$("#detalleVenta").load('cargarDetalleCompra.action?posicion='+posicion+'&cantidadArti='+cantidadArti+'&valorUniArti='+valorUniArti+'&totalDes='+totalDes+'&totalIva='+totalIva+'&tipo=venta');
-				if(posicion<0 && cantidadArti>0 && cantidadArti!='' && valorUniArti>0 && valorUniArti!=null ){
-					var divDatosPersona = document.getElementById('divDatosArticulo');divDatosPersona.innerHTML = '';
-					var artiId = document.getElementById('artiId');artiId.value = 0;
-					var campoFind = document.getElementById('campoFind');campoFind.style.display = 'block';
-					var repetirFind = document.getElementById('repetirFind');repetirFind.style.display = 'none';
-					var search = document.getElementById('search');search.value = '';
-				}
-			}
-			
 		</script>
 	</head>
 	<body id="dt_example">
@@ -143,6 +63,9 @@
 				<s:if test="estado=='all'||estado=='add'||estado=='edit'||estado=='save'">
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<s:hidden name="venta.ventId" id="ventId"></s:hidden>
+						<s:hidden name="venta.consecutivo" id="consecutivo"></s:hidden>
+						<s:hidden name="venta.ventFecha" id="ventFecha"></s:hidden>
+						<s:hidden name="venta.ventHora" id="ventHora"></s:hidden>
 						<s:hidden name="venta.ventTotal" id="ventTotal"></s:hidden>
 						<s:hidden name="venta.ventTotaldes" id="ventTotaldes"></s:hidden>
 						<s:hidden name="venta.ventTotaliva" id="ventTotaliva"></s:hidden>
@@ -151,6 +74,19 @@
 						<s:hidden name="detalleVenta.articulo.artiId" id="artiId"></s:hidden>
 						<s:hidden name="detalleVenta.id.artiId"></s:hidden>
 						<s:hidden name="detalleVenta.id.ventId"></s:hidden>
+						<tr>
+							<td colspan="6" class="leftLabel"><s:text name="ventas.datosfacventa"></s:text></td>
+						</tr>
+						<tr>
+							<td class="leftLabel"><s:text name="ventas.consecutivo"></s:text></td>
+							<td>
+								<s:property value="venta.ventConsecutivo"/>
+							</td>
+							<td class="leftLabel"><s:text name="ventas.fechahora"></s:text></td>
+							<td colspan="3">
+								<s:property value="venta.ventFecha"/>/<s:property value="venta.ventHora"/>
+							</td>
+						</tr>
 						<tr>
 							<td colspan="6" class="leftLabel"><s:text name="titulo.articulos"></s:text></td>
 						</tr>
@@ -194,23 +130,6 @@
 										</td>
 									</tr>
 								</table>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="6" class="leftLabel"><s:text name="ordencompra.datosfaccompra"></s:text></td>
-						</tr>
-						<tr>
-							<td class="leftLabel"><s:text name="ordencompra.nrocomprobante"></s:text></td>
-							<td>
-								<s:textfield name="ordenCompra.orcoNrocomprobante" id="orcoNrocomprobante" size="30" maxlength="30" cssClass="inputs"></s:textfield>
-							</td>
-							<td class="leftLabel"><s:text name="ordencompra.fechacompra"></s:text></td>
-							<td>
-								<s:textfield name="ordenCompra.orcoFechacompra" id="orcoFechacompra" size="15" maxlength="10" cssClass="inputs"></s:textfield>
-							</td>
-							<td class="leftLabel"><s:text name="ordencompra.fechavence"></s:text></td>
-							<td>
-								<s:textfield name="ordenCompra.orcoFechavence" id="orcoFechavence" size="15" maxlength="10" cssClass="inputs"></s:textfield>
 							</td>
 						</tr>
 						<tr>

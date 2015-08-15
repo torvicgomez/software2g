@@ -5,7 +5,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import com.software2g.vo.Articulo;
 import com.software2g.vo.Categoria;
 import com.software2g.vo.Cliente;
@@ -681,13 +680,13 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 	}
 	
 	@Transactional
-	public long persistOrdencompraId(Ordencompra ordencompra) throws Exception {
+	public long persistVentaId(Venta venta) throws Exception {
 		try {
-			return getOrdenCompraDao().persistOrdencompraId(ordencompra);
+			return getVentaDao().persistVentaId(venta);
 		} catch (RuntimeException e) {
-			throw new Exception("persistOrdencompraId failed: " + e.getMessage());
+			throw new Exception("persistVentaId failed: " + e.getMessage());
 		}
-	}s
+	}
 	/**
 	 * Remove the given persistent instance.
 	 */

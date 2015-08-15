@@ -221,6 +221,7 @@ public interface IGestionFacadeNIIF {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistVendedor(Vendedor vendedor) throws Exception;
+	
 	/**
 	 * Remove the given persistent instance.
 	 */
@@ -239,6 +240,7 @@ public interface IGestionFacadeNIIF {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistVenta(Venta venta) throws Exception;
+	public long persistVentaId(Venta venta) throws Exception;
 	/**
 	 * Remove the given persistent instance.
 	 */

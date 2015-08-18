@@ -7,7 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.software2g.util.ValidaString;
 import com.software2g.vo.Cliente;
+import com.software2g.vo.Persona;
 import com.software2g.niif.dao.IClienteDao;
 
 import org.springframework.stereotype.Repository;
@@ -99,6 +101,13 @@ public class ClienteDAOImpl implements IClienteDao {
 	public void persistCliente(Cliente cliente) {
 		em.persist(em.merge(cliente));
 	}
+	
+	public long persistClienteId(Cliente cliente) {
+		Cliente obj = em.merge(cliente); 
+		em.persist(obj); 
+		return obj.getClieId();
+	}
+	
 	/**
 	 * Remove the given persistent instance.
 	 */

@@ -45,6 +45,10 @@ public class Formapago implements Serializable {
 	public Formapago() {
 	}
 
+	public Formapago(long fopaId) {
+		this.fopaId = fopaId;
+	}
+	
 	public long getFopaId() {
 		return this.fopaId;
 	}

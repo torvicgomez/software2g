@@ -27,6 +27,7 @@ public interface IVendedorDao {
 	 * Return all persistent instances of the <code>Vendedor</code> entity.
 	 */
 	public List<Vendedor> findAllVendedors();
+	public Vendedor findAllVendedorIdPers(long persId);
 	/**
 	 * Make the given instance managed and persistent.
 	 */

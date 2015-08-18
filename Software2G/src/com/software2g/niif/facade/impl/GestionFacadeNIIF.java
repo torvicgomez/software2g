@@ -44,7 +44,7 @@ import com.software2g.portal.dao.ITipoDocumentoDao;
 public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 	
 	@Autowired
-	IArticuloDao articuloDao;
+	IArticuloDao articuloDao; 
 	@Autowired
 	ICategoriaDao categoriaDao;
 	@Autowired
@@ -246,6 +246,7 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 	/**
 	 * Make the given instance managed and persistent.
 	 */
+	@Transactional
 	public void persistCliente(Cliente cliente) throws Exception {
 		try {
 			getClienteDao().persistCliente(cliente);
@@ -253,6 +254,16 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 			throw new Exception("persistCliente failed: " + e.getMessage());
 		}
 	}
+	
+	@Transactional
+	public long persistClienteId(Cliente cliente) throws Exception {
+		try {
+			return getClienteDao().persistClienteId(cliente);
+		} catch (RuntimeException e) {
+			throw new Exception("persistClienteId failed: " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Remove the given persistent instance.
 	 */
@@ -623,6 +634,16 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 		}
 	}
 
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Vendedor findAllVendedorIdPers(long persId) throws Exception {
+		try {
+			return getVendedorDao().findAllVendedorIdPers(persId);
+		} catch (RuntimeException e) {
+			//throw new Exception("findAllVendedorIdPers failed: " + e.getMessage());
+			return null;
+		}
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

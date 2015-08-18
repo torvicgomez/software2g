@@ -153,7 +153,7 @@
 				document.getElementById('ventTotaldes').value = descuento;
 				document.getElementById('ventTotaliva').value = iva;
 				document.getElementById('ventTotalpag').value = totalaPagar;
-				document.form.action="ordencompra.action?estado=<%=ConstantesAplicativo.constanteEstadoSave%>";
+				document.form.action="venta.action?estado=<%=ConstantesAplicativo.constanteEstadoSave%>";
 				document.form.submit();
 			}
 			
@@ -167,18 +167,6 @@
 				document.form.submit();
 			}
 			
-			function agregarGrilla(tipoAdd){
-				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoAddGrid%>&tipo="+tipoAdd+"#tabs-5";
-				document.form.submit();
-				
-			}
-			
-			function eliminarGrilla(param, tipoDel){
-				document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoDeleteGrid%>&posList="+param+"&tipo="+tipoDel+"#tabs-5";
-				document.form.submit();
-			}
-			
-			 
 		</script>
 	</head>
 	<body id="dt_example">
@@ -222,23 +210,23 @@
 					</s:elseif>
 				</table>
 				<table cellpadding="0" cellspacing="0" border="0" class="display">
-<%-- 					<s:set name="estadoCheck" value="estado"></s:set>  --%>
-<%-- 						<s:hidden name="profesional.profId" id="profId"></s:hidden> --%>
-<%-- 						<s:hidden name="profesional.profEspecialidad" id="profEspecialidad"></s:hidden> --%>
-						<s:hidden name="venta.ventId"></s:hidden>
-						<s:hidden name="venta.ventConsecutivo"></s:hidden>
-						<s:hidden name="venta.ventFecha"></s:hidden>
-						<s:hidden name="venta.ventHora"></s:hidden>
-						<s:hidden name="persona.idPers"></s:hidden>
-<%-- 						<s:hidden name="persona.existePaciente"></s:hidden> --%>
-<%-- 						<s:hidden name="paciente.paciId"></s:hidden> --%>
+					<s:hidden name="persona.idPers"></s:hidden>
+					<s:hidden name="persona.existeCliente"></s:hidden>
+					<s:hidden name="cliente.clieId"></s:hidden>
+					<s:hidden name="vendedor.vendId"></s:hidden>
+					<s:hidden name="consecutivo.consId"></s:hidden>
+					<s:hidden name="consecutivo.consConsecutivodis"></s:hidden>
+					<s:hidden name="venta.ventId" id="ventId"></s:hidden>
+					<s:hidden name="venta.consecutivo" id="consecutivo"></s:hidden>
+					<s:hidden name="venta.ventFecha" id="ventFecha"></s:hidden>
+					<s:hidden name="venta.ventHora" id="ventHora"></s:hidden>
 					<tr>
 						<td colspan="4" class="leftLabel"><s:text name="ventas.datosfacventa"></s:text></td>
 					</tr>
 					<tr>
 						<td class="leftLabel"><s:text name="ventas.consecutivo"></s:text></td>
 						<td>
-							<s:property value="venta.ventConsecutivo"/>
+							<s:property value="consecutivo.consConsecutivodis"/>
 						</td>
 						<td class="leftLabel"><s:text name="ventas.fechahora"></s:text></td>
 						<td>
@@ -251,19 +239,20 @@
 					<tr>
 						<td class="leftLabel"><s:text name="personal.nombre"></s:text></td>
 						<td align="left">
-<%-- 							<s:property value="profesional.persona.nombreCompleto"/> --%>
-								Construccion!!!				
+							<s:property value="vendedor.persona.nombreCompleto"/>
 						</td>
 						<td class="leftLabel" width="130"><s:text name="ventas.codigovendedor"></s:text></td>
 						<td align="left">
-<%-- 							<s:property value="profesional.profEspecialidadView"/> --%>
-								Construccion!!!
+							<s:property value="vendedor.vendCodigo"/>
 						</td>
 					</tr>
 				</table> 
 				
 				<s:if test="estado=='alltiposervicio'">
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
+						<tr>
+							<td class="leftLabel" colspan="2"><s:text name="ventas.datoscliente"></s:text></td>
+						</tr>
 						<tr>
 							<td class="leftLabel"><s:text name="personal.numerodocumento"></s:text><s:text name="campo.requerido"></s:text></td>
 							<td>
@@ -281,7 +270,7 @@
 					</table>
 				</s:if>
 				
-				<s:elseif test="estado=='all'||estado=='edit'||estado=='save'||estado=='addGrid'||estado=='delGrid'">
+				<s:elseif test="estado=='all'||estado=='edit'||estado=='save'||estado=='abstract'">
 					<div id="pestanas">
 						<ul>
 							<li><a href="#tabs-0"><s:text name="ventas.cliente"></s:text></a></li>
@@ -289,46 +278,82 @@
 							<li><a href="#tabs-2"><s:text name="ventas.pagos"></s:text></a></li>
 						</ul>
 						<div id="tabs-0">
-							<table cellpadding="0" cellspacing="0" border="0" class="display">
-								<tr>
-									<td class="leftLabel"><s:text name="personal.numerodocumento"></s:text><s:text name="campo.requerido"></s:text></td>
-									<td>
-										<s:if test="persona.existeCliente==\"S\"">
-											<s:hidden name="persona.tipodocumento.idTidoc"></s:hidden>
-											<s:hidden name="persona.documentoPers"></s:hidden>
+							<s:if test="estado!='abstract'">
+								<table cellpadding="0" cellspacing="0" border="0" class="display">
+									<tr>
+										<td class="leftLabel"><s:text name="personal.numerodocumento"></s:text><s:text name="campo.requerido"></s:text></td>
+										<td>
+											<s:if test="persona.existeCliente==\"S\"">
+												<s:hidden name="persona.tipodocumento.idTidoc"></s:hidden>
+												<s:hidden name="persona.documentoPers"></s:hidden>
+												<s:property value="persona.documentoPers"/>&nbsp;<s:property value="persona.tipodocumento.abreviaturaTidoc"/>
+											</s:if>
+											<s:else>
+												<s:textfield name="persona.documentoPers" size="20" maxlength="15" cssClass="inputs"></s:textfield><%--nombreTidoc --%>
+												<s:select list="listTipoDoc" name="persona.tipodocumento.idTidoc" listKey="idTidoc" listValue="abreviaturaTidoc" cssClass="inputs"/>	
+											</s:else>
+										</td>
+									</tr>
+									<tr>
+										<td class="leftLabel"><s:text name="personal.primernombre"></s:text><s:text name="campo.requerido"></s:text></td>
+										<td><s:textfield name="persona.pnombrePers" size="35" maxlength="30" cssClass="inputs"></s:textfield></td>
+									</tr>
+									<tr>
+										<td class="leftLabel"><s:text name="personal.segundonombre"></s:text></td>
+										<td><s:textfield name="persona.snombrePers" size="35" maxlength="30" cssClass="inputs"></s:textfield></td>
+									</tr>
+									<tr>
+										<td class="leftLabel"><s:text name="personal.primerapellido"></s:text><s:text name="campo.requerido"></s:text></td>
+										<td><s:textfield name="persona.papellidoPers" size="35" maxlength="30" cssClass="inputs"></s:textfield></td>
+									</tr>
+									<tr>
+										<td class="leftLabel"><s:text name="personal.segundoapellido"></s:text></td>
+										<td><s:textfield name="persona.sapellidoPers" size="35" maxlength="30" cssClass="inputs"></s:textfield></td>
+									</tr>
+									<tr>
+										<td class="leftLabel"><s:text name="personal.telefono"></s:text><s:text name="campo.requerido"></s:text></td>
+										<td><s:textfield name="persona.telefonoPers" size="35" maxlength="30" cssClass="inputs"></s:textfield></td>
+									</tr>
+									<tr>
+										<td class="leftLabel"><s:text name="personal.email"></s:text><s:text name="campo.requerido"></s:text></td>
+										<td><s:textfield name="persona.emailPers" size="35" maxlength="80" cssClass="inputs"></s:textfield></td>
+									</tr>
+								</table>
+							</s:if>
+							<s:else>
+								<table cellpadding="0" cellspacing="0" border="0" class="display">
+									<tr>
+										<td class="leftLabel"><s:text name="personal.numerodocumento"></s:text><s:text name="campo.requerido"></s:text></td>
+										<td>
 											<s:property value="persona.documentoPers"/>&nbsp;<s:property value="persona.tipodocumento.abreviaturaTidoc"/>
-										</s:if>
-										<s:else>
-											<s:textfield name="persona.documentoPers" size="20" maxlength="15" cssClass="inputs"></s:textfield><%--nombreTidoc --%>
-											<s:select list="listTipoDoc" name="persona.tipodocumento.idTidoc" listKey="idTidoc" listValue="abreviaturaTidoc" cssClass="inputs"/>	
-										</s:else>
-									</td>
-								</tr>
-								<tr>
-									<td class="leftLabel"><s:text name="personal.primernombre"></s:text><s:text name="campo.requerido"></s:text></td>
-									<td><s:textfield name="persona.pnombrePers" size="35" maxlength="30" cssClass="inputs"></s:textfield></td>
-								</tr>
-								<tr>
-									<td class="leftLabel"><s:text name="personal.segundonombre"></s:text></td>
-									<td><s:textfield name="persona.snombrePers" size="35" maxlength="30" cssClass="inputs"></s:textfield></td>
-								</tr>
-								<tr>
-									<td class="leftLabel"><s:text name="personal.primerapellido"></s:text><s:text name="campo.requerido"></s:text></td>
-									<td><s:textfield name="persona.papellidoPers" size="35" maxlength="30" cssClass="inputs"></s:textfield></td>
-								</tr>
-								<tr>
-									<td class="leftLabel"><s:text name="personal.segundoapellido"></s:text></td>
-									<td><s:textfield name="persona.sapellidoPers" size="35" maxlength="30" cssClass="inputs"></s:textfield></td>
-								</tr>
-								<tr>
-									<td class="leftLabel"><s:text name="personal.telefono"></s:text><s:text name="campo.requerido"></s:text></td>
-									<td><s:textfield name="persona.telefonoPers" size="35" maxlength="30" cssClass="inputs"></s:textfield></td>
-								</tr>
-								<tr>
-									<td class="leftLabel"><s:text name="personal.email"></s:text><s:text name="campo.requerido"></s:text></td>
-									<td><s:textfield name="persona.emailPers" size="35" maxlength="80" cssClass="inputs"></s:textfield></td>
-								</tr>
-							</table>
+										</td>
+									</tr>
+									<tr>
+										<td class="leftLabel"><s:text name="personal.primernombre"></s:text></td>
+										<td><s:property value="persona.pnombrePers"/></td>
+									</tr>
+									<tr>
+										<td class="leftLabel"><s:text name="personal.segundonombre"></s:text></td>
+										<td><s:property value="persona.snombrePers"/></td>
+									</tr>
+									<tr>
+										<td class="leftLabel"><s:text name="personal.primerapellido"></s:text></td>
+										<td><s:property value="persona.papellidoPers"/></td>
+									</tr>
+									<tr>
+										<td class="leftLabel"><s:text name="personal.segundoapellido"></s:text></td>
+										<td><s:property value="persona.sapellidoPers"/></td>
+									</tr>
+									<tr>
+										<td class="leftLabel"><s:text name="personal.telefono"></s:text></td>
+										<td><s:property value="persona.telefonoPers"/></td>
+									</tr>
+									<tr>
+										<td class="leftLabel"><s:text name="personal.email"></s:text></td>
+										<td><s:property value="persona.emailPers"/></td>
+									</tr>
+								</table>
+							</s:else>
 						</div>
 						<div id="tabs-1">
 							<jsp:include page="ordenVenta.jsp" flush="true"></jsp:include>
@@ -337,14 +362,16 @@
 							<jsp:include page="pago.jsp" flush="true"></jsp:include>
 						</div>
 					</div>
-					<table cellpadding="0" cellspacing="0" border="0" class="display">
-						<tr>
-							<td class="right">
-								<input type="button" value="Volver" class="buttonSV" onclick="volver();"/>
-								<input type="button" value="Guardar" class="buttonSV" onclick="registrar();"/>
-							</td>
-						</tr>
-					</table>
+					<s:if test="estado!='abstract'">
+						<table cellpadding="0" cellspacing="0" border="0" class="display">
+							<tr>
+								<td class="right">
+									<input type="button" value="Volver" class="buttonSV" onclick="volver();"/>
+									<input type="button" value="Guardar" class="buttonSV" onclick="registrar();"/>
+								</td>
+							</tr>
+						</table>
+					</s:if>
 				</s:elseif>
 			</div>
 			<div class="spacer"></div>

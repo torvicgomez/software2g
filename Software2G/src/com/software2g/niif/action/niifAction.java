@@ -31,6 +31,7 @@ import com.software2g.vo.Consecutivo;
 import com.software2g.vo.Detallecompra;
 import com.software2g.vo.DetallecompraPK;
 import com.software2g.vo.Detalleventa;
+import com.software2g.vo.DetalleventaPK;
 import com.software2g.vo.Ordencompra;
 import com.software2g.vo.Pago;
 import com.software2g.vo.Persona;
@@ -39,6 +40,7 @@ import com.software2g.vo.Usuario;
 import com.software2g.vo.UtilGenerico;
 import com.software2g.vo.Condicionpago;
 import com.software2g.vo.Formapago;
+import com.software2g.vo.Vendedor;
 import com.software2g.vo.Venta;
 
 public class niifAction extends ActionSupport implements ServletRequestAware,ServletResponseAware {
@@ -78,7 +80,7 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	private List<Pago> listPago;
 	private Consecutivo consecutivo;
 	private List<Consecutivo> listConsecutivo;
-	
+	private Vendedor vendedor;
 	
 	public Categoria getCategoria() {return categoria;}
 	public void setCategoria(Categoria categoria) {this.categoria = categoria;}
@@ -539,64 +541,126 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     					cliente = gestionFacadeNIIF.findAllClienteIdPers(personaFind.getIdPers());
     					persona = personaFind;
     					persona.setExisteCliente(ConstantesAplicativo.constanteCheckSi);
+    				}else{
+    					persona.setExisteCliente(ConstantesAplicativo.constanteCheckNo);
     				}
     			}else{
     				cliente = gestionFacadeNIIF.findAllClienteIdPers(ConstantesAplicativo.constanteIdClienteComodin);
     				persona = cliente.getPersona();
     				persona.setExisteCliente(ConstantesAplicativo.constanteCheckSi);
     			}
+//    			venta.setVentFecha(ValidaString.fechaSystem());
+//    			venta.setVentHora(ValidaString.horaSystem());
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAllTipoServicio)){
     			listTipoDoc = gestionFacadeNIIF.findAllTipodocumentos();
+    			consecutivo = (Consecutivo)gestionFacadeNIIF.findConsecutivoById(ConstantesAplicativo.constanteIdConsecutivoVenta);
     			if(venta==null)
     				venta = new Venta();
-    			venta.setConsecutivoFechaHora(getConsecutivoVentaFechaHora());
-    			Usuario usuario = (Usuario)request.getSession().getAttribute("usuarioVO");
-    			System.out.println("getIdPers:["+usuario.getPersona().getIdPers()+"]");
-    			//vendedor = gestionFacadeAgenda.findProfesionalIdPersona(usuario.getPersona().getIdPers());
-    			//request.getSession().removeAttribute("listDetalleVenta");
-    			//request.getSession().removeAttribute("detalleVenta");
+    			venta.setVentFecha(ValidaString.fechaSystem());
+    			venta.setVentHora(ValidaString.horaSystem());
+    			vendedor = this.getVendedor();
+    			request.getSession().removeAttribute("listDetalleVenta");
+    			request.getSession().removeAttribute("detalleVenta");
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			listDetalleVenta = (List<Detalleventa>)request.getSession().getAttribute("listDetalleVenta");
+    			if(ValidaString.isNullOrEmptyString(persona.getDocumentoPers()))
+    				addActionError(getText("validacion.requeridoseccion","documentoPers",new ArrayList<String>(Arrays.asList("Número Documento", ConstantesAplicativo.constanteNombreSeccionDatosCliente))));
+    			if(persona.getTipodocumento().getIdTidoc()<=0)
+    				addActionError(getText("validacion.requeridoseccion","documentoPers",new ArrayList<String>(Arrays.asList("Tipo Documento", ConstantesAplicativo.constanteNombreSeccionDatosCliente))));
+    			if(ValidaString.isNullOrEmptyString(persona.getPnombrePers()))
+    				addActionError(getText("validacion.requeridoseccion","pnombrePers",new ArrayList<String>(Arrays.asList("Primer Nombre", ConstantesAplicativo.constanteNombreSeccionDatosCliente))));
+    			if(ValidaString.isNullOrEmptyString(persona.getPapellidoPers()))
+    				addActionError(getText("validacion.requeridoseccion","papellidoPers",new ArrayList<String>(Arrays.asList("Primer Apellido", ConstantesAplicativo.constanteNombreSeccionDatosCliente))));
     			if(listDetalleVenta==null||listDetalleVenta.size()<=0)
-    				addActionError(getText("validacion.requeridosec","detalleventa","Detalle Venta"));
+    				addActionError(getText("validacion.requeridosec","detalleventa",ConstantesAplicativo.constanteNombreSeccionDatosProducto));
+    			
+    			if(listPago!=null&&listPago.size()>0){
+    				boolean band = false;
+    				for(Pago elem:listPago){
+    					System.out.println("Pago:["+elem.getFormaPagoIdHelp()+"]-["+elem.getPagoComprobante()+"]-["+elem.getPagoValor()+"]");
+    					if(elem.getFormaPagoIdHelp()==1){
+    						band = true;
+    						if(elem.getPagoValor()<0)
+    							addActionError(getText("validacion.requeridoseccion","valor",new ArrayList<String>(Arrays.asList("Valor Efectivo", ConstantesAplicativo.constanteNombreSeccionDatosPagos))));
+    					}else if(elem.getFormaPagoIdHelp()==2){
+    						band = true;
+    						if(ValidaString.isNullOrEmptyString(elem.getPagoComprobante()))
+    							addActionError(getText("validacion.requeridoseccion","comprobante",new ArrayList<String>(Arrays.asList("Comprobante Tarjeta", ConstantesAplicativo.constanteNombreSeccionDatosPagos))));
+    						if(elem.getPagoValor()<0)
+    							addActionError(getText("validacion.requeridoseccion","valor",new ArrayList<String>(Arrays.asList("Valor Tarjeta", ConstantesAplicativo.constanteNombreSeccionDatosPagos))));
+    					}else if(elem.getFormaPagoIdHelp()==3){
+    						band = true;
+    						if(ValidaString.isNullOrEmptyString(elem.getPagoComprobante()))
+    							addActionError(getText("validacion.requeridoseccion","comprobante",new ArrayList<String>(Arrays.asList("Comprobante Cheque", ConstantesAplicativo.constanteNombreSeccionDatosPagos))));
+    						if(elem.getPagoValor()<0)
+    							addActionError(getText("validacion.requeridoseccion","valor",new ArrayList<String>(Arrays.asList("Valor Cheque", ConstantesAplicativo.constanteNombreSeccionDatosPagos))));
+    					}
+    				}
+    				if(!band)
+    					addActionError(getText("validacion.requeridosec","pagos",ConstantesAplicativo.constanteNombreSeccionDatosPagos));
+    			}
     			
     			if(!hasActionErrors()){
-    				
-    				
-    				formapago.setDatosAud(this.getDatosAud());
-    				ValidaString.imprimirObject(formapago);
-    				gestionFacadeNIIF.persistFormapago(formapago);
+    				//-----------------------------------------------------------------------------
+    				//1. Validar Si el Cliente ya se ecuentra registrado
+    				if(persona.getExisteCliente().equals(ConstantesAplicativo.constanteCheckNo)){
+    					persona.setDatosAud(getDatosAud());
+    					long persId = gestionFacadeNIIF.persistPersonaId(persona);//Insertar Persona
+    					if(persId>0){
+    						persona.setIdPers(persId);
+    						cliente.setPersona(persona);
+    						cliente.setDatosAud(getDatosAud());
+    						long clieId = gestionFacadeNIIF.persistClienteId(cliente);//Se registra la Persona Como Cliente
+    						if(clieId>0)
+    							cliente.setClieId(clieId);
+    					}
+    				}
+    				//-----------------------------------------------------------------------------
+    				//2. Registrar Venta
+    				if(cliente!=null&&cliente.getClieId()>0){
+    					venta.setCliente(cliente);
+    					venta.setVendedor(getVendedor());
+    					venta.setCondicionpago(getCondicionXPago(venta.getVentTotalpag()));
+    					venta.setConsecutivoFechaHora(getConsecutivoVentaFechaHora());
+    					venta.setVentEstado(venta.getCondicionpago().getCopaCondicionpago().equals(ConstantesAplicativo.constanteEstadoCondicionPagoContado)
+    							?ConstantesAplicativo.constanteEstadoOrdenVentaPagada
+    							:ConstantesAplicativo.constanteEstadoOrdenVentaPendiente);
+    					venta.setDatosAud(getDatosAud());
+    					ValidaString.imprimirObject(venta);
+    					long ventId = gestionFacadeNIIF.persistVentaId(venta);
+    					if(ventId>0){
+    						venta.setVentId(ventId);
+    						for(Detalleventa elem:listDetalleVenta){//2.1 Insertar Detalle de venta
+    							elem.setVenta(venta);
+    							elem.setId(new DetalleventaPK(elem.getVenta().getVentId(), elem.getArticulo().getArtiId()));
+    							elem.setDeveEstadoartven(ConstantesAplicativo.constanteEstadoDetalleVentaPagado);
+    							elem.setDatosAud(getDatosAud());
+    							gestionFacadeNIIF.persistDetalleventa(elem);
+    						}
+    						if(listPago!=null&&listPago.size()>0){//2.2 Insertar Pagos
+    							for(Pago elem:listPago){
+    								if(elem.getFormaPagoIdHelp()>0){
+	    								elem.setVenta(venta);
+	    								elem.setFormapago(gestionFacadeNIIF.findFormapagoById(elem.getFormaPagoIdHelp()));
+	    								elem.setPagoFecha(ValidaString.fechaSystem());
+	    								elem.setPagoHora(ValidaString.horaSystem());
+	    								elem.setDatosAud(getDatosAud());
+	    								gestionFacadeNIIF.persistPago(elem);
+    								}
+    							}
+    						}
+    						//-----------------------------------------------------------------------------
+    						//3. Avanzar Consecutivo de Factura
+    						if(!this.avanzarConsecutivo())
+    							addActionMessage(getText("accion.consecutivoventa"));
+    					}
+    				}
     				estado = ConstantesAplicativo.constanteEstadoAbstract;
     				addActionMessage(getText("accion.satisfactoria"));
     			}else{
     				listTipoDoc = gestionFacadeNIIF.findAllTipodocumentos();
     				listFormapago = gestionFacadeNIIF.findAllFormapagos();
     			}
-    			
-    			
-    			
-    			
-    			//ValidaString.imprimirObject(ordenCompra);
-    			if(!hasActionErrors()){
-    				ordenCompra.setProveedor(gestionFacadeNIIF.findProveedorById(1));//Construccion Proveedor
-    				ordenCompra.setOrcoEstado(ConstantesAplicativo.constanteEstadoOrdenCompraPendiente);
-    				ordenCompra.setDatosAud(getDatosAud());
-    				long orcoId = gestionFacadeNIIF.persistOrdencompraId(ordenCompra);
-    				if(orcoId>0){
-    					ordenCompra.setOrcoId(orcoId);
-    					for(Detallecompra elem:listDetalleCompra){
-    						elem.setOrdencompra(ordenCompra);
-    						elem.setId(new DetallecompraPK(elem.getArticulo().getArtiId(), elem.getOrdencompra().getOrcoId()));
-    						elem.setDatosAud(getDatosAud());
-    						gestionFacadeNIIF.persistDetallecompra(elem);
-    					}
-    				}
-    				estado = ConstantesAplicativo.constanteEstadoAbstract;
-    				addActionMessage(getText("accion.satisfactoria"));
-    			}
-    			
-    			
-    			
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			formapago = gestionFacadeNIIF.findFormapagoById(getIdLong());
     		}
@@ -680,6 +744,51 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 					ValidaString.fechaSystem(),
 					ValidaString.horaSystem());
 		} catch (Exception e) {
+			return null;
+		}
+	}
+	public boolean avanzarConsecutivo(){
+		boolean band = true;
+		try {
+			Consecutivo consecutivo = (Consecutivo)gestionFacadeNIIF.findConsecutivoById(ConstantesAplicativo.constanteIdConsecutivoVenta);
+			if((consecutivo.getConsConsecutivodis()+1)<=consecutivo.getConsFinconsecutivo()){
+				consecutivo.setConsConsecutivodis((consecutivo.getConsConsecutivodis()+1));
+				consecutivo.setDatosAud(getDatosAud());
+				gestionFacadeNIIF.persistConsecutivo(consecutivo);
+			}else
+				band = false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return band;
+	}
+	public Vendedor getVendedor(){
+		try {
+			Usuario usuario = (Usuario)request.getSession().getAttribute("usuarioVO");
+			if(usuario!=null&&usuario.getPersona()!=null)
+				return gestionFacadeNIIF.findAllVendedorIdPers(usuario.getPersona().getIdPers());
+			else
+				return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	public Condicionpago getCondicionXPago(double ventTotalaPagar){
+		try {
+			double sumPagos = 0;
+			if(listPago!=null&&listPago.size()>0){
+				for(Pago elem:listPago){
+					if(elem.getFormaPagoIdHelp()>0)
+						sumPagos +=elem.getPagoValor();
+				}
+			}
+			return  (ventTotalaPagar-sumPagos)>0?
+					(Condicionpago)gestionFacadeNIIF.findCondicionpagoById(ConstantesAplicativo.constanteIdCondicionPagoCredito):
+					(Condicionpago)gestionFacadeNIIF.findCondicionpagoById(ConstantesAplicativo.constanteIdCondicionPagoContado);
+		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}

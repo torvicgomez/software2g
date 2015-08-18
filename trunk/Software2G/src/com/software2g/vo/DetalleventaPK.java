@@ -20,6 +20,10 @@ public class DetalleventaPK implements Serializable {
 
 	public DetalleventaPK() {
 	}
+	public DetalleventaPK(long ventId, long artiId) {
+		this.ventId = ventId;
+		this.artiId = artiId;
+	}
 	public long getVentId() {
 		return this.ventId;
 	}

@@ -2232,3 +2232,15 @@ CREATE SEQUENCE niif.seq_cons_id
   START 1
   CACHE 1;
 ALTER TABLE niif.seq_cons_id OWNER TO postgres;
+
+----------------
+-- 18-08-2015 --
+----------------
+ALTER TABLE portal.persona ALTER COLUMN sexo_pers drop not NULL ;
+ALTER TABLE portal.persona ALTER COLUMN fechanacimiento_pers drop not NULL ;
+ALTER TABLE portal.persona ALTER COLUMN estadocivil_pers drop not NULL ;
+ALTER TABLE portal.persona ALTER COLUMN email_pers drop not NULL ;
+
+insert into niif.vendedor (vend_id, pers_id, vend_codigo, vend_fechacambio, vend_horacambio, vend_registradopor, vend_estado) values (nextval('niif.seq_vend_id'), 1, 'VEN01', '2015-08-18','09:09:56', 'vhgomezl', 'S');
+
+

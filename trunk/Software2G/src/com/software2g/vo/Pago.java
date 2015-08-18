@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.software2g.util.ValidaString;
+
 
 /**
  * The persistent class for the pagos database table.
@@ -60,6 +62,9 @@ public class Pago implements Serializable {
 	@JoinColumn(name="vent_id")
 	private Venta venta;
 
+	@Transient
+	private long formaPagoIdHelp;
+	
 	public Pago() {
 	}
 
@@ -131,6 +136,10 @@ public class Pago implements Serializable {
 		return this.pagoValor;
 	}
 
+	public String getPagoValorView() {
+		return ValidaString.formatToMoney(String.valueOf(pagoValor));
+	}
+	
 	public void setPagoValor(double pagoValor) {
 		this.pagoValor = pagoValor;
 	}
@@ -166,4 +175,19 @@ public class Pago implements Serializable {
 			this.pagoHoracambio=data.get(2);
 		}
 	}
+	
+	public void setFormaPagoId(long fopaId){
+		if(this.formapago==null)
+			this.formapago = new Formapago();
+		this.formapago.setFopaId(fopaId);
+	}
+
+	public long getFormaPagoIdHelp() {
+		return formaPagoIdHelp;
+	}
+
+	public void setFormaPagoIdHelp(long formaPagoIdHelp) {
+		this.formaPagoIdHelp = formaPagoIdHelp;
+	}
+	
 }

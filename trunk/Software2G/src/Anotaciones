@@ -87,6 +87,21 @@ Proyecto NIIF - Normas Internacionales de Informacion Finaciera
 	10.1- Crear funcionalidad Cliente ----------------------------------------------------------
 	10.2- Crear funcionalidad Proveedor --------------------------------------------------------
 	10.3- Crear funcionalidad Vendedor ---------------------------------------------------------
+11- Creacion funcionalidad ventas --------------------------------------------------------------
+	11.1- insercion cliente nuevo --------------------------------------------------------------
+	11.2- insercion venta ----------------------------------------------------------------------
+	11.3- insercion detalle de venta -----------------------------------------------------------
+	11.4- insercion de pagos -------------------------------------------------------------------
+12- Creacion funcionalidad de pagos ------------------------------------------------------------
+13- Creacion funcionalidad de anulacion de venta -----------------------------------------------
+14- Creacion de funcionalidad de articulos de ventas -------------------------------------------
+15- Afectacion de stock de articulos segun operacion -------------------------------------------
+	15.1- Venta --------------------------------------------------------------------------------
+	15.2- Anulacion ----------------------------------------------------------------------------
+	15.3- Devolucion ---------------------------------------------------------------------------
+16- Impresion facturas -------------------------------------------------------------------------
+17- Validacion del rol de vendedor segun usuario de logeo --------------------------------------
+18- Validar fecha de expiracion del consecutivo de venta ---------------------------------------
 
 Sugerencia
 * Tabla profesional salud ---------------------------------------------------------------------- .::[O.K]::.

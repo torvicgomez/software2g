@@ -75,6 +75,7 @@ public interface IGestionFacadeNIIF {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistCliente(Cliente cliente) throws Exception;
+	public long persistClienteId(Cliente cliente) throws Exception;
 	/**
 	 * Remove the given persistent instance.
 	 */
@@ -217,6 +218,7 @@ public interface IGestionFacadeNIIF {
 	 * Return all persistent instances of the <code>Vendedor</code> entity.
 	 */
 	public List<Vendedor> findAllVendedors() throws Exception;
+	public Vendedor findAllVendedorIdPers(long persId) throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */

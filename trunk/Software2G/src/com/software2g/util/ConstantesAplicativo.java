@@ -224,5 +224,23 @@ public final class ConstantesAplicativo {
 	public static final String constanteEstadoOrdenCompraPendiente = "PENDIENTE";
 	public static final String constanteEstadoOrdenCompraPagada = "PAGADA";
 	public static final long constanteIdClienteComodin = 2; //Crear un verdadero cliente comodin para ventas.
-	public static final long constanteIdConsecutivoVenta = 1; 
+	public static final long constanteIdConsecutivoVenta = 1;
+	public static final long constanteIdCondicionPagoContado = 2;
+	public static final long constanteIdCondicionPagoCredito = 1;
+	public static final String constanteEstadoOrdenVentaPagada = "PAGADA";
+	public static final String constanteEstadoOrdenVentaPendiente = "PENDIENTE";
+	public static final String constanteEstadoOrdenVentaCotizacion = "COTIZACION";
+	public static final String constanteEstadoOrdenVentaAnulada = "ANULADA";
+	
+	public static final String constanteEstadoCondicionPagoCredito = "CREDITO";
+	public static final String constanteEstadoCondicionPagoContado = "CONTADO";
+	
+	public static final String constanteEstadoDetalleVentaDevuelto = "DEVUELTO";
+	public static final String constanteEstadoDetalleVentaPagado = "PAGADO";
+	public static final String constanteEstadoDetalleVentaPendiente = "PENDIENTE";
+	public static final String constanteEstadoDetalleVentaPorEntregar = "POR_ENTREGAR";
+
+	public static final String constanteNombreSeccionDatosCliente = "Cliente";
+	public static final String constanteNombreSeccionDatosProducto = "Productos";
+	public static final String constanteNombreSeccionDatosPagos = "Pagos";
 }

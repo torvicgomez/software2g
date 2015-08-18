@@ -76,6 +76,23 @@ public class VendedorDAOImpl implements IVendedorDao {
             }
         }
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Vendedor findAllVendedorIdPers(long persId) {
+        try {
+    		String jpqlString = "select vendedor from " + Vendedor.class.getSimpleName() + " vendedor " +
+    				" where vendedor.persona.idPers =:persId ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("persId", persId);
+            return (Vendedor) query.getSingleResult();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

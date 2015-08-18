@@ -32,6 +32,7 @@ public interface IClienteDao {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistCliente(Cliente cliente);
+	public long persistClienteId(Cliente cliente);
 	/**
 	 * Remove the given persistent instance.
 	 */

@@ -88,6 +88,7 @@
 		
 		<action name="venta" method="ventaMethod" class="niifAction">
         	<result name="success" type="tiles">niif.ventas</result>
+        	<result name="input" type="tiles">niif.ventas</result>
         </action>
         
         <action name="consecutivo" method="consecutivoMethod" class="niifAction">

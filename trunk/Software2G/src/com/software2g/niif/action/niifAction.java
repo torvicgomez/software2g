@@ -733,10 +733,11 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     			}
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			venta = gestionFacadeNIIF.findVentaById(getIdLong());
-    			ValidaString.imprimirObject(venta.getCliente().getPersona());
-//    			persona = gestionFacadeNIIF.findPersonaById(cliente.getPersona().getIdPers());
+//    			ValidaString.imprimirObject(venta.getCliente().getPersona());
     			listDetalleVenta = gestionFacadeNIIF.findAllDetalleventas(venta.getVentId());
     			listPago = gestionFacadeNIIF.findAllPagosVenta(venta.getVentId());
+    			venta.setSaldoPendiente(this.getSaldoPendiente(listPago, venta.getVentTotalpag()));
+    			venta.setSaldoAbonado(this.getSaldoAbonado(listPago)) ;
     		}
     	} catch(Exception e){
     		e.printStackTrace();
@@ -831,6 +832,36 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	public double getSaldoPendiente(List<Pago> listPago, double totalaPagar){
+		try {
+			double sumPagos = 0;
+			if(listPago!=null&&listPago.size()>0){
+				for(Pago elem:listPago){
+					sumPagos +=elem.getPagoValor();
+				}
+			}
+			return  (totalaPagar-sumPagos);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	public double getSaldoAbonado(List<Pago> listPago){
+		try {
+			double sumPagos = 0;
+			if(listPago!=null&&listPago.size()>0){
+				for(Pago elem:listPago){
+					sumPagos +=elem.getPagoValor();
+				}
+			}
+			return  sumPagos;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
 		}
 	}
 }

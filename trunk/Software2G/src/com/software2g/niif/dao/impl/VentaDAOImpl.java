@@ -67,7 +67,8 @@ public class VentaDAOImpl implements IVentaDao {
 	@SuppressWarnings("unchecked")
 	public List<Venta> findAllVentas() {
         try {
-    		String jpqlString = "select venta from " + Venta.class.getSimpleName() + " venta";
+    		String jpqlString = "select venta from " + Venta.class.getSimpleName() + " venta " +
+    				"order by venta.ventEstado desc, venta.ventFecha asc ";
             Query query = em.createQuery( jpqlString );
             return query.getResultList();
         }

@@ -39,4 +39,8 @@
 	<definition name="niif.consecutivo" extends="baseLayoutPortal">
 		<put-attribute name="body" value="/niif/consecutivo.jsp" />
 	</definition>
+	
+	<definition name="niif.pagos" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/niif/abono.jsp" />
+	</definition>
 </tiles-definitions>

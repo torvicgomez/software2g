@@ -76,6 +76,23 @@ public class PagosDAOImpl implements IPagosDao {
             }
         }
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Pago> findAllPagosVenta(long ventId) {
+        try {
+    		String jpqlString = "select pago from " + Pago.class.getSimpleName() + " pago " +
+    				" where pago.venta.ventId =:ventId ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("ventId", ventId);
+            return query.getResultList();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

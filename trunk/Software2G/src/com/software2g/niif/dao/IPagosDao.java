@@ -27,6 +27,7 @@ public interface IPagosDao {
 	 * Return all persistent instances of the <code>Pago</code> entity.
 	 */
 	public List<Pago> findAllPagos();
+	public List<Pago> findAllPagosVenta(long ventId);
 	/**
 	 * Make the given instance managed and persistent.
 	 */

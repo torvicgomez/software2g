@@ -399,6 +399,15 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 		}
 	}
 
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Detalleventa> findAllDetalleventas(long ventId) throws Exception {
+		try {
+			return getDetalleVentaDao().findAllDetalleventas(ventId);
+		} catch (RuntimeException e) {
+			throw new Exception("findAllDetalleventas failed: " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */
@@ -544,6 +553,15 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 		}
 	}
 
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Pago> findAllPagosVenta(long ventId) throws Exception {
+		try {
+			return getPagosDao().findAllPagosVenta(ventId);
+		} catch (RuntimeException e) {
+			throw new Exception("findAllPagosVenta failed: " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

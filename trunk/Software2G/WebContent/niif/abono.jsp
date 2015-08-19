@@ -111,7 +111,7 @@
 								<th><s:text name="pagos.estado"></s:text></th>
 								<th><s:text name="ventas.fechahora"></s:text></th>
 								<th><s:text name="ordencompra.totalarticulo"></s:text></th>
-								<th><s:text name="pagos.saldopendiente"></s:text></th>
+<%-- 								<th><s:text name="pagos.saldopendiente"></s:text></th> --%>
 							</tr>
 						</thead>
 						<tbody>
@@ -125,7 +125,8 @@
 										</td>
 										<td align="center">
 											<a onclick="detalle('${data.ventId}');">
-												<img align="middle" src="<s:url value="/imagenes/icon_detalle.png"/>" alt="Detalle" width="18" height="18">
+												<s:text name="titulo.pagos"></s:text>
+<%-- 												<img align="middle" src="<s:url value="/imagenes/icon_detalle.png"/>" alt="Detalle" width="18" height="18"> --%>
 											</a>
 										</td>
 									</s:if>
@@ -135,7 +136,7 @@
 									<td><s:property value="ventEstado"/></td>
 									<td><s:property value="ventFecha"/>&nbsp;<s:property value="ventHora"/></td>
 									<td align="right"><s:property value="ventTotalpagView"/></td>
-									<td align="right"><s:property value="saldoPendienteView"/></td>
+<%-- 									<td align="right"><s:property value="saldoPendienteView"/></td> --%>
 								</tr>
 							</s:iterator>
 						</tbody>
@@ -146,7 +147,7 @@
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<s:hidden name="venta.ventId"></s:hidden>
 						<s:hidden name="venta.saldoAbonado"></s:hidden>
-						<s:hidden name="venta.saldoPendienteView"></s:hidden>
+						<s:hidden name="venta.saldoPendiente"></s:hidden>
 						<tr>
 							<td colspan="6" class="leftLabel"><s:text name="ventas.datosfacventa"></s:text></td>
 						</tr>

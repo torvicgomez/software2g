@@ -759,6 +759,10 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 								sumPagos += elem.getPagoValor();
 							}
 						}
+						listAbono = new ArrayList<Pago>();
+						System.out.println("venta.getSaldoPendiente():["+venta.getSaldoPendiente()+"]");
+						System.out.println("sumPagos:["+sumPagos+"]");
+						System.out.println((venta.getSaldoPendiente()-sumPagos));
 						estado = (venta.getSaldoPendiente()-sumPagos)<=0
 								?ConstantesAplicativo.constanteEstadoOrdenVentaPagada
 		    					:ConstantesAplicativo.constanteEstadoOrdenVentaPendiente;

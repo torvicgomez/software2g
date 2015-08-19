@@ -76,6 +76,23 @@ public class DetalleVentaDAOImpl implements IDetalleVentaDao {
             }
         }
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Detalleventa> findAllDetalleventas(long ventId) {
+        try {
+    		String jpqlString = "select detalleventa from " + Detalleventa.class.getSimpleName() + " detalleventa " +
+    				" where detalleventa.venta.ventId =:ventId ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("ventId", ventId);
+            return query.getResultList();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

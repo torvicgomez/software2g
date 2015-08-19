@@ -94,5 +94,9 @@
         <action name="consecutivo" method="consecutivoMethod" class="niifAction">
         	<result name="success" type="tiles">niif.consecutivo</result>
         </action>
+        
+        <action name="pagos" method="pagosMethod" class="niifAction">
+        	<result name="success" type="tiles">niif.pagos</result>
+        </action>
     </package>
 </struts>

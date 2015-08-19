@@ -27,6 +27,7 @@ public interface IDetalleVentaDao {
 	 * Return all persistent instances of the <code>Detalleventa</code> entity.
 	 */
 	public List<Detalleventa> findAllDetalleventas();
+	public List<Detalleventa> findAllDetalleventas(long ventId);
 	/**
 	 * Make the given instance managed and persistent.
 	 */

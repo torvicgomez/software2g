@@ -127,6 +127,7 @@ public interface IGestionFacadeNIIF {
 	 * Return all persistent instances of the <code>Detalleventa</code> entity.
 	 */
 	public List<Detalleventa> findAllDetalleventas() throws Exception;
+	public List<Detalleventa> findAllDetalleventas(long ventId) throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */
@@ -182,6 +183,7 @@ public interface IGestionFacadeNIIF {
 	 * Return all persistent instances of the <code>Pago</code> entity.
 	 */
 	public List<Pago> findAllPagos() throws Exception;
+	public List<Pago> findAllPagosVenta(long ventId) throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */

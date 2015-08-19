@@ -34,13 +34,27 @@
 				
 			} );
 
+			function soloNumeros(e) {
+				var key = e.keyCode || e.which;
+				teclado = String.fromCharCode(key);
+				numeros="0123456789.";
+				especiales = ["9", "8","37","39","46"];//array 
+				teclado_especial = false;
+				for(var i=0;i<especiales.length;i++){
+					if(key==especiales[i])
+						teclado_especial = true;
+				}
+				if(numeros.indexOf(teclado)==-1 && !teclado_especial)
+					return false;
+			}
+			
 			function agregar(){
 				document.form.action="pagos.action?estado=<%=ConstantesAplicativo.constanteEstadoAdd%>";
 				document.form.submit();
 			}
 			
 			function registrar(){
-				document.form.action="pagos.action?estado=<%=ConstantesAplicativo.constanteEstadoSave%>";
+				document.form.action="pagos.action?estado=<%=ConstantesAplicativo.constanteEstadoSave%>#tabs-2";
 				document.form.submit();
 			}
 			
@@ -68,28 +82,18 @@
 			<div id="demo">
 				<table cellpadding="0" cellspacing="0" border="0" class="display">
 					<tr><td>
-						<h1><s:text name="titulo.categoriaart"></s:text></h1>
+						<h1><s:text name="titulo.pagos"></s:text></h1>
 					</td></tr>
-					<s:if test="estado=='all'">
-						<tr><td class="right">
-							<input type="button" value="<s:text name="labelbutton.agregar"></s:text>" onclick="agregar();" class="buttonSV"/>
-						</td></tr>
+					<s:if test="estado=='edit'||estado=='save'||estado=='abstract'">
+						<tr>
+							<td class="right">
+								<input type="button" value="<s:text name="labelbutton.volver"></s:text>" onclick="volver();" class="buttonSV"/>
+								<s:if test="venta.saldoPendiente>0">
+									<input type="button" value="<s:text name="labelbutton.registrar"></s:text>" onclick="registrar();" class="buttonSV"/>
+								</s:if>
+							</td>
+						</tr>
 					</s:if>
-					<s:elseif test="estado=='add'||estado=='edit'||estado=='save'">
-						<tr>
-							<td class="right">
-								<input type="button" value="<s:text name="labelbutton.volver"></s:text>" onclick="volver();" class="buttonSV"/>
-								<input type="button" value="<s:text name="labelbutton.registrar"></s:text>" onclick="registrar();" class="buttonSV"/>
-							</td>
-						</tr>
-					</s:elseif>
-					<s:elseif test="estado=='abstract'">
-						<tr>
-							<td class="right">
-								<input type="button" value="<s:text name="labelbutton.volver"></s:text>" onclick="volver();" class="buttonSV"/>
-							</td>
-						</tr>
-					</s:elseif>
 				</table>
 				<s:if test="estado=='all'||estado=='query'">
 					<table cellpadding="0" cellspacing="0" border="0" class="display" id="abono">
@@ -138,11 +142,13 @@
 						<tfoot></tfoot>
 					</table>
 				</s:if>
-				<s:elseif test="estado=='all'||estado=='edit'||estado=='save'||estado=='abstract'">
+				<s:elseif test="estado=='edit'||estado=='save'||estado=='abstract'">
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
-						<s:hidden name="vendedor.vendId"></s:hidden>
+						<s:hidden name="venta.ventId"></s:hidden>
+						<s:hidden name="venta.saldoAbonado"></s:hidden>
+						<s:hidden name="venta.saldoPendienteView"></s:hidden>
 						<tr>
-							<td colspan="4" class="leftLabel"><s:text name="ventas.datosfacventa"></s:text></td>
+							<td colspan="6" class="leftLabel"><s:text name="ventas.datosfacventa"></s:text></td>
 						</tr>
 						<tr>
 							<td class="leftLabel"><s:text name="ventas.consecutivo"></s:text></td>
@@ -153,13 +159,17 @@
 							<td>
 								<s:property value="venta.ventFecha"/>/<s:property value="venta.ventHora"/>
 							</td>
+							<td class="leftLabel"><s:text name="pagos.estado"></s:text></td>
+							<td>
+								<s:property value="venta.ventEstado"/>
+							</td>
 						</tr>
 						<tr>
-							<td class="leftLabel" colspan="4"><s:text name="ventas.datosvendedor"></s:text></td>
+							<td class="leftLabel" colspan="6"><s:text name="ventas.datosvendedor"></s:text></td>
 						</tr>
 						<tr>
 							<td class="leftLabel"><s:text name="personal.nombre"></s:text></td>
-							<td align="left">
+							<td align="left" colspan="3">
 								<s:property value="venta.vendedor.persona.nombreCompleto"/>
 							</td>
 							<td class="leftLabel" width="130"><s:text name="ventas.codigovendedor"></s:text></td>
@@ -273,47 +283,77 @@
 									<td colspan="2"  class="leftLabel"><s:text name="pagos.saldoabonado"></s:text></td>
 									<td colspan="2"  class="leftLabel"><s:text name="pagos.saldopendiente"></s:text></td>
 									<td align="right" class="leftLabel"><s:text name="ordencompra.totalarticulo"></s:text></td>
-									<td align="right" width="30%"><s:property value="venta.ventTotalView"/></td>
+									<td align="right" width="15%"><s:property value="venta.ventTotalView"/></td>
 								</tr>
 								<tr>
 									<td rowspan="3" colspan="2" align="right"><font size="16" color="#0000FF"><strong><s:property value="venta.saldoAbonadoView"/></strong></font></td>
 									<td rowspan="3" colspan="2" align="right"><font size="16" color="#FF0000"><strong><s:property value="venta.saldoPendienteView"/></strong></font></td>
 									<td align="right" class="leftLabel"><s:text name="ordencompra.totaldescuento"></s:text></td>
-									<td align="right" width="30%"><s:property value="venta.ventTotaldesView"/></td>
+									<td align="right" width="15%"><s:property value="venta.ventTotaldesView"/></td>
 								</tr>
 								<tr>
 									<td align="right" class="leftLabel"><s:text name="ordencompra.totaliva"></s:text></td>
-									<td align="right" width="30%"><s:property value="venta.ventTotalivaView"/></td>
+									<td align="right" width="15%"><s:property value="venta.ventTotalivaView"/></td>
 								</tr>
 								<tr>
 									<td align="right" class="leftLabel"><s:text name="ordencompra.totalpagado"></s:text></td>
-									<td align="right" width="30%"><s:property value="venta.ventTotalpagView"/></td>
+									<td align="right" width="15%"><s:property value="venta.ventTotalpagView"/></td>
 								</tr>
-								
+								<tr>
+									<td colspan="6" class="leftLabel"><s:text name="pagos.detallepagosrealizados"></s:text></td>
+								</tr>
 								<s:iterator value="listPago" id="data" status="stat">
 									<tr>
-										<td class="leftLabel"><s:text name="formapago.formapago"></s:text></td>
-										<td align="right"><s:property value="formapago.fopaFormapago"/></td>
+										<td class="leftLabel"><s:text name="formapago.formapagofechahora"></s:text></td>
+										<td align="right"><s:property value="formapago.fopaFormapago"/> - <s:property value="pagoFecha"/>/<s:property value="pagoHora"/></td>
 										<td class="leftLabel"><s:text name="pagos.comprobante"></s:text></td>
 										<td align="right"><s:property value="pagoComprobante"/></td>
 										<td class="leftLabel"><s:text name="pagos.valor"></s:text></td>
 										<td align="right"><s:property value="pagoValorView"/></td>
 									</tr>
 								</s:iterator>
-								
+								<s:if test="venta.saldoPendiente>0">
+									<tr>
+										<td colspan="6"  class="leftLabel"><s:text name="pagos.registropago"></s:text></td>
+									</tr>
+									<tr>
+										<td class="leftLabel"><s:text name="formapago.formapago"></s:text></td>
+										<td align="right"><s:select list="listFormapago" name="listAbono[0].formaPagoIdHelp" listKey="fopaId" listValue="fopaFormapago" headerKey="-1" headerValue=".::Selecione::." cssClass="inputs"/></td>
+										<td class="leftLabel"><s:text name="pagos.comprobante"></s:text></td>
+										<td align="right"><s:textfield name="listAbono[0].pagoComprobante" size="10" cssClass="inputs"></s:textfield></td>
+										<td class="leftLabel"><s:text name="pagos.valor"></s:text></td>
+										<td align="right"><s:textfield name="listAbono[0].pagoValor" size="10" cssClass="inputs" style="text-align:right" onKeyPress="return soloNumeros(event)" onpaste="return false"></s:textfield></td>
+									</tr>
+									<tr>
+										<td class="leftLabel"><s:text name="formapago.formapago"></s:text></td>
+										<td align="right"><s:select list="listFormapago" name="listAbono[1].formaPagoIdHelp" listKey="fopaId" listValue="fopaFormapago" headerKey="-1" headerValue=".::Selecione::." cssClass="inputs"/></td>
+										<td class="leftLabel"><s:text name="pagos.comprobante"></s:text></td>
+										<td align="right"><s:textfield name="listAbono[1].pagoComprobante" size="10" cssClass="inputs"></s:textfield></td>
+										<td class="leftLabel"><s:text name="pagos.valor"></s:text></td>
+										<td align="right"><s:textfield name="listAbono[1].pagoValor" size="10" cssClass="inputs" style="text-align:right" onKeyPress="return soloNumeros(event)" onpaste="return false"></s:textfield></td>
+									</tr>
+									<tr>
+										<td class="leftLabel"><s:text name="formapago.formapago"></s:text></td>
+										<td align="right"><s:select list="listFormapago" name="listAbono[2].formaPagoIdHelp" listKey="fopaId" listValue="fopaFormapago" headerKey="-1" headerValue=".::Selecione::." cssClass="inputs"/></td>
+										<td class="leftLabel"><s:text name="pagos.comprobante"></s:text></td>
+										<td align="right"><s:textfield name="listAbono[2].pagoComprobante" size="10" cssClass="inputs"></s:textfield></td>
+										<td class="leftLabel"><s:text name="pagos.valor"></s:text></td>
+										<td align="right"><s:textfield name="listAbono[2].pagoValor" size="10" cssClass="inputs" style="text-align:right" onKeyPress="return soloNumeros(event)" onpaste="return false"></s:textfield></td>
+									</tr>
+								</s:if>
 							</table>
 						</div>
 					</div>
-					<s:if test="estado!='abstract'">
-						<table cellpadding="0" cellspacing="0" border="0" class="display">
-							<tr>
-								<td class="right">
-									<input type="button" value="Volver" class="buttonSV" onclick="volver();"/>
-									<input type="button" value="Guardar" class="buttonSV" onclick="registrar();"/>
-								</td>
-							</tr>
-						</table>
-					</s:if>
+					<table cellpadding="0" cellspacing="0" border="0" class="display">
+						<tr>
+							<td class="right">
+								<input type="button" value="<s:text name="labelbutton.volver"></s:text>" onclick="volver();" class="buttonSV"/>
+								<s:if test="venta.saldoPendiente>0">
+									<input type="button" value="<s:text name="labelbutton.registrar"></s:text>" onclick="registrar();" class="buttonSV"/>
+								</s:if>
+							</td>
+						</tr>
+					</table>
 				</s:elseif>
 			</div>
 			<div class="spacer"></div>

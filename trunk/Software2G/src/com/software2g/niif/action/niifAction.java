@@ -81,6 +81,7 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	private Consecutivo consecutivo;
 	private List<Consecutivo> listConsecutivo;
 	private Vendedor vendedor;
+	private List<Pago> listAbono;
 	
 	public Categoria getCategoria() {return categoria;}
 	public void setCategoria(Categoria categoria) {this.categoria = categoria;}
@@ -128,6 +129,8 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	public void setConsecutivo(Consecutivo consecutivo) {this.consecutivo = consecutivo;}
 	public List<Consecutivo> getListConsecutivo() {return listConsecutivo;}
 	public void setListConsecutivo(List<Consecutivo> listConsecutivo) {this.listConsecutivo = listConsecutivo;}
+	public List<Pago> getListAbono() {return listAbono;}
+	public void setListAbono(List<Pago> listAbono) {this.listAbono = listAbono;}
 	
 	
 	public List<UtilGenerico> getListEstado() {return ConstantesAplicativo.listEstadoSN;}
@@ -685,7 +688,6 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
     			listConsecutivo = gestionFacadeNIIF.findAllConsecutivos();
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
-    			ValidaString.imprimirObject(consecutivo);
     			if(consecutivo.getConsIniconsecutivo()<=0)
     				addActionError(getText("validacion.requerido","consIniconsecutivo","Consecutivo Inicial"));
     			if(ValidaString.isNullOrEmptyString(consecutivo.getConsVigencia()))
@@ -718,26 +720,69 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
     			listVenta = gestionFacadeNIIF.findAllVentas();
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
-    			ValidaString.imprimirObject(consecutivo);
-    			if(consecutivo.getConsIniconsecutivo()<=0)
-    				addActionError(getText("validacion.requerido","consIniconsecutivo","Consecutivo Inicial"));
-    			if(ValidaString.isNullOrEmptyString(consecutivo.getConsVigencia()))
-    				addActionError(getText("validacion.requerido","consVigencia","Vigencia Consecutivos"));
+    			if(listAbono!=null&&listAbono.size()>0){
+    				boolean band = false;
+    				for(Pago elem:listAbono){
+    					if(elem.getFormaPagoIdHelp()==1){
+    						band = true;
+    						if(elem.getPagoValor()<=0)
+    							addActionError(getText("validacion.requeridoseccion","valor",new ArrayList<String>(Arrays.asList("Valor Efectivo", ConstantesAplicativo.constanteNombreSeccionDatosPagos))));
+    					}else if(elem.getFormaPagoIdHelp()==2){
+    						band = true;
+    						if(ValidaString.isNullOrEmptyString(elem.getPagoComprobante()))
+    							addActionError(getText("validacion.requeridoseccion","comprobante",new ArrayList<String>(Arrays.asList("Comprobante Tarjeta", ConstantesAplicativo.constanteNombreSeccionDatosPagos))));
+    						if(elem.getPagoValor()<=0)
+    							addActionError(getText("validacion.requeridoseccion","valor",new ArrayList<String>(Arrays.asList("Valor Tarjeta", ConstantesAplicativo.constanteNombreSeccionDatosPagos))));
+    					}else if(elem.getFormaPagoIdHelp()==3){
+    						band = true;
+    						if(ValidaString.isNullOrEmptyString(elem.getPagoComprobante()))
+    							addActionError(getText("validacion.requeridoseccion","comprobante",new ArrayList<String>(Arrays.asList("Comprobante Cheque", ConstantesAplicativo.constanteNombreSeccionDatosPagos))));
+    						if(elem.getPagoValor()<=0)
+    							addActionError(getText("validacion.requeridoseccion","valor",new ArrayList<String>(Arrays.asList("Valor Cheque", ConstantesAplicativo.constanteNombreSeccionDatosPagos))));
+    					}
+    				}
+    				if(!band)
+    					addActionError(getText("validacion.requeridosec","pagos",ConstantesAplicativo.constanteNombreSeccionDatosPagos));
+    			}
     			if(!hasActionErrors()){
-    				consecutivo.setDatosAud(this.getDatosAud());
-    				consecutivo.setConsConsecutivodis(consecutivo.getConsIniconsecutivo());
-    				ValidaString.imprimirObject(consecutivo);
-    				gestionFacadeNIIF.persistConsecutivo(consecutivo);
+    				if(listAbono!=null&&listAbono.size()>0){//Insertar Pagos
+    					double sumPagos = 0;
+    					String estado = null;
+						for(Pago elem:listAbono){
+							if(elem.getFormaPagoIdHelp()>0){
+								elem.setVenta(venta);
+								elem.setFormapago(gestionFacadeNIIF.findFormapagoById(elem.getFormaPagoIdHelp()));
+								elem.setPagoFecha(ValidaString.fechaSystem());
+								elem.setPagoHora(ValidaString.horaSystem());
+								elem.setDatosAud(getDatosAud());
+								gestionFacadeNIIF.persistPago(elem);
+								sumPagos += elem.getPagoValor();
+							}
+						}
+						estado = (venta.getSaldoPendiente()-sumPagos)<=0
+								?ConstantesAplicativo.constanteEstadoOrdenVentaPagada
+		    					:ConstantesAplicativo.constanteEstadoOrdenVentaPendiente;
+						venta = gestionFacadeNIIF.findVentaById(venta.getVentId());
+						venta.setVentEstado(estado);
+						venta.setDatosAud(getDatosAud());
+						gestionFacadeNIIF.persistVenta(venta);
+					}
     				estado = ConstantesAplicativo.constanteEstadoAbstract;
     				addActionMessage(getText("accion.satisfactoria"));
-    			}
+    			}else
+    				venta = gestionFacadeNIIF.findVentaById(venta.getVentId());
+				listDetalleVenta = gestionFacadeNIIF.findAllDetalleventas(venta.getVentId());
+    			listPago = gestionFacadeNIIF.findAllPagosVenta(venta.getVentId());
+    			venta.setSaldoPendiente(this.getSaldoPendiente(listPago, venta.getVentTotalpag()));
+    			venta.setSaldoAbonado(this.getSaldoAbonado(listPago)) ;
+    			listFormapago = gestionFacadeNIIF.findAllFormapagos();
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			venta = gestionFacadeNIIF.findVentaById(getIdLong());
-//    			ValidaString.imprimirObject(venta.getCliente().getPersona());
     			listDetalleVenta = gestionFacadeNIIF.findAllDetalleventas(venta.getVentId());
     			listPago = gestionFacadeNIIF.findAllPagosVenta(venta.getVentId());
     			venta.setSaldoPendiente(this.getSaldoPendiente(listPago, venta.getVentTotalpag()));
     			venta.setSaldoAbonado(this.getSaldoAbonado(listPago)) ;
+    			listFormapago = gestionFacadeNIIF.findAllFormapagos();
     		}
     	} catch(Exception e){
     		e.printStackTrace();

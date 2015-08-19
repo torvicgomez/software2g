@@ -80,19 +80,20 @@ Proyecto NIIF - Normas Internacionales de Informacion Finaciera
 05- Creacion funcionalidad articulos ----------------------------------------------------------- .::[O.K]::.
 	05.1- Creación campos diferenciadores y que requieran formula o especificacion tecnica -----
 06- Creacion funcionalidad Provedores ----------------------------------------------------------	
-07- Creacion funcionalidad Orden de Compra -----------------------------------------------------
+07- Creacion funcionalidad Orden de Compra ----------------------------------------------------- .::[O.K]::.
 08- Crear Funcionalidad Condicion de Pago ------------------------------------------------------ .::[O.K]::.
 09- Creacion Funcionalidad Forma de Pago ------------------------------------------------------- .::[O.K]::.
 10- Crecion de Funcionalidades Heredadas de Persona --------------------------------------------
-	10.1- Crear funcionalidad Cliente ----------------------------------------------------------
+	10.1- Crear funcionalidad Cliente Integrada a la Venta ------------------------------------- .::[O.K]::.
 	10.2- Crear funcionalidad Proveedor --------------------------------------------------------
 	10.3- Crear funcionalidad Vendedor ---------------------------------------------------------
-11- Creacion funcionalidad ventas --------------------------------------------------------------
-	11.1- insercion cliente nuevo --------------------------------------------------------------
-	11.2- insercion venta ----------------------------------------------------------------------
-	11.3- insercion detalle de venta -----------------------------------------------------------
-	11.4- insercion de pagos -------------------------------------------------------------------
-12- Creacion funcionalidad de pagos ------------------------------------------------------------
+11- Creacion funcionalidad ventas -------------------------------------------------------------- .::[O.K]::.
+	11.1- insercion cliente nuevo -------------------------------------------------------------- .::[O.K]::.
+	11.2- insercion venta ---------------------------------------------------------------------- .::[O.K]::.
+	11.3- insercion detalle de venta ----------------------------------------------------------- .::[O.K]::.
+	11.4- insercion de pagos ------------------------------------------------------------------- .::[O.K]::.
+	11.5- Avanzar Consecutivo ------------------------------------------------------------------ .::[O.K]::.
+12- Creacion funcionalidad de pagos ------------------------------------------------------------ .::[O.K]::.
 13- Creacion funcionalidad de anulacion de venta -----------------------------------------------
 14- Creacion de funcionalidad de articulos de ventas -------------------------------------------
 15- Afectacion de stock de articulos segun operacion -------------------------------------------

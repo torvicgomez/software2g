@@ -107,6 +107,7 @@
 								<th><s:text name="pagos.estado"></s:text></th>
 								<th><s:text name="ventas.fechahora"></s:text></th>
 								<th><s:text name="ordencompra.totalarticulo"></s:text></th>
+								<th><s:text name="pagos.saldopendiente"></s:text></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -130,6 +131,7 @@
 									<td><s:property value="ventEstado"/></td>
 									<td><s:property value="ventFecha"/>&nbsp;<s:property value="ventHora"/></td>
 									<td align="right"><s:property value="ventTotalpagView"/></td>
+									<td align="right"><s:property value="saldoPendienteView"/></td>
 								</tr>
 							</s:iterator>
 						</tbody>
@@ -268,25 +270,26 @@
 						<div id="tabs-2">
 							<table cellpadding="0" cellspacing="0" border="0" class="display">
 								<tr>
-									<td colspan="4"></td>
+									<td colspan="2"  class="leftLabel"><s:text name="pagos.saldoabonado"></s:text></td>
+									<td colspan="2"  class="leftLabel"><s:text name="pagos.saldopendiente"></s:text></td>
 									<td align="right" class="leftLabel"><s:text name="ordencompra.totalarticulo"></s:text></td>
-									<td align="right"><s:property value="venta.ventTotalView"/></td>
+									<td align="right" width="30%"><s:property value="venta.ventTotalView"/></td>
 								</tr>
 								<tr>
-									<td colspan="4"></td>
+									<td rowspan="3" colspan="2" align="right"><font size="16" color="#0000FF"><strong><s:property value="venta.saldoAbonadoView"/></strong></font></td>
+									<td rowspan="3" colspan="2" align="right"><font size="16" color="#FF0000"><strong><s:property value="venta.saldoPendienteView"/></strong></font></td>
 									<td align="right" class="leftLabel"><s:text name="ordencompra.totaldescuento"></s:text></td>
-									<td align="right"><s:property value="venta.ventTotaldesView"/></td>
+									<td align="right" width="30%"><s:property value="venta.ventTotaldesView"/></td>
 								</tr>
 								<tr>
-									<td colspan="4"></td>
 									<td align="right" class="leftLabel"><s:text name="ordencompra.totaliva"></s:text></td>
-									<td align="right"><s:property value="venta.ventTotalivaView"/></td>
+									<td align="right" width="30%"><s:property value="venta.ventTotalivaView"/></td>
 								</tr>
 								<tr>
-									<td colspan="4"></td>
 									<td align="right" class="leftLabel"><s:text name="ordencompra.totalpagado"></s:text></td>
-									<td align="right"><s:property value="venta.ventTotalpagView"/></td>
+									<td align="right" width="30%"><s:property value="venta.ventTotalpagView"/></td>
 								</tr>
+								
 								<s:iterator value="listPago" id="data" status="stat">
 									<tr>
 										<td class="leftLabel"><s:text name="formapago.formapago"></s:text></td>
@@ -297,6 +300,7 @@
 										<td align="right"><s:property value="pagoValorView"/></td>
 									</tr>
 								</s:iterator>
+								
 							</table>
 						</div>
 					</div>

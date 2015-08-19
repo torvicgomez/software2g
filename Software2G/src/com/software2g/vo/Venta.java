@@ -79,6 +79,12 @@ public class Venta implements Serializable {
 	@JoinColumn(name="vend_id")
 	private Vendedor vendedor;
 
+	@Transient
+	private double saldoPendiente; 
+	
+	@Transient
+	private double saldoAbonado;
+	
 	public Venta() {
 	}
 
@@ -248,5 +254,29 @@ public class Venta implements Serializable {
 			this.ventFecha=data.get(1);
 			this.ventHora=data.get(2);
 		}
+	}
+
+	public double getSaldoPendiente() {
+		return saldoPendiente;
+	}
+
+	public void setSaldoPendiente(double saldoPendiente) {
+		this.saldoPendiente = saldoPendiente;
+	}
+	
+	public String getSaldoPendienteView() {
+		return ValidaString.formatToMoney(String.valueOf(saldoPendiente));
+	}
+
+	public double getSaldoAbonado() {
+		return saldoAbonado;
+	}
+
+	public void setSaldoAbonado(double saldoAbonado) {
+		this.saldoAbonado = saldoAbonado;
+	}
+
+	public String getSaldoAbonadoView() {
+		return ValidaString.formatToMoney(String.valueOf(saldoAbonado));
 	}
 }

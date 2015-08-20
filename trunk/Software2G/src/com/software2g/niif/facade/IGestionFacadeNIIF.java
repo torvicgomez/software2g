@@ -2,16 +2,18 @@ package com.software2g.niif.facade;
 
 import java.util.List;
 
+import com.software2g.vo.Archivotabla;
 import com.software2g.vo.Articulo;
 import com.software2g.vo.Categoria;
 import com.software2g.vo.Cliente;
 import com.software2g.vo.Condicionpago;
-import com.software2g.vo.Consecutivo;
 import com.software2g.vo.Detallecompra;
 import com.software2g.vo.Detalleventa;
 import com.software2g.vo.Formapago;
 import com.software2g.vo.Ordencompra;
 import com.software2g.vo.Pago;
+import com.software2g.vo.Portafolio;
+import com.software2g.vo.Portafoliocategoria;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Proveedor;
 import com.software2g.vo.Tipodocumento;
@@ -249,7 +251,7 @@ public interface IGestionFacadeNIIF {
 	 * Remove the given persistent instance.
 	 */
 	public void removeVenta(Venta venta) throws Exception;
-
+	
 	public Tipodocumento findTipodocumentoById(java.lang.Integer id) throws Exception;
 	public List<Tipodocumento> findAllTipodocumentos() throws Exception;
 	public void persistTipodocumento(Tipodocumento tipodocumento) throws Exception;
@@ -286,4 +288,76 @@ public interface IGestionFacadeNIIF {
 	 * Remove the given persistent instance.
 	 */
 	public void removeConsecutivo(Consecutivo consecutivo) throws Exception;
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Archivotabla findArchivotablaById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Archivotabla</code> entity.
+	 */
+	public List<Archivotabla> findAllArchivotablas() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistArchivotabla(Archivotabla archivotabla) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeArchivotabla(Archivotabla archivotabla) throws Exception;
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Portafolio findPortafolioById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Portafolio</code> entity.
+	 */
+	public List<Portafolio> findAllPortafolios() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistPortafolio(Portafolio portafolio) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removePortafolio(Portafolio portafolio) throws Exception;
+	/**
+	 * Consulta el ultimo registro de archivo tabla por desc tabla y idregistro
+	 * @param tabla
+	 * @param idRegistro
+	 * @return
+	 * @throws Exception
+	 */
+	public Archivotabla findArchivotablaByTablaIdRegistro(String tabla, String idRegistro) throws Exception;
+	
+	/**
+	 * Consulta todos los archivos de tabla por desc tabla y idregistro
+	 * @param tabla
+	 * @param idRegistro
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Archivotabla> findAllArchivotablasByTablaIdRegistro(String tabla, String idRegistro) throws Exception;
+
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Portafoliocategoria findPortafoliocategoriaById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Portafoliocategoria</code> entity.
+	 */
+	public List<Portafoliocategoria> findAllPortafoliocategorias() throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistPortafoliocategoria(Portafoliocategoria portafoliocategoria) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removePortafoliocategoria(Portafoliocategoria portafoliocategoria) throws Exception;
+	/**
+	 * Service method for named queries
+	 */
 }

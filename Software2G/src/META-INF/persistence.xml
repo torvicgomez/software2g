@@ -100,6 +100,9 @@
 		<class>com.software2g.vo.Proveedor</class>
 		<class>com.software2g.vo.Vendedor</class>
 		<class>com.software2g.vo.Venta</class>
+		<class>com.software2g.vo.Archivotabla</class>
+		<class>com.software2g.vo.Portafolio</class>
+		<class>com.software2g.vo.Portafoliocategoria</class> 
 		<class>com.software2g.vo.Consecutivo</class> 
 	</persistence-unit>
 </persistence>

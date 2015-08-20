@@ -243,4 +243,11 @@ public final class ConstantesAplicativo {
 	public static final String constanteNombreSeccionDatosCliente = "Cliente";
 	public static final String constanteNombreSeccionDatosProducto = "Productos";
 	public static final String constanteNombreSeccionDatosPagos = "Pagos";
+	
+	public static final String constanteNombreTablaPortafolio = "portafolio";
+	public static final String constanteRutaArchivosTablaPortafolio = "niif"+System.getProperty("file.separator")+"ficheros"+System.getProperty("file.separator")+"portafolio";
+	public static final String constanteNombreTablaPortafolioCategoria = "portafoliocategoria";
+	public static final String constanteRutaArchivosTablaPortafolioCategoria = "niif"+System.getProperty("file.separator")+"ficheros"+System.getProperty("file.separator")+"portafolio";
+	
+	public static final String constanteEstadoActivoGlobalLetra = "S";
 }

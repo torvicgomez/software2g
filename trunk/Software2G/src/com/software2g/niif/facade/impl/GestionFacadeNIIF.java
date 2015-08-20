@@ -5,6 +5,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+
+import com.software2g.vo.Archivotabla;
 import com.software2g.vo.Articulo;
 import com.software2g.vo.Categoria;
 import com.software2g.vo.Cliente;
@@ -16,11 +19,14 @@ import com.software2g.vo.Formapago;
 import com.software2g.vo.Ordencompra;
 import com.software2g.vo.Pago;
 import com.software2g.vo.Persona;
+import com.software2g.vo.Portafolio;
+import com.software2g.vo.Portafoliocategoria;
 import com.software2g.vo.Proveedor;
 import com.software2g.vo.Tipodocumento;
 import com.software2g.vo.Vendedor;
 import com.software2g.vo.Venta;
 import com.software2g.niif.facade.IGestionFacadeNIIF;
+import com.software2g.niif.dao.IArchivoTablaDao;
 import com.software2g.niif.dao.IArticuloDao;
 import com.software2g.niif.dao.ICategoriaDao;
 import com.software2g.niif.dao.IClienteDao;
@@ -31,6 +37,8 @@ import com.software2g.niif.dao.IDetalleVentaDao;
 import com.software2g.niif.dao.IFormaPagoDao;
 import com.software2g.niif.dao.IOrdenCompraDao;
 import com.software2g.niif.dao.IPagosDao;
+import com.software2g.niif.dao.IPortafolioCategoriaDao;
+import com.software2g.niif.dao.IPortafolioDao;
 import com.software2g.niif.dao.IProveedorDao;
 import com.software2g.niif.dao.IVendedorDao;
 import com.software2g.niif.dao.IVentaDao;
@@ -68,12 +76,25 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 	@Autowired
 	IVentaDao ventaDao;
 	@Autowired
+	IPortafolioDao portafolioDao;
+	@Autowired
+	IArchivoTablaDao archivoTablaDao;
+	@Autowired
+	IPortafolioCategoriaDao portafolioCategoriaDao;
+	@Autowired
 	ITipoDocumentoDao tipoDocumentoDao;
 	@Autowired
 	IPersonaDao personaDao;
 	@Autowired
 	IConsecutivoDao consecutivoDao;
 	
+	
+	public IPortafolioCategoriaDao getPortafolioCategoriaDao() {return portafolioCategoriaDao;}
+	public void setPortafolioCategoriaDao(IPortafolioCategoriaDao portafolioCategoriaDao) {this.portafolioCategoriaDao = portafolioCategoriaDao;}
+	public IPortafolioDao getPortafolioDao() {return portafolioDao;}
+	public void setPortafolioDao(IPortafolioDao portafolioDao) {this.portafolioDao = portafolioDao;}
+	public IArchivoTablaDao getArchivoTablaDao() {return archivoTablaDao;}
+	public void setArchivoTablaDao(IArchivoTablaDao archivoTablaDao) {this.archivoTablaDao = archivoTablaDao;}
 	public IArticuloDao getArticuloDao() {return articuloDao;}
 	public void setArticuloDao(IArticuloDao articuloDao) {this.articuloDao = articuloDao;}
 	public ICategoriaDao getCategoriaDao() {return categoriaDao;}
@@ -736,6 +757,161 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 			throw new Exception("removeVenta failed: " + e.getMessage());
 		}
 	}
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Archivotabla findArchivotablaById(long id) throws Exception {
+		try {
+			return getArchivoTablaDao().findArchivotablaById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findArchivotablaById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Archivotabla</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Archivotabla> findAllArchivotablas() throws Exception {
+		try {
+			return getArchivoTablaDao().findAllArchivotablas();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllArchivotablas failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistArchivotabla(Archivotabla archivotabla) throws Exception {
+		try {
+			getArchivoTablaDao().persistArchivotabla(archivotabla);
+		} catch (RuntimeException e) {
+			throw new Exception("persistArchivotabla failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeArchivotabla(Archivotabla archivotabla) throws Exception {
+		try {
+			getArchivoTablaDao().removeArchivotabla(archivotabla);
+		} catch (RuntimeException e) {
+			throw new Exception("removeArchivotabla failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Consulta el ultimo registro de archivo tabla por desc tabla y idregistro
+	 */
+	public Archivotabla findArchivotablaByTablaIdRegistro(String tabla, String idRegistro) throws Exception{
+		try {
+			return getArchivoTablaDao().findArchivotablaByTablaIdRegistro(tabla, idRegistro);
+		} catch (RuntimeException e) {
+			throw new Exception("findArchivotablaByTablaIdRegistro failed: " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * Consulta todos los archivos de tabla por desc tabla y idregistro
+	 */
+	public List<Archivotabla> findAllArchivotablasByTablaIdRegistro(String tabla, String idRegistro) throws Exception{
+		try {
+			return getArchivoTablaDao().findAllArchivotablasByTablaIdRegistro(tabla, idRegistro);
+		} catch (RuntimeException e) {
+			throw new Exception("findAllArchivotablasByTablaIdRegistro failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Service method for named queries
+	 */
+
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Portafolio findPortafolioById(long id) throws Exception {
+		try {
+			return getPortafolioDao().findPortafolioById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findPortafolioById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Portafolio</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Portafolio> findAllPortafolios() throws Exception {
+		try {
+			return getPortafolioDao().findAllPortafolios();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllPortafolios failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistPortafolio(Portafolio portafolio) throws Exception {
+		try {
+			getPortafolioDao().persistPortafolio(portafolio);
+		} catch (RuntimeException e) {
+			throw new Exception("persistPortafolio failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removePortafolio(Portafolio portafolio) throws Exception {
+		try {
+			getPortafolioDao().removePortafolio(portafolio);
+		} catch (RuntimeException e) {
+			throw new Exception("removePortafolio failed: " + e.getMessage());
+		}
+	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Portafoliocategoria findPortafoliocategoriaById(long id) throws Exception {
+		try {
+			return getPortafolioCategoriaDao().findPortafoliocategoriaById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findPortafoliocategoriaById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Portafoliocategoria</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Portafoliocategoria> findAllPortafoliocategorias() throws Exception {
+		try {
+			return getPortafolioCategoriaDao().findAllPortafoliocategorias();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllPortafoliocategorias failed: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistPortafoliocategoria(Portafoliocategoria portafoliocategoria) throws Exception {
+		try {
+			getPortafolioCategoriaDao().persistPortafoliocategoria(portafoliocategoria);
+		} catch (RuntimeException e) {
+			throw new Exception("persistPortafoliocategoria failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removePortafoliocategoria(Portafoliocategoria portafoliocategoria) throws Exception {
+		try {
+			getPortafolioCategoriaDao().removePortafoliocategoria(portafoliocategoria);
+		} catch (RuntimeException e) {
+			throw new Exception("removePortafoliocategoria failed: " + e.getMessage());
+		}
+	}
+	
 
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
 	public Tipodocumento findTipodocumentoById(java.lang.Integer id) throws Exception {

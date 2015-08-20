@@ -287,8 +287,8 @@
 									<td align="right" width="15%"><s:property value="venta.ventTotalView"/></td>
 								</tr>
 								<tr>
-									<td rowspan="3" colspan="2" align="right"><font size="16" color="#0000FF"><strong><s:property value="venta.saldoAbonadoView"/></strong></font></td>
-									<td rowspan="3" colspan="2" align="right"><font size="16" color="#FF0000"><strong><s:property value="venta.saldoPendienteView"/></strong></font></td>
+									<td rowspan="3" colspan="2" align="right"><font size="8" color="#0000FF"><strong><s:property value="venta.saldoAbonadoView"/></strong></font></td>
+									<td rowspan="3" colspan="2" align="right"><font size="8" color="#FF0000"><strong><s:property value="venta.saldoPendienteView"/></strong></font></td>
 									<td align="right" class="leftLabel"><s:text name="ordencompra.totaldescuento"></s:text></td>
 									<td align="right" width="15%"><s:property value="venta.ventTotaldesView"/></td>
 								</tr>

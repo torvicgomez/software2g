@@ -543,7 +543,10 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     				if(personaFind!=null&&personaFind.getIdPers()>0){
     					cliente = gestionFacadeNIIF.findAllClienteIdPers(personaFind.getIdPers());
     					persona = personaFind;
-    					persona.setExisteCliente(ConstantesAplicativo.constanteCheckSi);
+    					if(cliente!=null&&cliente.getClieId()>0)
+    						persona.setExisteCliente(ConstantesAplicativo.constanteCheckSi);
+    					else
+    						persona.setExisteCliente(ConstantesAplicativo.constanteCheckNo);
     				}else{
     					persona.setExisteCliente(ConstantesAplicativo.constanteCheckNo);
     				}
@@ -631,6 +634,7 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     					venta.setDatosAud(getDatosAud());
     					ValidaString.imprimirObject(venta);
     					long ventId = gestionFacadeNIIF.persistVentaId(venta);
+    					System.out.println("ventId:["+ventId+"]");
     					if(ventId>0){
     						venta.setVentId(ventId);
     						for(Detalleventa elem:listDetalleVenta){//2.1 Insertar Detalle de venta

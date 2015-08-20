@@ -1,11 +1,13 @@
 package com.software2g.niif.action;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +22,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
+import com.software2g.vo.Archivotabla;
 import com.software2g.niif.dao.impl.PagosDAOImpl;
 import com.software2g.niif.facade.IGestionFacadeNIIF;
 import com.software2g.util.ConstantesAplicativo;
@@ -33,6 +36,8 @@ import com.software2g.vo.DetallecompraPK;
 import com.software2g.vo.Detalleventa;
 import com.software2g.vo.DetalleventaPK;
 import com.software2g.vo.Ordencompra;
+import com.software2g.vo.Portafolio;
+import com.software2g.vo.Portafoliocategoria;
 import com.software2g.vo.Pago;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Tipodocumento;
@@ -82,7 +87,39 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	private List<Consecutivo> listConsecutivo;
 	private Vendedor vendedor;
 	private List<Pago> listAbono;
+	private Portafolio portafolio;
+	private List<Portafolio> listPortafolio;
+	private Archivotabla archivotabla;
+	private List<Archivotabla> listArchivotabla;
+	private Portafoliocategoria portafoliocategoria;
+	private List<Portafoliocategoria> listPortafoliocategoria;
 	
+	private File fileUpload;
+	private String fileUploadContentType;
+	private String fileUploadFileName;
+	
+	
+	
+	public List<Archivotabla> getListArchivotabla() {return listArchivotabla;}
+	public void setListArchivotabla(List<Archivotabla> listArchivotabla) {this.listArchivotabla = listArchivotabla;}
+	public List<Portafoliocategoria> getListPortafoliocategoria() {return listPortafoliocategoria;}
+	public void setListPortafoliocategoria(List<Portafoliocategoria> listPortafoliocategoria) {this.listPortafoliocategoria = listPortafoliocategoria;}
+	public Portafoliocategoria getPortafoliocategoria() {return portafoliocategoria;}
+	public void setPortafoliocategoria(Portafoliocategoria portafoliocategoria) {this.portafoliocategoria = portafoliocategoria;}
+	public Archivotabla getArchivotabla() {return archivotabla;}
+	public void setArchivotabla(Archivotabla archivotabla) {this.archivotabla = archivotabla;}
+	
+	public File getFileUpload() {return fileUpload;}
+	public void setFileUpload(File fileUpload) {this.fileUpload = fileUpload;}
+	public String getFileUploadContentType() {return fileUploadContentType;}
+	public void setFileUploadContentType(String fileUploadContentType) {this.fileUploadContentType = fileUploadContentType;}
+	public String getFileUploadFileName() {return fileUploadFileName;}
+	public void setFileUploadFileName(String fileUploadFileName) {this.fileUploadFileName = fileUploadFileName;}
+	
+	public Portafolio getPortafolio() {return portafolio;}
+	public void setPortafolio(Portafolio portafolio) {this.portafolio = portafolio;}
+	public List<Portafolio> getListPortafolio() {return listPortafolio;}
+	public void setListPortafolio(List<Portafolio> listPortafolio) {this.listPortafolio = listPortafolio;}
 	public Categoria getCategoria() {return categoria;}
 	public void setCategoria(Categoria categoria) {this.categoria = categoria;}
 	public List<Categoria> getListCategoria() {return listCategoria;}
@@ -523,6 +560,219 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     		addActionError(getText("error.aplicacion"));
     	}
     	System.out.println("######>>>>>>>niifAction>>>>formaPagoMethod>>>>estado entrada-->>"+estado);
+    	return Action.SUCCESS;
+	}
+		
+	@SkipValidation
+	public String portafolioMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>niifAction>>>>portafolioMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listPortafolio = gestionFacadeNIIF.findAllPortafolios();
+//    			for(Portafolio elem:listPortafolio){
+//    				archivotabla = gestionFacadeNIIF.findArchivotablaByTablaIdRegistro(ConstantesAplicativo.constanteNombreTablaPortafolio, String.valueOf(elem.getPortId()));
+//    				if(archivotabla!=null){
+//        				String rutaAlterna = "/";
+//        				rutaAlterna += archivotabla.getArtaRuta().replace("\\", "/")+"/"+archivotabla.getArtaArchguardado();
+//        				archivotabla.setRutaAlterna(rutaAlterna);
+//        				System.out.println("//*/*/*/*/*////*/*/*/*/*/*/*/*/*/*/*/*/*/*/");
+//        				System.out.println(rutaAlterna);
+//        				System.out.println("//*/*/*/*/*////*/*/*/*/*/*/*/*/*/*/*/*/*/*/");
+//        			}
+//    			}
+    			
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			if(ValidaString.isNullOrEmptyString(portafolio.getPortReferencia()))
+    				addActionError(getText("validacion.requerido","portreferencia","Referencia"));
+    			if(ValidaString.isNullOrEmptyString(portafolio.getPortDescripcion()))
+    				addActionError(getText("validacion.requerido","portdescripcion","Descripción"));
+    			if(ValidaString.isNullOrEmptyString((String.valueOf(portafolio.getPortValor()))))
+    				addActionError(getText("validacion.requerido","portvalor","Valor $"));
+    			if(!hasActionErrors()){
+    				portafolio.setDatosAud(this.getDatosAud());
+    				ValidaString.imprimirObject(portafolio);
+    				gestionFacadeNIIF.persistPortafolio(portafolio);
+    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				boolean uploadFile = false;
+    				System.out.println("...........................................................");
+    				System.out.println("...........................................................");
+    				if(getFileUpload()!=null){
+    					uploadFile = utilidadAlmacenarArchivo(ConstantesAplicativo.constanteNombreTablaPortafolio, 
+    													portafolio.getPortId()+"", 
+    													getFileUploadFileName(), 
+    														ConstantesAplicativo.constanteRutaArchivosTablaPortafolio, 
+    															getFileUpload(), 
+    																ConstantesAplicativo.constanteCheckSi);
+    				}
+    				System.out.println("entra y sale de uploadfile");
+    				if(getFileUpload()!=null && !uploadFile)
+    					addActionError(getText("error.aplicacion"));
+    				archivotabla = gestionFacadeNIIF.findArchivotablaByTablaIdRegistro(ConstantesAplicativo.constanteNombreTablaPortafolio, portafolio.getPortId()+"");
+    				if(archivotabla!=null){
+        				String rutaAlterna = "/";
+        				rutaAlterna += archivotabla.getArtaRuta().replace("\\", "/")+"/"+archivotabla.getArtaArchguardado();
+        				archivotabla.setRutaAlterna(rutaAlterna);
+        			}else{
+        				archivotabla = new Archivotabla();
+        				}
+    				addActionMessage(getText("accion.satisfactoria"));
+    			}
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			portafolio = gestionFacadeNIIF.findPortafolioById(getIdLong());
+    			archivotabla = gestionFacadeNIIF.findArchivotablaByTablaIdRegistro(ConstantesAplicativo.constanteNombreTablaPortafolio, portafolio.getPortId()+"");
+    			if(archivotabla!=null){
+    				String rutaAlterna = "/";
+    				rutaAlterna += archivotabla.getArtaRuta().replace("\\", "/")+"/"+archivotabla.getArtaArchguardado();
+    				archivotabla.setRutaAlterna(rutaAlterna);
+    			}else
+    				archivotabla = new Archivotabla();
+    		}
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>niifAction>>>>portafolioMethod>>>>estado entrada-->>"+estado);
+    	return Action.SUCCESS;
+	}
+	
+	/**
+	 * Utilidad para subir un archivo y cargarlo en la tabla Archivo Tabla con validacion de eliminacion
+	 * @param tabla
+	 * @param idRegistro
+	 * @param nombreArchivoOri
+	 * @param ruta
+	 * @param archivo
+	 * @param eliminarExistente
+	 * @return
+	 */
+	public boolean utilidadAlmacenarArchivo(String tabla, String idRegistro, String nombreArchivoOri, String ruta, File archivo, String eliminarExistente){
+		try{
+			String filePath = request.getRealPath(System.getProperty("file.separator"));
+			filePath += ruta;
+			if(eliminarExistente.equals(ConstantesAplicativo.constanteCheckSi)){
+				System.out.println(">>>>>entro a aliminar existente>>>>>");
+				archivotabla = gestionFacadeNIIF.findArchivotablaByTablaIdRegistro(tabla, idRegistro);
+				if(archivotabla!=null){
+					System.out.println("es diferente de null, entra a eliminar archivo y registro");
+					File destFile = new File(filePath, archivotabla.getArtaArchguardado());
+					destFile.delete();
+					gestionFacadeNIIF.removeArchivotabla(archivotabla);
+				}
+			}
+			System.out.println(">>>>>entro a crear archivo>>>>>");
+//			usuarioLogin = (UsuarioLogin)request.getSession().getAttribute("UsuarioLogin");
+			archivotabla = new Archivotabla();
+			archivotabla.setArtaTabla(tabla);
+			archivotabla.setArtaIdtabla(idRegistro);
+			archivotabla.setArtaArchoriginal(nombreArchivoOri);
+			Calendar hora = Calendar.getInstance();
+			String [] partesarchivo = nombreArchivoOri.split("\\.");
+			String nombreArchivo = "Archivo_"+tabla+"_"+idRegistro+"_"+ hora.get(Calendar.HOUR_OF_DAY) + hora.get(Calendar.MINUTE) + hora.get(Calendar.SECOND) +"."+partesarchivo[partesarchivo.length-1];
+			//String nombreArchivo = "Archivo_"+tabla+"_"+idRegistro+"."+partesarchivo[partesarchivo.length-1];
+			archivotabla.setArtaArchguardado(nombreArchivo);
+			archivotabla.setArtaRuta(ruta);
+			archivotabla.setArtaEstado(ConstantesAplicativo.constanteEstadoActivoGlobalLetra);
+//			archivotabla.setArtaRegistradopor("123321");
+//			archivotabla.setArtaFechacambio("14/08/2015");
+			archivotabla.setDatosAud(this.getDatosAud());
+			gestionFacadeNIIF.persistArchivotabla(archivotabla);
+			
+			System.out.println(">>>>>>>>>>>>>>>>>RUTA-->>"+filePath);
+			File destFile = new File(filePath, nombreArchivo);
+			FileUtils.copyFile(archivo, destFile);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Utilidad para eliminar un archivo en fisico y en tabla ArchivTabla
+	 * @param tabla
+	 * @param idRegistro
+	 * @param ruta
+	 * @param idArchivoTabla
+	 * @return
+	 */
+	public boolean utilidadEliminarArchivo(String tabla, String idRegistro, String ruta, long idArchivoTabla){
+		try{
+			String filePath = request.getRealPath(System.getProperty("file.separator"));
+			filePath += ruta;
+			
+			archivotabla = gestionFacadeNIIF.findArchivotablaById(idArchivoTabla);
+			if(archivotabla!=null){
+				System.out.println("es diferente de null, entra a eliminar archivo y registro");
+				File destFile = new File(filePath, archivotabla.getArtaArchguardado());
+				destFile.delete();
+				gestionFacadeNIIF.removeArchivotabla(archivotabla);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	@SkipValidation
+	public String portafolioCategoriaMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>niifAction>>>>portafolioCategoriaMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listPortafoliocategoria = gestionFacadeNIIF.findAllPortafoliocategorias();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			if(ValidaString.isNullOrEmptyString(portafoliocategoria.getPocaReferencia()))
+    				addActionError(getText("validacion.requerido","pocareferencia","Referencia"));
+    			if(ValidaString.isNullOrEmptyString(portafoliocategoria.getPocaDescripcion()))
+    				addActionError(getText("validacion.requerido","pocadescripcion","Descripción"));
+    			if(!hasActionErrors()){
+    				portafoliocategoria.setDatosAud(this.getDatosAud());
+    				ValidaString.imprimirObject(portafoliocategoria);
+    				gestionFacadeNIIF.persistPortafoliocategoria(portafoliocategoria);
+    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				boolean uploadFile = false;
+    				System.out.println("...........................................................");
+    				System.out.println("...........................................................");
+    				if(getFileUpload()!=null){
+    					uploadFile = utilidadAlmacenarArchivo(ConstantesAplicativo.constanteNombreTablaPortafolioCategoria, 
+    													portafoliocategoria.getPocaId()+"", 
+    													getFileUploadFileName(), 
+    														ConstantesAplicativo.constanteRutaArchivosTablaPortafolio, 
+    															getFileUpload(), 
+    																ConstantesAplicativo.constanteCheckSi);
+    				}
+    				System.out.println("entra y sale de uploadfile");
+    				if(getFileUpload()!=null && !uploadFile)
+    					addActionError(getText("error.aplicacion"));
+    				archivotabla = gestionFacadeNIIF.findArchivotablaByTablaIdRegistro(ConstantesAplicativo.constanteNombreTablaPortafolioCategoria, portafoliocategoria.getPocaId()+"");
+    				if(archivotabla!=null){
+        				String rutaAlterna = "/";
+        				rutaAlterna += archivotabla.getArtaRuta().replace("\\", "/")+"/"+archivotabla.getArtaArchguardado();
+        				archivotabla.setRutaAlterna(rutaAlterna);
+        			}else{
+        				archivotabla = new Archivotabla();
+        				}
+    				addActionMessage(getText("accion.satisfactoria"));
+    			}
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			portafoliocategoria = gestionFacadeNIIF.findPortafoliocategoriaById(getIdLong());
+    			archivotabla = gestionFacadeNIIF.findArchivotablaByTablaIdRegistro(ConstantesAplicativo.constanteNombreTablaPortafolioCategoria, portafoliocategoria.getPocaId()+"");
+    			if(archivotabla!=null){
+    				String rutaAlterna = "/";
+    				rutaAlterna += archivotabla.getArtaRuta().replace("\\", "/")+"/"+archivotabla.getArtaArchguardado();
+    				archivotabla.setRutaAlterna(rutaAlterna);
+    			}else
+    				archivotabla = new Archivotabla();
+    		}
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>niifAction>>>>portafolioCategoriaMethod>>>>estado entrada-->>"+estado);
     	return Action.SUCCESS;
 	}
 	

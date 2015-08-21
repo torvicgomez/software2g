@@ -39,6 +39,7 @@ public final class ConstantesAplicativo {
 	public static final String constanteEstadoAssociate = "associate";
 	public static final String constanteEstadoOperacionCita = "operacioncita";
 	public static final String constanteEstadoAccionRealizar = "accionrealizar";
+	public static final String constanteeEstadoVerTodo = "vertodo";
 	public static final String constanteTipoGridMedicamentos = "GridMedicamentos";
 	public static final String constanteTipoGridElementos = "GridElementos";
 	public static final String constanteEstadoLegalizarCompromiso = "legalizarcompromiso";
@@ -252,9 +253,7 @@ public final class ConstantesAplicativo {
 	public static final String constanteRutaArchivosTablaPortafolioCategoria = "niif"+System.getProperty("file.separator")+"ficheros"+System.getProperty("file.separator")+"portafolio";
 	
 	public static final String constanteEstadoActivoGlobalLetra = "S";
-	public static final String constanteAgendaMedica = "AGEN_MEDI";
-	public static final String constanteAgendaCategoria = "AGEN_CATE";
-	
+	public static final long constanteNumeroColumnas = 5;
 }
 
 

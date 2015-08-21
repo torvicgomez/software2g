@@ -54,6 +54,11 @@
 				document.form.submit();
 			}
 			
+			function vertodo(param){
+// 				alert(param);
+				document.form.action="portafolio.action?estado=<%=ConstantesAplicativo.constanteeEstadoVerTodo%>&id="+param;
+				document.form.submit();
+			}
 			
 		</script>
 </head>
@@ -61,6 +66,7 @@
 	<s:form id="form" enctype="multipart/form-data">
 		<s:hidden name="funcPosicionado"></s:hidden>
 			<s:hidden name="bandEstadoFunc"></s:hidden>
+			<s:hidden name="sizeList"></s:hidden>
 			<div id="demo">
 				<table cellpadding="0" cellspacing="0" border="0" class="display">
 					<tr><td>
@@ -87,47 +93,91 @@
 						</tr>
 					</s:elseif>
 				</table>
-				<s:if test="estado=='all'||estado=='query'">
-					<table cellpadding="0" cellspacing="0" border="0" class="display" id="portafolio">
-						<thead>
-							<tr>
-								<s:if test="estado=='all'">
+<%-- 				<s:if test="estado=='all'||estado=='query'"> --%>
+<!-- 					<table cellpadding="0" cellspacing="0" border="0" class="display" id="portafolio"> -->
+<!-- 						<thead> -->
+<!-- 							<tr> -->
+<%-- 								<s:if test="estado=='all'"> --%>
 <%-- 									<th><s:text name="columna.edit"></s:text></th> --%>
-								</s:if>
-								<s:if test="estado=='all'">
-									<th><s:text name="columna.dtll"></s:text></th>
-								</s:if>
-								<th><s:text name="portafolios.referencia"></s:text></th>
+<%-- 								</s:if> --%>
+<%-- 								<s:if test="estado=='all'"> --%>
+<%-- 									<th><s:text name="columna.dtll"></s:text></th> --%>
+<%-- 								</s:if> --%>
+<%-- 								<th><s:text name="portafolios.referencia"></s:text></th> --%>
 <%-- 								<th><s:text name="portafolios.imagen"></s:text></th> --%>
-								<th><s:text name="portafolios.descripcion"></s:text></th>
-								<th><s:text name="portafolios.valor"></s:text></th>
+<%-- 								<th><s:text name="portafolios.descripcion"></s:text></th> --%>
+<%-- 								<th><s:text name="portafolios.valor"></s:text></th> --%>
 <%-- 								<th><s:text name="portafolios.vervalor"></s:text></th> --%>
 <%-- 								<th><s:text name="global.fecharegistra"></s:text></th> --%>
-							</tr>
-						</thead>
-						<tbody>
-							<s:iterator value="listPortafolio" id="data">
-								<tr>
-									<s:if test="estado=='all'">
+<!-- 							</tr> -->
+<!-- 						</thead> -->
+<!-- 						<tbody> -->
+<%-- 							<s:iterator value="listPortafolio" id="data"> --%>
+<!-- 								<tr> -->
+<%-- 									<s:if test="estado=='all'"> --%>
 <!-- 										<td align="center"> -->
 <%-- 											<a onclick="modificar('${data.portId}');"> --%>
 <%-- 												<img align="middle" src="<s:url value="/imagenes/icon_edit.png"/>" alt="Editar" width="18" height="18"> --%>
 <!-- 											</a> -->
 <!-- 										</td> -->
-										<td align="center">
-											<a onclick="detalle('${data.portId}');">
-												<img align="middle" src="<s:url value="/imagenes/icon_detalle.png"/>" alt="Detalle" width="18" height="18">
-											</a>
-										</td>
-									</s:if>
-									<td><s:property value="portReferencia"/></td>
+<!-- 										<td align="center"> -->
+<%-- 											<a onclick="detalle('${data.portId}');"> --%>
+<%-- 												<img align="middle" src="<s:url value="/imagenes/icon_detalle.png"/>" alt="Detalle" width="18" height="18"> --%>
+<!-- 											</a> -->
+<!-- 										</td> -->
+<%-- 									</s:if> --%>
+<%-- 									<td><s:property value="portReferencia"/></td> --%>
 <!-- 									<td> -->
 <%-- 										<img id="img_destino" alt="FOTO" src="<%=request.getContextPath()%><s:property value="archivotabla.rutaAlterna"/>" width="150" height="100"> --%>
 <!-- 									</td> -->
-									<td><s:property value="portDescripcion"/></td>
-									<td><s:property value="portValor"/></td>
+<%-- 									<td><s:property value="portDescripcion"/></td> --%>
+<%-- 									<td><s:property value="portValor"/></td> --%>
 <%-- 									<td><s:property value="portVervalor"/></td> --%>
 <%-- 									<td><s:property value="portFechacambio"/>&nbsp;<s:property value="portHoracambio"/></td> --%>
+<!-- 								</tr> -->
+<%-- 							</s:iterator> --%>
+<!-- 						</tbody> -->
+<!-- 						<tfoot></tfoot> -->
+<!-- 					</table> -->
+<%-- 				</s:if> --%>
+				<s:if test="estado=='all'||estado=='query'">
+					<table cellpadding="0" cellspacing="0" border="0" class="display" id="portafoliocategoria">
+						<thead>
+							<tr>
+<%-- 								<s:if test="estado=='all'"> --%>
+<%-- 									<th><s:text name="columna.edit"></s:text></th> --%>
+<%-- 								</s:if> --%>
+<%-- 								<s:if test="estado=='all'"> --%>
+<%-- 									<th><s:text name="columna.dtll"></s:text></th> --%>
+<%-- 								</s:if> --%>
+								<th><s:text name="portafolioscategoria.referencia"></s:text></th>
+								<th><s:text name="portafolioscategoria.imagen"></s:text></th>
+								<th><s:text name="profesional.coloragenda"></s:text></th>
+								<th><s:text name="portafolioscategoria.descripcion"></s:text></th>
+							</tr>
+						</thead>
+						<tbody>
+							<s:iterator value="listPortafoliocategoria" id="data">
+								<tr>
+<%-- 									<s:if test="estado=='all'"> --%>
+<!-- 										<td align="center"> -->
+<%-- 											<a onclick="modificar('${data.pocaId}');"> --%>
+<%-- 												<img align="middle" src="<s:url value="/imagenes/icon_edit.png"/>" alt="Editar" width="18" height="18"> --%>
+<!-- 											</a> -->
+<!-- 										</td> -->
+<!-- 										<td align="center"> -->
+<%-- 											<a onclick="detalle('${data.pocaId}');"> --%>
+<%-- 												<img align="middle" src="<s:url value="/imagenes/icon_detalle.png"/>" alt="Detalle" width="18" height="18"> --%>
+<!-- 											</a> -->
+<!-- 										</td> -->
+<%-- 									</s:if> --%>
+									<td><s:property value="pocaReferencia"/></td>
+									<td>
+										<a onclick="vertodo('${data.pocaId}');">
+											<img id="img_poca" alt="FOTO" src="<%=request.getContextPath()%><s:property value="archivo.rutaAlterna"/>" width="150" height="100"></td>
+										</a>
+									<td bgcolor="<s:property value="pocaBackgroundcolor"/>"></td>
+									<td><s:property value="pocaDescripcion"/></td>
 								</tr>
 							</s:iterator>
 						</tbody>
@@ -137,6 +187,14 @@
 				<s:elseif test="estado=='add'||estado=='edit'||estado=='save'">
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<s:hidden name="portafolio.portId" id="portId"></s:hidden>
+						<tr>
+							<td class="leftLabel"><s:text name="portafolios.categoria"></s:text></td>
+							<td colspan="3">
+<%-- 								<s:if test="listPortafoliocategoria!=null&&listPortafoliocategoria.size()>0">	 --%>
+										<s:select list="listPortafoliocategoria" name="portafoliocategoria.pocaId" listKey="pocaId" listValue="pocaReferencia" headerKey="-1" headerValue=".::Seleccion::." cssClass="inputs"/>
+<%-- 								</s:if> --%>
+							</td>
+						</tr>
 						<tr>
 							<td class="leftLabel"><s:text name="portafolios.referencia"></s:text></td>
 							<td colspan="3">
@@ -220,6 +278,40 @@
 								<input type="button" value="<s:text name="labelbutton.volver"></s:text>" onclick="volver();" class="buttonSV"/>
 							</td>
 						</tr>
+					</table>
+				</s:elseif>
+				<s:elseif test="estado=='vertodo'">
+					<table cellpadding="0" cellspacing="0" border="0" class="display" id="portafolio">
+						<thead>
+							<tr>
+								<th colspan="3"><s:text name="portafolios.imagen"></s:text></th>	
+							</tr>
+						</thead>
+						<tbody><tr>
+							<s:iterator value="listPortafolio" id="data">
+								<td>
+									<table>
+										
+										<tr>
+											<td>
+												<img id="img_port" alt="FOTO" src="<%=request.getContextPath()%><s:property value="archivo.rutaAlterna"/>" width="150" height="100"></td>
+										</tr>
+										<tr>
+<!-- 											<td align="center"> -->
+<%-- 												<a onclick="detalle('${data.portId}');"> --%>
+<%-- 													<img align="middle" src="<s:url value="/imagenes/icon_detalle.png"/>" alt="Detalle" width="18" height="18"> --%>
+<!-- 												</a> -->
+<!-- 											</td> -->
+											<td><s:property value="portReferencia"/></td>
+										</tr>
+										<tr>
+											<td><s:property value="portDescripcion"/></td>
+										</tr>
+									</table>
+								</td>
+							</s:iterator></tr>
+						</tbody>
+						<tfoot></tfoot>
 					</table>
 				</s:elseif>
 			</div>

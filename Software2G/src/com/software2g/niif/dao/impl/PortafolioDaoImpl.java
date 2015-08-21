@@ -7,7 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.software2g.vo.Archivotabla;
 import com.software2g.vo.Portafolio;
+import com.software2g.vo.Portafoliocategoria;
 import com.software2g.niif.dao.IPortafolioDao;
 
 import org.springframework.stereotype.Repository;
@@ -82,6 +84,12 @@ public class PortafolioDaoImpl implements IPortafolioDao {
 	public void persistPortafolio(Portafolio portafolio) {
 		em.persist(em.merge(portafolio));
 	}
+	
+	public long persistPortafolioId(Portafolio portafolio) {
+		Portafolio obj = em.merge(portafolio); 
+		em.persist(obj);
+		return obj.getPortId();
+	}
 	/**
 	 * Remove the given persistent instance.
 	 */
@@ -89,5 +97,22 @@ public class PortafolioDaoImpl implements IPortafolioDao {
 		/*In JPA, objects detach automatically when they are serialized or when a persistence context ends.
 		 The merge method returns a managed copy of the given detached entity.*/
 		em.remove(em.merge(portafolio));
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Portafolio> findAllPortafolioByCatalogoIdRegistro(long idRegistro) {
+        try {
+    		String jpqlString = "select portafolio from " + Portafolio.class.getSimpleName() + " portafolio " +
+    							"where portafolio.portafoliocategoria.pocaId=:idRegistro " +
+    							"order by portafolio.portReferencia desc ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("idRegistro", idRegistro);
+            return query.getResultList();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
 	}
 }

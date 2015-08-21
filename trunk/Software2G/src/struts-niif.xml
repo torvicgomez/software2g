@@ -85,6 +85,12 @@
     			<param name="charSet">iso-8859-1</param>
 			</result>
 		</action>
+		<action name="portafolio" method="portafolioMethod" class="niifAction">
+        	<result name="success" type="tiles">niif.portafolio</result>
+        </action>
+		<action name="portafoliocategoria" method="portafolioCategoriaMethod" class="niifAction">
+        	<result name="success" type="tiles">niif.portafolioCategoria</result>
+        </action>
 		
 		<action name="venta" method="ventaMethod" class="niifAction">
         	<result name="success" type="tiles">niif.ventas</result>
@@ -98,5 +104,6 @@
         <action name="pagos" method="pagosMethod" class="niifAction">
         	<result name="success" type="tiles">niif.pagos</result>
         </action>
+        
     </package>
 </struts>

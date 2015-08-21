@@ -319,6 +319,7 @@ public interface IGestionFacadeNIIF {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistPortafolio(Portafolio portafolio) throws Exception;
+	public long persistPortafolioId(Portafolio portafolio) throws Exception;
 	/**
 	 * Remove the given persistent instance.
 	 */
@@ -360,4 +361,5 @@ public interface IGestionFacadeNIIF {
 	 */
 	public void removePortafoliocategoria(Portafoliocategoria portafoliocategoria) throws Exception;
 	public Portafoliocategoria findCategoriaBackground(String background) throws Exception;
+	public List<Portafolio> findAllPortafolioByCatalogoIdRegistro(long idRegistro) throws Exception; 
 }

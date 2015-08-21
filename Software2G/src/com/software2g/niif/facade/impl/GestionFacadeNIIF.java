@@ -860,6 +860,14 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 			throw new Exception("persistPortafolio failed: " + e.getMessage());
 		}
 	}
+	
+	public long persistPortafolioId(Portafolio portafolio) throws Exception {
+		try {
+			 return getPortafolioDao().persistPortafolioId(portafolio);
+		} catch (RuntimeException e) {
+			throw new Exception("persistPortafolioId failed: " + e.getMessage());
+		}
+	}
 	/**
 	 * Remove the given persistent instance.
 	 */
@@ -1103,6 +1111,15 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 			getConsecutivoDao().removeConsecutivo(consecutivo);
 		} catch (RuntimeException e) {
 			throw new Exception("removeConsecutivo failed: " + e.getMessage());
+		}
+	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Portafolio> findAllPortafolioByCatalogoIdRegistro(long idRegistro) throws Exception {
+		try {
+			return getPortafolioDao().findAllPortafolioByCatalogoIdRegistro(idRegistro);
+		} catch (RuntimeException e) {
+			throw new Exception("findAllPortafolioByCatalogoIdRegistro failed: " + e.getMessage());
 		}
 	}
 }

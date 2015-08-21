@@ -68,6 +68,11 @@ public class Pago implements Serializable {
 	public Pago() {
 	}
 
+	public Pago(long formaPagoIdHelp, double pagoValor) {
+		this.formaPagoIdHelp = formaPagoIdHelp;
+		this.pagoValor = pagoValor;
+	}
+	
 	public long getPagoId() {
 		return this.pagoId;
 	}

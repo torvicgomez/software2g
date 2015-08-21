@@ -7,6 +7,7 @@ import com.software2g.vo.Articulo;
 import com.software2g.vo.Categoria;
 import com.software2g.vo.Cliente;
 import com.software2g.vo.Condicionpago;
+import com.software2g.vo.Consecutivo;
 import com.software2g.vo.Detallecompra;
 import com.software2g.vo.Detalleventa;
 import com.software2g.vo.Formapago;

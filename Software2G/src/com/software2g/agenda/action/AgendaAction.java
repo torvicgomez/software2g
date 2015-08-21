@@ -559,6 +559,16 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	    						ConstantesAplicativo.constanteExtensionFileJS, 
 	    						ConstantesAplicativo.constanteTipoFileJSConstantesAgenda,
 	    						idAgenda+"");
+	    				//--------------------------------------------------------------------------------
+	    				//21-08-2015 - Victor Gomez
+	    				//Ajuste Para Creacion de Archivo de Eventos Agenda
+	    				path = request.getServletContext().getRealPath("/")+"js\\constantesCalendario\\eventosAgenda\\";	
+	    				nameFile = "eventosagenda_"+idAgenda;
+	    				gestionFacadeAgenda.crearFile(path, nameFile,   
+	    						ConstantesAplicativo.constanteExtensionFileJS, 
+	    						ConstantesAplicativo.constanteTipoFileJSConstantesEventosxAgenda,
+	    						idAgenda+"");
+	    				//--------------------------------------------------------------------------------
     				}
     				estado = ConstantesAplicativo.constanteEstadoAbstract;
     				addActionMessage(getText("accion.satisfactoria"));

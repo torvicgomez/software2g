@@ -86,6 +86,7 @@ Proyecto NIIF - Normas Internacionales de Informacion Finaciera
 10- Crecion de Funcionalidades Heredadas de Persona --------------------------------------------
 	10.1- Crear funcionalidad Cliente Integrada a la Venta ------------------------------------- .::[O.K]::.
 	10.2- Crear funcionalidad Proveedor --------------------------------------------------------
+	10.3- Crear funcionalidad Vendedor ---------------------------------------------------------
 11- Creacion funcionalidad ventas -------------------------------------------------------------- .::[O.K]::.
 	11.1- insercion cliente nuevo -------------------------------------------------------------- .::[O.K]::.
 	11.2- insercion venta ---------------------------------------------------------------------- .::[O.K]::.
@@ -108,7 +109,11 @@ Proyecto NIIF - Normas Internacionales de Informacion Finaciera
 	19.3- Crear funcionalidad Portafolio --------------------------------------------------------
 	19.4- Crear tabla y secuencia portafoliocategoria ------------------------------------------- .::[O.K]::.
 	19.5- Crear funcionalidad portafoliocategoria------------------------------------------------ .::[O.K]::.
-	
+20- Ordenes de Venta que el iva sea calculado al momento de adicionar articulos ----------------
+21- Que se muestre como opcion predeterminada el pago en efectivo ------------------------------ .::[O.K]::.
+22- Validar que los pagos no sean mayores al total a pagar ------------------------------------- .::[O.K]::.
+
+
 Sugerencia
 * Tabla profesional salud ---------------------------------------------------------------------- .::[O.K]::.
 	adicionar Campo: - profesion  -------------------------------------------------------------- .::[O.K]::.

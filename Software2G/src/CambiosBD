@@ -2136,8 +2136,7 @@ insert into niif.proveedor (prov_id, pers_id, prov_razonsocial, prov_fechacambio
 ----------------
 -- 06-08-2015 --
 ----------------
-AL
-TER TABLE niif.ordencompra ADD orco_fechavence character varying(10) NOT NULL;
+ALTER TABLE niif.ordencompra ADD orco_fechavence character varying(10) NOT NULL;
 -- Opcional este registro mientras funcionalidad proveedores esta
 insert into niif.proveedor (prov_id, pers_id, prov_razonsocial, prov_fechacambio, prov_horacambio, prov_registradopor) values ( nextval('niif.seq_prov_id') ,1,'Victor Hugo Gomez L. 75106199-1', '2015-08-06', '09:18:03', 'vhgomezl');
 
@@ -2203,7 +2202,40 @@ CREATE SEQUENCE niif.seq_arta_id
   MAXVALUE 999999999
   START 1
   CACHE 1;
-ALTER TABLE niif.seq_arta_id OWNER TO postgres;  
+ALTER TABLE niif.seq_arta_id OWNER TO postgres;
+
+----------------
+-- 19-08-2015 --
+----------------
+CREATE TABLE niif.portafoliocategoria
+(
+  poca_id numeric(30,0) NOT NULL,
+  poca_referencia character varying(15) NOT NULL,
+  poca_descripcion character varying(300),
+  poca_fechacambio character varying(10) NOT NULL,
+  poca_horacambio character varying(8) NOT NULL,
+  poca_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_poca PRIMARY KEY (poca_id )
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE niif.portafoliocategoria OWNER TO postgres;
+   
+CREATE SEQUENCE niif.seq_poca_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 999999999
+  START 1
+  CACHE 1;
+ALTER TABLE niif.seq_poca_id OWNER TO postgres; 
+
+ALTER TABLE niif.portafolio ADD COLUMN poca_id numeric(30,0);
+
+ALTER TABLE niif.portafolio ADD
+CONSTRAINT fk_poca FOREIGN KEY (poca_id) REFERENCES niif.portafoliocategoria (poca_id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+
 
 -- Opcional este registro mientras funcionalidad cliente esta
 insert into niif.cliente (clie_id, pers_id, clie_fechacambio, clie_horacambio, clie_registradopor) values (nextval('niif.seq_clie_id'), 1, '2015-08-13','15:49:56', 'vhgomezl');
@@ -2245,3 +2277,36 @@ ALTER TABLE portal.persona ALTER COLUMN email_pers drop not NULL ;
 insert into niif.vendedor (vend_id, pers_id, vend_codigo, vend_fechacambio, vend_horacambio, vend_registradopor, vend_estado) values (nextval('niif.seq_vend_id'), 1, 'VEN01', '2015-08-18','09:09:56', 'vhgomezl', 'S');
 
 
+----------------
+-- 19-08-2015 --
+----------------
+CREATE TABLE niif.portafoliocategoria
+(
+  poca_id numeric(30,0) NOT NULL,
+  poca_referencia character varying(15) NOT NULL,
+  poca_descripcion character varying(300),
+  poca_fechacambio character varying(10) NOT NULL,
+  poca_horacambio character varying(8) NOT NULL,
+  poca_registradopor character varying(30) NOT NULL,
+  CONSTRAINT pk_poca PRIMARY KEY (poca_id )
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE niif.portafoliocategoria OWNER TO postgres;
+   
+CREATE SEQUENCE niif.seq_poca_id
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 999999999
+  START 1
+  CACHE 1;
+ALTER TABLE niif.seq_poca_id OWNER TO postgres; 
+
+ALTER TABLE niif.portafolio ADD COLUMN poca_id numeric(30,0);
+
+ALTER TABLE niif.portafolio ADD
+CONSTRAINT fk_poca FOREIGN KEY (poca_id) REFERENCES niif.portafoliocategoria (poca_id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+
+  

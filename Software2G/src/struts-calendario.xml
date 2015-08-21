@@ -76,6 +76,10 @@
         	<result name="success" type="tiles">calendario.agendamedica</result>
         </action>
         
+        <action name="agendacategoria" method="agendaCategoriaMethod" class="AgendaAction">
+        	<result name="success" type="tiles">calendario.agendacategoria</result>
+        </action>
+        
         <action name="crearEventoCalendario" class="AgendaAction">
 			<result name="success" type="stream">
 				<param name="contentType">text/html</param>

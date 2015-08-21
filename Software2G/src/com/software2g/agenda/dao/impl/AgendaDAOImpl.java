@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.software2g.util.ConstantesAplicativo;
 import com.software2g.vo.Agenda;
 import com.software2g.agenda.dao.IAgendaDao;
 
@@ -67,6 +68,24 @@ public class AgendaDAOImpl implements IAgendaDao {
 	public List<Agenda> findAllAgendas() {
         try {
     		String jpqlString = "select agenda from " + Agenda.class.getSimpleName() + " agenda";
+            Query query = em.createQuery( jpqlString );
+            return query.getResultList();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Agenda> findAllAgendas(String tipo) {
+        try {
+    		String jpqlString = "select agenda from " + Agenda.class.getSimpleName() + " agenda ";
+    		if(tipo.equals(ConstantesAplicativo.constanteAgendaMedica))
+    			jpqlString += " where agenda.profesional is not null ";
+    		else if(tipo.equals(ConstantesAplicativo.constanteAgendaCategoria))
+    			jpqlString += " where agenda.portafolioCategoria is not null ";
             Query query = em.createQuery( jpqlString );
             return query.getResultList();
         }

@@ -21,9 +21,11 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 import com.software2g.agenda.facade.IGestionFacadeAgenda;
 import com.software2g.historia_clinica.facade.IGestionFacadeHistoriaClinica;
+import com.software2g.niif.facade.IGestionFacadeNIIF;
 import com.software2g.util.ConstantesAplicativo;
 import com.software2g.util.ValidaString;
 import com.software2g.vo.Agenda;
+import com.software2g.vo.Archivotabla;
 import com.software2g.vo.Codigoenfermedade;
 import com.software2g.vo.Departamento;
 import com.software2g.vo.Diagnostico;
@@ -43,6 +45,7 @@ import com.software2g.vo.Pais;
 import com.software2g.vo.Parametroscalendario;
 import com.software2g.vo.Participante;
 import com.software2g.vo.Persona;
+import com.software2g.vo.Portafoliocategoria;
 import com.software2g.vo.Pregunta;
 import com.software2g.vo.Procedimiento;
 import com.software2g.vo.Profesional;
@@ -69,6 +72,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private HttpServletResponse response;
 	private IGestionFacadeAgenda gestionFacadeAgenda;
 	private IGestionFacadeHistoriaClinica gestionFacadeHistoriaClinica;
+	private IGestionFacadeNIIF gestionFacadeNIIF;
 	private String estado;
 	private String funcPosicionado;
 	private String bandEstadoFunc;
@@ -90,7 +94,9 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private Persona persona;
 	private InputStream strDatosPersona;
 	private List<Agenda> listAgendaMedica;
+	private List<Agenda> listAgendaCategoria;
 	private Agenda agendaMedica;
+	private Agenda agendaCategoria;
 	private InputStream strCrearEvento;
 	private Evento evento;
 	private Participante participante;
@@ -151,6 +157,9 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private List<Registrocovertest> listRegistroCoverTestLejos;
 	private List<Registrocovertest> listRegistroCoverTestCerca;
 	
+	private List<Portafoliocategoria> listPortafolioCategoria;
+	private Archivotabla archivotabla;
+	
 	public List<Parametroscalendario> getListParametroCalendrio() {return listParametroCalendrio;}
 	public void setListParametroCalendrio(List<Parametroscalendario> listParametroCalendrio) {this.listParametroCalendrio = listParametroCalendrio;}
 	public Parametroscalendario getParametroCalendario() {return parametroCalendario;}
@@ -169,8 +178,12 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setListPersona(List<Persona> listPersona) {this.listPersona = listPersona;}
 	public List<Agenda> getListAgendaMedica() {return listAgendaMedica;}
 	public void setListAgendaMedica(List<Agenda> listAgendaMedica) {this.listAgendaMedica = listAgendaMedica;}
+	public List<Agenda> getListAgendaCategoria() {return listAgendaCategoria;}
+	public void setListAgendaCategoria(List<Agenda> listAgendaCategoria) {this.listAgendaCategoria = listAgendaCategoria;}
 	public Agenda getAgendaMedica() {return agendaMedica;}
 	public void setAgendaMedica(Agenda agendaMedica) {this.agendaMedica = agendaMedica;}
+	public Agenda getAgendaCategoria() {return agendaCategoria;}
+	public void setAgendaCategoria(Agenda agendaCategoria) {this.agendaCategoria = agendaCategoria;}
 	public String getConstantesAgendaProfesional() {return constantesAgendaProfesional;}
 	public void setConstantesAgendaProfesional(String constantesAgendaProfesional) {this.constantesAgendaProfesional = constantesAgendaProfesional;}
 	public String getEventoAgendaProfesional() {return eventoAgendaProfesional;}
@@ -283,6 +296,12 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	public void setListRegistroCoverTestLejos(List<Registrocovertest> listRegistroCoverTestLejos) {this.listRegistroCoverTestLejos = listRegistroCoverTestLejos;}
 	public List<Registrocovertest> getListRegistroCoverTestCerca() {return listRegistroCoverTestCerca;}
 	public void setListRegistroCoverTestCerca(List<Registrocovertest> listRegistroCoverTestCerca) {this.listRegistroCoverTestCerca = listRegistroCoverTestCerca;}
+	
+	public List<Portafoliocategoria> getListPortafolioCategoria() {return listPortafolioCategoria;}
+	public void setListPortafolioCategoria(List<Portafoliocategoria> listPortafolioCategoria) {this.listPortafolioCategoria = listPortafolioCategoria;}
+	public Archivotabla getArchivotabla() {return archivotabla;}
+	public void setArchivotabla(Archivotabla archivotabla) {this.archivotabla = archivotabla;}
+	
 	
 	public String getConstanteTipoPregAbierta(){ return ConstantesAplicativo.constanteTipoPregAbierta;}
 	public String getConstanteTipoPregMultipleMR(){ return ConstantesAplicativo.constanteTipoPregMultipleMR;}
@@ -505,13 +524,129 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	}
 	
 	@SkipValidation
+	public String agendaCategoriaMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>AgendaAction>>>>agendaMedicaMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listAgendaCategoria  = gestionFacadeAgenda.findAllAgendas(ConstantesAplicativo.constanteAgendaCategoria);
+    			if(listAgendaCategoria!=null&&listAgendaCategoria.size()>0){
+    				for(Agenda elem:listAgendaCategoria){
+    					if(elem.getPortafolioCategoria()!=null&&elem.getPortafolioCategoria().getPocaId()>0){
+    						archivotabla = gestionFacadeNIIF.findArchivotablaByTablaIdRegistro(ConstantesAplicativo.constanteNombreTablaPortafolioCategoria, elem.getPortafolioCategoria().getPocaId()+"");
+    	    				if(archivotabla!=null){
+    	        				String rutaAlterna = "/";
+    	        				rutaAlterna += archivotabla.getArtaRuta().replace("\\", "/")+"/"+archivotabla.getArtaArchguardado();
+    	        				archivotabla.setRutaAlterna(rutaAlterna);
+    	        			}else{
+    	        				archivotabla = new Archivotabla();
+    	        			}
+    	    				elem.getPortafolioCategoria().setArchivo(archivotabla);
+    	    			}
+    	    			archivotabla = null;
+    				}
+    			}
+    			bandEstadoFunc = ConstantesAplicativo.constanteEstadoAddSave;
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoAdd)){
+    			listPortafolioCategoria = gestionFacadeNIIF.findAllPortafoliocategorias();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			SimpleDateFormat sdf = new SimpleDateFormat(ConstantesAplicativo.constanteFormatoFecha4);
+    			if(agendaCategoria.getPortafolioCategoria().getPocaId()<=0)
+    				addActionError(getText("validacion.requerido","pocaId","Portafolio Catalogo"));
+    			
+    			if(ValidaString.isNullOrEmptyString(agendaCategoria.getAgenFechaini()))
+    				addActionError(getText("validacion.requerido","agenfechaini","Fecha Apertura Agenda"));
+    			
+    			if(ValidaString.isNullOrEmptyString(agendaCategoria.getAgenFechafin()))
+    				addActionError(getText("validacion.requerido","agenfechafin","Fecha Cierre Agenda"));
+    			else if(!ValidaString.esFechaMayor(sdf.parse(agendaCategoria.getAgenFechafin()), sdf.parse(agendaCategoria.getAgenFechaini()), ConstantesAplicativo.constanteFormatoFecha4))
+    				addActionError(getText("validacion.requerido","agenfechafin","Fecha Cierre Agenda debe ser mayor a Fecha Apertura Agenda"));
+    			
+    			if(ValidaString.isNullOrEmptyString(agendaCategoria.getAgenMintime()))
+    				addActionError(getText("validacion.requerido","agenmintime","Hora Apertura Cita"));
+    			
+    			if(ValidaString.isNullOrEmptyString(agendaCategoria.getAgenMaxtime()))
+    				addActionError(getText("validacion.requerido","agenmaxtime","Hora Cierre Cita"));
+    			else if(!ValidaString.esHoraMayor(agendaCategoria.getAgenMaxtime(), agendaCategoria.getAgenMintime()))
+    				addActionError(getText("validacion.requerido","agenmaxtime","Hora Cierre Cita debe ser mayor a Hora Apertura Cita"));
+    			
+    			if(ValidaString.isNullOrEmptyString(agendaCategoria.getAgenDuracionevento()))
+    				addActionError(getText("validacion.requerido","agendiracionevento","Duración Cita"));
+    			if(ValidaString.isNullOrEmptyString(agendaCategoria.getAgenScrolltime()))
+    				addActionError(getText("validacion.requerido","agenscrolltime","Scroll Time"));
+    			if(ValidaString.isNullOrEmptyString(agendaCategoria.getAgenAlldayslot()))
+    				addActionError(getText("validacion.requerido","agenalldayslot","Evento Todo el Dia"));
+    			else if(agendaCategoria.getAgenAlldayslot().equals("1") && ValidaString.isNullOrEmptyString(agendaCategoria.getAgenAlldaytext()))
+    				addActionError(getText("validacion.requerido","agenalldaytext","Etiqueta Evento Todo el Dia"));
+    			
+    			if(!hasActionErrors()){
+    				agendaCategoria.setPortafolioCategoria(gestionFacadeNIIF.findPortafoliocategoriaById(agendaCategoria.getPortafolioCategoria().getPocaId()));
+    				String nameFile = "constanteAgendaCate_"+agendaCategoria.getPortafolioCategoria().getPocaId();
+    				agendaCategoria.setAgenPathconstantes(nameFile);
+    				agendaCategoria.setAddSegundos();
+    				agendaCategoria.setDatosAud(this.getDatosAud());
+    				ValidaString.imprimirObject(agendaCategoria);
+    				long idAgenda = gestionFacadeAgenda.persistAgendaId(agendaCategoria);
+    				if(idAgenda>0){
+	    				String path = request.getServletContext().getRealPath("/")+"js\\constantesCalendario\\agenda\\"; 
+	    				boolean resultFile = gestionFacadeAgenda.crearFile(path, nameFile,   
+	    						ConstantesAplicativo.constanteExtensionFileJS, 
+	    						ConstantesAplicativo.constanteTipoFileJSConstantesAgenda,
+	    						idAgenda+"");
+	    				//--------------------------------------------------------------------------------
+	    				//21-08-2015 - Victor Gomez
+	    				//Ajuste Para Creacion de Archivo de Eventos Agenda
+	    				path = request.getServletContext().getRealPath("/")+"js\\constantesCalendario\\eventosAgenda\\";	
+	    				nameFile = "eventosagenda_"+idAgenda;
+	    				gestionFacadeAgenda.crearFile(path, nameFile,   
+	    						ConstantesAplicativo.constanteExtensionFileJS, 
+	    						ConstantesAplicativo.constanteTipoFileJSConstantesEventosxAgenda,
+	    						idAgenda+"");
+	    				//--------------------------------------------------------------------------------
+	    				agendaCategoria.setPortafolioCategoria(gestionFacadeNIIF.findPortafoliocategoriaById(agendaCategoria.getPortafolioCategoria().getPocaId()));
+	    				archivotabla = gestionFacadeNIIF.findArchivotablaByTablaIdRegistro(ConstantesAplicativo.constanteNombreTablaPortafolioCategoria, agendaCategoria.getPortafolioCategoria().getPocaId()+"");
+	    				if(archivotabla!=null){
+	        				String rutaAlterna = "/";
+	        				rutaAlterna += archivotabla.getArtaRuta().replace("\\", "/")+"/"+archivotabla.getArtaArchguardado();
+	        				archivotabla.setRutaAlterna(rutaAlterna);
+	        			}else{
+	        				archivotabla = new Archivotabla();
+	        			}
+	    				agendaCategoria.getPortafolioCategoria().setArchivo(archivotabla);
+    				}
+    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+    				addActionMessage(getText("accion.satisfactoria"));
+    			}
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			agendaCategoria= gestionFacadeAgenda.findAgendaById(getIdLong());
+    			archivotabla = gestionFacadeNIIF.findArchivotablaByTablaIdRegistro(ConstantesAplicativo.constanteNombreTablaPortafolioCategoria, agendaCategoria.getPortafolioCategoria().getPocaId()+"");
+				if(archivotabla!=null){
+    				String rutaAlterna = "/";
+    				rutaAlterna += archivotabla.getArtaRuta().replace("\\", "/")+"/"+archivotabla.getArtaArchguardado();
+    				archivotabla.setRutaAlterna(rutaAlterna);
+    			}else{
+    				archivotabla = new Archivotabla();
+    			}
+				agendaCategoria.getPortafolioCategoria().setArchivo(archivotabla);
+				listPortafolioCategoria = gestionFacadeNIIF.findAllPortafoliocategorias();
+    		}
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>AgendaAction>>>>agendaMedicaMethod>>>>estado salida-->>"+estado);
+    	return Action.SUCCESS;
+	}
+	
+	@SkipValidation
 	public String agendaMedicaMethod(){
 		String  result = Action.SUCCESS; 
     	try { 
     		getFuncionPosicionado();
     		System.out.println("######>>>>>>>AgendaAction>>>>agendaMedicaMethod>>>>estado entrada-->>"+estado);
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
-    			listAgendaMedica  = gestionFacadeAgenda.findAllAgendas();
+    			listAgendaMedica  = gestionFacadeAgenda.findAllAgendas(ConstantesAplicativo.constanteAgendaMedica);
     			bandEstadoFunc = ConstantesAplicativo.constanteEstadoAddSave;
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			SimpleDateFormat sdf = new SimpleDateFormat(ConstantesAplicativo.constanteFormatoFecha4);
@@ -584,6 +719,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     	System.out.println("######>>>>>>>AgendaAction>>>>agendaMedicaMethod>>>>estado salida-->>"+estado);
     	return Action.SUCCESS;
 	}
+	
 	
 	@SkipValidation
 	public String odontogramaMethod(){
@@ -1444,9 +1580,10 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
     	return Action.SUCCESS;
 	}
 	
-	public AgendaAction(IGestionFacadeAgenda gestionFacadeAgenda, IGestionFacadeHistoriaClinica gestionFacadeHistoriaClinica) {
+	public AgendaAction(IGestionFacadeAgenda gestionFacadeAgenda, IGestionFacadeHistoriaClinica gestionFacadeHistoriaClinica, IGestionFacadeNIIF gestionFacadeNIIF) {
 		this.gestionFacadeAgenda = gestionFacadeAgenda;
 		this.gestionFacadeHistoriaClinica = gestionFacadeHistoriaClinica;
+		this.gestionFacadeNIIF = gestionFacadeNIIF;
 	}
 	
 	public HttpServletRequest getRequest() {return request;}

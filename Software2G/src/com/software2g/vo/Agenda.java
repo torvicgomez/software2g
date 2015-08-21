@@ -70,6 +70,12 @@ public class Agenda implements Serializable {
 	@OneToMany(mappedBy="agenda")
 	private List<Tiemponodisponible> tiemponodisponibles;
 
+	//bi-directional many-to-one association to niif.portafoliocategoria
+	@ManyToOne
+	@JoinColumn(name="poca_id")
+	private Portafoliocategoria portafolioCategoria;
+
+	
 	public Agenda() {
 	}
 
@@ -216,4 +222,13 @@ public class Agenda implements Serializable {
 		this.agenMintime+= this.agenMintime.length()==5?":00":"";
 		this.agenScrolltime+= this.agenScrolltime.length()==5?":00":"";
 	}
+
+	public Portafoliocategoria getPortafolioCategoria() {
+		return portafolioCategoria;
+	}
+
+	public void setPortafolioCategoria(Portafoliocategoria portafolioCategoria) {
+		this.portafolioCategoria = portafolioCategoria;
+	}
+	
 }

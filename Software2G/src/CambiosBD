@@ -2313,4 +2313,8 @@ CONSTRAINT fk_poca FOREIGN KEY (poca_id) REFERENCES niif.portafoliocategoria (po
 -- 21-08-2015 --
 ----------------
 ALTER TABLE niif.portafoliocategoria ADD COLUMN poca_backgroundcolor character varying(7);  
+ALTER TABLE "HISCLINICA"."AGENDA" ADD COLUMN poca_id numeric(30,0); 
+ALTER TABLE "HISCLINICA"."AGENDA" ADD CONSTRAINT fk_agen_poca FOREIGN KEY (poca_id) REFERENCES niif.portafoliocategoria (poca_id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE "HISCLINICA"."AGENDA" ALTER COLUMN id_profesional DROP NOT NULL;  
+  
   

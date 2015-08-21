@@ -254,6 +254,9 @@ public final class ConstantesAplicativo {
 	
 	public static final String constanteEstadoActivoGlobalLetra = "S";
 	public static final long constanteNumeroColumnas = 5;
+	
+	public static final String constanteAgendaMedica = "AGEN_MEDI";
+	public static final String constanteAgendaCategoria = "AGEN_CATE";
 }
 
 

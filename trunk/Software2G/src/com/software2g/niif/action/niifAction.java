@@ -16,6 +16,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
@@ -717,7 +718,7 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	}
 	
 	@SkipValidation
-	public String portafolioCategoriaMethod(){
+	public String portafolioCategoriaMethod(){ 
 		String  result = Action.SUCCESS; 
     	try { 
     		getFuncionPosicionado();
@@ -787,6 +788,7 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     			request.getSession().removeAttribute("detalleVenta");
     			listFormapago = gestionFacadeNIIF.findAllFormapagos();
     			listTipoDoc = gestionFacadeNIIF.findAllTipodocumentos();
+    			listPago = new ArrayList<Pago>();listPago.add(new Pago(1,0.0));
     			//Validar si existe el cliente o no
     			if(!ValidaString.isNullOrEmptyString(persona.getDocumentoPers())&&!ValidaString.isNullOrEmptyString(persona.getTipodocumento().getAbreviaturaTidoc())){
     				Persona personaFind = gestionFacadeNIIF.findPersona(persona.getDocumentoPers(), persona.getTipodocumento().getAbreviaturaTidoc());
@@ -832,6 +834,7 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     			
     			if(listPago!=null&&listPago.size()>0){
     				boolean band = false;
+    				double sumaPagos = 0;
     				for(Pago elem:listPago){
     					System.out.println("Pago:["+elem.getFormaPagoIdHelp()+"]-["+elem.getPagoComprobante()+"]-["+elem.getPagoValor()+"]");
     					if(elem.getFormaPagoIdHelp()==1){
@@ -851,9 +854,13 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     						if(elem.getPagoValor()<0)
     							addActionError(getText("validacion.requeridoseccion","valor",new ArrayList<String>(Arrays.asList("Valor Cheque", ConstantesAplicativo.constanteNombreSeccionDatosPagos))));
     					}
+    					if(elem.getFormaPagoIdHelp()>0)
+    						sumaPagos += elem.getPagoValor(); 
     				}
     				if(!band)
     					addActionError(getText("validacion.requeridosec","pagos",ConstantesAplicativo.constanteNombreSeccionDatosPagos));
+    				else if((venta.getVentTotalpag()-sumaPagos)<0)
+    					addActionError(getText("validacion.valormaximopagoseccion","valorsuperior",new ArrayList<String>(Arrays.asList(ValidaString.formatToMoney(String.valueOf(sumaPagos)), venta.getVentTotalpagView(), ConstantesAplicativo.constanteNombreSeccionDatosPagos))));
     			}
     			
     			if(!hasActionErrors()){
@@ -976,6 +983,7 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			if(listAbono!=null&&listAbono.size()>0){
     				boolean band = false;
+    				double sumaPagos = 0;
     				for(Pago elem:listAbono){
     					if(elem.getFormaPagoIdHelp()==1){
     						band = true;
@@ -994,9 +1002,13 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     						if(elem.getPagoValor()<=0)
     							addActionError(getText("validacion.requeridoseccion","valor",new ArrayList<String>(Arrays.asList("Valor Cheque", ConstantesAplicativo.constanteNombreSeccionDatosPagos))));
     					}
+    					if(elem.getFormaPagoIdHelp()>0)
+    						sumaPagos += elem.getPagoValor(); 
     				}
     				if(!band)
     					addActionError(getText("validacion.requeridosec","pagos",ConstantesAplicativo.constanteNombreSeccionDatosPagos));
+    				else if((venta.getSaldoPendiente()-sumaPagos)<0)
+    					addActionError(getText("validacion.valormaximoseccion","valorsuperior",new ArrayList<String>(Arrays.asList(ValidaString.formatToMoney(String.valueOf(sumaPagos)), venta.getSaldoPendienteView(), ConstantesAplicativo.constanteNombreSeccionDatosPagos))));
     			}
     			if(!hasActionErrors()){
     				if(listAbono!=null&&listAbono.size()>0){//Insertar Pagos
@@ -1013,7 +1025,7 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 								sumPagos += elem.getPagoValor();
 							}
 						}
-						listAbono = new ArrayList<Pago>();
+						listAbono = new ArrayList<Pago>();listAbono.add(new Pago(1,0.0));
 						System.out.println("venta.getSaldoPendiente():["+venta.getSaldoPendiente()+"]");
 						System.out.println("sumPagos:["+sumPagos+"]");
 						System.out.println((venta.getSaldoPendiente()-sumPagos));
@@ -1041,6 +1053,7 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     			venta.setSaldoPendiente(this.getSaldoPendiente(listPago, venta.getVentTotalpag()));
     			venta.setSaldoAbonado(this.getSaldoAbonado(listPago)) ;
     			listFormapago = gestionFacadeNIIF.findAllFormapagos();
+    			listAbono = new ArrayList<Pago>();listAbono.add(new Pago(1,0.0));
     		}
     	} catch(Exception e){
     		e.printStackTrace();

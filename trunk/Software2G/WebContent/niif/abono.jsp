@@ -305,10 +305,10 @@
 								</tr>
 								<s:iterator value="listPago" id="data" status="stat">
 									<tr>
-										<td class="leftLabel"><s:text name="formapago.formapagofechahora"></s:text></td>
-										<td align="right"><s:property value="formapago.fopaFormapago"/> - <s:property value="pagoFecha"/>/<s:property value="pagoHora"/></td>
-										<td class="leftLabel"><s:text name="pagos.comprobante"></s:text></td>
-										<td align="right"><s:property value="pagoComprobante"/></td>
+										<td class="leftLabel"><s:text name="titulo.pagos"></s:text>&nbsp;${stat.index+1}</td>
+										<td align="left" colspan="3"><s:property value="formapago.fopaFormapago"/> - <s:property value="pagoFecha"/>/<s:property value="pagoHora"/> - <s:property value="pagoComprobante"/></td>
+<%-- 										<td class="leftLabel"><s:text name="pagos.comprobante"></s:text></td> --%>
+<%-- 										<td align="right"><s:property value="pagoComprobante"/></td> --%>
 										<td class="leftLabel"><s:text name="pagos.valor"></s:text></td>
 										<td align="right"><s:property value="pagoValorView"/></td>
 									</tr>

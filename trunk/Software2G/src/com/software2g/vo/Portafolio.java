@@ -48,6 +48,9 @@ public class Portafolio implements Serializable {
 	@JoinColumn(name="poca_id")
 	private Portafoliocategoria portafoliocategoria;
 
+	@Transient 
+	private Archivotabla archivo;
+	
 	public Portafolio() {
 	}
 
@@ -121,6 +124,15 @@ public class Portafolio implements Serializable {
 
 	public void setPortafoliocategoria(Portafoliocategoria portafoliocategoria) {
 		this.portafoliocategoria = portafoliocategoria;
+	}
+
+	
+	public Archivotabla getArchivo() {
+		return archivo;
+	}
+
+	public void setArchivo(Archivotabla archivo) {
+		this.archivo = archivo;
 	}
 
 	public void setDatosAud(List<String> data){

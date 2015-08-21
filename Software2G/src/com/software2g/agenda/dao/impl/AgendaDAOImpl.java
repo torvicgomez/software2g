@@ -113,6 +113,26 @@ public class AgendaDAOImpl implements IAgendaDao {
         }
 	}
 	
+	@SuppressWarnings("unchecked")
+	public Agenda findIdAgenda(String background, String tipo) {
+        try {
+        	String jpqlString = " select agenda from " + Agenda.class.getSimpleName() + " agenda ";
+        	if(tipo.equals(ConstantesAplicativo.constanteAgendaMedica))
+        		jpqlString += " where agenda.profesional.profBackgroundcoloragen =:background  ";
+        	else if(tipo.equals(ConstantesAplicativo.constanteAgendaCategoria))
+        		jpqlString += " where agenda.portafolioCategoria.pocaBackgroundcolor =:background  ";
+            Query query = em.createQuery( jpqlString );
+            System.out.println("background: ["+background+"]");
+            query.setParameter("background", background);
+            return (Agenda) query.getSingleResult();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */

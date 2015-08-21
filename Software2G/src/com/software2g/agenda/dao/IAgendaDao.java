@@ -38,4 +38,5 @@ public interface IAgendaDao  {
 	 */
 	public void removeAgenda(Agenda agenda);
 	public Agenda findIdAgenda(String background);
+	public Agenda findIdAgenda(String background, String tipo);
 }

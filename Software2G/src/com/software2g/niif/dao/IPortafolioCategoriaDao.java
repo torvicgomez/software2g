@@ -36,4 +36,5 @@ public interface IPortafolioCategoriaDao {
 	 * Remove the given persistent instance.
 	 */
 	public void removePortafoliocategoria(Portafoliocategoria portafoliocategoria);
+	public Portafoliocategoria findCategoriaBackground(String background);
 }

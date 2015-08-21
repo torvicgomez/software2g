@@ -879,6 +879,16 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 			throw new Exception("findPortafoliocategoriaById failed with the id " + id + ": " + e.getMessage());
 		}
 	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Portafoliocategoria findCategoriaBackground(String background) throws Exception {
+		try {
+			return getPortafolioCategoriaDao().findCategoriaBackground(background);
+		} catch (RuntimeException e) {
+			throw new Exception("findCategoriaBackground failed with the background " + background + ": " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Return all persistent instances of the <code>Portafoliocategoria</code> entity.
 	 */

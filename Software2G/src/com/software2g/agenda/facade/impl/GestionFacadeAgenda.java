@@ -150,6 +150,18 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 		}
 	}
 	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Agenda findIdAgenda(String background, String tipo) throws Exception {
+		try {
+			System.out.println("background:["+background+"]");
+			return getAgendaDao().findIdAgenda(background, tipo);
+		} catch (RuntimeException e) {
+			//throw new Exception("findIdAgenda failed: " + e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */
@@ -958,7 +970,11 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 					constantes += "  start: '"+elem.getEvenStart()+"',\n";
 					constantes += "  end: '"+elem.getEvenEnd()+"',\n";
 					constantes += "  url: '"+elem.getEvenUrl()+elem.getEvenId()+"',\n";
-					constantes += "  backgroundColor: '"+elem.getAgenda().getProfesional().getProfBackgroundcoloragen()+"'\n";
+					constantes += elem.getAgenda().getProfesional()!=null&&!elem.getAgenda().getProfesional().getProfBackgroundcoloragen().equals("")
+							?"  backgroundColor: '"+elem.getAgenda().getProfesional().getProfBackgroundcoloragen()+"'\n"
+							:elem.getAgenda().getPortafolioCategoria()!=null&&!elem.getAgenda().getPortafolioCategoria().getPocaBackgroundcolor().equals("")
+							?"  backgroundColor: '"+elem.getAgenda().getPortafolioCategoria().getPocaBackgroundcolor()+"'\n"
+							:"  backgroundColor: '#FFFFFF'\n";
 					constantes += "},";
 				}
 				constantes = constantes.substring(0,constantes.length()-1)+"];";

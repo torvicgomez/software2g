@@ -36,6 +36,7 @@ public interface IGestionFacadeAgenda {
 	public List<Agenda> findAllAgendas() throws Exception;
 	public List<Agenda> findAllAgendas(String tipo) throws Exception;
 	public Agenda findIdAgenda(String background) throws Exception;
+	public Agenda findIdAgenda(String background, String tipo) throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */

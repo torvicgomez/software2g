@@ -44,7 +44,8 @@ var zNodes = [
 	{id:5008, pId:5000, name:"Ventas", file:"venta.action?estado=alltiposervicio&funcPosicionado=NIIF::>Ventas"},
 	{id:5009, pId:5000, name:"Consecutivos", file:"consecutivo.action?estado=all&funcPosicionado=NIIF::>Consecutivos de Ventas"},
 	{id:5010, pId:5000, name:"Pagos", file:"pagos.action?estado=all&funcPosicionado=NIIF::>Pagos"},
-	{id:5011, pId:5000, name:"Parametros Agenda Categorias", file:"agendacategoria.action?estado=all&funcPosicionado=NIIF::>Parametros Agenda Categorias"}
+	{id:5011, pId:5000, name:"Parametros Agenda Categorias", file:"agendacategoria.action?estado=all&funcPosicionado=NIIF::>Parametros Agenda Categorias"},
+	{id:5012, pId:5000, name:"Agendar Compromisos", file:"calendarioCategoria.action?estado=all&funcPosicionado=NIIF::>/Agendar Compromisos"}
 	
 //	{id:5000, pId:0, name:"Cartera", open:true},
 //	{id:5001, pId:5000, name:"Parametricas", open:true, file:"inicioParametrica.action?url=Cartera::>Parametricas"},

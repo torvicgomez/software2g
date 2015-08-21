@@ -41,6 +41,7 @@ public final class ConstantesAplicativo {
 	public static final String constanteEstadoAccionRealizar = "accionrealizar";
 	public static final String constanteTipoGridMedicamentos = "GridMedicamentos";
 	public static final String constanteTipoGridElementos = "GridElementos";
+	public static final String constanteEstadoLegalizarCompromiso = "legalizarcompromiso";
 	
 	public static final String constanteTipoFileJSFuncRol = "functionrol";
 	public static final String constanteTipoFileJSTreeMenu = "treemenu";

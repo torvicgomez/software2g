@@ -16,6 +16,10 @@
 		<put-attribute name="body" value="/calendario/calendario.jsp" />
 	</definition>
 	 
+	<definition name="calendario.inicioCalendarioCategoria" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/calendario/calendarioCategoria.jsp" />
+	</definition>
+	 
 	<definition name="calendario.parametrosCalendario" extends="baseLayoutPortal">
 		<put-attribute name="body" value="/calendario/parametrosCalendario.jsp" />
 	</definition>

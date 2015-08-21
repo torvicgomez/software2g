@@ -725,39 +725,60 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     		System.out.println("######>>>>>>>niifAction>>>>portafolioCategoriaMethod>>>>estado entrada-->>"+estado);
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
     			listPortafoliocategoria = gestionFacadeNIIF.findAllPortafoliocategorias();
+    			if(listPortafoliocategoria!=null&&listPortafoliocategoria.size()>0){
+	    			for(Portafoliocategoria elem:listPortafoliocategoria){
+	    				archivotabla = gestionFacadeNIIF.findArchivotablaByTablaIdRegistro(ConstantesAplicativo.constanteNombreTablaPortafolioCategoria, elem.getPocaId()+"");
+	    				if(archivotabla!=null){
+	        				String rutaAlterna = "/";
+	        				rutaAlterna += archivotabla.getArtaRuta().replace("\\", "/")+"/"+archivotabla.getArtaArchguardado();
+	        				archivotabla.setRutaAlterna(rutaAlterna);
+	        			}else{
+	        				archivotabla = new Archivotabla();
+	        			}
+	    				elem.setArchivo(archivotabla);
+	    				ValidaString.imprimirObject(elem.getArchivo());
+	    			}
+	    			archivotabla = null;
+    			}
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
     			if(ValidaString.isNullOrEmptyString(portafoliocategoria.getPocaReferencia()))
     				addActionError(getText("validacion.requerido","pocareferencia","Referencia"));
     			if(ValidaString.isNullOrEmptyString(portafoliocategoria.getPocaDescripcion()))
     				addActionError(getText("validacion.requerido","pocadescripcion","Descripción"));
+    			if(ValidaString.isNullOrEmptyString(portafoliocategoria.getPocaBackgroundcolor()))
+    				addActionError(getText("validacion.requerido","pocabackgroundcolor","Color Representación Agenda"));
     			if(!hasActionErrors()){
     				portafoliocategoria.setDatosAud(this.getDatosAud());
     				ValidaString.imprimirObject(portafoliocategoria);
-    				gestionFacadeNIIF.persistPortafoliocategoria(portafoliocategoria);
-    				estado = ConstantesAplicativo.constanteEstadoAbstract;
-    				boolean uploadFile = false;
-    				System.out.println("...........................................................");
-    				System.out.println("...........................................................");
-    				if(getFileUpload()!=null){
-    					uploadFile = utilidadAlmacenarArchivo(ConstantesAplicativo.constanteNombreTablaPortafolioCategoria, 
-    													portafoliocategoria.getPocaId()+"", 
-    													getFileUploadFileName(), 
-    														ConstantesAplicativo.constanteRutaArchivosTablaPortafolio, 
-    															getFileUpload(), 
-    																ConstantesAplicativo.constanteCheckSi);
+    				long pocaId = gestionFacadeNIIF.persistPortafoliocategoriaId(portafoliocategoria);
+    				if(pocaId>0){
+    					portafoliocategoria.setPocaId(pocaId);
+	    				estado = ConstantesAplicativo.constanteEstadoAbstract;
+	    				boolean uploadFile = false;
+	    				System.out.println("...........................................................");
+	    				System.out.println("...........................................................");
+	    				if(getFileUpload()!=null){
+	    					uploadFile = utilidadAlmacenarArchivo(ConstantesAplicativo.constanteNombreTablaPortafolioCategoria, 
+	    													portafoliocategoria.getPocaId()+"", 
+	    													getFileUploadFileName(), 
+	    														ConstantesAplicativo.constanteRutaArchivosTablaPortafolio, 
+	    															getFileUpload(), 
+	    																ConstantesAplicativo.constanteCheckSi);
+	    				}
+	    				System.out.println("entra y sale de uploadfile");
+	    				if(getFileUpload()!=null && !uploadFile)
+	    					addActionError(getText("error.aplicacion"));
+	    				archivotabla = gestionFacadeNIIF.findArchivotablaByTablaIdRegistro(ConstantesAplicativo.constanteNombreTablaPortafolioCategoria, portafoliocategoria.getPocaId()+"");
+	    				if(archivotabla!=null){
+	        				String rutaAlterna = "/";
+	        				rutaAlterna += archivotabla.getArtaRuta().replace("\\", "/")+"/"+archivotabla.getArtaArchguardado();
+	        				archivotabla.setRutaAlterna(rutaAlterna);
+	        			}else{
+	        				archivotabla = new Archivotabla();
+	        			}
+	    				addActionMessage(getText("accion.satisfactoria"));
     				}
-    				System.out.println("entra y sale de uploadfile");
-    				if(getFileUpload()!=null && !uploadFile)
-    					addActionError(getText("error.aplicacion"));
-    				archivotabla = gestionFacadeNIIF.findArchivotablaByTablaIdRegistro(ConstantesAplicativo.constanteNombreTablaPortafolioCategoria, portafoliocategoria.getPocaId()+"");
-    				if(archivotabla!=null){
-        				String rutaAlterna = "/";
-        				rutaAlterna += archivotabla.getArtaRuta().replace("\\", "/")+"/"+archivotabla.getArtaArchguardado();
-        				archivotabla.setRutaAlterna(rutaAlterna);
-        			}else{
-        				archivotabla = new Archivotabla();
-        				}
-    				addActionMessage(getText("accion.satisfactoria"));
+    				
     			}
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			portafoliocategoria = gestionFacadeNIIF.findPortafoliocategoriaById(getIdLong());

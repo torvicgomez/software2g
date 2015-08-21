@@ -97,8 +97,10 @@
 								<s:if test="estado=='all'">
 									<th><s:text name="columna.dtll"></s:text></th>
 								</s:if>
+								<th><s:text name="portafolioscategoria.imagen"></s:text></th>
 								<th><s:text name="portafolioscategoria.referencia"></s:text></th>
 								<th><s:text name="portafolioscategoria.descripcion"></s:text></th>
+								<th><s:text name="profesional.coloragenda"></s:text></th>
 								<th><s:text name="global.fecharegistra"></s:text></th>
 							</tr>
 						</thead>
@@ -117,8 +119,10 @@
 											</a>
 										</td>
 									</s:if>
+									<td><img id="img_poca" alt="FOTO" src="<%=request.getContextPath()%><s:property value="archivo.rutaAlterna"/>" width="150" height="100"></td>
 									<td><s:property value="pocaReferencia"/></td>
 									<td><s:property value="pocaDescripcion"/></td>
+									<td bgcolor="<s:property value="pocaBackgroundcolor"/>"></td>
 									<td><s:property value="pocaFechacambio"/>&nbsp;<s:property value="pocaHoracambio"/></td>
 								</tr>
 							</s:iterator>
@@ -142,13 +146,20 @@
 							</td>
 						</tr>
 						<tr>
-						<td class="leftLabel" width="130"><s:text name="portafolioscategoria.imagen"></s:text></td>
-						<td class="text"><s:file name="fileUpload"/></td>
-						<td>
-							<a href="<%=request.getContextPath()%><s:property value="archivotabla.rutaAlterna"/>">
-								<s:property value="archivotabla.artaArchoriginal"/>
-							</a>
-						</td>
+							<td class="leftLabel" width="130"><s:text name="portafolioscategoria.imagen"></s:text></td>
+							<td class="text"><s:file name="fileUpload"/></td>
+							<td>
+								<a href="<%=request.getContextPath()%><s:property value="archivotabla.rutaAlterna"/>">
+									<s:property value="archivotabla.artaArchoriginal"/>
+								</a>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="leftLabel"><s:text name="profesionalsalud.coloragenda"></s:text></td>
+							<td colspan="3">
+								<s:textfield name="portafoliocategoria.pocaBackgroundcolor" id="pocaBackgroundcolor" size="30" maxlength="30" cssClass="inputs" onclick="startColorPicker(this)" onkeyup="maskedHex(this)"></s:textfield>
+							</td>
 						</tr>
 					</table>
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
@@ -170,20 +181,30 @@
 							<td class="leftLabel"><s:text name="portafolioscategoria.descripcion"></s:text></td>
 							<td colspan="3"><s:property value="portafoliocategoria.pocaDescripcion"/></td>
 						</tr>
+						
 						<s:if test="archivotabla.artaArchoriginal!=null||archivotabla.rutaAlterna!=null">
-						<tr><td class="leftLabel" width="130"><s:text name="portafolioscategoria.imagen"></s:text></td>
-							<td>
-								<a href="<%=request.getContextPath()%><s:property value="archivotabla.rutaAlterna"/>">
-									<s:property value="archivotabla.artaArchoriginal"/>
-								</a>
-							</td>
-						</tr>
+							<tr><td class="leftLabel" width="130"><s:text name="portafolioscategoria.imagen"></s:text></td>
+								<td>
+									<img id="img_poca" alt="FOTO" src="<%=request.getContextPath()%><s:property value="archivotabla.rutaAlterna"/>" width="150" height="100">
+<%-- 									<a href="<%=request.getContextPath()%><s:property value="archivotabla.rutaAlterna"/>"> --%>
+										<s:property value="archivotabla.artaArchoriginal"/>
+<!-- 									</a> -->
+								</td>
+							</tr>
 						</s:if>
 						<s:else>
 							<tr>
 								<td class="leftLabel" colspan="2"><center><s:text name="portafolioscategoria.sinimagen"></s:text></center></td>
 							</tr>
 						</s:else>
+						
+						<tr>
+							<td class="leftLabel" width="130"><s:text name="profesionalsalud.coloragenda"></s:text></td>
+							<td colspan="3"><table border="0" width="70%"><tr> 
+								<td bgcolor="<s:property value="portafoliocategoria.pocaBackgroundcolor"/>" width="15%"><s:property value="portafoliocategoria.pocaBackgroundcolor"/></td><td></td>
+							</tr></table></td>
+							
+						</tr>
 					</table>
 					<table cellpadding="0" cellspacing="0" border="0" class="display">
 						<tr>

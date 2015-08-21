@@ -16,7 +16,7 @@ public class Portafoliocategoria implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="PORTAFOLIOCATEGORIA_POCAID_GENERATOR", sequenceName="NIIF.SEQ_POCA_ID")
+	@SequenceGenerator(name="PORTAFOLIOCATEGORIA_POCAID_GENERATOR", sequenceName="NIIF.SEQ_POCA_ID", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PORTAFOLIOCATEGORIA_POCAID_GENERATOR")
 	@Column(name="poca_id")
 	private long pocaId;
@@ -35,11 +35,17 @@ public class Portafoliocategoria implements Serializable {
 
 	@Column(name="poca_registradopor")
 	private String pocaRegistradopor;
+	
+	@Column(name="poca_backgroundcolor")
+	private String pocaBackgroundcolor;
 
 	//bi-directional many-to-one association to Portafolio
 	@OneToMany(mappedBy="portafoliocategoria")
 	private List<Portafolio> portafolios;
 
+	@Transient 
+	private Archivotabla archivo;
+	
 	public Portafoliocategoria() {
 	}
 
@@ -118,6 +124,22 @@ public class Portafoliocategoria implements Serializable {
 			this.pocaFechacambio=data.get(1);
 			this.pocaHoracambio=data.get(2);
 		}
+	}
+
+	public String getPocaBackgroundcolor() {
+		return pocaBackgroundcolor;
+	}
+
+	public void setPocaBackgroundcolor(String pocaBackgroundcolor) {
+		this.pocaBackgroundcolor = pocaBackgroundcolor;
+	}
+
+	public Archivotabla getArchivo() {
+		return archivo;
+	}
+
+	public void setArchivo(Archivotabla archivo) {
+		this.archivo = archivo;
 	}
 
 }

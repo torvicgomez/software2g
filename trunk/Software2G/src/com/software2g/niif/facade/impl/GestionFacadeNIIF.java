@@ -901,6 +901,15 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 			throw new Exception("persistPortafoliocategoria failed: " + e.getMessage());
 		}
 	}
+	
+	public long persistPortafoliocategoriaId(Portafoliocategoria portafoliocategoria) throws Exception {
+		try {
+			return getPortafolioCategoriaDao().persistPortafoliocategoriaId(portafoliocategoria);
+		} catch (RuntimeException e) {
+			throw new Exception("persistPortafoliocategoriaId failed: " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Remove the given persistent instance.
 	 */

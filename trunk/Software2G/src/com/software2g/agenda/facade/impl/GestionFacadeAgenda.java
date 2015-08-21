@@ -130,6 +130,15 @@ public class GestionFacadeAgenda implements IGestionFacadeAgenda{
 	}
 
 	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Agenda> findAllAgendas(String tipo) throws Exception {
+		try {
+			return getAgendaDao().findAllAgendas(tipo);
+		} catch (RuntimeException e) {
+			throw new Exception("findAllAgendas failed: " + e.getMessage());
+		}
+	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
 	public Agenda findIdAgenda(String background) throws Exception {
 		try {
 			System.out.println("background:["+background+"]");

@@ -251,4 +251,9 @@ public final class ConstantesAplicativo {
 	public static final String constanteRutaArchivosTablaPortafolioCategoria = "niif"+System.getProperty("file.separator")+"ficheros"+System.getProperty("file.separator")+"portafolio";
 	
 	public static final String constanteEstadoActivoGlobalLetra = "S";
+	public static final String constanteAgendaMedica = "AGEN_MEDI";
+	public static final String constanteAgendaCategoria = "AGEN_CATE";
+	
 }
+
+

@@ -43,6 +43,10 @@ public class Portafoliocategoria implements Serializable {
 	@OneToMany(mappedBy="portafoliocategoria")
 	private List<Portafolio> portafolios;
 
+	//bi-directional many-to-one association to Agenda
+	@OneToMany(mappedBy="portafolioCategoria")
+	private List<Agenda> agendas;
+	
 	@Transient 
 	private Archivotabla archivo;
 	
@@ -140,6 +144,14 @@ public class Portafoliocategoria implements Serializable {
 
 	public void setArchivo(Archivotabla archivo) {
 		this.archivo = archivo;
+	}
+
+	public List<Agenda> getAgendas() {
+		return agendas;
+	}
+
+	public void setAgendas(List<Agenda> agendas) {
+		this.agendas = agendas;
 	}
 
 }

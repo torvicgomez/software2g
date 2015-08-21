@@ -27,6 +27,7 @@ public interface IAgendaDao  {
 	 * Return all persistent instances of the <code>Agenda</code> entity.
 	 */
 	public List<Agenda> findAllAgendas();
+	public List<Agenda> findAllAgendas(String tipo);
 	/**
 	 * Make the given instance managed and persistent.
 	 */

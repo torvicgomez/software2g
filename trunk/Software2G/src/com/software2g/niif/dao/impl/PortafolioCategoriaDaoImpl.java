@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.software2g.vo.Portafoliocategoria;
+import com.software2g.vo.Profesional;
 import com.software2g.niif.dao.IPortafolioCategoriaDao;
 
 import org.springframework.stereotype.Repository;
@@ -96,5 +97,20 @@ public class PortafolioCategoriaDaoImpl implements IPortafolioCategoriaDao {
 		/*In JPA, objects detach automatically when they are serialized or when a persistence context ends.
 		 The merge method returns a managed copy of the given detached entity.*/
 		em.remove(em.merge(portafoliocategoria));
+	}
+	
+	public Portafoliocategoria findCategoriaBackground(String background) {
+        try {
+    		String jpqlString = "select portafoliocategoria from " + Portafoliocategoria.class.getSimpleName() + " portafoliocategoria" +
+    				" where portafoliocategoria.pocaBackgroundcolor =:background ";
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("background", background);
+            return (Portafoliocategoria)query.getSingleResult();
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
 	}
 }

@@ -98,6 +98,7 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 	private Agenda agendaMedica;
 	private Agenda agendaCategoria;
 	private InputStream strCrearEvento;
+	private InputStream strCrearEventoCate;
 	private Evento evento;
 	private Participante participante;
 	private Tipoprocedimiento tipoProcedimiento;
@@ -363,6 +364,62 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 			e.printStackTrace();
 		}
     	System.out.println("######>>>>>>>AgendaAction>>>>calendarioMethod>>>>estado salida-->>"+estado);
+    	return result;
+	}
+	
+	@SkipValidation
+	public String calendarioCategoriaMethod(){
+		String  result = Action.SUCCESS;
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>AgendaAction>>>>calendarioCategoriaMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listPortafolioCategoria = gestionFacadeNIIF.findAllPortafoliocategorias();
+    			constantesAgendaProfesional = ConstantesAplicativo.constanteNameFileJSAllAgendaProf;
+    			eventoAgendaProfesional = ConstantesAplicativo.constanteNameFileJSAllEventoAgendaProf;
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)){
+    			listPortafolioCategoria = gestionFacadeNIIF.findAllPortafoliocategorias();
+    			if(background==null||(background!=null&&background.equals(""))){
+    				constantesAgendaProfesional = ConstantesAplicativo.constanteNameFileJSAllAgendaProf;
+        			eventoAgendaProfesional = ConstantesAplicativo.constanteNameFileJSAllEventoAgendaProf;
+    			}else{
+	    			agendaCategoria = gestionFacadeAgenda.findIdAgenda(getBackground(), ConstantesAplicativo.constanteAgendaCategoria);
+	    			agendaCategoria.setPortafolioCategoria(gestionFacadeNIIF.findCategoriaBackground(getBackground()));
+	    			archivotabla = gestionFacadeNIIF.findArchivotablaByTablaIdRegistro(ConstantesAplicativo.constanteNombreTablaPortafolioCategoria, agendaCategoria.getPortafolioCategoria().getPocaId()+"");
+    				if(archivotabla!=null){
+        				String rutaAlterna = "/";
+        				rutaAlterna += archivotabla.getArtaRuta().replace("\\", "/")+"/"+archivotabla.getArtaArchguardado();
+        				archivotabla.setRutaAlterna(rutaAlterna);
+        			}else{
+        				archivotabla = new Archivotabla();
+        			}
+    				agendaCategoria.getPortafolioCategoria().setArchivo(archivotabla);
+	    			constantesAgendaProfesional = "constantesCalendario/agenda/constanteAgendaCate_"+agendaCategoria.getPortafolioCategoria().getPocaId();
+	    			eventoAgendaProfesional = "eventosAgenda/eventosagenda_"+agendaCategoria.getAgenId();
+    			}
+    			estado = ConstantesAplicativo.constanteEstadoAll;
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoLegalizarCompromiso)){
+    			
+    			if(evento!=null&&evento.getAccion()!=null&&evento.getAccion().equals(ConstantesAplicativo.constanteNoAplica))
+    				addActionError(getText("validacion.requerido","evenAccion","Accion a Realizar"));
+    			if(evento!=null&&evento.getEvenId()>0){
+    				evento = gestionFacadeAgenda.findEventoById(evento.getEvenId());
+    			}else{
+	    			long idEvento = Long.parseLong(request.getParameter("idEvento").toString());
+	    			evento = gestionFacadeAgenda.findEventoById(idEvento);
+    			}
+    			evento.setParticipantes(gestionFacadeAgenda.findAllParticipantes(evento.getEvenId()));
+    			if(evento.getParticipantes()!=null&&evento.getParticipantes().size()>0)
+    				participante = (Participante) evento.getParticipantes().get(0);
+    			estado = ConstantesAplicativo.constanteEstadoOperacionCita;
+    			evento.getEvenStartViewFecha();
+    			evento.getEvenStartViewHora();
+    		}
+    	} catch (Exception e) {
+			addActionMessage(getText("error.aplicacion"));
+			e.printStackTrace();
+		}
+    	System.out.println("######>>>>>>>AgendaAction>>>>calendarioCategoriaMethod>>>>estado salida-->>"+estado);
     	return result;
 	}
 	
@@ -1735,6 +1792,62 @@ public class AgendaAction extends ActionSupport implements ServletRequestAware,S
 		}
 		return strCrearEvento;
 	}
+	
+	public InputStream getStrCrearEventoCate() {
+		try{
+			String html = "";
+			String backgroundColor = String.valueOf(request.getParameter("backgroundColor"));
+			Evento evento = new Evento();
+			evento.setAgenda(gestionFacadeAgenda.findIdAgenda(backgroundColor, ConstantesAplicativo.constanteAgendaCategoria));
+			String title = String.valueOf(request.getParameter("title"));
+			String start = String.valueOf(request.getParameter("start"));
+			String end = String.valueOf(request.getParameter("end"));
+			String url = "calendarioCategoria.action?estado="+ConstantesAplicativo.constanteEstadoLegalizarCompromiso+"&funcPosicionado=Calendario/Informacion Cita&idEvento=";
+			evento.setEvenTitle(title);
+			evento.setEvenStart(start);
+			evento.setEvenEnd(end);
+			evento.setEvenUrl(url);
+			evento.setEvenBackgroundcolor(backgroundColor);
+			evento.setEvenEstado(ConstantesAplicativo.constanteEstadoEventoCreado);
+			evento.setDatosAud(getDatosAud());
+			ValidaString.imprimirObject(evento);
+			long idEvento = gestionFacadeAgenda.persistEventoId(evento);
+			if(idEvento>0){
+				evento.setEvenId(idEvento);
+				Participante participante = new Participante();
+				participante.setEvento(evento);
+				participante.setPartDocumento(String.valueOf(request.getParameter("nrodocumento")));
+				participante.setPartTipodocumento(String.valueOf(request.getParameter("tipodoc")));
+				participante.setPartPnombre(String.valueOf(request.getParameter("pnombre")));
+				participante.setPartSnombre(String.valueOf(request.getParameter("snombre")));
+				participante.setPartPapellido(String.valueOf(request.getParameter("papellido")));
+				participante.setPartSapellido(String.valueOf(request.getParameter("sapellido")));
+				participante.setPartTelefono(String.valueOf(request.getParameter("telefono")));
+				participante.setPartEmail(String.valueOf(request.getParameter("email")));
+				participante.setDatosAud(getDatosAud());
+				ValidaString.imprimirObject(participante);
+				gestionFacadeAgenda.persistParticipante(participante);
+			}	
+			String nameFile = "eventos";
+			String path = request.getServletContext().getRealPath("/")+"js\\constantesCalendario\\"; 
+			gestionFacadeAgenda.crearFile(path, nameFile,   
+						ConstantesAplicativo.constanteExtensionFileJS, 
+						ConstantesAplicativo.constanteTipoFileJSConstantesEventos,
+						ConstantesAplicativo.constanteCrearFileJSEventosAll);
+			path = request.getServletContext().getRealPath("/")+"js\\constantesCalendario\\eventosAgenda\\";	
+			nameFile = "eventosagenda_"+evento.getAgenda().getAgenId();
+			gestionFacadeAgenda.crearFile(path, nameFile,   
+					ConstantesAplicativo.constanteExtensionFileJS, 
+					ConstantesAplicativo.constanteTipoFileJSConstantesEventosxAgenda,
+					evento.getAgenda().getAgenId()+"");
+			html = "<input type=\"hidden\" id=\"idEventoCreado\" value=\""+idEvento+"\"/>";
+			strCrearEventoCate = new ByteArrayInputStream(html.getBytes(Charset.forName("UTF-8")));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return strCrearEventoCate;
+	}
+	
 	
 	public InputStream getStrDatosDiagnostico() {
 		try{

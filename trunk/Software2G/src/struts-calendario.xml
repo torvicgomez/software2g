@@ -53,6 +53,11 @@
         <action name="calendario" method="calendarioMethod" class="AgendaAction">
         	<result name="success" type="tiles">calendario.inicioCalendario</result> 
         </action>
+        
+        <action name="calendarioCategoria" method="calendarioCategoriaMethod" class="AgendaAction">
+        	<result name="success" type="tiles">calendario.inicioCalendarioCategoria</result> 
+        </action>
+        
         <action name="paramCalendario" method="paramCalendarioMethod" class="AgendaAction">
         	<result name="success" type="tiles">calendario.parametrosCalendario</result> 
         </action>
@@ -84,6 +89,14 @@
 			<result name="success" type="stream">
 				<param name="contentType">text/html</param>
     			<param name="inputName">strCrearEvento</param>
+    			<param name="charSet">iso-8859-1</param>
+			</result>
+		</action>
+		
+		<action name="crearEventoCalendarioCate" class="AgendaAction">
+			<result name="success" type="stream">
+				<param name="contentType">text/html</param>
+    			<param name="inputName">strCrearEventoCate</param>
     			<param name="charSet">iso-8859-1</param>
 			</result>
 		</action>

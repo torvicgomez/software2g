@@ -359,7 +359,5 @@ public interface IGestionFacadeNIIF {
 	 * Remove the given persistent instance.
 	 */
 	public void removePortafoliocategoria(Portafoliocategoria portafoliocategoria) throws Exception;
-	/**
-	 * Service method for named queries
-	 */
+	public Portafoliocategoria findCategoriaBackground(String background) throws Exception;
 }

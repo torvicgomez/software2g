@@ -212,6 +212,9 @@
         <property name="proveedorDao"><bean class="com.software2g.niif.dao.impl.ProveedorDAOImpl"/></property>
         <property name="vendedorDao"><bean class="com.software2g.niif.dao.impl.VendedorDAOImpl"/></property>
         <property name="ventaDao"><bean class="com.software2g.niif.dao.impl.VentaDAOImpl"/></property>
+        <property name="portafolioDao"><bean class="com.software2g.niif.dao.impl.PortafolioDaoImpl"/></property>
+        <property name="archivoTablaDao"><bean class="com.software2g.niif.dao.impl.ArchivoTablaDaoImpl"/></property>
+        <property name="portafolioCategoriaDao"><bean class="com.software2g.niif.dao.impl.PortafolioCategoriaDaoImpl"/></property>
         <property name="tipoDocumentoDao"><bean class="com.software2g.portal.dao.impl.TipoDocumentoDaoImpl"/></property>
         <property name="personaDao"><bean class="com.software2g.portal.dao.impl.PersonaDaoImpl"/></property>
         <property name="consecutivoDao"><bean class="com.software2g.niif.dao.impl.ConsecutivoDaoImpl"/></property>

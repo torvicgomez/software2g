@@ -82,6 +82,13 @@ public class PortafolioCategoriaDaoImpl implements IPortafolioCategoriaDao {
 	public void persistPortafoliocategoria(Portafoliocategoria portafoliocategoria) {
 		em.persist(em.merge(portafoliocategoria));
 	}
+	
+	public long persistPortafoliocategoriaId(Portafoliocategoria portafoliocategoria) {
+		Portafoliocategoria obj = em.merge(portafoliocategoria); 
+		em.persist(obj);
+		return obj.getPocaId();
+	}
+	
 	/**
 	 * Remove the given persistent instance.
 	 */

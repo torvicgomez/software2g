@@ -17,7 +17,7 @@ public class Portafolio implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="PORTAFOLIO_PORTID_GENERATOR", sequenceName="NIIF.SEQ_PORT_ID")
+	@SequenceGenerator(name="PORTAFOLIO_PORTID_GENERATOR", sequenceName="NIIF.SEQ_PORT_ID", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PORTAFOLIO_PORTID_GENERATOR")
 	@Column(name="port_id")
 	private long portId;

@@ -354,6 +354,7 @@ public interface IGestionFacadeNIIF {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistPortafoliocategoria(Portafoliocategoria portafoliocategoria) throws Exception;
+	public long persistPortafoliocategoriaId(Portafoliocategoria portafoliocategoria) throws Exception;
 	/**
 	 * Remove the given persistent instance.
 	 */

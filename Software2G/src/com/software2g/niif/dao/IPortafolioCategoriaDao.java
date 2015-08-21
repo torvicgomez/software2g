@@ -31,6 +31,7 @@ public interface IPortafolioCategoriaDao {
 	 * Make the given instance managed and persistent.
 	 */
 	public void persistPortafoliocategoria(Portafoliocategoria portafoliocategoria);
+	public long persistPortafoliocategoriaId(Portafoliocategoria portafoliocategoria);
 	/**
 	 * Remove the given persistent instance.
 	 */

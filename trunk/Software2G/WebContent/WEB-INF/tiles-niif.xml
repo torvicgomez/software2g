@@ -31,6 +31,12 @@
 	<definition name="niif.Formapago" extends="baseLayoutPortal">
 		<put-attribute name="body" value="/niif/Formapago.jsp" />
 	</definition>
+	<definition name="niif.portafolio" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/niif/portafolio.jsp" />
+	</definition>
+	<definition name="niif.portafolioCategoria" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/niif/portafolioCategoria.jsp" />
+	</definition>
 	
 	<definition name="niif.ventas" extends="baseLayoutPortal">
 		<put-attribute name="body" value="/niif/ventas.jsp" />

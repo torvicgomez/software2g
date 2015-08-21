@@ -585,6 +585,8 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 //    			}
     			
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoSave)){
+    			if(portafoliocategoria==null||portafoliocategoria.getPocaId()<=0)
+    				addActionError(getText("validacion.requerido","pocaid","Categoria"));
     			if(ValidaString.isNullOrEmptyString(portafolio.getPortReferencia()))
     				addActionError(getText("validacion.requerido","portreferencia","Referencia"));
     			if(ValidaString.isNullOrEmptyString(portafolio.getPortDescripcion()))
@@ -592,6 +594,7 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     			if(ValidaString.isNullOrEmptyString((String.valueOf(portafolio.getPortValor()))))
     				addActionError(getText("validacion.requerido","portvalor","Valor $"));
     			if(!hasActionErrors()){
+    				portafolio.setPortafoliocategoria(gestionFacadeNIIF.findPortafoliocategoriaById(portafoliocategoria.getPocaId()));
     				portafolio.setDatosAud(this.getDatosAud());
     				ValidaString.imprimirObject(portafolio);
     				gestionFacadeNIIF.persistPortafolio(portafolio);
@@ -622,6 +625,8 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     			}
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			portafolio = gestionFacadeNIIF.findPortafolioById(getIdLong());
+    			portafoliocategoria = gestionFacadeNIIF.findPortafoliocategoriaById(portafolio.getPortafoliocategoria().getPocaId());
+    			listPortafoliocategoria = gestionFacadeNIIF.findAllPortafoliocategorias();
     			archivotabla = gestionFacadeNIIF.findArchivotablaByTablaIdRegistro(ConstantesAplicativo.constanteNombreTablaPortafolio, portafolio.getPortId()+"");
     			if(archivotabla!=null){
     				String rutaAlterna = "/";

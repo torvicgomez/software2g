@@ -18,6 +18,7 @@ import com.software2g.vo.Detalleventa;
 import com.software2g.vo.Formapago;
 import com.software2g.vo.Ordencompra;
 import com.software2g.vo.Pago;
+import com.software2g.vo.Participante;
 import com.software2g.vo.Persona;
 import com.software2g.vo.Portafolio;
 import com.software2g.vo.Portafoliocategoria;
@@ -25,6 +26,7 @@ import com.software2g.vo.Proveedor;
 import com.software2g.vo.Tipodocumento;
 import com.software2g.vo.Vendedor;
 import com.software2g.vo.Venta;
+import com.software2g.agenda.dao.IParticipanteDao;
 import com.software2g.niif.facade.IGestionFacadeNIIF;
 import com.software2g.niif.dao.IArchivoTablaDao;
 import com.software2g.niif.dao.IArticuloDao;
@@ -87,7 +89,8 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 	IPersonaDao personaDao;
 	@Autowired
 	IConsecutivoDao consecutivoDao;
-	
+	@Autowired
+	IParticipanteDao participanteDao;
 	
 	public IPortafolioCategoriaDao getPortafolioCategoriaDao() {return portafolioCategoriaDao;}
 	public void setPortafolioCategoriaDao(IPortafolioCategoriaDao portafolioCategoriaDao) {this.portafolioCategoriaDao = portafolioCategoriaDao;}
@@ -125,6 +128,8 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 	public void setPersonaDao(IPersonaDao personaDao) {this.personaDao = personaDao;}
 	public IConsecutivoDao getConsecutivoDao() {return consecutivoDao;}
 	public void setConsecutivoDao(IConsecutivoDao consecutivoDao) {this.consecutivoDao = consecutivoDao;}
+	public IParticipanteDao getParticipanteDao() {return participanteDao;}
+	public void setParticipanteDao(IParticipanteDao participanteDao) {this.participanteDao = participanteDao;}
 	
 	/**
 	 * Find an entity by its id (primary key).
@@ -728,6 +733,30 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 		}
 	}
 
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Venta> findAllVentas(String fechaMesVenta) throws Exception {
+		try {
+			System.out.println("Realizar la Consulta!!!!");
+			return getVentaDao().findAllVentas(fechaMesVenta);
+		} catch (RuntimeException e) {
+//			throw new Exception("findAllVentas failed: " + e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Venta> findAllVentasReport() throws Exception {
+		try {
+			System.out.println("Entra esta Parte!!!!");
+			return getVentaDao().findAllVentasReport();
+		} catch (RuntimeException e) {
+//			throw new Exception("findAllVentasReport failed: " + e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	/**
 	 * Make the given instance managed and persistent.
 	 */
@@ -1120,6 +1149,63 @@ public class GestionFacadeNIIF implements IGestionFacadeNIIF {
 			return getPortafolioDao().findAllPortafolioByCatalogoIdRegistro(idRegistro);
 		} catch (RuntimeException e) {
 			throw new Exception("findAllPortafolioByCatalogoIdRegistro failed: " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public Participante findParticipanteById(long id) throws Exception {
+		try {
+			return getParticipanteDao().findParticipanteById(id);
+		} catch (RuntimeException e) {
+			throw new Exception("findParticipanteById failed with the id " + id + ": " + e.getMessage());
+		}
+	}
+	/**
+	 * Return all persistent instances of the <code>Participante</code> entity.
+	 */
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Participante> findAllParticipantes() throws Exception {
+		try {
+			return getParticipanteDao().findAllParticipantes();
+		} catch (RuntimeException e) {
+			throw new Exception("findAllParticipantes failed: " + e.getMessage());
+		}
+	}
+
+	@Transactional(propagation=Propagation.NEVER, readOnly=true)
+	public List<Participante> findAllParticipantes(long idEvento) throws Exception {
+		try {
+			System.out.println("idEvento:["+idEvento+"]");
+			return getParticipanteDao().findAllParticipantes(idEvento);
+		} catch (RuntimeException e) {
+			//throw new Exception("findAllParticipantes failed: " + e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistParticipante(Participante participante) throws Exception {
+		try {
+			getParticipanteDao().persistParticipante(participante);
+		} catch (RuntimeException e) {
+			throw new Exception("persistParticipante failed: " + e.getMessage());
+		}
+	}
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeParticipante(Participante participante) throws Exception {
+		try {
+			getParticipanteDao().removeParticipante(participante);
+		} catch (RuntimeException e) {
+			throw new Exception("removeParticipante failed: " + e.getMessage());
 		}
 	}
 }

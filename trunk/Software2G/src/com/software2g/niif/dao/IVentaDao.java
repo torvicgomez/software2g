@@ -27,6 +27,8 @@ public interface IVentaDao {
 	 * Return all persistent instances of the <code>Venta</code> entity.
 	 */
 	public List<Venta> findAllVentas();
+	public List<Venta> findAllVentasReport();
+	public List<Venta> findAllVentas(String fechaMesVenta);
 	/**
 	 * Make the given instance managed and persistent.
 	 */

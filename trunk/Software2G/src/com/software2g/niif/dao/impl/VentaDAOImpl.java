@@ -1,5 +1,6 @@
 package com.software2g.niif.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -98,5 +99,73 @@ public class VentaDAOImpl implements IVentaDao {
 		/*In JPA, objects detach automatically when they are serialized or when a persistence context ends.
 		 The merge method returns a managed copy of the given detached entity.*/
 		em.remove(em.merge(venta));
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Venta> findAllVentasReport() {
+        try {
+    		String sqlString = " select case substring(t.fecha_venta from 6 for 2)" +
+    				"	when '01' then 'Enero de '||substring(t.fecha_venta from 0 for 5)" +
+    				"	when '02' then 'Febrero de '||substring(t.fecha_venta from 0 for 5)" +
+    				"	when '03' then 'Marzo de '||substring(t.fecha_venta from 0 for 5)" +
+    				"	when '04' then 'Abril de '||substring(t.fecha_venta from 0 for 5)" +
+    				"	when '05' then 'Mayo de '||substring(t.fecha_venta from 0 for 5)" +
+    				"	when '06' then 'Junio de '||substring(t.fecha_venta from 0 for 5)" +
+    				"	when '07' then 'Julio de '||substring(t.fecha_venta from 0 for 5)" +
+    				"	when '08' then 'Agosto de '||substring(t.fecha_venta from 0 for 5)" +
+    				"	when '09' then 'Septiembre de '||substring(t.fecha_venta from 0 for 5)" +
+    				"	when '10' then 'Octubre de '||substring(t.fecha_venta from 0 for 5)" +
+    				"	when '11' then 'Noviembre de '||substring(t.fecha_venta from 0 for 5)" +
+    				"	else 'Diciembre de '||substring(t.fecha_venta from 0 for 5)" +
+    				"	end as formatFecha," +
+    				"	t.fecha_venta, sum(t.vent_totalpag) as total_venta_mes " +
+    				" from (select substring(vent_fecha from 0 for 8) as fecha_venta, substring(vent_fecha from 6 for 2), vent_totalpag from niif.venta) as t" +
+    				" group by t.fecha_venta, formatFecha " +
+    				" order by t.fecha_venta asc ";
+    		System.out.println("SQL:["+sqlString+"]");
+            Query query = em.createNativeQuery( sqlString );
+            List<Object[]> list = query.getResultList();
+            System.out.println("list:["+list+"]");
+            List<Venta> listVentaReport = new ArrayList<Venta>();
+            if(list!=null&&list.size()>0){
+            	System.out.println("Entra este Ciclo!!!!");
+            	for(Object[] elem:list){
+            		Venta venta = new Venta();
+            		venta.setFormatoFechaReport(elem[0].toString());
+            		venta.setFechaReport(elem[1].toString());
+            		venta.setTotalMesVentaReport(Double.parseDouble(elem[2].toString()));
+            		listVentaReport.add(venta);
+            	}
+            }
+            return listVentaReport;
+        }catch(Exception e){
+        	e.printStackTrace();
+        	return null;	
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+	}
+
+	public List<Venta> findAllVentas(String fechaMesVenta) {
+        try {
+    		String jpqlString = "select venta from " + Venta.class.getSimpleName() + " venta " +
+    				" where venta.ventFecha like :fechaMesVenta " +
+    				" order by venta.ventFecha asc "; 
+    		System.out.println("fechaMesVenta:["+fechaMesVenta+"]");
+            Query query = em.createQuery( jpqlString );
+            query.setParameter("fechaMesVenta", fechaMesVenta+"%");
+            return query.getResultList();
+        }catch(Exception e){
+        	e.printStackTrace();
+        	return null;
+        }
+        finally {
+            if (em != null) {
+                em.close();
+            }
+        }
 	}
 }

@@ -13,6 +13,7 @@ import com.software2g.vo.Detalleventa;
 import com.software2g.vo.Formapago;
 import com.software2g.vo.Ordencompra;
 import com.software2g.vo.Pago;
+import com.software2g.vo.Participante;
 import com.software2g.vo.Portafolio;
 import com.software2g.vo.Portafoliocategoria;
 import com.software2g.vo.Persona;
@@ -243,6 +244,8 @@ public interface IGestionFacadeNIIF {
 	 * Return all persistent instances of the <code>Venta</code> entity.
 	 */
 	public List<Venta> findAllVentas() throws Exception;
+	public List<Venta> findAllVentasReport() throws Exception;
+	public List<Venta> findAllVentas(String fechaMesVenta) throws Exception;
 	/**
 	 * Make the given instance managed and persistent.
 	 */
@@ -361,5 +364,24 @@ public interface IGestionFacadeNIIF {
 	 */
 	public void removePortafoliocategoria(Portafoliocategoria portafoliocategoria) throws Exception;
 	public Portafoliocategoria findCategoriaBackground(String background) throws Exception;
-	public List<Portafolio> findAllPortafolioByCatalogoIdRegistro(long idRegistro) throws Exception; 
+	public List<Portafolio> findAllPortafolioByCatalogoIdRegistro(long idRegistro) throws Exception;
+	
+	/**
+	 * Find an entity by its id (primary key).
+	 * @return The found entity instance or null if the entity does not exist.
+	 */
+	public Participante findParticipanteById(long id) throws Exception;
+	/**
+	 * Return all persistent instances of the <code>Participante</code> entity.
+	 */
+	public List<Participante> findAllParticipantes() throws Exception;
+	public List<Participante> findAllParticipantes(long idEvento) throws Exception;
+	/**
+	 * Make the given instance managed and persistent.
+	 */
+	public void persistParticipante(Participante participante) throws Exception;
+	/**
+	 * Remove the given persistent instance.
+	 */
+	public void removeParticipante(Participante participante) throws Exception;
 }

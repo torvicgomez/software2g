@@ -55,7 +55,7 @@
         </action>
         
         <action name="calendarioCategoria" method="calendarioCategoriaMethod" class="AgendaAction">
-        	<result name="success" type="tiles">calendario.inicioCalendarioCategoria</result> 
+        	<result name="success" type="tiles">calendario.inicioCalendarioCategoria</result>
         </action>
         
         <action name="paramCalendario" method="paramCalendarioMethod" class="AgendaAction">

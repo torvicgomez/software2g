@@ -36,6 +36,11 @@
 							<table cellpadding="0" cellspacing="0" border="1" class="display" id="paradasProgramadas"> 
 								<thead>
 									<tr>
+										<th><s:text name="medicamentos.medicamento"></s:text></th>
+										<th><s:text name="medicamentos.presentacion"></s:text></th>
+										<th><s:text name="medicamentos.cantidad"></s:text></th>
+										<th><s:text name="medicamentos.dosis"></s:text></th>
+										<th><s:text name="medicamentos.intervalo"></s:text></th>
 										<th><s:text name="columna.item"></s:text></th>
 										<th><s:text name="medicamentos.medicamento"></s:text></th>
 										<th><s:text name="medicamentos.presentacion"></s:text></th>
@@ -49,6 +54,12 @@
 									<s:iterator value="listMedicamento" id="data" status="stat">
 										<tr>
 											<td>${stat.index+1}</td>
+											<td><s:property value="ludeParada"/></td>
+											<td><s:property value="ludeParada"/></td>
+											<td><s:property value="ludeParada"/></td>
+											<td><s:property value="ludeParada"/></td>
+											<td><s:property value="ludeParada"/></td>
+											<td class="right"><input type="button" value="<s:text name="labelbutton.eliminarMedicamento"></s:text>" onclick="eliminarGrilla('${stat.index}');" class="buttonSV"/></td>
 											<td><s:property value="mediMedicamento"/></td>
 											<td><s:property value="mediPresentacion"/></td>
 											<td><s:property value="mediCantidad"/></td>

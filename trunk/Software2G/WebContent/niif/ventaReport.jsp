@@ -130,6 +130,7 @@
 								<th><s:text name="ventas.consecutivo"></s:text></th>
 								<th><s:text name="pagos.estado"></s:text></th>
 								<th><s:text name="ventas.fechahora"></s:text></th>
+								<th><s:text name="ordencompra.totalarticulo"></s:text></th>
 								<th><s:text name="pagos.saldoabonado"></s:text></th>
 								<th><s:text name="pagos.saldopendiente"></s:text></th>
 							</tr>
@@ -140,6 +141,7 @@
 									<td><s:property value="ventConsecutivo"/></td>
 									<td><s:property value="ventEstado"/></td>
 									<td><s:property value="ventFecha"/>/<s:property value="ventHora"/></td>
+									<td align="right"><s:property value="ventTotalpagView"/></td>
 									<td align="right"><s:property value="saldoAbonadoView"/></td>
 									<td align="right"><s:property value="saldoPendienteView"/></td>
 								</tr>

@@ -37,6 +37,7 @@ import com.software2g.vo.DetallecompraPK;
 import com.software2g.vo.Detalleventa;
 import com.software2g.vo.DetalleventaPK;
 import com.software2g.vo.Ordencompra;
+import com.software2g.vo.Participante;
 import com.software2g.vo.Portafolio;
 import com.software2g.vo.Portafoliocategoria;
 import com.software2g.vo.Pago;
@@ -94,6 +95,7 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	private List<Archivotabla> listArchivotabla;
 	private Portafoliocategoria portafoliocategoria;
 	private List<Portafoliocategoria> listPortafoliocategoria;
+	private Participante participante;
 	
 	private File fileUpload;
 	private String fileUploadContentType;
@@ -169,7 +171,8 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	public void setListConsecutivo(List<Consecutivo> listConsecutivo) {this.listConsecutivo = listConsecutivo;}
 	public List<Pago> getListAbono() {return listAbono;}
 	public void setListAbono(List<Pago> listAbono) {this.listAbono = listAbono;}
-	
+	public Participante getParticipante() {return participante;}
+	public void setParticipante(Participante participante) {this.participante = participante;}
 	
 	public List<UtilGenerico> getListEstado() {return ConstantesAplicativo.listEstadoSN;}
 	public List<UtilGenerico> getListEstadoArticulo() {return ConstantesAplicativo.listEstadoArticulo;}
@@ -842,9 +845,29 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
     			request.getSession().removeAttribute("listDetalleVenta");
     			request.getSession().removeAttribute("detalleVenta");
-    			listFormapago = gestionFacadeNIIF.findAllFormapagos();
     			listTipoDoc = gestionFacadeNIIF.findAllTipodocumentos();
+    			listFormapago = gestionFacadeNIIF.findAllFormapagos();
     			listPago = new ArrayList<Pago>();listPago.add(new Pago(1,0.0));
+    			String idEvento = request.getParameter("idEvento");
+    			String partId = request.getParameter("partId");
+    			if(idEvento!=null&&Integer.parseInt(idEvento)>0){
+    				consecutivo = (Consecutivo)gestionFacadeNIIF.findConsecutivoById(ConstantesAplicativo.constanteIdConsecutivoVenta);
+        			if(venta==null)
+        				venta = new Venta();
+        			venta.setVentFecha(ValidaString.fechaSystem());
+        			venta.setVentHora(ValidaString.horaSystem());
+        			vendedor = this.getVendedor();
+        			if(partId!=null&&Integer.parseInt(partId)>0){
+        				participante = gestionFacadeNIIF.findParticipanteById(Long.parseLong(partId));
+        				if(participante!=null){
+	        				if(persona==null)
+	        					persona = new Persona();
+	        				persona.setDocumentoPers(participante.getPartDocumento());
+	        				persona.setTipodocumento(new Tipodocumento());
+	        				persona.getTipodocumento().setAbreviaturaTidoc(participante.getPartTipodocumento());
+        				}
+        			}
+    			}
     			//Validar si existe el cliente o no
     			if(!ValidaString.isNullOrEmptyString(persona.getDocumentoPers())&&!ValidaString.isNullOrEmptyString(persona.getTipodocumento().getAbreviaturaTidoc())){
     				Persona personaFind = gestionFacadeNIIF.findPersona(persona.getDocumentoPers(), persona.getTipodocumento().getAbreviaturaTidoc());
@@ -857,6 +880,12 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     						persona.setExisteCliente(ConstantesAplicativo.constanteCheckNo);
     				}else{
     					persona.setExisteCliente(ConstantesAplicativo.constanteCheckNo);
+    					persona.setPnombrePers(participante.getPartPnombre());
+    					persona.setSnombrePers(participante.getPartSnombre());
+    					persona.setPapellidoPers(participante.getPartPapellido());
+    					persona.setSapellidoPers(participante.getPartSapellido());
+    					persona.setTelefonoPers(participante.getPartTelefono());
+    					persona.setEmailPers(participante.getPartEmail());
     				}
     			}else{
     				cliente = gestionFacadeNIIF.findAllClienteIdPers(ConstantesAplicativo.constanteIdClienteComodin);
@@ -1119,6 +1148,41 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     	return Action.SUCCESS;
 	}
 	
+	@SkipValidation
+	public String ventaReportMethod(){
+		String  result = Action.SUCCESS; 
+    	try { 
+    		getFuncionPosicionado();
+    		System.out.println("######>>>>>>>niifAction>>>>ventaReportMethod>>>>estado entrada-->>"+estado);
+    		if(estado.equals(ConstantesAplicativo.constanteEstadoAll) || estado.equals(ConstantesAplicativo.constanteEstadoQuery)){
+    			listVenta = gestionFacadeNIIF.findAllVentasReport();
+    		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
+    			System.out.println("Entra esta Parte!!!");
+    			listVenta = gestionFacadeNIIF.findAllVentas(getId());
+    			System.out.println("listVenta:["+listVenta+"]");
+    			if(listVenta!=null&&listVenta.size()>0){
+    				double ventaPaga = 0;
+    				double ventaDeben = 0;
+	    			for(Venta elem:listVenta){
+	        			listPago = gestionFacadeNIIF.findAllPagosVenta(elem.getVentId());
+	        			venta.setSaldoPendiente(this.getSaldoPendiente(listPago, elem.getVentTotalpag()));
+	        			venta.setSaldoAbonado(this.getSaldoAbonado(listPago)) ;
+	        			if(elem.getVentEstado().equals(ConstantesAplicativo.constanteEstadoOrdenVentaPagada))
+	        				ventaPaga += elem.getVentTotalpag();
+	        			else if(elem.getVentEstado().equals(ConstantesAplicativo.constanteEstadoOrdenVentaPendiente))
+	        				ventaDeben += elem.getVentTotalpag();
+	    			}
+	    			venta.setTotalMesVentaReportPago(ventaPaga);
+	    			venta.setTotalMesVentaReportDeben(ventaDeben);
+    			}
+    		}
+    	} catch(Exception e){
+    		e.printStackTrace();
+    		addActionError(getText("error.aplicacion"));
+    	}
+    	System.out.println("######>>>>>>>niifAction>>>>ventaReportMethod>>>>estado entrada-->>"+estado);
+    	return Action.SUCCESS;
+	}
 	
 	public niifAction(IGestionFacadeNIIF gestionFacadeNIIF) {
 		this.gestionFacadeNIIF = gestionFacadeNIIF;
@@ -1135,8 +1199,8 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	public void setFuncPosicionado(String funcPosicionado) {this.funcPosicionado = funcPosicionado;}
 	public String getId() {return id;}
 	public void setId(String id) {this.id = id;}
-	public long getIdLong() {return Long.parseLong(id);}
-	public Integer getIdInteger() {return Integer.parseInt(id);}
+	public long getIdLong() {try{return Long.parseLong(id);}catch(Exception e){return 0;}}
+	public Integer getIdInteger() {try{return Integer.parseInt(id);}catch(Exception e){return 0;}}
 	public IGestionFacadeNIIF getGestionFacadeNIIF() {return gestionFacadeNIIF;}
 	public void setGestionFacadeNIIF(IGestionFacadeNIIF gestionFacadeNIIF) {this.gestionFacadeNIIF = gestionFacadeNIIF;}
 	public String getBandEstadoFunc() {return bandEstadoFunc;}

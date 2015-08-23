@@ -84,6 +84,18 @@ public class Venta implements Serializable {
 	
 	@Transient
 	private double saldoAbonado;
+
+	@Transient
+	private String formatoFechaReport;
+	@Transient
+	private String fechaReport;
+	@Transient
+	private double totalMesVentaReport;
+	@Transient
+	private double totalMesVentaReportPago;
+	@Transient
+	private double totalMesVentaReportDeben;
+	
 	
 	public Venta() {
 	}
@@ -278,5 +290,57 @@ public class Venta implements Serializable {
 
 	public String getSaldoAbonadoView() {
 		return ValidaString.formatToMoney(String.valueOf(saldoAbonado));
+	}
+
+	public String getFormatoFechaReport() {
+		return formatoFechaReport;
+	}
+
+	public void setFormatoFechaReport(String formatoFechaReport) {
+		this.formatoFechaReport = formatoFechaReport;
+	}
+
+	public String getFechaReport() {
+		return fechaReport;
+	}
+
+	public void setFechaReport(String fechaReport) {
+		this.fechaReport = fechaReport;
+	}
+
+	public double getTotalMesVentaReport() {
+		return totalMesVentaReport;
+	}
+
+	public String getTotalMesVentaReportView() {
+		return ValidaString.formatToMoney(String.valueOf(totalMesVentaReport));
+	}
+	
+	public void setTotalMesVentaReport(double totalMesVentaReport) {
+		this.totalMesVentaReport = totalMesVentaReport;
+	}
+
+	public double getTotalMesVentaReportPago() {
+		return totalMesVentaReportPago;
+	}
+
+	public String getTotalMesVentaReportPagoView() {
+		return ValidaString.formatToMoney(String.valueOf(totalMesVentaReportPago));
+	}
+	
+	public void setTotalMesVentaReportPago(double totalMesVentaReportPago) {
+		this.totalMesVentaReportPago = totalMesVentaReportPago;
+	}
+
+	public double getTotalMesVentaReportDeben() {
+		return totalMesVentaReportDeben;
+	}
+
+	public String getTotalMesVentaReportDebenView() {
+		return ValidaString.formatToMoney(String.valueOf(totalMesVentaReportDeben));
+	}
+	
+	public void setTotalMesVentaReportDeben(double totalMesVentaReportDeben) {
+		this.totalMesVentaReportDeben = totalMesVentaReportDeben;
 	}
 }

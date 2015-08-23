@@ -219,5 +219,6 @@
         <property name="tipoDocumentoDao"><bean class="com.software2g.portal.dao.impl.TipoDocumentoDaoImpl"/></property>
         <property name="personaDao"><bean class="com.software2g.portal.dao.impl.PersonaDaoImpl"/></property>
         <property name="consecutivoDao"><bean class="com.software2g.niif.dao.impl.ConsecutivoDaoImpl"/></property>
+        <property name="participanteDao"><bean class="com.software2g.agenda.dao.impl.ParticipanteDAOImpl"/></property>
     </bean>
 </beans>

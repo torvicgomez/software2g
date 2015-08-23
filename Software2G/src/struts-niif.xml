@@ -105,5 +105,8 @@
         	<result name="success" type="tiles">niif.pagos</result>
         </action>
         
+        <action name="ventareport" method="ventaReportMethod" class="niifAction">
+        	<result name="success" type="tiles">niif.ventareport</result>
+        </action>
     </package>
 </struts>

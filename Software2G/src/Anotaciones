@@ -113,9 +113,10 @@ Proyecto NIIF - Normas Internacionales de Informacion Finaciera
 21- Que se muestre como opcion predeterminada el pago en efectivo ------------------------------ .::[O.K]::.
 22- Validar que los pagos no sean mayores al total a pagar ------------------------------------- .::[O.K]::.
 23- Crear agenda por categorias ---------------------------------------------------------------- .::[O.K]::.
-24- Enlazar evento agenda categorias con la funcionalidad de venta -----------------------------
+24- Enlazar evento agenda categorias con la funcionalidad de venta ----------------------------- .::[O.K]::.
 25- Crear la pestaña especifica para venta de productos del portafolio -------------------------
 26- Crear la pestaña especifica para la venta en relacion al detalle del servicio --------------
+27- Actulizar Participante Evento segun datos registrados en venta -----------------------------
 
 
 Sugerencia

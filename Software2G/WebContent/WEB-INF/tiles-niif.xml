@@ -49,4 +49,8 @@
 	<definition name="niif.pagos" extends="baseLayoutPortal">
 		<put-attribute name="body" value="/niif/abono.jsp" />
 	</definition>
+	
+	<definition name="niif.ventareport" extends="baseLayoutPortal">
+		<put-attribute name="body" value="/niif/ventaReport.jsp" />
+	</definition>
 </tiles-definitions>

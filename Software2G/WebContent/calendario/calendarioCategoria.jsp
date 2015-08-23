@@ -154,14 +154,14 @@
 	
 	function continuar(){
 		var accionRealizar = document.getElementById('accionRealizar').value;
-		if(accionRealizar == 'AS'){
-			var profId = document.getElementById('profId').value;
+		if(accionRealizar == 'LS'){
 			var evenId = document.getElementById('evenId').value;
-			document.form.action="servicioclinico.action?estado=<%=ConstantesAplicativo.constanteEstadoAll%>&idProfesional="+profId+"&idEvento="+evenId+"&funcPosicionado=Calendario/Servicio Clinico";
+			var partId = document.getElementById('partId').value;
+			document.form.action="venta.action?estado=<%=ConstantesAplicativo.constanteEstadoAll%>&partId="+partId+"&idEvento="+evenId+"&funcPosicionado=NIIF::>Venta";
 		}else if(accionRealizar == 'CC'){
-			document.form.action="calendario.action?estado=<%=ConstantesAplicativo.constanteEstadoOperacionCita%>";
+			document.form.action="calendarioCategoria.action?estado=<%=ConstantesAplicativo.constanteEstadoLegalizarCompromiso%>";
 		}else if(accionRealizar == 'NA'){
-			document.form.action="calendario.action?estado=<%=ConstantesAplicativo.constanteEstadoOperacionCita%>";
+			document.form.action="calendarioCategoria.action?estado=<%=ConstantesAplicativo.constanteEstadoLegalizarCompromiso%>";
 		}
 		document.form.submit();
 	}
@@ -212,6 +212,10 @@
 			</s:if>
 			<s:elseif test="estado=='operacioncita'">
 				<table cellpadding="0" cellspacing="0" border="0" class="display">
+					<s:hidden name="evento.evenId" id="evenId"></s:hidden>
+					<s:hidden name="participante.partId" id="partId"></s:hidden>
+					<s:hidden name="participante.partDocumento" id="documentoPers"></s:hidden>
+					<s:hidden name="participante.partTipodocumento" id="abreviaturaTidoc"></s:hidden>
 					<tr><td align="left">
 						<h1><s:text name="portafolioscategoria.informacioncompromiso"></s:text></h1>
 					</td></tr>

@@ -1159,7 +1159,6 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
     		}else if(estado.equals(ConstantesAplicativo.constanteEstadoEdit)||estado.equals(ConstantesAplicativo.constanteEstadoAbstract)){
     			System.out.println("Entra esta Parte!!!");
     			listVenta = gestionFacadeNIIF.findAllVentas(getId());
-    			System.out.println("listVenta:["+listVenta+"]");
     			if(listVenta!=null&&listVenta.size()>0){
     				double ventaPaga = 0;
     				double ventaDeben = 0;
@@ -1167,14 +1166,11 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	        			listPago = gestionFacadeNIIF.findAllPagosVenta(elem.getVentId());
 	        			System.out.println("listPago:["+listPago+"]");
 	        			if(listPago!=null&&listPago.size()>0){
-	        				System.out.println("elem.getVentTotalpag():["+elem.getVentTotalpag()+"]");
 	        				elem.setSaldoPendiente(this.getSaldoPendiente(listPago, elem.getVentTotalpag()));
 	        				elem.setSaldoAbonado(this.getSaldoAbonado(listPago)) ;
 	        			}
-//	        			if(elem.getVentEstado().equals(ConstantesAplicativo.constanteEstadoOrdenVentaPagada))
-	        				ventaPaga += elem.getSaldoAbonado();
-//	        			else if(elem.getVentEstado().equals(ConstantesAplicativo.constanteEstadoOrdenVentaPendiente))
-	        				ventaDeben += elem.getSaldoPendiente();
+        				ventaPaga += elem.getSaldoAbonado();
+        				ventaDeben += elem.getSaldoPendiente();
 	    			}
 	    			venta.setTotalMesVentaReportPago(ventaPaga);
 	    			venta.setTotalMesVentaReportDeben(ventaDeben);
@@ -1277,21 +1273,12 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	
 	public double getSaldoPendiente(List<Pago> listPago, double totalaPagar){
 		try {
-			System.out.println("---------------------------------------");
-			System.out.println("SAlDO PENDIENTE");
 			double sumPagos = 0;
-			System.out.println("listPago:["+listPago+"]");
 			if(listPago!=null&&listPago.size()>0){
-				System.out.println("Entra Ciclo!!!");
 				for(Pago elem:listPago){
-					System.out.println("elem.getPagoValor():["+elem.getPagoValor()+"]");
 					sumPagos +=elem.getPagoValor();
 				}
 			}
-			System.out.println("totalaPagar:["+totalaPagar+"]");
-			System.out.println("sumPagos:["+sumPagos+"]");
-			System.out.println("Saldo:["+(totalaPagar-sumPagos)+"]");
-			System.out.println("---------------------------------------");
 			return  (totalaPagar-sumPagos);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1301,19 +1288,12 @@ public class niifAction extends ActionSupport implements ServletRequestAware,Ser
 	
 	public double getSaldoAbonado(List<Pago> listPago){
 		try {
-			System.out.println("---------------------------------------");
-			System.out.println("SAlDO ABONADO");
 			double sumPagos = 0;
-			System.out.println("listPago:["+listPago+"]");
 			if(listPago!=null&&listPago.size()>0){
-				System.out.println("Entra Ciclo!!!!");
 				for(Pago elem:listPago){
-					System.out.println("elem.getPagoValor():["+elem.getPagoValor()+"]");
 					sumPagos +=elem.getPagoValor();
 				}
 			}
-			System.out.println("sumPagos:["+sumPagos+"]");
-			System.out.println("---------------------------------------");
 			return  sumPagos;
 		} catch (Exception e) {
 			e.printStackTrace();
